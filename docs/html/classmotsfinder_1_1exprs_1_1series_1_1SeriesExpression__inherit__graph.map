@@ -1,0 +1,7 @@
+<map id="SeriesExpression" name="SeriesExpression">
+<area shape="rect" id="node4" href="$classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html" title="Truncated Chebyshev series expression. " alt="" coords="5,229,65,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions. " alt="" coords="90,229,178,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions. " alt="" coords="17,80,153,107"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function. " alt="" coords="25,304,125,331"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression. " alt="" coords="150,304,235,331"/>
+</map>

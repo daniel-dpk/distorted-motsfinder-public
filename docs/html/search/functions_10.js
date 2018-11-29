@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['sample_5foperator_5ffunc',['sample_operator_func',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a37359d9431d685a9f223eb8fb1ac2877',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
+  ['sample_5foperator_5ffuncs',['sample_operator_funcs',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#af662ffd7c33639f83ea94f9fdc9fc0e6',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
+  ['save',['save',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a3700b94d209d5fc275b75342c97ab92a',1,'motsfinder.axisym.curve.basecurve.BaseCurve.save()'],['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a66acadec2046bd574164a77c8ec93c5f',1,'motsfinder.exprs.numexpr.NumericExpression.save()']]],
+  ['save_5fto_5ffile',['save_to_file',['../namespacemotsfinder_1_1exprs_1_1numexpr.html#ae99a0d2f72e280ba31fd67afd3544101',1,'motsfinder::exprs::numexpr']]],
+  ['set_5fcoefficients',['set_coefficients',['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a69a1d316f82763717a4b3b9cdc7acb4b',1,'motsfinder::exprs::series::SeriesExpression']]],
+  ['set_5forigin',['set_origin',['../classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html#aa6bedeb076c9a3eb6865cb5e8eb843e2',1,'motsfinder::axisym::curve::starshapedcurve::StarShapedCurve']]],
+  ['set_5fsub_5fexprs',['set_sub_exprs',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a2836ad26b7ee0c674b28019a8ca2d653',1,'motsfinder::exprs::numexpr::NumericExpression']]],
+  ['set_5fx',['set_x',['../classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorBase.html#a01cc96b4061bc94d61d89efd67bce2d3',1,'motsfinder::exprs::evaluators::EvaluatorBase']]],
+  ['sin_5fvalues',['sin_values',['../classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a583c8c9d481ab07c9da59ec240e0655e',1,'motsfinder::exprs::trig::_TrigEval']]],
+  ['singularity_5fhandling',['singularity_handling',['../classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a6f57785d6164d185c9589a874f695514',1,'motsfinder::exprs::basics::DivisionExpression2D']]],
+  ['slowtest',['slowtest',['../namespacetestutils.html#ac6e3797bfb6cd64edb18b1fdd363f365',1,'testutils']]],
+  ['solution_5ffunction',['solution_function',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a25c571f8fbcb949245d68c237625c0f5',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
+  ['solve',['solve',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a2535e9fc8511a790cc51d0ebb89aa513',1,'motsfinder.axisym.newton.NewtonKantorovich.solve()'],['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#aa000ae68bd4fb40ab94cef4b5ed7593b',1,'motsfinder.ndsolve.solver.NDSolver.solve()']]],
+  ['stability_5fparameter',['stability_parameter',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a1c31ce03473cd21360bef7a1f8c2a640',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
+  ['start_5fblock',['start_block',['../classfix__doxypypy_1_1DoxyCommentBlock.html#a45aa66bdad61d9f5411bf3bb5e18361a',1,'fix_doxypypy::DoxyCommentBlock']]],
+  ['starts_5fblock',['starts_block',['../classfix__doxypypy_1_1DoxyCommentBlock.html#a6c29a397d2cfd829897adf10c1a34957',1,'fix_doxypypy::DoxyCommentBlock']]],
+  ['store_5fdomain',['store_domain',['../classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html#aa970e8ef41ef502a4eca46f8c115b405',1,'motsfinder.exprs.evaluators._Evaluator.store_domain()'],['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#aa970e8ef41ef502a4eca46f8c115b405',1,'motsfinder.exprs.numexpr.NumericExpression.store_domain()']]],
+  ['str',['str',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#ae90d51e7a9050f6e809f7a1fa44fab4a',1,'motsfinder::exprs::numexpr::NumericExpression']]],
+  ['suspend_5fcalc_5fobj',['suspend_calc_obj',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a63fc2ab7c97360b53459877417ba7213',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]]
+];

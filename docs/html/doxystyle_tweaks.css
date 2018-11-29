@@ -1,0 +1,6 @@
+code {
+    background-color: rgba(220, 220, 220, 0.3);
+}
+table.memname tr {
+    float: left;
+}

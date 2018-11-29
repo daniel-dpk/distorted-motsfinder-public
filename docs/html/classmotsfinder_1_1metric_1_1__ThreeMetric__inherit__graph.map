@@ -1,0 +1,6 @@
+<map id="_ThreeMetric" name="_ThreeMetric">
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="81,155,238,181"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1metric_1_1FlatThreeMetric.html" title="Flat 3&#45;metric in Cartesian coordinates. " alt="" coords="263,155,376,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="5,229,137,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1metric_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="161,229,333,256"/>
+</map>

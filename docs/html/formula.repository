@@ -1,0 +1,343 @@
+\form#0:$ \sigma $
+\form#1:$ r = h(\theta) $
+\form#2:$ \sigma_R $
+\form#3:$ \partial_\lambda^n\gamma(\lambda) $
+\form#4:$ \gamma'(\lambda) $
+\form#5:\[ \tilde\gamma(t) = \gamma(s(t)), \qquad\mathrm{s.t.\ } \Vert\tilde\gamma'(t)\Vert = 1. \]
+\form#6:\[ \kappa = \Vert\tilde\gamma''\Vert = \frac{|x'z''-x''z'|}{\Vert\gamma'\Vert^3}, \]
+\form#7:\[ \int_a^b \Vert\gamma'(t)\Vert_g\ dt, \]
+\form#8:$g$
+\form#9:\[ \mathrm{dist} = \left| \int_a^b \sqrt{g_{zz}}\ dz \right|, \]
+\form#10:\[ f(\lambda) := \nu \cdot (\gamma(\lambda) - p_0), \]
+\form#11:$p_0$
+\form#12:$\nu$
+\form#13:\[ L^\infty(\gamma_1, \gamma_2) := \max_\lambda( \Vert\gamma_1(\lambda) - \gamma_2(\lambda)\Vert ), \]
+\form#14:$ \Theta $
+\form#15:$ s_i $
+\form#16:$ \partial_i s_j $
+\form#17:$ X^u_i = \partial_i y^u $
+\form#18:$ X^u_{ij} = \partial_i\partial_j y^u $
+\form#19:$ y^u = \lambda $
+\form#20:$ X_i $
+\form#21:$ X_{ij} $
+\form#22:$ h $
+\form#23:$ h' $
+\form#24:$ h'' $
+\form#25:$ \partial_{h}\Theta $
+\form#26:$ \partial_{h''}\Theta $
+\form#27:$ \partial_{h'} \Theta, \partial_{h''} \Theta $
+\form#28:\begin{eqnarray*} \partial_{h'} s_i &=& - X_i\\ \partial_{h'} \partial_i s_j &=& - X_{ij}. \end{eqnarray*}
+\form#29:$s_i$
+\form#30:$\partial_i s_j$
+\form#31:$X_i$
+\form#32:$X_{ij}$
+\form#33:\begin{eqnarray*} \partial_{h''} s_i &=& 0\\ \partial_{h''} \partial_i s_j &=& - X_i X_j. \end{eqnarray*}
+\form#34:$\partial_i\partial_j s_k$
+\form#35:$Z := X_{ijk} = \partial_i\partial_j\partial_k \lambda$
+\form#36:$\lambda$
+\form#37:$R = q^{AB}R_{AB}$
+\form#38:$q_{ab} = g_{ab} - \nu_a \nu_b$
+\form#39:$R_{AB}$
+\form#40:$R_{AB} = R^C_{\ A\,CB}$
+\form#41:$R^A_{\ B\,CD}$
+\form#42:$(\lambda,\varphi)$
+\form#43:$q_{AB}$
+\form#44:$R_{AB\,CD} = q_{AE}R^E_{\ B\,CD}$
+\form#45:$R_{\lambda\varphi\,\lambda\varphi}$
+\form#46:\[ R = q^{AB}R_{AB} = 2 R_{\lambda\varphi\,\lambda\varphi} (q^{\lambda\lambda}q^{\varphi\varphi} - (q^{\lambda\varphi})^2). \]
+\form#47:$\partial_{A_1}\partial_{A_2}\ldots q_{BC}$
+\form#48:\[ g = a(\rho,z)\ (d\rho^2 + dz^2) + \rho^2 b(\rho,z)\ d\varphi^2, \]
+\form#49:$a, b > 0$
+\form#50:$\rho = \sqrt{x^2+y^2}$
+\form#51:$\rho\cos\varphi = x$
+\form#52:\[ (g_{ab}) = \left(\begin{array}{@{}ccc@{}} a c^2 + b s^2 & a c s - b c s & 0 \\ a c s - b c s & b c^2 + a s^2 & 0 \\ 0 & 0 & a \end{array}\right), \]
+\form#53:$c := \cos\varphi$
+\form#54:$s := \sin\varphi$
+\form#55:\[ q_{ab} = g_{ab} - \nu_a \nu_b. \]
+\form#56:$\rho = \rho(\lambda) = (\gamma(\lambda))_x$
+\form#57:$z = z(\lambda) = (\gamma(\lambda))_z$
+\form#58:\begin{eqnarray*} dx &=& \rho' \cos\varphi\ d\lambda - \rho \sin\varphi\ d\varphi \\ dy &=& \rho' \sin\varphi\ d\lambda + \rho \cos\varphi\ d\varphi \\ dz &=& z'\ d\lambda \end{eqnarray*}
+\form#59:\begin{eqnarray*} \underline{\nu} &:=& g(\nu,\,\cdot\,) = \nu_a\ dx^a = \big[\rho'\,(\nu_x c + \nu_y s) + z' \nu_z\big]\ d\lambda + \rho\,(-\nu_x s + \nu_y c)\ d\varphi \\ &=:& \nu_\lambda\ d\lambda + \nu_\varphi\ d\varphi, \end{eqnarray*}
+\form#60:\begin{eqnarray*} q &=& (a\,(\rho'^2+z'^2) + \nu_\lambda^2)\ d\lambda^2 + (b\,\rho^2 + \nu_\varphi^2)\ d\varphi^2 + \nu_\lambda \nu_\varphi (d\lambda \otimes d\varphi + d\varphi \otimes d\lambda) \\ &=& q_{\lambda\lambda}\ d\lambda^2 + q_{\varphi\varphi}\ d\varphi^2 + q_{\lambda\varphi}\ (d\lambda \otimes d\varphi + d\varphi \otimes d\lambda). \end{eqnarray*}
+\form#61:$\varphi=0$
+\form#62:$\nu_y = 0$
+\form#63:\begin{eqnarray*} \partial_C q_{\lambda\lambda} &=& a_{,C}\,(\rho'^2+z'^2) + 2a\,\delta_{C\lambda}(\rho'\rho'' + z'z'') + 2 \nu_{\lambda,C} \nu_\lambda \\ \partial_C q_{\varphi\varphi} &=& b_{,C} \rho^2 + 2b\,\delta_{C\lambda} \rho \rho' \\ \partial_C q_{\lambda\varphi} &=& 0, \end{eqnarray*}
+\form#64:$f_{,A} := \partial_A f$
+\form#65:$\delta_{AB}$
+\form#66:\begin{eqnarray*} \partial_D\partial_C q_{\lambda\lambda} &=& a_{,CD}(\rho'^2+z'^2) + 2\delta_{D\lambda}a_{,C}(\rho'\rho''+z'z'') \\&& + 2\delta_{C\lambda}\big[ a_{,D}(\rho'\rho''+z'z'') + \delta_{D\lambda} a\,( \rho''^2 + \rho'\rho''' + z''^2 + z'z''' ) \big] \\&& + 2\nu_{\lambda,CD}\nu_\lambda + 2\nu_{\lambda,C} \nu_{\lambda,D} \\ \partial_D\partial_C q_{\varphi\varphi} &=& b_{,CD}\rho^2 + 2 \delta_{D\lambda} b_{,C}\rho\rho' + 2 \delta_{C\lambda} \big[ b_{,D}\rho\rho' + \delta_{D\lambda}b\,(\rho'^2 + \rho\rho'') \big] \\&& + 2\nu_{\varphi,CD}\nu_\varphi + 2\nu_{\varphi,C} \nu_{\varphi,D} \\ \partial_D\partial_C q_{\lambda\varphi} &=& \nu_{\lambda,CD}\nu_\varphi + \nu_{\lambda,C} \nu_{\varphi,D} + \nu_{\varphi,C} \nu_{\lambda,D} + \nu_{\varphi,CD}\nu_\lambda. \end{eqnarray*}
+\form#67:\[ \partial_i\partial_j b \stackrel{\varphi=0}{=} \partial_i\partial_j g_{yy}, \]
+\form#68:$g_{yy} = b\cos^2\varphi + a\sin^2\varphi$
+\form#69:\[ \partial_x \partial_y g_{yy} = b_{,xy} + 2 \varphi_{,x}\varphi_{,y}(a-b) = b_{,xy}. \]
+\form#70:\[ -\varphi_{,x}\sin\varphi = \partial_x\cos\varphi = \frac{\rho^2-x^2}{\rho^3} = \frac{y^2}{\rho^3} \quad\Rightarrow\quad \varphi_{,x} = -\frac{y}{\rho^2} \stackrel{y=0}{=} 0. \]
+\form#71:$\lambda,\varphi$
+\form#72:\[ x = \rho(\lambda)\cos\varphi,\quad y = \rho(\lambda)\sin\varphi,\quad z = z(\lambda), \]
+\form#73:$\varphi = 0$
+\form#74:\[ \begin{array}{@{}r@{\;}l@{\qquad}r@{\;}l@{\qquad}r@{\;}l@{\qquad}r@{\;}l@{\qquad}r@{\;}l@{}} x_{,\lambda} &= \rho' & x_{,\varphi} & = 0 & x_{,\lambda\lambda} & = \rho'' & x_{,\lambda\varphi} & = 0 & x_{,\varphi\varphi} & = -\rho \\ y_{,\lambda} &= 0 & y_{,\varphi} & = \rho & y_{,\lambda\lambda} & = 0 & y_{,\lambda\varphi} & = \rho' & y_{,\varphi\varphi} & = 0 \\ z_{,\lambda} &= z' & z_{,\varphi} & = 0 & z_{,\lambda\lambda} & = z'' & z_{,\lambda\varphi} & = 0 & z_{,\varphi\varphi} & = 0 \end{array} \]
+\form#75:\[ \begin{array}{@{}r@{\;}l@{\qquad}r@{\;}l@{}} a_{,\lambda} &= \rho' a_{,x} + z' a_{,z} & a_{,\lambda\lambda} &= \rho'' a_{,x} + z'' a_{,z} + \rho'^2 a_{,xx} + z'^2 a_{,zz} + 2 \rho' z' a_{,xz} \\ a_{,\varphi} &= 0 & a_{,\varphi\varphi} &= 0 \qquad\qquad a_{,\lambda\varphi} = 0. \end{array} \]
+\form#76:$\rho$
+\form#77:$\nu_i$
+\form#78:$\nu_A$
+\form#79:$A=\lambda,\varphi$
+\form#80:\[ \nu_i = \frac{s_i}{\sqrt{D}}, \qquad D := g^{kl} s_k s_l. \]
+\form#81:\[ \partial_i\nu_j = \frac{\partial_i s_j}{\sqrt{D}} - \frac{s_j}{2 D^{3/2}} D_i \]
+\form#82:\[ \partial_i\partial_j\nu_k = \frac{\partial_i \partial_j s_k}{\sqrt{D}} - \frac{1}{2 D^{3/2}} \Big( (\partial_j s_k) D_i + (\partial_i s_k) D_j + s_k D_{ij} \Big) + \frac{3}{4} \frac{s_k}{D^{5/2}} D_i D_j, \]
+\form#83:\begin{eqnarray*} D_i &:=& \partial_i (g^{kl} s_k s_l) = (\partial_i g^{kl}) s_k s_l + 2 g^{kl} s_k\,\partial_i s_l \\ D_{ij} &:=& \partial_j D_i \\ &=& (\partial_i \partial_j g^{kl}) s_k s_l + 2 (\partial_i g^{kl}) s_k\,\partial_j s_l + 2 (\partial_j g^{kl}) s_k\,\partial_i s_l \\&& + 2 g^{kl} \big( (\partial_j s_k)(\partial_i s_l) + s_k \partial_i \partial_j s_l \big). \end{eqnarray*}
+\form#84:\begin{eqnarray*} \partial_\lambda \nu_i &=& \rho' \nu_{i,x} + z' \nu_{i,z} \\ \partial_\varphi \nu_i &=& \rho \nu_{i,y} \quad (= 0\ \mbox{if}\ i \neq y) \\ \partial_\lambda^2 \nu_i &=& \rho'' \nu_{i,x} + \rho'^2 \nu_{i,xx} + z'' \nu_{i,z} + z'^2 \nu_{i,zz} + 2\rho' z' \nu_{i,xz} \\ \partial_\lambda\partial_\varphi \nu_i &=& \rho' \nu_{i,y} + \rho\rho' \nu_{i,xy} + \rho z' \nu_{i,yz} \\ \partial_\varphi^2 \nu_i &=& -\rho \nu_{i,x} + \rho^2 \nu_{i,yy}. \end{eqnarray*}
+\form#85:$\nu_{i,x} := \partial_x\nu_i$
+\form#86:$y_{,\varphi} = \rho$
+\form#87:\begin{eqnarray*} \partial_\lambda \nu_\lambda &=& \nu_x \rho'' + \nu_z z'' + \nu_{x,\lambda} \rho' + \nu_{z,\lambda} z' \\ \partial_\varphi \nu_\lambda &=& \nu_{x,\varphi} \rho' \\ \partial_\lambda \nu_\varphi &=& 0 \\ \partial_\varphi \nu_\varphi &=& - \nu_x \rho + \nu_{y,\varphi} \rho \\ \partial_\lambda^2 \nu_\lambda &=& \nu_x \rho''' + 2 \nu_{x,\lambda} \rho'' + \nu_{x,\lambda\lambda} \rho' + \nu_z z''' + 2 \nu_{z,\lambda} z'' + \nu_{z,\lambda\lambda} z' \\ \partial_\lambda\partial_\varphi \nu_\lambda &=& \rho' \nu_{x,\lambda\varphi} + z' \nu_{z,\lambda,\varphi} \\ \partial_\varphi^2 \nu_\lambda &=& \rho'\, (\nu_{x,\varphi\varphi} + \nu_x + 2 \nu_{y,\varphi}) + z' \nu_{z,\varphi\varphi} \\ \partial_\lambda^2 \nu_\varphi &=& \nu_{y,\lambda\lambda} \rho \\ \partial_\lambda\partial_\varphi \nu_\varphi &=& \rho\,(-\nu_x + \nu_{y,\varphi}) + \rho\,(-\nu_{x,\lambda} + \nu_{y,\lambda\varphi}) \\ \partial_\varphi^2 \nu_\varphi &=& \rho \nu_{y,\varphi\varphi}. \end{eqnarray*}
+\form#88:\[ R_{\lambda\varphi\,\lambda\varphi} = q_{\lambda A} R^A_{\ \varphi\,\lambda\varphi} \]
+\form#89:\[ R^A_{\ B\,CD} = \partial_C \Gamma^A_{DB} - \partial_D \Gamma^A_{CB} + \Gamma^A_{CE} \Gamma^E_{DB} - \Gamma^A_{DE} \Gamma^E_{CB}, \]
+\form#90:$\Gamma^{A}_{BC}$
+\form#91:$R^\lambda_{\ \varphi\,\lambda_\varphi}$
+\form#92:$R^\varphi{\ \varphi\,\lambda_\varphi}$
+\form#93:$\Gamma^A_{BC}$
+\form#94:$\partial_A\Gamma^B_{CD}$
+\form#95:$k_{AB} k^{AB}$
+\form#96:$k_{AB} = -\nabla_A \nu_B$
+\form#97:$\sigma$
+\form#98:$p \in \sigma$
+\form#99:\[ k(v_p, X_p) = 0 \qquad \forall\,X_p\in T_p M, \]
+\form#100:$v$
+\form#101:$\Sigma$
+\form#102:\[ dx^\mu\big|_\sigma = \frac{\partial x^\mu}{\partial u^A}\ du^A =: x^\mu_{,A}\ du^A, \]
+\form#103:$u^A = \lambda,\varphi$
+\form#104:$x^\mu_{,A}$
+\form#105:$x^0_{,A} = 0$
+\form#106:$x^0 = t$
+\form#107:$\varphi$
+\form#108:$\partial_A = x^a_{,A}\partial_a$
+\form#109:\begin{eqnarray*} \nabla_{\!\partial_A} \nu_B &=& \big[x^a_{,A} \nabla_a \underline\nu\big]_B \\ &=& x^a_{,A} \big[ (\partial_a\nu_\beta - \Gamma^\alpha_{a\beta}\nu_\alpha)\ dx^\beta \big]_B \\ &=& x^a_{,A} \big[ (\partial_a\nu_b - \Gamma^c_{ab}\nu_c)\ dx^b \big]_B \\ &=& x^a_{,A} (\partial_a\nu_b - \Gamma^c_{ab}\nu_c) x^b_{,B} \\ &=& x^a_{,A} x^b_{,B} (\partial_a\nu_b - {}^{(3)}\Gamma^c_{ab}\nu_c). \end{eqnarray*}
+\form#110:$dx^0\big|_\sigma = 0$
+\form#111:$\nu_0 = 0$
+\form#112:$g_{ab} = {}^{(4)}g_{ab} + n_a n_b$
+\form#113:\begin{eqnarray*} (\Gamma^k_{ab} - {}^{(3)}\Gamma^k_{ab}) \nu_k &=& \frac{1}{2} (g^{kc} - n^k n^c) \big[ - \partial_c (g_{ab} - n_a n_b) + \partial_a (g_{bc} - n_b n_c) + \partial_b (g_{ca} - n_c n_a) \big] \nu_k \\&& - \frac{1}{2} g^{kc} \big[ - \partial_c g_{ab} + \partial_a g_{bc} + \partial_b g_{ca} \big] \nu_k \\ &=& \frac{1}{2} \nu^c \big[ \partial_c (n_a n_b) - \partial_a (n_b n_c) - \partial_b (n_c n_a) \big] \\ &=& 0. \end{eqnarray*}
+\form#114:$n^k \nu_k = 0$
+\form#115:$T_p\Sigma$
+\form#116:$n_\mu = 0$
+\form#117:$\mu \neq 0$
+\form#118:$ \partial_i g^{jk} $
+\form#119:$ \partial_i \ln\sqrt{g} $
+\form#120:$ X_i := \partial_i \lambda(\vec x) $
+\form#121:$ Y := X_{ij} := \partial_i\partial_j\lambda$
+\form#122:$ X^i := g^{ij}X_j $
+\form#123:\[ k_{AB} = -\nabla_A \nu_B, \qquad A,B = \lambda,\varphi \]
+\form#124:$\nabla$
+\form#125:\[ A = \int_\sigma \sqrt{\det q}\ d^2x, \]
+\form#126:\[ q = \Pi_\sigma g = g\big|_\sigma - \underline{\nu} \otimes \underline{\nu}, \qquad q_{ab} = g_{ab} - \nu_a \nu_b \]
+\form#127:$\underline{\nu} = g(\nu,\,\cdot\,)$
+\form#128:$a \equiv b$
+\form#129:$g_{zz} = a$
+\form#130:$g_{yy}\big|_{\varphi=0} = b$
+\form#131:$\gamma$
+\form#132:\[ \rho(\lambda) = \gamma(\lambda)_x, \qquad z(\lambda) = \gamma(\lambda)_z. \]
+\form#133:$d\rho = \rho' \ d\lambda$
+\form#134:$dz = z' \ d\lambda$
+\form#135:$\nu_a$
+\form#136:$d\lambda$
+\form#137:$d\varphi$
+\form#138:\begin{eqnarray*} \det q &=& q_{\lambda\lambda} q_{\varphi\varphi} - q_{\lambda\varphi}^2 \\ &=& b \rho^2 \big[ (\nu_x\rho'\cos\varphi + \nu_y\rho'\sin\varphi + \nu_z z')^2 + a\ (\rho'^2 + z'^2) \big] + a\ (\nu_y\rho\cos\varphi - \nu_x\rho\sin\varphi)^2 (\rho'^2 + z'^2) \\ \det q\big|_{\varphi=0} &=& b \rho^2 \big[ (\nu_x\rho' + \nu_z z')^2 + a\ (\rho'^2 + z'^2) \big]. \end{eqnarray*}
+\form#139:\[ A = \int_0^\pi d\lambda \int_0^{2\pi}d\varphi\ \sqrt{\det q} = 2\pi \int_0^\pi d\lambda\ \sqrt{\det q\big|_{\varphi=0}}. \]
+\form#140:\[ M := \sqrt{A/16\pi}, \]
+\form#141:\[ R := \sqrt{A/4\pi}, \]
+\form#142:\[ L_\nu \zeta = -\Delta_\sigma \zeta - (R_{ij}\nu^i\nu^j + k_{AB}k^{AB}), \]
+\form#143:$R_{ij}$
+\form#144:$(\Sigma, g)$
+\form#145:$k_{AB}$
+\form#146:$\Delta_\sigma = q^{AB}\,{}^{(2)}\nabla_A\,{}^{(2)}\nabla_B$
+\form#147:$(\sigma, q)$
+\form#148:$L_\nu$
+\form#149:$\zeta$
+\form#150:\begin{eqnarray*} \Delta_\sigma \zeta &=& q^{AB}\,{}^{(2)}\nabla_A\,{}^{(2)}\nabla_B\zeta = q^{A\lambda}\,{}^{(2)}\nabla_A\,\partial_\lambda\zeta = q^{A\lambda} \big[ \partial_A \partial_\lambda \zeta - \Gamma^C_{A\lambda}\partial_C \zeta \big] \\ &=& q^{\lambda\lambda}\partial_\lambda^2\zeta - q^{A\lambda}\Gamma^\lambda_{A\lambda}\partial_\lambda\zeta. \end{eqnarray*}
+\form#151:\[ \gamma(\lambda) = (x(\lambda), 0, z(\lambda)), \qquad \lambda \in [0,\pi]. \]
+\form#152:\[ \tilde\gamma(\lambda) := \gamma(s(\lambda)), \]
+\form#153:\[ \Vert\tilde\gamma'(\lambda)\Vert = \frac{\ell(\gamma)}{\pi}, \]
+\form#154:$\ell(\gamma)$
+\form#155:$s$
+\form#156:\[ s'(\lambda)=\frac{\ell(\gamma)/\pi}{\Vert\gamma'(s(\lambda))\Vert} =: f(s(\lambda)). \]
+\form#157:$s(0) = 0$
+\form#158:\[ \Vert\tilde\gamma'(\lambda)\Vert_g = \mathrm{const}, \]
+\form#159:\[ \Vert\tilde\gamma'(\lambda)\Vert_g = c\ \exp\left(-\alpha\,\kappa^\beta\right), \]
+\form#160:$\kappa(\lambda)$
+\form#161:$\alpha$
+\form#162:$\beta$
+\form#163:\[ \gamma(\lambda) = \gamma_R(\lambda) + h(\lambda) \nu_R(\lambda), \]
+\form#164:$ \nu_R $
+\form#165:\[ \gamma(\lambda) = \gamma_R(\lambda) + \left(\sum_{k=0}^n a_k \cos(k\lambda)\right) \nu_R(\lambda), \]
+\form#166:$ a_k $
+\form#167:\[ \partial_n \gamma(\lambda) = \partial_n \gamma_R(\lambda) + \sum_{k=0}^n {n \choose k} h^{(n-k)}(\lambda) \nu_R^{(k)}(\lambda), \]
+\form#168:\[ F(\vec x) = d(\vec x) - h(\lambda(\vec x)), \]
+\form#169:$ (d,\lambda) $
+\form#170:\[ s_i = \nabla_i F = \partial_i F = \partial_i d - X_i h', \]
+\form#171:$ X_i = \partial_i \lambda $
+\form#172:\[ \partial_i s_j = \partial_i \partial_j d - X_{ij}h' - X_i X_j h'', \]
+\form#173:$ X_{ij} = \partial_i\partial_j\lambda $
+\form#174:\[ \partial_i\partial_j s_k = d_{ijk} - X_{ijk} h' - (X_{ij}X_k + X_{jk}X_i + X_{ki}X_j) h'' - X_i X_j X_k h''', \]
+\form#175:$d_{ijk} := \partial_i \partial_j \partial_k d$
+\form#176:$ \partial_i\partial_j u $
+\form#177:$u$
+\form#178:$\partial_i \partial_j \partial_k u$
+\form#179:$(\rho, z)$
+\form#180:$(\rho,z)$
+\form#181:$(d,\lambda)$
+\form#182:\[ J_{(\rho,z)} = \left(\begin{array}{@{}cc@{}} \partial_d \rho & \partial_\lambda \rho\\ \partial_d z & \partial_\lambda z \end{array}\right) = \left(\begin{array}{@{}cc@{}} (\nu_R)_x & (\gamma'_R)_x + d\ (\nu'_R)_x\\ (\nu_R)_z & (\gamma'_R)_z + d\ (\nu'_R)_z \end{array}\right) =: \left(\begin{array}{@{}cc@{}} \tilde a & \tilde b\\ \tilde c & \tilde d \end{array}\right) \]
+\form#183:\[ J_{(d,\lambda)}(\rho,z) = (J_{(\rho,z)})^{-1} = \left(\begin{array}{@{}cc@{}} \partial_\rho d & \partial_z d\\ \partial_\rho \lambda & \partial_z \lambda \end{array}\right). \]
+\form#184:$J_{(\rho,z)}$
+\form#185:\begin{eqnarray*} \tilde a_i &=& X_i\ (\nu'_R)_x \\ \tilde b_i &=& X_i\ \big[(\gamma_R'')_x + d (\nu_R'')_x\big] + d_i\ (\nu'_R)_x \\ \tilde c_i &=& X_i\ (\nu'_R)_z \\ \tilde d_i &=& X_i\ \big[(\gamma_R'')_z + d (\nu_R'')_z\big] + d_i\ (\nu'_R)_z, \end{eqnarray*}
+\form#186:\begin{eqnarray*} \tilde a_{ij} &=& X_{ij} (\nu_R')_x + X_i X_j (\nu_R'')_x, \\ \tilde b_{ij} &=& X_{ij} ((\gamma_R'')_x + d\;(\nu_R'')_x) + X_i X_j ((\gamma_R''')_x + d\;(\nu_R''')_x) \\&& + (\nu_R'')_x (X_i d_j + X_j d_i) + d_{ij} (\nu_R')_x, \end{eqnarray*}
+\form#187:$ d_i := \partial_i d $
+\form#188:$X_i := \partial_i \lambda$
+\form#189:$\tilde c_{ij}$
+\form#190:$\tilde d_{ij}$
+\form#191:$(\rho,\varphi,z)$
+\form#192:$f = f(\rho, z)$
+\form#193:\begin{eqnarray*} \partial_x f &=& \frac{\partial \rho}{\partial x} \frac{\partial f}{\partial \rho} = \frac{x}{\rho} f \stackrel{\varphi=0}{=} \partial_\rho f, \\ \partial_y f &=& \frac{y}{\rho} \partial_\rho f \stackrel{\varphi=0}{=} 0, \\ \partial_x^2 f &\stackrel{\varphi=0}{=}& \partial_\rho^2 f, \\ \partial_x\partial_y f &\stackrel{\varphi=0}{=}& 0, \\ \partial_y^2 f &\stackrel{\varphi=0}{=}& \frac{\partial_\rho f}{\rho} = \frac{\partial_x f}{x}, \\ \partial_x\partial_y^2 f &\stackrel{\varphi=0}{=}& \frac{\partial_x^2 f}{x} - \frac{\partial_x f}{x^2}. \end{eqnarray*}
+\form#194:\[ \gamma(\lambda) = x_0 + h(\lambda) (\sin\lambda, 0, \cos\lambda), \qquad \lambda \in [0,\pi], \]
+\form#195:$ x_0 $
+\form#196:\[ x(\lambda) = h(\lambda) \sin(\lambda), \qquad z(\lambda) = h(\lambda) \cos(\lambda). \]
+\form#197:\[ \partial_\lambda^n \gamma(\lambda) = \sum_{k=0}^n {n \choose k} h^{(n-k)}(\lambda) \ \partial_\lambda^k \left(\begin{array}{@{}c@{}} \sin(\lambda) \\ \cos(\lambda) \end{array}\right). \]
+\form#198:\[ F(\vec x) = r - h(\lambda(\vec x)), \]
+\form#199:\[ s_i = \nabla_i F = \partial_i F = \frac{x^i}{r} - X_i h', \]
+\form#200:$ X_i = \partial_i\lambda $
+\form#201:\[ \partial_i s_j = \frac{\delta_{ij}}{r} - \frac{x^i x^j}{r^3} - X_{ij}h' - X_i X_j h'', \]
+\form#202:$ \delta_{ij} $
+\form#203:$ r \to h $
+\form#204:\[ \cos\lambda = \frac{z}{r}, \]
+\form#205:\[ X_1 = \frac{\cos\lambda}{h}, \qquad X_2 = 0, \qquad X_3 = -\frac{\sin\lambda}{h}, \]
+\form#206:\[ X_{11} = -\frac{\sin(2\lambda)}{h^2}, \qquad X_{22} = \frac{\cot\lambda}{h^2}, \qquad X_{33} = \frac{\sin(2\lambda)}{h^2}, \qquad X_{13} = -\frac{\cos(2\lambda)}{h^2} = X_{31}, \]
+\form#207:\[ s_1 = \sin\lambda-\frac{h'}{h} \cos\lambda, \qquad s_2 = 0, \qquad s_3 = \cos\lambda+\frac{h'}{h} \sin\lambda, \]
+\form#208:\begin{eqnarray*} \partial_1 s_1 &=& \frac{1}{h^2} \left( (h-h'')\cos^2\lambda + h'\sin(2\lambda) \right), \\ \partial_2 s_2 &=& \frac{1}{h^2} \left( h-h' \frac{\cos\lambda}{\sin\lambda} \right), \\ \partial_3 s_3 &=& \frac{1}{h^2} \left( (h-h'')\sin^2\lambda - h'\sin(2\lambda) \right), \\ \partial_1 s_3 &=& \frac{1}{2h^2} \left( (h''-h)\sin(2\lambda) + 2h'\cos(2\lambda) \right) = \partial_3 s_1. \end{eqnarray*}
+\form#209:$ \sin(x) $
+\form#210:$ \sum_{n=0}^N a_n \phi_n(x) $
+\form#211:$ f_1(x) + f_2(x) $
+\form#212:$ f_i $
+\form#213:$ f(x) = c = \mathrm{const} $
+\form#214:$ f(x) = a x $
+\form#215:$ f(x) = a g(x) $
+\form#216:$ f(x) = g(x) h(x) $
+\form#217:$ f(\mathbf{x}) = g(x) h(y) $
+\form#218:$ f(\mathbf{x}) = g(y) h(\mathbf{x}) $
+\form#219:$ f(\mathbf{x}) = g(x)/h(y) $
+\form#220:$ f(\mathbf{x}) = g(y)/h(\mathbf{x}) $
+\form#221:$ f(x) = g(x) + a h(x) $
+\form#222:$ a $
+\form#223:\[ f(\mathbf{x}) = f_1(\mathbf{x}) (1 - \beta(\mathbf{x})) + \beta(\mathbf{x}) f_2(\mathbf{x}). \]
+\form#224:$ \mathbf{x} \mapsto f(x) $
+\form#225:$ \mathbf{x} \mapsto f(y) $
+\form#226:$ f_1 $
+\form#227:$ f_2 $
+\form#228:$ \beta $
+\form#229:$ T_n $
+\form#230:\[ u(x) = \sum_n a_n T_n(x), \]
+\form#231:\[ u'(x) = \sum_n b_n T_n(x). \]
+\form#232:\[ \sum_{j=0}^{\mathrm{num-1}} a_j T_{n(j)}(x_i) = f_i \]
+\form#233:$T_k$
+\form#234:\[ T_k^{(n)}(x) = \sum_{i=0}^{k-1} a^{k,n}_i T_i(x). \]
+\form#235:$ a^{k,n}_i $
+\form#236:$ T_i^{(n)} $
+\form#237:$ \partial_x(f(x)g(x)) $
+\form#238:$ \sin^2(x) $
+\form#239:\[ f(x_i) = y_i \]
+\form#240:$\sin(j x_i)$
+\form#241:$\cos(j x_i)$
+\form#242:\[ g = \psi^4 \delta , \]
+\form#243:$ \delta $
+\form#244:\[ {}^{(4)}g = - \left(\frac{1-m/(2r)}{1+m/(2r)}\right)^2 dt^2 + \psi^4 \delta , \]
+\form#245:\[ \psi = 1 + \frac{m}{2r}. \]
+\form#246:$ t $
+\form#247:$ r = m/2 $
+\form#248:$ \tilde r_s = 2m $
+\form#249:\[ \partial_i\psi = - \frac{m x^i}{2r^3}, \qquad \partial_i\partial_j\psi = - \frac{m \delta_{ij}}{2r^3} + \frac{3}{2} \frac{m x^i x^j}{r^5}. \]
+\form#250:\[ g = \psi^4\ \delta , \]
+\form#251:\[ \psi = 1 + \frac{m_1}{2 r_1} + \frac{m_2}{2 r_2}. \]
+\form#252:$ m_i $
+\form#253:$ r_i $
+\form#254:\[ r_i = \Vert \vec x_i \Vert, \quad\mbox{where}\quad \vec x_i := \vec x - \vec c_i. \]
+\form#255:$\vec c_1 = -\vec c_2 = (0, 0, d/2)$
+\form#256:\begin{eqnarray*} \partial_i\psi &=& - \frac{m_1 x_1^i}{2r_1^3} - \frac{m_2 x_2^i}{2r_2^3} \\ \partial_i\partial_j\psi &=& - \frac{m_1 \delta_{ij}}{2r_1^3} - \frac{m_2 \delta_{ij}}{2r_2^3} + \frac{3}{2} \frac{m_1 x_1^i x_1^j}{r_1^5} + \frac{3}{2} \frac{m_2 x_2^i x_2^j}{r_2^5}. \end{eqnarray*}
+\form#257:\[ \Gamma^c_{ab} = \frac{1}{2} g^{cd} \big( - \partial_d g_{ab} + \partial_a g_{bd} + \partial_b g_{da} \big), \]
+\form#258:$\partial_a g_{bc}$
+\form#259:$\Gamma^a_{bc}$
+\form#260:\begin{eqnarray*} \partial_e \Gamma^c_{ab} &=& \frac{1}{2} (\partial_e q^{cd}) \big( - \partial_d q_{ab} + \partial_a q_{bd} + \partial_b q_{da} \big) \\&& + \frac{1}{2} q^{cd} \big( - \partial_e\partial_d q_{ab} + \partial_e\partial_a q_{bd} + \partial_e\partial_b q_{da} \big). \end{eqnarray*}
+\form#261:$\partial_a g^{bc}$
+\form#262:$\partial_a \partial_b g_{cd}$
+\form#263:$\partial_a\Gamma^b_{cd}$
+\form#264:\[ R^a_{b\,cd}, \]
+\form#265:$\partial_a \Gamma^b_{cd}$
+\form#266:$ X^i = g^{ij} X_j $
+\form#267:$ X_i = g_{ij} X^j $
+\form#268:$ \sqrt{g_{ij} v^i v^j} $
+\form#269:$ g^{ij} $
+\form#270:$\partial_{i_1}\partial_{i_2}\ldots g_{kl}$
+\form#271:$ \partial_i \ln(\sqrt{g}) $
+\form#272:$R_{ab} := R^c_{\ a\,cb}$
+\form#273:\[ g = \psi^4 \delta, \qquad g^{-1} = \psi^{-4} \delta. \]
+\form#274:\begin{eqnarray*} \partial_i g(x) &=& 4 \psi^3 \partial_i\psi\ \mathrm{Id} \\ \partial_i \partial_j g(x) &=& (12 \psi^2 \partial_i\psi \partial_j\psi + 4\psi^3 \partial_i\partial_j\psi)\ \mathrm{Id} \\ \partial_i g^{-1}(x) &=& -4 \psi^{-5} \partial_i\psi\ \mathrm{Id} \\ \partial_i \partial_j g^{-1}(x) &=& (20 \psi^{-6} \partial_i\psi \partial_j\psi - 4 \psi^{-5} \partial_i\partial_j\psi)\ \mathrm{Id} \end{eqnarray*}
+\form#275:\[ \partial_i \ln(\sqrt{g}) = \partial_i \ln(\sqrt{\psi^{12}}) = \partial_i \ln(\psi^6) = \frac{1}{\psi^6} 6 \psi^5 \partial_i \psi = 6 \frac{\partial_i\psi}{\psi}. \]
+\form#276:$\partial_{i_1}\partial_{i_2}\psi$
+\form#277:$4 \pi \tilde r_s^2$
+\form#278:$\tilde r_s = 2m$
+\form#279:$ \Vert \vec x \Vert \to \infty$
+\form#280:$d/m \approx 1.532395$
+\form#281:$ (1/2, 2) $
+\form#282:\[ f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x) \]
+\form#283:\[ f(1/2) = \exp(-a\cos(b/2)), \quad f(2) = \exp(-a\cos(2b)) \]
+\form#284:$ f(x) = \exp(-a\cos(b x)) $
+\form#285:\[ M_{ij} = \phi_j(x_i), \]
+\form#286:$\phi_j$
+\form#287:$x_i$
+\form#288:\[ \alpha(x) u(x) + \beta(x) \partial_\nu u(x) = g(x), \]
+\form#289:$ x $
+\form#290:$ g(x) $
+\form#291:$ \partial_\nu u(x) = u'(x) $
+\form#292:\[ f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) \exp(-a\cos(b x)) \]
+\form#293:\[ \mathcal{L} u = \lambda u. \]
+\form#294:$\{\phi_k\}$
+\form#295:\[ u(x) = \sum_{k=0}^N a_k\,\phi_k(x), \]
+\form#296:\[ L_{ij} a_j = \lambda\,\Phi_{ij} a_j, \]
+\form#297:\[ L_{ij} := (\mathcal{L}\phi_j)(x_i), \qquad \Phi_{ij} = \phi_j(x_i), \]
+\form#298:\[ {n \choose 0}, {n \choose 1}, \ldots, {n \choose n}. \]
+\form#299:$a_{ij}$
+\form#300:$\partial_i a_{jk}$
+\form#301:$\partial_i \partial_j a_{kl}$
+\form#302:$\partial_{i_1} \partial_{i_2} \ldots (B)_{kl}$
+\form#303:$B = A^{-1}$
+\form#304:\[ A = \left(\begin{array}{@{}cc@{}} a & b\\ c & d \end{array}\right). \]
+\form#305:\[ B := A^{-1} = \frac{1}{\det A} \left(\begin{array}{@{}cc@{}} b & -b\\ -c & a \end{array}\right), \]
+\form#306:$\det A = ad-bc$
+\form#307:$a_i := \partial_i a$
+\form#308:$a_{ij} := \partial_i \partial_j a$
+\form#309:\[ \partial_i B = - \frac{\partial_i \det A}{(\det A)^2} \left(\begin{array}{@{}cc@{}} d & -b\\ -c & a \end{array}\right) + \frac{1}{\det A} \left(\begin{array}{@{}cc@{}} d_i & -b_i\\ -c_i & a_i \end{array}\right) \]
+\form#310:\begin{eqnarray*} \partial_i \partial_j B &=& \left( -\frac{\partial_i\partial_j\det A}{(\det A)^2} + 2 \frac{(\partial_i\det A)(\partial_j\det A)}{(\det A)^3} \right) \left(\begin{array}{@{}cc@{}} d & -b\\ -c & a \end{array}\right) \\&& - \frac{\partial_i\det A}{(\det A)^2} \left(\begin{array}{@{}cc@{}} d_j & -b_j\\ -c_j & a_j \end{array}\right) - \frac{\partial_j\det A}{(\det A)^2} \left(\begin{array}{@{}cc@{}} d_i & -b_i\\ -c_i & a_i \end{array}\right) \\&& + \frac{1}{\det A} \left(\begin{array}{@{}cc@{}} d_{ij} & -b_{ij}\\ -c_{ij} & a_{ij} \end{array}\right), \end{eqnarray*}
+\form#311:\begin{eqnarray*} \partial_i \det A &=& a_i d + a d_i - b_i c - b c_i, \\ \partial_i \partial_j \det A &=& a_{ij} d + a_i d_j + a_j d_i + a d_{ij} - b_{ij} c - b_i c_j - b_j c_i - b c_{ij}. \end{eqnarray*}
+\form#312:\[ f a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x) \]
+\form#313:\[ L_\nu \zeta = -\Delta_\sigma \zeta - (R_{ij}\nu^i\nu^j + k_{AB}k^{AB}) \zeta, \]
+\form#314:\begin{eqnarray*} \Delta_\sigma \zeta &=& \frac{1}{\sqrt{q}} \partial_A (\sqrt{q} q^{AB} \partial_B f) = \left( \frac{1}{2} q^{AB} q^{C\lambda} \partial_C q_{AB} + \partial_A q^{A\lambda} \right) \zeta' + q^{\lambda\lambda} \zeta'' \\ &=& \left( \frac{1}{2} q^{AB} q^{C\lambda} - q^{AC} q^{B\lambda} \right) (\partial_C q_{AB}) \zeta' + q^{\lambda\lambda} \zeta''. \end{eqnarray*}
+\form#315:\begin{eqnarray*} \Delta_\sigma \zeta &=& \frac{1}{\sqrt{q}} \partial_A (\sqrt{q} q^{AB} \partial_B \zeta) = \left( \frac{1}{2} q^{AB} q^{C\lambda} \partial_C q_{AB} + \partial_A q^{A\lambda} \right) \zeta' + q^{\lambda\lambda} \zeta'' \\ &=& \left( \frac{1}{2} q^{AB} q^{C\lambda} - q^{AC} q^{B\lambda} \right) (\partial_C q_{AB}) \zeta' + q^{\lambda\lambda} \zeta''. \end{eqnarray*}
+\form#316:$0 = \partial_i \delta^i_j = \partial_i(g^{ik}g_{kl})$
+\form#317:\[ \partial_i g^{-1} = -g^{-1} (\partial_i g) g^{-1}. \]
+\form#318:\[ \overline\Theta = \frac{1}{A} \int \Theta \sqrt{q}\ d^2x. \]
+\form#319:$I_n$
+\form#320:$0 = \partial_i \partial_j \delta^i_j = \partial_i \partial_j (g^{ik}g_{kl})$
+\form#321:\[ \partial_i \partial_j g^{-1} = -g^{-1}\big[ (\partial_i \partial_j g) g^{-1} + (\partial_j g) (\partial_i g^{-1}) + (\partial_i g) (\partial_j g^{-1}) \big]. \]
+\form#322:$0 = \partial_i \delta^a_b = \partial_i(g^{ac}g_{cb})$
+\form#323:$0 = \partial_i \partial_j \delta^a_b = \partial_i \partial_j (g^{ac}g_{cb})$
+\form#324:$ \partial_h \Theta, \partial_{h'} \Theta, \partial_{h''} \Theta $
+\form#325:\[ (\delta\Theta)(h)\Delta := \frac{d}{d\varepsilon}\Big|_{\varepsilon=0} \Theta(h+\varepsilon\Delta) \]
+\form#326:$\Delta$
+\form#327:\[ \partial_h\Theta \Delta + \partial_{h'}\Theta \Delta' + \partial_{h''}\Theta \Delta''. \]
+\form#328:\[ \partial_f \Theta = \frac{A_f}{D^{3/2}} - \frac{3}{2} \frac{A D_f}{D^{5/2}} + \frac{B_f}{D^{1/2}} - \frac{1}{2} \frac{B D_f}{D^{3/2}} + \frac{C_f}{D} - \frac{C D_f}{D^2} - \partial_f \,\mathrm{tr} K, \]
+\form#329:\[ (\delta\Theta)(h)\Delta = \partial_h\Theta \Delta + \partial_{h'}\Theta \Delta' + \partial_{h''}\Theta \Delta''. \]
+\form#330:$\partial_h \Theta$
+\form#331:\begin{eqnarray*} A s^i s^j \partial_i s_j - \frac{1}{2} s^i (\partial_i g^{kl}) s_k s_l \\ B &:=& (\partial_i g^{ij}) s_j + g^{ij} \partial_i s_j + (\partial_i \ln\sqrt{g}) s^i \\ C &:=& K^{ij} s_i s_j \\ D &:=& s_i s^i. \end{eqnarray*}
+\form#332:\begin{eqnarray*} A &:=& -s^i s^j \partial_i s_j - \frac{1}{2} s^i (\partial_i g^{kl}) s_k s_l \\ B &:=& (\partial_i g^{ij}) s_j + g^{ij} \partial_i s_j + (\partial_i \ln\sqrt{g}) s^i \\ C &:=& K^{ij} s_i s_j \\ D &:=& s_i s^i. \end{eqnarray*}
+\form#333:\[ \partial_h A = -2(\partial_h s^i) s^j \partial_i s_j - s^i s^j \partial_h \partial_i s_j - \frac{1}{2} (\partial_h s^i) (\partial_i g^{kl}) s_k s_l - \frac{1}{2} s^i (\partial_h \partial_i g^{kl}) s_k s_l - s^i (\partial_i g^{kl}) s_k \partial_h s_l \]
+\form#334:\[ \partial_h B = (\partial_h \partial_i g^{ij}) s_j + (\partial_i g^{ij}) \partial_h s_j + (\partial_h g^{ij}) \partial_i s_j + g^{ij} \partial_h \partial_i s_j + (\partial_h \partial_i \ln\sqrt{g}) s^i + (\partial_i \ln\sqrt{g}) \partial_h s^i \]
+\form#335:\[ \partial_h C = \big[(\partial_h g^{ik}) g^{jl} + g^{ik}(\partial_h g^{jl})\big] K_{kl} s_i s_j + g^{ik} g^{jl} (\partial_h K_{kl}) s_i s_j + 2 g^{ik} g^{jl} K_{kl} s_i \partial_h s_j \]
+\form#336:\[ \partial_h D = (\partial_h g^{ij}) s_i s_j + 2 g^{ij} s_i \partial_h s_j \]
+\form#337:\[ \partial_h \mathrm{tr}K = (\partial_h g^{ij}) K_{ij} + g^{ij} \partial_h K_{ij} \]
+\form#338:\[ \partial_h f = (\partial_i f) (\partial_h\gamma)^i, \]
+\form#339:\begin{eqnarray*} \partial_{h'} s_i &=& - X_i\\ \partial_{h'} \partial_i s_j &=& - X_{ij}, \end{eqnarray*}
+\form#340:$X_{ij} := \partial_i \partial_j \lambda$
+\form#341:\begin{eqnarray*} \partial_{h'} A &=& 2 X^i s^j \partial_i s_j + s^i s^j X_{ij} + \frac{1}{2} (\partial_i g^{kl}) (X^i s_k s_l + 2 s^i X_k s_l) \\ \partial_{h'} B &=& -(\partial_i g^{ij}) X_j - g^{ij} X_{ij} - (\partial_i\ln\sqrt{g}) X^i \\ \partial_{h'} C &=& -2 K_{ij} X^i s^j \\ \partial_{h'} D &=& -2 X_i s^i \end{eqnarray*}
+\form#342:\begin{eqnarray*} \partial_{h''} A &=& s^i s^j X_i X_j \\ \partial_{h''} B &=& -X^i X_i \\ \partial_{h''} C &=& \partial_{h''} D = 0 \end{eqnarray*}

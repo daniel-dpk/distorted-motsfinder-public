@@ -1,0 +1,5 @@
+<map id="ExpansionCurve" name="ExpansionCurve">
+<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html" title="Represent a curve as offset function relative to another curve. " alt="" coords="5,229,121,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html" title="Represent as angle&#45;dependent distance from some origin. " alt="" coords="146,229,271,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html" title="Base class for curves in the x&#45;z&#45;plane. " alt="" coords="92,80,179,107"/>
+</map>

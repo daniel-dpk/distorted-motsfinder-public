@@ -1,0 +1,6 @@
+<map id="SimpleExpression" name="SimpleExpression">
+<area shape="rect" id="node4" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleCosExpression.html" title="Cosine expression with arbitrary derivatives. " alt="" coords="5,229,156,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleSinExpression.html" title="Sine expression with arbitrary derivatives. " alt="" coords="181,229,327,256"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1basics_1_1SinSquaredExpression.html" title="Sine squared (sin(x)**2) expression with first two derivatives. " alt="" coords="351,229,506,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions. " alt="" coords="186,80,322,107"/>
+</map>

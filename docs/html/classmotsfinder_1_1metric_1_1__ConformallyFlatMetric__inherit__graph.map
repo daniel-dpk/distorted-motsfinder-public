@@ -1,0 +1,5 @@
+<map id="_ConformallyFlatMetric" name="_ConformallyFlatMetric">
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="5,229,137,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1metric_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="161,229,333,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1__ThreeMetric.html" title="Base class for metrics, i.e. symmetric covariant 2&#45;Tensor fields. " alt="" coords="110,80,209,107"/>
+</map>

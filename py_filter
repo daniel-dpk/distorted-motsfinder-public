@@ -1,0 +1,2 @@
+#!/bin/bash
+./call_python.py -m doxypypy.doxypypy -a -c $1 --direct-stdout | ./scripts/fix_doxypypy.py
