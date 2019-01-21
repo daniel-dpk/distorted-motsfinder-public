@@ -17,7 +17,6 @@ from six import add_metaclass
 
 import numpy as np
 from scipy import linalg
-from scipy.misc import derivative
 
 from .helpers import christoffel_symbols, christoffel_deriv
 from .helpers import riemann_components
@@ -26,8 +25,14 @@ from .helpers import riemann_components
 __all__ = []
 
 
+# It is customary to denote indices of tensors without spaces, e.g.:
+#   T_{ijk}  =>  T[i,j,k]
+# We disable the respective pylint warning for this file.
+# pylint: disable=bad-whitespace
+
+
 class MetricTensor(object):
-    r"""Metric tensor at a certain point in a spatial slice.
+    r"""Metric tensor class at a given point.
 
     The metric tensor is represented as a matrix, which means that some basis
     has been chosen. Operations with vectors are only well-defined if they are
@@ -95,29 +100,13 @@ class MetricTensor(object):
 
 
 @add_metaclass(ABCMeta)
-class _ThreeMetric(object):
-    r"""Base class for metrics, \ie symmetric covariant 2-Tensor fields.
+class _GeneralMetric(object):
+    r"""Base class for general metrics (\ie of any dimension and signature).
 
     The methods child classes have to implement are:
         * _mat_at() computing the metric tensor (matrix) at a given point
-
-    The may also override the default implementations of diff() and
-    diff_lnsqrtg() if analytical derivatives are available. Otherwise,
-    numerical finite difference (FD) differentiation is performed.
+        * diff() computing derivatives of the metric at a given point
     """
-    def __init__(self, dx=1e-8, fd_order=3):
-        r"""Base class init for metrics.
-
-        Args:
-            dx: Step length for numerical differentiation. Default is `1e-8`.
-            fd_order: Finite difference approximation order for numerical
-                differentiation. Default is `3`.
-        """
-        ## Step length for numerical differentiation.
-        self.dx = dx
-        ## Finite difference approximation order for numerical
-        ## differentiation.
-        self.fd_order = fd_order
 
     def at(self, point):
         r"""Return the metric tensor at a given point."""
@@ -128,23 +117,15 @@ class _ThreeMetric(object):
         r"""Compute the metric tensor matrix at a given point."""
         raise NotImplementedError
 
-    def diff(self, point, inverse=False, diff=1, **kw):
-        r"""Return derivatives in x,y,z directions at the given point.
+    @abstractmethod
+    def diff(self, point, inverse=False, diff=1):
+        r"""Return derivatives of the metric at the given point.
 
-        If `inverse==True`, the derivatives of the inverse
-        metric \f$ g^{ij} \f$ are returned.
-
-        The optional argument `dx` may be set to a floating point value to
-        control numerical differentiation step-size. By default, the value of
-        `dx` as set during object creation is used. Other arguments are passed
-        to `scipy.misc.derivative` to modify numerical finite difference
-        order.
-
-        Note that subclasses may implement analytical differentiation, in
-        which case `dx` and other optional arguments may be ignored.
+        If `inverse==True`, the derivatives of the inverse metric
+        \f$g^{ij}\f$ are returned.
 
         @param point
-            3D point (tuple/list/array) at which to compute the derivatives.
+            Point (tuple/list/array) at which to compute the derivatives.
         @param inverse
             Whether to compute the derivatives of the inverse metric (indices
             up).
@@ -154,44 +135,55 @@ class _ThreeMetric(object):
         @return Multidimensional list with indices `i1, i2, ..., k, l`
             corresponding to \f$\partial_{i_1}\partial_{i_2}\ldots g_{kl}\f$
             (or the inverse components if ``inverse==True``).
+
+        @b Notes
+
+        Subclasses may use _compute_inverse_diff() to compute the derivatives
+        of inverse metrics. This is not implemented as default action to allow
+        these classes to handle caching the results if they so desire.
+
+        A simple implementation of diff() might start with:
+        ~~~.py
+        def diff(self, point, inverse=False, diff=1):
+            if inverse:
+                return self._compute_inverse_diff(point, diff=diff)
+            if diff == 0:
+                return self._mat_at(point)
+            # ... your code to compute derivatives ...
+        ~~~
         """
+        raise NotImplementedError
+
+    def _compute_inverse_diff(self, point, diff=1):
+        r"""Compute derivatives of the inverse metric from those of the metric."""
         if diff == 0:
-            return self.at(point).inv if inverse else self.at(point).mat
-        if diff != 1:
-            raise NotImplementedError
-        point = np.array(point)
-        g0 = self.at(point)
-        def f(d, axis):
-            v = [0., 0., 0.]
-            v[axis] = d
-            g = g0 if d == 0 else self.at(point + v)
-            return g.inv if inverse else g.mat
-        # TODO: Scale `dx` with norm(point)?
-        kw["dx"] = kw.get("dx", self.dx)
-        kw["order"] = kw.get("order", self.fd_order)
-        return [derivative(f, x0=0.0, n=diff, args=(i,), **kw) for i in range(3)]
+            return linalg.inv(self._mat_at(point))
+        dg = self.diff(point, diff=1)
+        g_inv = self.diff(point, inverse=True, diff=0)
+        if diff == 1:
+            return -g_inv.dot(dg).dot(g_inv).swapaxes(0, 1)
+        ddg = self.diff(point, diff=2)
+        dg_inv = self.diff(point, inverse=True, diff=1)
+        if diff == 2:
+            terms1 = np.einsum('ijab,bc->ijac', ddg, g_inv)
+            terms2 = np.einsum('iab,jbc->ijac', dg, dg_inv)
+            terms3 = terms2.swapaxes(0, 1)
+            # pylint: disable=invalid-unary-operand-type
+            return -np.einsum('ab,ijbc->ijac', g_inv, terms1+terms2+terms3)
+        raise NotImplementedError
 
-    def diff_lnsqrtg(self, point, **kw):
-        r"""Return x,y,z derivatives of ln(sqrt(det(g))).
+    def diff_lnsqrtg(self, point):
+        r"""Return derivatives of ln(sqrt(det(g))).
 
-        This computes the terms \f$ \partial_i \ln(\sqrt{g}) \f$
+        This computes the terms \f$\partial_i \ln(\sqrt{g})\f$
         and returns the results as a list (i.e. one element per value of `i`).
-
-        Similar to diff(), child classes may implement more efficient
-        analytical derivatives and ignore optional arguments such as `dx`.
         """
-        point = np.array(point)
-        g0 = self.at(point)
-        def f(d, axis):
-            v = [0., 0., 0.]
-            v[axis] = d
-            g = g0 if d == 0 else self.at(point + v)
-            return np.log(np.sqrt(np.linalg.det(g.mat)))
-        kw["dx"] = kw.get("dx", self.dx)
-        return [derivative(f, x0=0.0, n=1, args=(i,), **kw) for i in range(3)]
+        g_inv = self.diff(point, inverse=True, diff=0)
+        dg = self.diff(point, diff=1)
+        return 0.5 * np.einsum('jk,ijk', g_inv, dg)
 
     def christoffel(self, point):
-        r"""Compute the Christoffel symbols of this 3-metric.
+        r"""Compute the Christoffel symbols of this metric.
 
         @return NumPy array with indices `[a,b,c]` corresponding to
             \f$\Gamma^a_{bc}\f$.
@@ -225,3 +217,41 @@ class _ThreeMetric(object):
         return np.array(
             [[_ric(a, b) for b in ra] for a in ra]
         )
+
+    def ricci_scalar(self, point):
+        r"""Compute the scalar curvature (Ricci scalar)."""
+        g_inv = self.at(point).inv
+        Ric = self.ricci_tensor(point)
+        return g_inv.dot(Ric).trace()
+
+
+class _ThreeMetric(_GeneralMetric):
+    r"""Base class for 3-metrics on a spatial slice of spacetime.
+
+    The methods child classes have to implement are:
+        * _mat_at() computing the metric tensor (matrix) at a given point
+        * diff() computing derivatives of the metric at a given point
+    """
+    # pylint: disable=abstract-method
+
+    def get_curv(self):
+        r"""Return the extrinsic curvature belonging to this 3-metric.
+
+        The default implementation assumes a time-symmetric slice, i.e.
+        vanishing extrinsic curvature. Implementations of non-time-symmetric
+        slices should provide a callable with signature
+        ``curv(point, diff=n)``, where ``n`` is the derivative order.
+        """
+        return None
+
+    def get_lapse(self):
+        return None
+
+    def get_shift(self):
+        return None
+
+    def get_dtlapse(self):
+        return None
+
+    def get_dtshift(self):
+        return None

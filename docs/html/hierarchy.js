@@ -9,7 +9,8 @@ var hierarchy =
         [ "InsufficientResolutionOrRoundoff", "classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html", null ],
         [ "StepLimitExceeded", "classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html", null ]
       ] ],
-      [ "NDSolveError", "classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html", null ]
+      [ "NDSolveError", "classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html", null ],
+      [ "NumericalError", "classmotsfinder_1_1numutils_1_1NumericalError.html", null ]
     ] ],
     [ "MotsFindingConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html", [
       [ "BrillLindquistConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html", null ],
@@ -67,12 +68,14 @@ var hierarchy =
           ] ]
         ] ]
       ] ],
-      [ "_ThreeMetric", "classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html", [
-        [ "_ConformallyFlatMetric", "classmotsfinder_1_1metric_1_1analytical_1_1__ConformallyFlatMetric.html", [
-          [ "BrillLindquistMetric", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html", null ],
-          [ "SchwarzschildSliceMetric", "classmotsfinder_1_1metric_1_1analytical_1_1SchwarzschildSliceMetric.html", null ]
-        ] ],
-        [ "FlatThreeMetric", "classmotsfinder_1_1metric_1_1analytical_1_1FlatThreeMetric.html", null ]
+      [ "_GeneralMetric", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html", [
+        [ "_ThreeMetric", "classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html", [
+          [ "_ConformallyFlatMetric", "classmotsfinder_1_1metric_1_1analytical_1_1__ConformallyFlatMetric.html", [
+            [ "BrillLindquistMetric", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html", null ],
+            [ "SchwarzschildSliceMetric", "classmotsfinder_1_1metric_1_1analytical_1_1SchwarzschildSliceMetric.html", null ]
+          ] ],
+          [ "FlatThreeMetric", "classmotsfinder_1_1metric_1_1analytical_1_1FlatThreeMetric.html", null ]
+        ] ]
       ] ],
       [ "MetricTensor", "classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html", null ],
       [ "_SpectralBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html", [

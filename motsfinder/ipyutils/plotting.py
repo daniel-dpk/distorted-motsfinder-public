@@ -7,6 +7,7 @@ Helper functions for more convenient plotting.
 from __future__ import print_function
 import os
 import os.path as op
+import copy
 
 import numpy as np
 from mpmath import mp
@@ -182,6 +183,11 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         ``cfg_callback(ax)``, where `ax` is the current axis object. Use
         `ax.figure` to obtain the figure object. It is called as the last step
         before saving/showing the plot.
+    @param dpi
+        Optional `dpi` value for construction the figure. Higher values
+        magnify the plot (including e.g. labels). Default is
+        ``rcParams["figure.dpi"]`` (usually `75` or `100`, depending on the
+        matplotlib version).
     @param plot_kw (dict or (dict, dict), optional)
         Additional options passed to the `ax.plot` call. If two dicts are
         given, the second one is used when plotting `f2`.
@@ -445,7 +451,8 @@ def plot_polar(f, origin=(0, 0), points=500, l='-k', pi_symmetry=False,
 
 def plot_mat(mat, figsize=(5, 4), colorbar=True, cmap=cm.jet, vmin=None,
              vmax=None, absolute=False, log10=False, normalize=False,
-             offset=0, plot_kw=None, show=True, close=False, **kw):
+             offset=0, bad_color=None, plot_kw=None, show=True, close=False,
+             **kw):
     r"""Visualize a matrix using a colored rectangle.
 
     Parameters not described here are described in plot_data() or plot_1d().
@@ -474,6 +481,8 @@ def plot_mat(mat, figsize=(5, 4), colorbar=True, cmap=cm.jet, vmin=None,
         plotting logarithms and there are exact zeros. For example, adding a
         value slightly below the roundoff plateau of spectral coefficients can
         make the plot more readable.
+    @param bad_color
+        Color to use for NaNs in the data.
     @param plot_kw
         Dictionary of arguments to pass to the `ax.matshow()` function.
     """
@@ -492,12 +501,17 @@ def plot_mat(mat, figsize=(5, 4), colorbar=True, cmap=cm.jet, vmin=None,
     if offset != 0:
         mat = mat + offset
     if log10:
-        mat = np.log10(mat)
+        mat = np.ma.log10(mat)
+    if bad_color:
+        cmap = copy.copy(cmap)
+        if not isinstance(bad_color, (list, tuple)):
+            bad_color = [bad_color]
+        cmap.set_bad(*bad_color)
     with plot_ctx(figsize=figsize, show=show, close=close, **kw) as ax:
         img = ax.matshow(mat, cmap=cmap, vmin=vmin, vmax=vmax, **plot_kw)
         if colorbar:
             opts = colorbar if isinstance(colorbar, dict) else dict()
-            ax.figure.colorbar(img, **opts)
+            ax.figure.colorbar(img, **insert_missing(opts, ax=ax))
     if not show and not close:
         return ax
 
@@ -600,7 +614,7 @@ def plot_multi(*args, tight_layout=False, **kwargs):
     plt.show()
 
 
-def video_from_folder(*folders, ext='png', **kw):
+def video_from_folder(*folders, ext='png', filter_cb=None, **kw):
     r"""Display a movie from a sequence of images in one or more folders.
 
     This takes all images in the given folder(s) and renders them into a video
@@ -638,6 +652,9 @@ def video_from_folder(*folders, ext='png', **kw):
         if reverse:
             files.reverse()
         image_files += files
+    if filter_cb:
+        image_files = [img for i, img in enumerate(image_files)
+                       if filter_cb(i, img)]
     if not image_files:
         raise ValueError("No images found.")
     return video_from_images(image_files, **kw)

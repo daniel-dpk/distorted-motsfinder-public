@@ -44,6 +44,7 @@ from math import fsum
 
 from six import add_metaclass
 import numpy as np
+from scipy import linalg
 from scipy.misc import derivative
 
 from ...utils import cache_method_results
@@ -79,7 +80,7 @@ class ExpansionCalc(object):
     be interpreted as such a cache, with added functionality to do the
     necessary computations using the cached values.
     """
-    def __init__(self, curve, h_fun, param, metric, extr_curvature):
+    def __init__(self, curve, h_fun, param, metric):
         r"""Create a "calc" object for certain point of a curve.
 
         The curve represents an axisymmetric surface.
@@ -96,9 +97,6 @@ class ExpansionCalc(object):
         @param metric
             The Riemannian 3-metric defining the geometry of the surrounding
             space.
-        @param extr_curvature
-            Symmetric covariant 2-tensor defining the extrinsic curvature `K`.
-            If not specified, time-symmetry is assumed (i.e. `K=0`).
         """
         ## Step sizes for FD numerical differentiation of the expansion
         ## \wrt `h`, `h'`, ``h''``, respectively.
@@ -124,11 +122,11 @@ class ExpansionCalc(object):
         self.metric = metric
         ## Metric tensor at the point to do computations at.
         self.g = metric.at(point)
-        if extr_curvature is None:
+        if curve.extr_curvature is None:
             ## Extrinsic curvature at the point to do computations at.
             self.K = None
         else:
-            self.K = extr_curvature(point)
+            self.K = curve.extr_curvature(point)
         # Cached metric derivatives (computed on-demand).
         self._dg = None
         self._dg_inv = None
@@ -651,7 +649,7 @@ class ExpansionCalc(object):
     def induced_metric(self, diff=0, inverse=False):
         r"""Compute the induced metric on the surface.
 
-        This method can compute the components of the induced metric in
+        This method computes the components of the induced metric in
         \f$(\lambda,\varphi)\f$ coordinates as well as the components of the
         inverse (i.e. indices upstairs) and derivatives of these components.
 
@@ -672,132 +670,53 @@ class ExpansionCalc(object):
 
         @b Notes
 
-        As in expcurve.ExpansionCurve.area(), we consider the most general
-        axisymmetric 3-metric, i.e. a Brill wave (cf. [1]), which we write as
+        The induced 2-metric `q` on the surface \f$\sigma\f$ is formally given
+        by
         \f[
-            g = a(\rho,z)\ (d\rho^2 + dz^2) + \rho^2 b(\rho,z)\ d\varphi^2,
+            q = \Pi_\sigma g = g\big|_\sigma - \underline{\nu} \otimes \underline{\nu},
+            \qquad
+            q_{ab} = g_{ab} - \nu_a \nu_b,
         \f]
-        where \f$a, b > 0\f$. We know that our 3-metric will be of this form
-        if it is to be axisymmetric.
-
-        Taking the usual transforms \f$\rho = \sqrt{x^2+y^2}\f$ and
-        \f$\rho\cos\varphi = x\f$, we can relate the components to those in
-        `x`, `y`, `z` coordinates in which the metric is given. We get
+        where \f$\nu\f$ is the outward pointing normal of \f$\sigma\f$ and
+        \f$\underline{\nu} = g(\nu,\,\cdot\,)\f$.
+        The induced metric can easily be expressed in terms of the components
+        of the 3-metric `g` by expanding these into the cobasis fields of the
+        coordinates \f$\lambda, \varphi\f$ on the 2-surface (and thereby
+        dropping any transversal components). As a result, we get the simple
+        formula
         \f[
-            (g_{ab}) =
-            \left(\begin{array}{@{}ccc@{}}
-                a c^2 + b s^2 & a c s - b c s & 0 \\
-                a c s - b c s & b c^2 + a s^2 & 0 \\
-                0 & 0 & a
-            \end{array}\right),
+            q_{AB} = g_{ij}\ (\partial_A x^i)\ (\partial_B x^j),
         \f]
-        where \f$c := \cos\varphi\f$ and \f$s := \sin\varphi\f$.
+        where `A,B = 1,2` and
+        \f$(\partial_A) = (\partial_\lambda, \partial_\varphi)\f$.
+        The derivatives of the Cartesian coordinates `x,y,z` are computed in
+        diff_xyz_wrt_laph().
 
-        The components of the induced metric `q` on the surface are then given
-        in any coordinates by (compare e.g. equation (2) in [2])
-        \f[
-            q_{ab} = g_{ab} - \nu_a \nu_b.
-        \f]
-        A straightforward way to compute these components is to express `g`
-        and the covariant unit normal w.r.t. the coordinates
-        \f$(\lambda,\varphi)\f$ on the surface. To this end, note that the
-        surface is parameterized in the above cylindrical coordinates via
-        \f$\rho = \rho(\lambda) = (\gamma(\lambda))_x\f$ and
-        \f$z = z(\lambda) = (\gamma(\lambda))_z\f$. Hence we have
+        From this, we easily get the first and second derivatives by applying
+        the chain and product rule:
         \f{eqnarray*}{
-            dx &=& \rho' \cos\varphi\ d\lambda - \rho \sin\varphi\ d\varphi \\
-            dy &=& \rho' \sin\varphi\ d\lambda + \rho \cos\varphi\ d\varphi \\
-            dz &=& z'\ d\lambda
-        \f}
-        and therefore
-        \f{eqnarray*}{
-            \underline{\nu} &:=& g(\nu,\,\cdot\,) = \nu_a\ dx^a
-                = \big[\rho'\,(\nu_x c + \nu_y s) + z' \nu_z\big]\ d\lambda
-                  + \rho\,(-\nu_x s + \nu_y c)\ d\varphi
-              \\
-                &=:& \nu_\lambda\ d\lambda + \nu_\varphi\ d\varphi,
-        \f}
-        leading finally to
-        \f{eqnarray*}{
-            q &=& (a\,(\rho'^2+z'^2) + \nu_\lambda^2)\ d\lambda^2
-                + (b\,\rho^2 + \nu_\varphi^2)\ d\varphi^2
-                + \nu_\lambda \nu_\varphi (d\lambda \otimes d\varphi
-                                           + d\varphi \otimes d\lambda)
+            \partial_A q_{CD} &=&
+                (\partial_A g_{ij}) x_C^i x_D^j
+                + g_{ij} (x_{CA}^i x_D^j + x_C^i x_{DA}^j)
             \\
-                &=& q_{\lambda\lambda}\ d\lambda^2
-                    + q_{\varphi\varphi}\ d\varphi^2
-                    + q_{\lambda\varphi}\ (d\lambda \otimes d\varphi
-                                           + d\varphi \otimes d\lambda).
-        \f}
-        Note that for \f$\varphi=0\f$, we have \f$\nu_y = 0\f$ due to the
-        axisymmetry making the induced metric become diagonal.
-
-        The first derivatives are computed via (all evaluated at `phi==0`)
-        \f{eqnarray*}{
-            \partial_C q_{\lambda\lambda}
-                &=& a_{,C}\,(\rho'^2+z'^2)
-                    + 2a\,\delta_{C\lambda}(\rho'\rho'' + z'z'')
-                    + 2 \nu_{\lambda,C} \nu_\lambda
-            \\
-            \partial_C q_{\varphi\varphi}
-                &=& b_{,C} \rho^2 + 2b\,\delta_{C\lambda} \rho \rho'
-            \\
-            \partial_C q_{\lambda\varphi}
-                &=& 0,
-        \f}
-        where \f$f_{,A} := \partial_A f\f$ and \f$\delta_{AB}\f$ is the
-        Kronecker delta.
-        The second derivatives are
-        \f{eqnarray*}{
-            \partial_D\partial_C q_{\lambda\lambda}
-                &=& a_{,CD}(\rho'^2+z'^2)
-                    + 2\delta_{D\lambda}a_{,C}(\rho'\rho''+z'z'')
+            \partial_A\partial_B q_{CD} &=&
+                (\partial_A\partial_B g_{ij}) x_C^i x_D^j
+                + (\partial_A g_{ij}) (x_{CB}^i x_D^j + x_C^i x_{DB}^j)
+                + (\partial_B g_{ij}) (x_{CA}^i x_D^j + x_C^i x_{DA}^j)
                 \\&&
-                    + 2\delta_{C\lambda}\big[
-                        a_{,D}(\rho'\rho''+z'z'')
-                        + \delta_{D\lambda} a\,(
-                            \rho''^2 + \rho'\rho''' + z''^2 + z'z'''
-                        )
-                    \big]
-                \\&&
-                    + 2\nu_{\lambda,CD}\nu_\lambda
-                    + 2\nu_{\lambda,C} \nu_{\lambda,D}
-            \\
-            \partial_D\partial_C q_{\varphi\varphi}
-                &=& b_{,CD}\rho^2 + 2 \delta_{D\lambda} b_{,C}\rho\rho'
-                    + 2 \delta_{C\lambda} \big[
-                        b_{,D}\rho\rho'
-                        + \delta_{D\lambda}b\,(\rho'^2 + \rho\rho'')
-                    \big]
-                \\&&
-                    + 2\nu_{\varphi,CD}\nu_\varphi
-                    + 2\nu_{\varphi,C} \nu_{\varphi,D}
-            \\
-            \partial_D\partial_C q_{\lambda\varphi}
-                &=& \nu_{\lambda,CD}\nu_\varphi
-                    + \nu_{\lambda,C} \nu_{\varphi,D}
-                    + \nu_{\varphi,C} \nu_{\lambda,D}
-                    + \nu_{\varphi,CD}\nu_\lambda.
+                + g_{ij} (x_{CAB}^i x_D^j + x_{CA}^i x_{DB}^j
+                          + x_{CB}^i x_{DA}^j + x_C^i x_{DAB}^j).
         \f}
-
-        @b References
-
-        [1] Brill, Dieter R. "On the positive definite mass of the
-            Bondi-Weber-Wheeler time-symmetric gravitational waves." Annals of
-            Physics 7.4 (1959): 466-483.
-
-        [2] Gundlach, Carsten. "Pseudospectral apparent horizon finders: An
-            efficient new algorithm." Physical Review D 57.2 (1998): 863.
+        Here, \f$x_{A}^i := \partial_A x^i\f$, etc.
         """
         return self._induced_metric(diff, bool(inverse))
 
     @cache_method_results()
     def _induced_metric(self, diff, inverse):
-        r"""Implements induced_metric()."""
         if inverse:
             q = self.induced_metric(diff=0)
             if diff == 0:
-                return np.array([[1/q[0,0], 0.0], [0.0, 1/q[1,1]]])
+                return linalg.inv(q)
             dq = self.induced_metric(diff=1)
             if diff == 1:
                 dq_inv = inverse_2x2_matrix_derivative(q, dq, diff=1)
@@ -807,233 +726,129 @@ class ExpansionCalc(object):
                 ddq_inv = inverse_2x2_matrix_derivative(q, dq, ddq, diff=2)
                 return ddq_inv
             raise NotImplementedError
-        a, b = self.get_a_b_from_metric(diff=0)
-        rho = self.point[0]
-        drho, dz = self.curve.diff(self.param, diff=1)
-        nl, _ = self.covariant_normal(coords='la,ph')
-        q11 = a * (drho**2+dz**2) + nl**2
-        q22 = b * rho**2
-        q = np.array([[q11, 0.0],
-                      [0.0, q22]])
+        dx = self.diff_xyz_wrt_laph(diff=1)
+        g = self.g.mat
         if diff == 0:
+            q = np.einsum('ij,ai,bj', g, dx, dx)
             return q
-        # partial_i nu_lambda,  (i=lambda,phi)
-        dnl, dnp = self.covariant_normal(coords='la,ph', deriv_wrt='la,ph', diff=1)
-        ddrho, ddz = self.curve.diff(self.param, diff=2)
-        da, db = self.get_a_b_from_metric(deriv_wrt='la,ph', diff=1)
-        # dq11 = [partial_lambda q_{la,la}, partial_phi q_{la,la}]
-        # (la == lambda)
-        dq11 = (
-            2 * dnl * nl
-            + da * (drho**2+dz**2)
-            + 2*a * np.array([(drho*ddrho + dz*ddz), 0.0])
-        )
-        dq22 = (
-            db * rho**2 + 2*b * np.array([rho*drho, 0.0])
-        )
-        # we want indices to mean [A,B,C] <=> \partial_A q_BC
-        dq = np.array([[[dq11[i], 0.0], [0.0, dq22[i]]] for i in range(2)])
+        ddx = self.diff_xyz_wrt_laph(diff=2)
+        dg = self.dg
+        dg_laph = np.einsum('ak,kij', dx, dg)
         if diff == 1:
-            return dq
-        dda, ddb = self.get_a_b_from_metric(deriv_wrt='la,ph', diff=2)
-        ddnl, ddnp = self.covariant_normal(coords='la,ph', deriv_wrt='la,ph', diff=2)
-        ddn = np.array([ddnl, ddnp])
-        n = np.array([nl, 0.0])
-        dn = np.array([dnl, dnp])
-        d3rho, d3z = self.curve.diff(self.param, diff=3)
-        def _ddq(D,C,A,B):
-            ddq = (
-                ddn[A,C,D] * n[B] + dn[A,C] * dn[B,D] + dn[A,D] * dn[B,C] + n[A] * ddn[B,C,D]
+            dq = (
+                np.einsum('aij,bi,cj', dg_laph, dx, dx)
+                + np.einsum('ij,bai,cj', g, ddx, dx)
+                + np.einsum('ij,bi,caj', g, dx, ddx)
             )
-            if A == B == 0:
-                ddq += dda[C,D] * (drho**2 + dz**2)
-                if D == 0:
-                    ddq += 2 * da[C] * (drho*ddrho + dz*ddz)
-                if C == 0:
-                    ddq += 2 * da[D] * (drho*ddrho + dz*ddz)
-                    if D == 0:
-                        ddq += 2 * a * (ddrho**2 + drho*d3rho + ddz**2 + dz*d3z)
-            if A == B == 1:
-                ddq += ddb[C,D] * rho**2
-                if D == 0:
-                    ddq += 2 * db[C] * rho * drho
-                if C == 0:
-                    ddq += 2 * db[D] * rho * drho
-                    if D == 0:
-                        ddq += 2 * b * (drho**2 + rho*ddrho)
-            return ddq
+            return dq
+        d3x = self.diff_xyz_wrt_laph(diff=3)
+        ddg = self.ddg
+        ddg_laph = (
+            np.einsum('abk,kij', ddx, dg)
+            + np.einsum('ak,bl,klij', dx, dx, ddg)
+        )
+        ddq = (
+            np.einsum('abij,ci,dj', ddg_laph, dx, dx)
+            + np.einsum('aij,cbi,dj', dg_laph, ddx, dx)
+            + np.einsum('aij,ci,dbj', dg_laph, dx, ddx)
+            + np.einsum('bij,cai,dj', dg_laph, ddx, dx)
+            + np.einsum('bij,ci,daj', dg_laph, dx, ddx)
+            + np.einsum('ij,cabi,dj', g, d3x, dx)
+            + np.einsum('ij,cai,dbj', g, ddx, ddx)
+            + np.einsum('ij,cbi,daj', g, ddx, ddx)
+            + np.einsum('ij,ci,dabj', g, dx, d3x)
+        )
         if diff == 2:
-            # indices should be [D,C,A,B] <=> \partial_D \partial_C q_AB
-            ra = range(2)
-            return np.array([[[[_ddq(D,C,A,B) for B in ra] for A in ra]
-                              for C in ra] for D in ra])
+            return ddq
         raise NotImplementedError
 
-    def get_a_b_from_metric(self, deriv_wrt=None, diff=0):
-        r"""Compute values of the functions a and b for the current metric.
+    def diff_xyz_wrt_laph(self, diff=1):
+        r"""Compute derivatives of x,y,z \wrt lambda and phi.
 
-        See the docstring of induced_metric() for the definition of
-        axisymmetric metrics in terms of the functions `a` and `b`. As can
-        also be seen in the docstring, we get `a` as the `g_zz` component and
-        `b` as the `g_yy` component for `phi=0` (which we assume here
-        throughout).
-
-        @param deriv_wrt
-            String indicating with respect to which coordinates any
-            derivatives should be returned. Ignored if `diff==0`. Valid values
-            are ``'x,y,z'`` and ``'la,ph'``.
-        @param diff
-            Derivative order to compute of `a` and `b`.
-
-        @return Either two floats (if `diff==0`), one for `a` and `b`,
-            respectively, or two NumPy arrays with `diff` axes corresponding
-            to the partial derivatives.
-
-        @b Notes
-
-        To obtain the derivatives of `a` w.r.t. `x,y,z`, note that since
-        `a == g_zz` even without setting `phi = 0`, the partial derivatives of
-        the metric can directly be taken as those of `a`. For `b`, this is
-        also the case, i.e.
-        \f[
-            \partial_i\partial_j b
-                \stackrel{\varphi=0}{=} \partial_i\partial_j g_{yy},
-        \f]
-        even though one has to be careful to verify the above equation since
-        \f$g_{yy} = b\cos^2\varphi + a\sin^2\varphi\f$.
-        For example, we get
-        \f[
-            \partial_x \partial_y g_{yy}
-                = b_{,xy} + 2 \varphi_{,x}\varphi_{,y}(a-b)
-                = b_{,xy}.
-        \f]
-        The last equation is due to \f$\rho\cos\varphi = x\f$ and hence
-        \f[
-            -\varphi_{,x}\sin\varphi = \partial_x\cos\varphi
-                = \frac{\rho^2-x^2}{\rho^3}
-                = \frac{y^2}{\rho^3}
-            \quad\Rightarrow\quad
-            \varphi_{,x} = -\frac{y}{\rho^2}
-                \stackrel{y=0}{=} 0.
-        \f]
-
-        For the derivatives w.r.t. \f$\lambda,\varphi\f$, we use the chain
-        rule and the concrete transformation rules
-        \f[
+        This computes the derivatives of the Cartesian coordinates `x,y,z`
+        w.r.t. the surface intrinsic coordinates `lambda` and `phi` based on
+        the usual transform rules
+        \f{eqnarray*}{
             x = \rho(\lambda)\cos\varphi,\quad
             y = \rho(\lambda)\sin\varphi,\quad
             z = z(\lambda),
-        \f]
-        to get (at \f$\varphi = 0\f$)
-        \f[
-            \begin{array}{@{}r@{\;}l@{\qquad}r@{\;}l@{\qquad}r@{\;}l@{\qquad}r@{\;}l@{\qquad}r@{\;}l@{}}
-            x_{,\lambda} &= \rho' & x_{,\varphi} & = 0    & x_{,\lambda\lambda} & = \rho'' & x_{,\lambda\varphi} & = 0     & x_{,\varphi\varphi} & = -\rho \\
-            y_{,\lambda} &= 0     & y_{,\varphi} & = \rho & y_{,\lambda\lambda} & = 0      & y_{,\lambda\varphi} & = \rho' & y_{,\varphi\varphi} & = 0 \\
-            z_{,\lambda} &= z'    & z_{,\varphi} & = 0    & z_{,\lambda\lambda} & = z''    & z_{,\lambda\varphi} & = 0     & z_{,\varphi\varphi} & = 0
-            \end{array}
-        \f]
-        and therefore, again at \f$\varphi = 0\f$,
-        \f[
-            \begin{array}{@{}r@{\;}l@{\qquad}r@{\;}l@{}}
-            a_{,\lambda} &= \rho' a_{,x} + z' a_{,z} &
-            a_{,\lambda\lambda} &= \rho'' a_{,x} + z'' a_{,z} + \rho'^2 a_{,xx} + z'^2 a_{,zz} + 2 \rho' z' a_{,xz}
-            \\
-            a_{,\varphi} &= 0 &
-            a_{,\varphi\varphi} &= 0 \qquad\qquad
-            a_{,\lambda\varphi} = 0.
-            \end{array}
-        \f]
-        The same formulas hold for `b`.
-        For some of these identities, we need to express `y`-derivatives of
-        `a` in terms of \f$\rho\f$-derivatives using the rules explained at
-        the end of the docstring of
-        refparamcurve._RefParamExpansionCalc.coord_derivs().
+        \f}
+        where \f$\rho\f$ is the `x`-component of the curve and `z` its
+        `z`-component. The results are evaluated at \f$\varphi = 0\f$.
+
+        @return For ``diff==1``, return the first derivatives with indices
+            ``dx[A,i]`` meaning \f$\partial_A x^i\f$, where we have
+            \f$(x^i) := (x,y,z)\f$ and
+            \f$(\partial_A) := (\partial_\lambda, \partial_phi)\f$.
+            For ``diff==2``, second derivatives are returned with indices
+            ``ddx[A,B,i]`` meaning \f$\partial_A\partial_B x^i\f$.
+            The same pattern holds for ``diff==3``.
+            If ``diff==None``, a list ``[dx, ddx, dddx]`` is returned.
+
+        @param diff
+            Derivative order. One of `1`, `2`, `3`. Default is `1`.
+            If explicitely set to None, all three implemented orders are
+            returned.
         """
-        if diff == 0:
-            a, b = self.g.mat[2,2], self.g.mat[1,1]
-            return a, b
-        if deriv_wrt not in ('x,y,z', 'la,ph'):
-            raise ValueError("Unknown coordinates: %s" % deriv_wrt)
-        return self._get_a_b_from_metric(deriv_wrt, diff)
+        # Here we'll call r==rho and dr==\partial_lambda rho,
+        # l==lambda, p==phi, etc.
+        results = []
+        r, _ = self.curve(self.param, xyz=False)
+        dr, dz = self.curve.diff(self.param, diff=1)
+        if diff is None or diff == 1:
+            dx = np.array([
+                [dr, 0., dz],  # partial_lambda (x,y,z)
+                [0.,  r, 0.],  # partial_phi    (x,y,z)
+            ])
+            if diff == 1:
+                return dx
+            results.append(dx)
+        ddr, ddz = self.curve.diff(self.param, diff=2)
+        if diff is None or diff == 2:
+            dll = [ddr, 0., ddz]
+            dlp = [0.,  dr, 0.]
+            dpp = [-r,  0., 0.]
+            ddx = np.array([
+                [dll, dlp],
+                [dlp, dpp],
+            ])
+            if diff == 2:
+                return ddx
+            results.append(ddx)
+        d3r, d3z = self.curve.diff(self.param, diff=3)
+        if diff is None or diff == 3:
+            dlll = [d3r, 0.,  d3z]
+            dllp = [0.,  ddr, 0.]
+            dlpp = [-dr, 0.,  0.]
+            dppp = [0.,  -r,  0.]
+            dddx = np.array([
+                [[dlll, dllp],
+                 [dllp, dlpp]],
+                [[dllp, dlpp],
+                 [dlpp, dppp]],
+            ])
+            if diff == 3:
+                return dddx
+            results.append(dddx)
+        if diff is None:
+            return results
+        raise ValueError("Unknown derivative order: %s" % diff)
 
-    @cache_method_results()
-    def _get_a_b_from_metric(self, deriv_wrt, diff):
-        r"""Cached version of get_a_b_from_metric() for computing derivatives."""
-        if deriv_wrt == 'x,y,z':
-            return self._a_b_wrt_xyz(diff=diff)
-        return self._a_b_wrt_laph(diff=diff)
-
-    def _a_b_wrt_xyz(self, diff):
-        r"""Compute derivatives of a, b \wrt x,y,z (see get_a_b_from_metric())."""
-        if diff == 1:
-            # dg[i,j,k] = \partial_i g_jk
-            dg = np.asarray(self.metric.diff(self.point, diff=1))
-            da = dg[:,2,2]
-            db = dg[:,1,1]
-            da[1] = db[1] = 0.0
-            return da, db
-        if diff == 2:
-            # ddg[i,j,k,l] = \partial_i \partial_j g_kl
-            ddg = np.asarray(self.metric.diff(self.point, diff=2))
-            dda = ddg[:,:,2,2]
-            ddb = ddg[:,:,1,1]
-            return dda, ddb
-        raise NotImplementedError
-
-    def _a_b_wrt_laph(self, diff):
-        r"""Compute derivatives of a, b \wrt lambda,phi (see get_a_b_from_metric())."""
-        dab = np.asarray(self.get_a_b_from_metric('x,y,z', diff=1))
-        drho, dz = self.curve.diff(self.param, diff=1)
-        if diff == 1:
-            da_l, db_l = [
-                drho * dab[i,0] + dz * dab[i,2]
-                for i in range(2)
-            ]
-            return np.array([[da_l, 0.0], [db_l, 0.0]])
-        ddab = np.asarray(self.get_a_b_from_metric('x,y,z', diff=2))
-        ddrho, ddz = self.curve.diff(self.param, diff=2)
-        if diff == 2:
-            ddab_ll = [
-                ddrho * dab[i,0] + ddz * dab[i,2]
-                + drho**2 * ddab[i,0,0] + dz**2 * ddab[i,2,2]
-                + 2 * drho * dz * ddab[i,0,2]
-                for i in range(2)
-            ]
-            return np.array([[[ddab_ll[i], 0.0], [0.0, 0.0]] for i in range(2)])
-        raise NotImplementedError
-
-    def covariant_normal(self, coords='x,y,z', deriv_wrt=None, diff=0):
+    def covariant_normal(self, diff=0):
         r"""Compute (derivatives of) the normalized covariant normal.
 
-        This method can compute the components of the normalized covariant
-        normal in either `x,y,z` or \f$\lambda,\varphi\f$ coordinates. It can
-        also compute derivatives of these components w.r.t. either of these
-        coordinates in most cases (the exception being the `x,y,z` derivatives
-        of the \f$\lambda,\varphi\f$ components).
-
-        @param coords
-            String indicating in which coordinates to return the components.
-            Valid values are ``'x,y,z'`` (default) and ``'la,ph'``.
-        @param deriv_wrt
-            String indicating with respect to which coordinates any
-            derivatives should be returned. Ignored if `diff==0`. Valid values
-            are ``'x,y,z'`` and ``'la,ph'``. By default, derivatives are
-            returned w.r.t. the requested `coords`.
         @param diff
             Derivative order to compute. Default is `0`.
 
-        @return For ``coords=='x,y,z'``, returns three elements corresponding
-            to (derivatives of) the `x, y, z` components \f$\nu_i\f$. For
-            ``coords=='la,ph'``, two elements are returned which correspond to
-            the two components \f$\nu_A\f$, \f$A=\lambda,\varphi\f$. In case
-            of derivatives, each element will be a NumPy array with `diff`
-            axes corresponding to the partial derivatives.
+        @return NumPy `ndarray` with ``diff+1`` axes and indices
+            ``i1,i2,...,k`` corresponding to
+            \f$\partial_{i_1}\partial_{i_2}\ldots\nu_k\f$. For example, for
+            ``diff==0``, returns the three components of `nu`.
 
         @b Notes
 
         Given the non-normalized components \f$s_i\f$ of the covariant outward
-        pointing normal on the surface, in the simplest case of x,y,z
-        components without differentiation, the result is just
+        pointing normal on the surface, we compute
         \f[
             \nu_i = \frac{s_i}{\sqrt{D}}, \qquad D := g^{kl} s_k s_l.
         \f]
@@ -1057,10 +872,10 @@ class ExpansionCalc(object):
         \f]
         where
         \f{eqnarray*}{
-            D_i &:=& \partial_i (g^{kl} s_k s_l)
+            D_i &:=& \partial_i D
                 = (\partial_i g^{kl}) s_k s_l + 2 g^{kl} s_k\,\partial_i s_l
             \\
-            D_{ij} &:=& \partial_j D_i \\
+            D_{ij} &:=& \partial_i\partial_j D \\
                 &=&
                 (\partial_i \partial_j g^{kl}) s_k s_l
                 + 2 (\partial_i g^{kl}) s_k\,\partial_j s_l
@@ -1071,188 +886,12 @@ class ExpansionCalc(object):
                     + s_k \partial_i \partial_j s_l
                 \big).
         \f}
-
-        The derivatives of the x,y,z components w.r.t. \f$\lambda,\varphi\f$
-        are obtained using the chain rule, i.e. the results at \f$\varphi=0\f$
-        are
-        \f{eqnarray*}{
-            \partial_\lambda \nu_i &=& \rho' \nu_{i,x} + z' \nu_{i,z}
-            \\
-            \partial_\varphi \nu_i &=& \rho \nu_{i,y}
-                \quad (= 0\ \mbox{if}\ i \neq y)
-            \\
-            \partial_\lambda^2 \nu_i &=&
-                \rho'' \nu_{i,x} + \rho'^2 \nu_{i,xx}
-                + z'' \nu_{i,z} + z'^2 \nu_{i,zz}
-                + 2\rho' z' \nu_{i,xz}
-            \\
-            \partial_\lambda\partial_\varphi \nu_i &=&
-                \rho' \nu_{i,y} + \rho\rho' \nu_{i,xy} + \rho z' \nu_{i,yz}
-            \\
-            \partial_\varphi^2 \nu_i &=&
-                -\rho \nu_{i,x} + \rho^2 \nu_{i,yy}.
-        \f}
-        Here, \f$\nu_{i,x} := \partial_x\nu_i\f$, etc., and we have used the
-        coordinate derivatives like \f$y_{,\varphi} = \rho\f$ derived in
-        get_a_b_from_metric().
-
-        Finally, the derivatives of the \f$\lambda,\varphi\f$ components
-        w.r.t. \f$\lambda,\varphi\f$ can be spelled out by, again, applying
-        the chain rule and then setting \f$\varphi=0\f$ to yield
-        \f{eqnarray*}{
-            \partial_\lambda \nu_\lambda
-                &=& \nu_x \rho'' + \nu_z z''
-                    + \nu_{x,\lambda} \rho'
-                    + \nu_{z,\lambda} z'
-            \\
-            \partial_\varphi \nu_\lambda &=& \nu_{x,\varphi} \rho'
-            \\
-            \partial_\lambda \nu_\varphi &=& 0
-            \\
-            \partial_\varphi \nu_\varphi
-                &=& - \nu_x \rho + \nu_{y,\varphi} \rho
-            \\
-            \partial_\lambda^2 \nu_\lambda
-                &=& \nu_x \rho''' + 2 \nu_{x,\lambda} \rho''
-                    + \nu_{x,\lambda\lambda} \rho'
-                    + \nu_z z'''
-                    + 2 \nu_{z,\lambda} z''
-                    + \nu_{z,\lambda\lambda} z'
-            \\
-            \partial_\lambda\partial_\varphi \nu_\lambda
-                &=& \rho' \nu_{x,\lambda\varphi} + z' \nu_{z,\lambda,\varphi}
-            \\
-            \partial_\varphi^2 \nu_\lambda
-                &=& \rho'\, (\nu_{x,\varphi\varphi} + \nu_x + 2 \nu_{y,\varphi})
-                    + z' \nu_{z,\varphi\varphi}
-            \\
-            \partial_\lambda^2 \nu_\varphi &=& \nu_{y,\lambda\lambda} \rho
-            \\
-            \partial_\lambda\partial_\varphi \nu_\varphi
-                &=& \rho\,(-\nu_x + \nu_{y,\varphi})
-                    + \rho\,(-\nu_{x,\lambda} + \nu_{y,\lambda\varphi})
-            \\
-            \partial_\varphi^2 \nu_\varphi
-                &=& \rho \nu_{y,\varphi\varphi}.
-        \f}
         """
-        if not diff or deriv_wrt is None:
-            deriv_wrt = coords
-        if coords not in ('x,y,z', 'la,ph'):
-            raise ValueError("Unknown coordinates: %s" % coords)
-        if deriv_wrt not in ('x,y,z', 'la,ph'):
-            raise ValueError("Unknown coordinates: %s" % deriv_wrt)
-        return self._covariant_normal(coords, deriv_wrt, diff)
+        return self._covariant_normal(diff)
 
     @cache_method_results()
-    def _covariant_normal(self, coords, deriv_wrt, diff):
+    def _covariant_normal(self, diff):
         r"""Cached implementation of covariant_normal()."""
-        if coords == 'x,y,z' and deriv_wrt == 'x,y,z':
-            return self._nu_xyz_wrt_xyz(diff=diff)
-        if coords == 'x,y,z' and deriv_wrt == 'la,ph':
-            return self._nu_xyz_wrt_laph(diff=diff)
-        if coords == 'la,ph' and deriv_wrt == 'la,ph':
-            return self._nu_laph_wrt_laph(diff=diff)
-        raise NotImplementedError
-
-    def _nu_laph_wrt_laph(self, diff=0):
-        r"""Compute lambda,phi derivatives of lambda,phi normal components.
-
-        See covariant_normal() for the derivation of the used formulas.
-        """
-        rho = self.point[0]
-        nx, _, nz = self.covariant_normal()
-        drho, dz = self.curve.diff(self.param, diff=1)
-        if diff == 0:
-            nl = drho * nx + dz * nz # nu_lambda
-            return nl, 0.0
-        ddrho, ddz = self.curve.diff(self.param, diff=2)
-        # derivatives of nu_x, nu_z w.r.t. lambda and phi
-        dnx_lp, dny_lp, dnz_lp = self.covariant_normal(
-            coords='x,y,z', deriv_wrt='la,ph', diff=1
-        )
-        dnl_la = nx * ddrho + dnx_lp[0] * drho + nz * ddz + dnz_lp[0] * dz
-        dnl_ph = dnx_lp[1] * drho
-        dnp_la = 0.0
-        dnp_ph = rho * (-nx + dny_lp[1])
-        dnl = np.array([dnl_la, dnl_ph])
-        dnp = np.array([dnp_la, dnp_ph])
-        if diff == 1:
-            return dnl, dnp
-        d3rho, d3z = self.curve.diff(self.param, diff=3)
-        ddnx_lp, ddny_lp, ddnz_lp = self.covariant_normal(
-            coords='x,y,z', deriv_wrt='la,ph', diff=2
-        )
-        ddnl_ll = (
-            nx * d3rho + 2*dnx_lp[0]*ddrho + ddnx_lp[0,0]*drho + d3z*nz
-            + 2*ddz*dnz_lp[0] + dz*ddnz_lp[0,0]
-        )
-        ddnl_lp = drho * ddnx_lp[0,1] + dz * ddnz_lp[0,1]
-        ddnl_pp = drho * (ddnx_lp[1,1] - nx + 2*dny_lp[1]) + dz*ddnz_lp[1,1]
-        ddnp_ll = rho * ddny_lp[0,0]
-        ddnp_lp = drho*(-nx+dny_lp[1]) + rho*(-dnx_lp[0]+ddny_lp[0,1])
-        ddnp_pp = rho * ddny_lp[1,1]
-        if diff == 2:
-            ddnl = np.array([[ddnl_ll, ddnl_lp], [ddnl_lp, ddnl_pp]])
-            ddnp = np.array([[ddnp_ll, ddnp_lp], [ddnp_lp, ddnp_pp]])
-            return ddnl, ddnp
-        raise NotImplementedError
-
-    def _nu_xyz_wrt_laph(self, diff=0):
-        r"""Compute lambda,phi derivatives of x,y,z normal components.
-
-        See covariant_normal() for the derivation of the used formulas.
-        """
-        if diff == 0:
-            return self._nu_xyz_wrt_xyz(diff=0)
-        rho = self.point[0]
-        drho, dz = self.curve.diff(self.param, diff=1)
-        # e.g.: dn[0] = partial_i nu_x,  for i = x, y, z
-        dn = self.covariant_normal(
-            coords='x,y,z', deriv_wrt='x,y,z', diff=1
-        )
-        dnx_la, dny_la, dnz_la = [drho * dn[i][0] + dz * dn[i][2]
-                                  for i in range(3)]
-        dnx_ph, dny_ph, dnz_ph = [rho * dn[i][1] for i in range(3)]
-        if diff == 1:
-            dnx_lp = np.array([dnx_la, dnx_ph])
-            dny_lp = np.array([dny_la, dny_ph])
-            dnz_lp = np.array([dnz_la, dnz_ph])
-            return dnx_lp, dny_lp, dnz_lp
-        # e.g.: ddn[0] = partial_i partial_j nu_x,  for i = x, y, z
-        # so: ddn[0][1,2] = partial_y partial_z nu_x
-        ddn = self.covariant_normal(
-            coords='x,y,z', deriv_wrt='x,y,z', diff=2
-        )
-        ddrho, ddz = self.curve.diff(self.param, diff=2)
-        ddnx_ll, ddny_ll, ddnz_ll = [
-            ddrho * dn[i][0] + drho**2 * ddn[i][0,0] + 2*drho*dz * ddn[i][0,2]
-            + dz**2 * ddn[i][2,2] + ddz * dn[i][2]
-            for i in range(3)
-        ]
-        ddnx_lp, ddny_lp, ddnz_lp = [
-            drho * dn[i][1] + rho*drho * ddn[i][0,1] + rho*dz * ddn[i][1,2]
-            for i in range(3)
-        ]
-        ddnx_pp, ddny_pp, ddnz_pp = [
-            -rho * dn[i][0] + rho**2 * ddn[i][1,1]
-            for i in range(3)
-        ]
-        if diff == 2:
-            ddnx = np.array([[ddnx_ll, ddnx_lp],
-                             [ddnx_lp, ddnx_pp]])
-            ddny = np.array([[ddny_ll, ddny_lp],
-                             [ddny_lp, ddny_pp]])
-            ddnz = np.array([[ddnz_ll, ddnz_lp],
-                             [ddnz_lp, ddnz_pp]])
-            return ddnx, ddny, ddnz
-        raise NotImplementedError
-
-    def _nu_xyz_wrt_xyz(self, diff=0):
-        r"""Compute x,y,z derivatives of x,y,z normal components.
-
-        See covariant_normal() for the derivation of the used formulas.
-        """
         s = self.s
         D = self.ABCD[3]
         if diff == 0:
@@ -1274,7 +913,7 @@ class ExpansionCalc(object):
                 )
                 for j in range(3)
             ]
-            return dnx, dny, dnz
+            return np.array([dnx, dny, dnz]).T
         dds = self.compute_dds()
         Di = self.compute_Di()
         Dij = self.compute_Dij()
@@ -1288,7 +927,7 @@ class ExpansionCalc(object):
                 + 3./4. * s[k] / D**2.5 * np.outer(Di, Di)
                 for k in range(3)
             ]
-            return ddnx, ddny, ddnz
+            return np.array([ddnx, ddny, ddnz]).T # partial derivs. commute
         raise NotImplementedError
 
     def compute_Di(self):
@@ -1429,10 +1068,9 @@ class ExpansionCalc(object):
             dx^\mu\big|_\sigma = \frac{\partial x^\mu}{\partial u^A}\ du^A
                 =: x^\mu_{,A}\ du^A,
         \f]
-        where \f$u^A = \lambda,\varphi\f$. The \f$x^\mu_{,A}\f$ are derived
-        and spelled out in the description of get_a_b_from_metric(). Note that
-        \f$x^0_{,A} = 0\f$ since \f$x^0 = t\f$ does not depend on
-        \f$\lambda\f$ or \f$\varphi\f$.
+        where \f$u^A = \lambda,\varphi\f$. The \f$x^\mu_{,A}\f$ are computed
+        in diff_xyz_wrt_laph(). Note that \f$x^0_{,A} = 0\f$ since
+        \f$x^0 = t\f$ does not depend on \f$\lambda\f$ or \f$\varphi\f$.
         Observing further that \f$\partial_A = x^a_{,A}\partial_a\f$, we get
         \f{eqnarray*}{
             \nabla_{\!\partial_A} \nu_B
@@ -1486,18 +1124,9 @@ class ExpansionCalc(object):
         ra2 = range(2)
         ra3 = range(3)
         G3 = self.metric.christoffel(self.point)
-        nu = self.covariant_normal(coords='x,y,z', diff=0)
-        dn = self.covariant_normal(coords='x,y,z', deriv_wrt='x,y,z', diff=1)
-        # currently: dn[i,j] = partial_j nu_i
-        # we want:   dn[i,j] = partial_i nu_j
-        dn = np.asarray(dn).T
-        rho = self.point[0]
-        drho, dz = self.curve.diff(self.param, diff=1)
-        # dx[A,i] = partial_A x^i
-        dx = np.array([
-            [drho, 0.0, dz], # partial_lambda [x, y, z]
-            [0.0, rho, 0.0], # partial_phi    [x, y, z]
-        ])
+        nu = self.covariant_normal(diff=0)
+        dn = self.covariant_normal(diff=1) # i,j -> del_i nu_j
+        dx = self.diff_xyz_wrt_laph(diff=1) # shape=(2,3), A,i -> del_A x^i
         def _K(A, B):
             return - (
                 fsum(dx[A,i]*dx[B,j] * dn[i,j]

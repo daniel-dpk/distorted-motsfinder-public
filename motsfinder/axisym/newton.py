@@ -34,7 +34,7 @@ from scipy.linalg import LinAlgWarning, LinAlgError
 import numpy as np
 
 from ..utils import insert_missing, process_pool
-from ..numutils import raise_all_warnings
+from ..numutils import raise_all_warnings, NumericalError
 from ..ndsolve import ndsolve, CosineBasis
 
 
@@ -253,7 +253,8 @@ class NewtonKantorovich(object):
                     with process_pool() as pool:
                         return self._solve(initial_curve, pool=pool)
                 return self._solve(initial_curve)
-            except (LinAlgWarning, LinAlgError) as e:
+            except (LinAlgWarning, LinAlgError, FloatingPointError,
+                    NumericalError) as e:
                 self._raise(NoConvergence, str(e))
 
     def _solve(self, initial_curve, pool=None):

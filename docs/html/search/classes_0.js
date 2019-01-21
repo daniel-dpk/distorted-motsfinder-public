@@ -8,6 +8,7 @@ var searchData=
   ['_5fevaluator',['_Evaluator',['../classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html',1,'motsfinder::exprs::evaluators']]],
   ['_5ffuncvariation',['_FuncVariation',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1__FuncVariation.html',1,'motsfinder::axisym::curve::expcalc']]],
   ['_5ffuncwrap',['_FuncWrap',['../classmotsfinder_1_1utils_1_1__FuncWrap.html',1,'motsfinder::utils']]],
+  ['_5fgeneralmetric',['_GeneralMetric',['../classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html',1,'motsfinder::metric::base']]],
   ['_5flinearexpansionequation',['_LinearExpansionEquation',['../classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html',1,'motsfinder::axisym::newton']]],
   ['_5fmpmatrix',['_MpMatrix',['../classmotsfinder_1_1pickle__helpers_1_1__MpMatrix.html',1,'motsfinder::pickle_helpers']]],
   ['_5fmppi',['_MpPi',['../classmotsfinder_1_1pickle__helpers_1_1__MpPi.html',1,'motsfinder::pickle_helpers']]],

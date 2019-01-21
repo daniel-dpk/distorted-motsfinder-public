@@ -131,8 +131,8 @@ def parallel_compute(func, arg_list, args=(), kwargs=None, processes=None,
         for i, a in enumerate(items):
             chunks[i].append(a)
     runners = [_Runner(f, chunk) for chunk in chunks]
-    with process_pool(processes=processes, pool=pool):
-        workers = [pool.apply_async(runner, ()) for runner in runners]
+    with process_pool(processes=processes, pool=pool) as p:
+        workers = [p.apply_async(runner, ()) for runner in runners]
         results = [None] * len(arg_list)
         for i, worker in enumerate(workers):
             worker_results = worker.get()

@@ -91,6 +91,7 @@ class BaseCurve(object):
         self.domain = (0, np.pi)
         self._evaluator_overrides = None
         self._name = name
+        self._user_data = dict()
 
     def save(self, filename, overwrite=False, verbose=True, msg=''):
         r"""Save the curve to disk.
@@ -130,6 +131,17 @@ class BaseCurve(object):
         self.__dict__.update(restore_dict(state))
         # compatibility with data from previous versions
         self.__dict__['_name'] = self.__dict__.get('_name', '')
+        self.__dict__['_user_data'] = self.__dict__.get('_user_data', dict())
+
+    @property
+    def user_data(self):
+        r"""Dictionary of custom data stored in the curve.
+
+        This may be used to store search settings used to find the curve, or
+        physical properties like the area. Note that all stored data must be
+        picklable in order for saving and loading of the curve to work.
+        """
+        return self._user_data
 
     @property
     def name(self):

@@ -31,9 +31,11 @@ var classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve =
     [ "save", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a3700b94d209d5fc275b75342c97ab92a", null ],
     [ "tangent", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac4f6d98c9d65d438f6883a7b11628cac", null ],
     [ "unfreeze_evaluator", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ad86324d541d9b0f48b3cfe8647467613", null ],
+    [ "user_data", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ade300aee3cd305ca4ada280d408f471c", null ],
     [ "z_distance", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a09e7e0d3a2c3b77896fc0192eab51d10", null ],
     [ "z_distance_using_metric", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0d117c54647baccea4fee5bcf100bd79", null ],
     [ "_evaluator_overrides", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a4721bf46de8d6b4d0d7ae199e9dce9c6", null ],
     [ "_name", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a705391f3be33314bd5788a28f7538642", null ],
+    [ "_user_data", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ae0a51965ea669ca5e8ec525a4e452731", null ],
     [ "domain", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a8a6287602630db6aeffcb6cf5787a216", null ]
 ];

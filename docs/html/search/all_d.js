@@ -2,6 +2,7 @@ var searchData=
 [
   ['n',['N',['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a8d46d885c64dcd7e03c1cce176d06b3e',1,'motsfinder::exprs::series::SeriesExpression']]],
   ['name',['name',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02',1,'motsfinder.axisym.curve.basecurve.BaseCurve.name()'],['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a5907ca3bbf8e7cd8f40c3007338f6d02',1,'motsfinder.exprs.numexpr.NumericExpression.name()']]],
+  ['nan_5fmat',['nan_mat',['../namespacemotsfinder_1_1numutils.html#a62d955bcc07efc721a2ddc88c474b7ca',1,'motsfinder::numutils']]],
   ['ndsolve',['ndsolve',['../namespacemotsfinder_1_1ndsolve_1_1solver.html#aa9b143582d20b970c4f3001cad8fa3b5',1,'motsfinder::ndsolve::solver']]],
   ['ndsolveerror',['NDSolveError',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html',1,'motsfinder::ndsolve::bcs']]],
   ['ndsolver',['NDSolver',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html',1,'motsfinder::ndsolve::solver']]],
@@ -13,5 +14,6 @@ var searchData=
   ['norm',['norm',['../classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#ab2812bc8199d1c19dfae86a73f37bc35',1,'motsfinder::metric::base::MetricTensor']]],
   ['normal',['normal',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a1bde5537a950b9c8a5e0c430fc86d91d',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
   ['num',['num',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177',1,'motsfinder.axisym.curve.expcurve.ExpansionCurve.num()'],['../classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#a8e123567df79f0eb5b554d595e328177',1,'motsfinder.axisym.curve.parametriccurve.ParametricCurve.num()'],['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a8e123567df79f0eb5b554d595e328177',1,'motsfinder.ndsolve.bases.base._SpectralBasis.num()']]],
+  ['numericalerror',['NumericalError',['../classmotsfinder_1_1numutils_1_1NumericalError.html',1,'motsfinder::numutils']]],
   ['numericexpression',['NumericExpression',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html',1,'motsfinder::exprs::numexpr']]]
 ];

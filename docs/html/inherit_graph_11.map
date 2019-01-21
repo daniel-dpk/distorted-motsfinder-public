@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html" title="Base for exceptions indicating failed convergence of Newton steps. " alt="" coords="145,42,261,69"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1metric_1_1simulation_1_1siogeneral_1_1SimulationDataError.html" title="Raised if simulation data is not compatible with this module. " alt="" coords="133,93,272,119"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html" title="Raised for problems of the numerical task (like ill&#45;conditioned boundary conditions). " alt="" coords="151,143,254,170"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1numutils_1_1NumericalError.html" title="Exception raised for problems with numerical evaluation. " alt="" coords="148,194,257,221"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html" title="Raised when resolution is too low or roundoff prevents convergence. " alt="" coords="320,5,483,47"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html" title="Raised when convergence not achieved within the step count limit. " alt="" coords="334,71,469,98"/>
+</map>

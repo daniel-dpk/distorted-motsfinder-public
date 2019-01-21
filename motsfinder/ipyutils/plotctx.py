@@ -78,7 +78,7 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
              ytick_spacing=None, title=None, xlabel=None, ylabel=None,
              tight=True, tight_layout=True, usetex=None, fontsize=None,
              save=None, ax=None, show=True, close=False, cfg_callback=None,
-             equal_lengths=False, save_opts=None):
+             equal_lengths=False, dpi=None, save_opts=None):
     r"""Context manager for preparing a figure and applying configuration.
 
     This is a convenience function with which it is possible to easily create
@@ -107,7 +107,9 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
         rc_opts['font.size'] = fontsize
     with matplotlib_rc(rc_opts):
         if ax is None:
-            fig = plt.figure(figsize=figsize)
+            fig = plt.figure(
+                figsize=figsize, **(dict(dpi=dpi) if dpi else dict())
+            )
             if projection is not None:
                 ax = fig.add_subplot(111, projection=projection)
             else:
@@ -165,7 +167,7 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
             xmin, xmax = ax.get_xlim()
             ax.set_xlim(xmin-pad[0], xmax+pad[1])
         _cb(ax)
-        if save is not None:
+        if save is not None and save is not False:
             if "." not in op.basename(save):
                 save += ".pdf"
             fname = op.expanduser(save)

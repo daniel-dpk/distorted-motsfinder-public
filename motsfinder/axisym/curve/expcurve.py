@@ -14,6 +14,7 @@ from contextlib import contextmanager
 from math import fsum
 
 import numpy as np
+from scipy import linalg
 from scipy.integrate import quad
 from scipy.special import sph_harm
 
@@ -27,6 +28,12 @@ from .parametriccurve import ParametricCurve
 
 
 __all__ = []
+
+
+# It is customary to denote indices of tensors without spaces, e.g.:
+#   T_{ijk}  =>  T[i,j,k]
+# We disable the respective pylint warning for this file.
+# pylint: disable=bad-whitespace
 
 
 class ExpansionCurve(BaseCurve):
@@ -48,7 +55,7 @@ class ExpansionCurve(BaseCurve):
         * _create_calc_obj() to create the cache/calculator object
     """
 
-    def __init__(self, h, metric, extr_curvature=None, name=''):
+    def __init__(self, h, metric, name=''):
         r"""Base class constructor taking a horizon function and metric.
 
         @param h (exprs.numexpr.NumericExpression)
@@ -57,9 +64,6 @@ class ExpansionCurve(BaseCurve):
         @param metric
             The Riemannian 3-metric defining the geometry of the surrounding
             space.
-        @param extr_curvature
-            Symmetric covariant 2-tensor defining the extrinsic curvature `K`.
-            If not specified, time-symmetry is assumed (i.e. `K=0`).
         @param name
             Name of this curve. This may be used when printing information
             about this curve or as label in plots.
@@ -67,12 +71,17 @@ class ExpansionCurve(BaseCurve):
         super(ExpansionCurve, self).__init__(name=name)
         self.h = h
         self.metric = metric
-        self.extr_curvature = extr_curvature
+        self.extr_curvature = metric.get_curv() if metric else None
         self._calc = None
 
     def __getstate__(self):
-        with self.suspend_calc_obj():
+        with self.suspend_calc_obj(), self.suspend_curv():
             return super(ExpansionCurve, self).__getstate__()
+
+    def __setstate__(self, state):
+        super().__setstate__(state)
+        if self.metric:
+            self.extr_curvature = self.metric.get_curv()
 
     @abstractmethod
     def h_diff(self, param):
@@ -244,6 +253,16 @@ class ExpansionCurve(BaseCurve):
             self._calc = calc_orig
 
     @contextmanager
+    def suspend_curv(self):
+        r"""Context manager to temporarily ignore the extrinsic curvature."""
+        curv = self.extr_curvature
+        try:
+            self.extr_curvature = None
+            yield
+        finally:
+            self.extr_curvature = curv
+
+    @contextmanager
     def temp_metric(self, metric=None):
         r"""Context manager to temporarily replace the used metric.
 
@@ -393,12 +412,14 @@ class ExpansionCurve(BaseCurve):
             calc = self.get_calc_obj(param)
             return calc.extrinsic_curvature(trace=trace, square=square)
 
-    def area(self, full_output=False):
+    def area(self, full_output=False, **kw):
         r"""Compute the area of the surface represented by this curve.
 
         @param full_output
             If `True`, return the computed area and an estimation of the
             error. Otherwise (default), just return the area.
+        @param **kw
+            Additional keyword arguments are passed to `scipy.integrate.quad`.
 
         @return The computed area. If `full_output==True`, returns a pair
             ``(A, err)``, where `A` is the area computed from numerical 1D
@@ -417,66 +438,18 @@ class ExpansionCurve(BaseCurve):
             \qquad
             q_{ab} = g_{ab} - \nu_a \nu_b
         \f]
-        is the restriction of the Riemannian 3-metric \f$g\f$ to the surface
-        \f$\sigma\f$, i.e. the induced metric on \f$\sigma\f$
-        (compare equation (2) in [1]).
+        is the induced metric on \f$\sigma\f$ (compare equation (2) in [1]).
         Here, \f$\nu\f$ is the outward pointing normal of \f$\sigma\f$ and
-        \f$\underline{\nu} = g(\nu,\,\cdot\,)\f$, which is computed by the
-        expcalc.ExpansionCalc class.
-        Since we assume the geometry to be axisymmetric, the metric will be a
-        conformally transformed Brill wave (cf. [2]) having a general form of
-        \f[
-            g = a(\rho,z)\ (d\rho^2 + dz^2) + \rho^2 b(\rho,z)\ d\varphi^2,
-        \f]
-        where \f$a, b > 0\f$. (In the conformally flat case, we will have
-        \f$a \equiv b\f$). Note that the components of \f$g\f$ in Cartesian
-        coordinates satisfy \f$g_{zz} = a\f$ and
-        \f$g_{yy}\big|_{\varphi=0} = b\f$ as can be verified by transforming
-        the above Brill wave to Cartesian coordinates.
-        The surface the current curve \f$\gamma\f$ represents is defined by
-        \f[
-            \rho(\lambda) = \gamma(\lambda)_x, \qquad
-            z(\lambda) = \gamma(\lambda)_z.
-        \f]
-        Using \f$d\rho = \rho' \ d\lambda\f$ and \f$dz = z' \ d\lambda\f$ and
-        expressing the components \f$\nu_a\f$ with respect to
-        \f$d\lambda\f$, \f$d\varphi\f$, we arrive at
-        \f{eqnarray*}{
-            \det q &=& q_{\lambda\lambda} q_{\varphi\varphi}
-                    - q_{\lambda\varphi}^2
-                \\
-                &=& b \rho^2 \big[
-                    (\nu_x\rho'\cos\varphi + \nu_y\rho'\sin\varphi + \nu_z z')^2
-                    + a\ (\rho'^2 + z'^2)
-                \big]
-                + a\ (\nu_y\rho\cos\varphi - \nu_x\rho\sin\varphi)^2
-                     (\rho'^2 + z'^2)
-                \\
-            \det q\big|_{\varphi=0} &=&
-                b \rho^2 \big[
-                    (\nu_x\rho' + \nu_z z')^2
-                    + a\ (\rho'^2 + z'^2)
-                \big].
-        \f}
-        Due to the symmetry w.r.t. \f$\varphi\f$, we only have to perform a
-        one-dimensional numerical integration to obtain the area via
-        \f[
-            A = \int_0^\pi d\lambda \int_0^{2\pi}d\varphi\ \sqrt{\det q}
-              = 2\pi \int_0^\pi d\lambda\ \sqrt{\det q\big|_{\varphi=0}}.
-        \f]
+        \f$\underline{\nu} = g(\nu,\,\cdot\,)\f$.
 
         @b References
 
         [1] Gundlach, Carsten. "Pseudospectral apparent horizon finders: An
             efficient new algorithm." Physical Review D 57.2 (1998): 863.
-
-        [2] Brill, Dieter R. "On the positive definite mass of the
-            Bondi-Weber-Wheeler time-symmetric gravitational waves." Annals of
-            Physics 7.4 (1959): 466-483.
         """
         with self.fix_evaluator():
             det_q = self._get_det_q_func()
-            res, err = quad(lambda t: np.sqrt(det_q(t)), a=0, b=np.pi)
+            res, err = quad(lambda t: np.sqrt(det_q(t)), a=0, b=np.pi, **kw)
             area = 2*np.pi * res
             err = 2*np.pi * err
             if full_output:
@@ -484,22 +457,11 @@ class ExpansionCurve(BaseCurve):
             return area
 
     def _get_det_q_func(self):
-        r"""Create a function to evaluate det(q), see area() for details."""
+        r"""Create a function to evaluate det(q)."""
         def det_q(param):
             calc = self.get_calc_obj(param)
-            # interpret gamma_x as rho
-            rho = calc.point[0]
-            g = calc.g
-            a = g.mat[2, 2] # g_zz (see docstring)
-            b = g.mat[1, 1] # g_yy (see docstring)
-            s, s_up = calc.s, calc.s_up
-            # we need the normalized normal covector
-            nx, _, nz = s / np.sqrt(s.dot(s_up))
-            rhop, zp = self.diff(param)
-            return b * rho**2 * (
-                (nx * rhop + nz * zp)**2
-                + a * (rhop**2 + zp**2)
-            )
+            q = calc.induced_metric()
+            return linalg.det(q)
         return det_q
 
     def irreducible_mass(self, area=None):
@@ -625,43 +587,50 @@ class ExpansionCurve(BaseCurve):
             marginally outer trapped surfaces and existence of marginally
             outer trapped tubes." arXiv preprint arXiv:0704.2889 (2007).
         """
-        if self.extr_curvature is not None:
-            raise NotImplementedError("Computing stability in non-time-symmetric "
-                                      "slices not implemented.")
         if num is None:
             num = self.num
         with self.fix_evaluator():
-            def eq(pts):
-                terms = []
-                for pt in pts:
-                    calc = self.get_calc_obj(pt)
-                    dq = calc.induced_metric(diff=1)
-                    q_inv = calc.induced_metric(inverse=True)
-                    dlambda_term = -(
-                        0.5 * np.einsum('kl,i,ikl', q_inv, q_inv[:,0], dq)
-                        - np.einsum('ik,l,ikl', q_inv, q_inv[0,:], dq)
-                    )
-                    d2lambda_term = -q_inv[0,0]
-                    k2 = calc.extrinsic_curvature(square=True)
-                    nu_cov = calc.covariant_normal('x,y,z', diff=0)
-                    nu = calc.g.inv.dot(nu_cov)
-                    Ric = self.metric.ricci_tensor(calc.point)
-                    Rnn = Ric.dot(nu).dot(nu)
-                    # terms[0] == coeff of id
-                    # terms[1] == coeff of \partial_\lambda
-                    # terms[2] == coeff of \partial_\lambda^2
-                    terms.append([-Rnn-k2, dlambda_term, d2lambda_term])
-                return np.array(terms).T, 0.0
-            solver = NDSolver(
-                eq=eq,
-                basis=CosineBasis(domain=(0, np.pi), num=num, lobatto=False),
+            if self.extr_curvature is None:
+                eq = self.stability_eigenvalue_equation_timesym
+            else:
+                raise NotImplementedError
+        solver = NDSolver(
+            eq=eq,
+            basis=CosineBasis(domain=(0, np.pi), num=num, lobatto=False),
+        )
+        eigenvals, principle = solver.eigenvalues()
+        if abs(principle.imag) > rtol * abs(principle.real):
+            raise RuntimeError("Non-real principle eigenvalue detected.")
+        if full_output:
+            return principle.real, eigenvals
+        return principle.real
+
+    def stability_eigenvalue_equation_timesym(self, pts):
+        r"""Eigenvalue equation evaluator for time-symmetric case.
+
+        This function is suitable to be passed as `eq` parameter to
+        motsfinder.ndsolve.solver.NDSolver.
+        """
+        # Values for 3 derivative orders (0,1,2) per point.
+        operator_values = np.zeros((len(pts), 3))
+        for pt, op in zip(pts, operator_values):
+            calc = self.get_calc_obj(pt)
+            dq = calc.induced_metric(diff=1)
+            q_inv = calc.induced_metric(inverse=True)
+            # Laplacian:
+            op[1] += -(
+                0.5 * np.einsum('kl,i,ikl', q_inv, q_inv[:,0], dq)
+                - np.einsum('ik,l,ikl', q_inv, q_inv[0,:], dq)
             )
-            eigenvals, principle = solver.eigenvalues()
-            if abs(principle.imag) > rtol * abs(principle.real):
-                raise RuntimeError("Non-real principle eigenvalue detected.")
-            if full_output:
-                return principle.real, eigenvals
-            return principle.real
+            op[2] += -q_inv[0,0]
+            # Remaining terms:
+            k2 = calc.extrinsic_curvature(square=True)
+            nu_cov = calc.covariant_normal(diff=0)
+            nu = calc.g.inv.dot(nu_cov)
+            Ric = self.metric.ricci_tensor(calc.point)
+            Rnn = Ric.dot(nu).dot(nu)
+            op[0] += -Rnn - k2
+        return operator_values.T, 0.0
 
     def multipoles(self, max_n=10, num=None, **kw):
         r"""Compute the mass multipoles I_n of the horizon.

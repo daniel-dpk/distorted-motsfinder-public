@@ -2,6 +2,7 @@ var searchData=
 [
   ['n',['N',['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a8d46d885c64dcd7e03c1cce176d06b3e',1,'motsfinder::exprs::series::SeriesExpression']]],
   ['name',['name',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02',1,'motsfinder.axisym.curve.basecurve.BaseCurve.name()'],['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a5907ca3bbf8e7cd8f40c3007338f6d02',1,'motsfinder.exprs.numexpr.NumericExpression.name()']]],
+  ['nan_5fmat',['nan_mat',['../namespacemotsfinder_1_1numutils.html#a62d955bcc07efc721a2ddc88c474b7ca',1,'motsfinder::numutils']]],
   ['ndsolve',['ndsolve',['../namespacemotsfinder_1_1ndsolve_1_1solver.html#aa9b143582d20b970c4f3001cad8fa3b5',1,'motsfinder::ndsolve::solver']]],
   ['newton_5fkantorovich',['newton_kantorovich',['../namespacemotsfinder_1_1axisym_1_1newton.html#a2c65a6ca64e8c4a88988043f8e49cf45',1,'motsfinder::axisym::newton']]],
   ['nice_5fname',['nice_name',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a138e4a7c521f2b78098fdd155f82e7cb',1,'motsfinder::exprs::numexpr::NumericExpression']]],

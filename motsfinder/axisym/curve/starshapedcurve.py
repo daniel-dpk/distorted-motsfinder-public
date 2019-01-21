@@ -52,8 +52,7 @@ class StarShapedCurve(ExpansionCurve):
     See the examples in the package description of curve.starshapedcurve.
     """
 
-    def __init__(self, h, metric, extr_curvature=None, origin=(0, 0, 0),
-                 name=''):
+    def __init__(self, h, metric, origin=(0, 0, 0), name=''):
         r"""Create a star-shaped parameterized curve.
 
         @param h (exprs.numexpr.NumericExpression)
@@ -62,9 +61,6 @@ class StarShapedCurve(ExpansionCurve):
         @param metric
             The Riemannian 3-metric defining the geometry of the surrounding
             space.
-        @param extr_curvature
-            Symmetric covariant 2-tensor defining the extrinsic curvature `K`.
-            If not specified, time-symmetry is assumed (i.e. `K=0`).
         @param origin (float or 2- or 3-tuple/list)
             Origin with respect to which this curve is parameterized.
             A float is interpreted as the `z`-axis coordinate value.
@@ -76,14 +72,12 @@ class StarShapedCurve(ExpansionCurve):
             Name of this curve. This may be used when printing information
             about this curve or as label in plots.
         """
-        super(StarShapedCurve, self).__init__(h, metric, extr_curvature,
-                                              name=name)
+        super(StarShapedCurve, self).__init__(h, metric, name=name)
         self._origin = None
         self.set_origin(origin)
 
     @staticmethod
-    def create_sphere(radius, num, metric, extr_curvature=None,
-                      origin=(0, 0, 0)):
+    def create_sphere(radius, num, metric, origin=(0, 0, 0)):
         r"""Create a circle of given radius representing a sphere in 3D.
 
         @param radius
@@ -95,17 +89,12 @@ class StarShapedCurve(ExpansionCurve):
         @param metric
             The Riemannian 3-metric defining the geometry of the surrounding
             space.
-        @param extr_curvature
-            Symmetric covariant 2-tensor defining the extrinsic curvature `K`.
-            If not specified, time-symmetry is assumed (i.e. `K=0`).
         @param origin
             Origin with respect to which this curve is parameterized. See
             #__init__() for details.
         """
         h = CosineSeries([radius], domain=(0, np.pi))
-        curve = StarShapedCurve(h=h, metric=metric,
-                                extr_curvature=extr_curvature,
-                                origin=origin)
+        curve = StarShapedCurve(h=h, metric=metric, origin=origin)
         return curve.resample(num)
 
     def h_diff(self, param):
@@ -133,12 +122,11 @@ class StarShapedCurve(ExpansionCurve):
     def _create_calc_obj(self, param):
         return _StarShapedExpansionCalc(
             curve=self, h_fun=self._get_evaluators(), param=param,
-            metric=self.metric, extr_curvature=self.extr_curvature
+            metric=self.metric,
         )
 
     def copy(self):
         return type(self)(h=self.h.copy(), metric=self.metric,
-                          extr_curvature=self.extr_curvature,
                           origin=self.origin, name=self.name)
 
     def __call__(self, param, xyz=False):

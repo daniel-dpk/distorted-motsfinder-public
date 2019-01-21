@@ -33,14 +33,14 @@ __all__ = [
 
 class FlatThreeMetric(_ThreeMetric):
     r"""Flat 3-metric in Cartesian coordinates."""
-    def __init__(self, **kw):
-        super(FlatThreeMetric, self).__init__(**kw)
+    def __init__(self):
+        super(FlatThreeMetric, self).__init__()
         self._g = np.identity(3)
 
     def _mat_at(self, point):
         return self._g
 
-    def diff(self, point, inverse=False, diff=1, **kw):
+    def diff(self, point, inverse=False, diff=1):
         if diff == 0:
             return self.at(point).inv if inverse else self.at(point).mat
         return np.zeros([3] * (diff+2))
@@ -60,18 +60,6 @@ class _ConformallyFlatMetric(_ThreeMetric):
     differentiation of the metric and its inverse.
     """
 
-    def __init__(self, force_fd=False, **kw):
-        r"""Base class init for conformally flat metrics.
-
-        @param force_fd (boolean)
-            Whether to enforce numerical FD differentiation even if analytical
-            derivatives are implemented. Default is `False`.
-        @param **kw
-            Keyword arguments passed to _ThreeMetric.
-        """
-        super(_ConformallyFlatMetric, self).__init__(**kw)
-        self.force_fd = force_fd
-
     def _mat_at(self, point):
         return self.conformal_factor(point) * np.identity(3)
 
@@ -79,7 +67,7 @@ class _ConformallyFlatMetric(_ThreeMetric):
         r"""Compute the conformal factor at the given point."""
         return self.psi(point)**4
 
-    def diff(self, point, inverse=False, diff=1, **kw):
+    def diff(self, point, inverse=False, diff=1):
         r"""Analytically compute derivatives \wrt x, y, z.
 
         @return Multidimensional list with indices `i1, i2, ..., k, l`
@@ -109,10 +97,6 @@ class _ConformallyFlatMetric(_ThreeMetric):
         """
         if diff == 0:
             return self.at(point).inv if inverse else self.at(point).mat
-        if self.force_fd:
-            return super(_ConformallyFlatMetric, self).diff(
-                point, inverse=inverse, **kw
-            )
         Id = np.identity(3)
         if diff == 1:
             # indices mean: [i,j,k] <=> \partial_i g_jk
@@ -134,7 +118,7 @@ class _ConformallyFlatMetric(_ThreeMetric):
             ).reshape(3, 3, 3, 3)
         raise NotImplementedError
 
-    def diff_lnsqrtg(self, point, **kw):
+    def diff_lnsqrtg(self, point):
         r"""Return x,y,z derivatives of ln(sqrt(det(g))).
 
         This computes the terms \f$ \partial_i \ln(\sqrt{g}) \f$
@@ -149,10 +133,6 @@ class _ConformallyFlatMetric(_ThreeMetric):
                 = 6 \frac{\partial_i\psi}{\psi}.
         \f]
         """
-        if self.force_fd:
-            return super(_ConformallyFlatMetric, self).diff_lnsqrtg(
-                point, **kw
-            )
         psi, dpsi = self.psi(point, derivatives=True)
         return [6 * dpsii / psi for dpsii in dpsi]
 
@@ -223,15 +203,13 @@ class SchwarzschildSliceMetric(_ConformallyFlatMetric):
     \anchor straumann2004 [2] Straumann, Norbert. General relativity. Springer
     Science & Business Media, 2004.
     """
-    def __init__(self, m, **kw):
+    def __init__(self, m):
         r"""Create a Schwarzschild slice metric of a given mass.
 
         @param m (float)
             ADM Mass of the metric.
-        @param **kw
-            Optional arguments for the parent class (e.g. `dx`).
         """
-        super(SchwarzschildSliceMetric, self).__init__(**kw)
+        super(SchwarzschildSliceMetric, self).__init__()
         self.m = float(m)
 
     def horizon_area(self):
@@ -323,7 +301,7 @@ class BrillLindquistMetric(_ConformallyFlatMetric):
         "Interaction energy in geometrostatics." Physical Review 131.1 (1963):
         471.
     """
-    def __init__(self, d, m1=1, m2=1, axis='z', **kw):
+    def __init__(self, d, m1=1, m2=1, axis='z'):
         r"""Construct a Brill-Lindquist 3-metric.
 
         The ADM mass of the metric (specifically, the ADM mass of the
@@ -345,8 +323,6 @@ class BrillLindquistMetric(_ConformallyFlatMetric):
         @param axis (``{'x', 'y', 'z'}``, optional)
             Symmetry axis on which to place the two punctures. Default is
             `'z'`.
-        @param **kw
-            Further arguments passed to the parent class constructor.
 
         @b References
 
@@ -354,7 +330,7 @@ class BrillLindquistMetric(_ConformallyFlatMetric):
             Trapped Surfaces in Numerical General Relativity. Diss. PhD thesis,
             University of Jena, 2010.
         """
-        super(BrillLindquistMetric, self).__init__(**kw)
+        super(BrillLindquistMetric, self).__init__()
         self._m1 = float(m1)
         self._m2 = float(m2)
         self._d = d

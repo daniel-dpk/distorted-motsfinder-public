@@ -1,0 +1,5 @@
+<map id="_SioField" name="_SioField">
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioCurv.html" title="Extrinsic curvature of a slice read from simulation data. " alt="" coords="5,80,75,107"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html" title="Represents a scalar field with one component. " alt="" coords="99,80,205,107"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html" title="Represents a vector field with three spatial components. " alt="" coords="229,80,336,107"/>
+</map>

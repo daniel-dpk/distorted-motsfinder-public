@@ -83,370 +83,92 @@ $(document).ready(function(){initNavTree('classmotsfinder_1_1metric_1_1base_1_1_
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">_ThreeMetric Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Base class for metrics, i.e. symmetric covariant 2-Tensor fields.  
+<p>Base class for 3-metrics on a spatial slice of spacetime.  
  <a href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for _ThreeMetric:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric__inherit__graph.png" border="0" usemap="#__ThreeMetric_inherit__map" alt="Inheritance graph"/></div>
 <map name="__ThreeMetric_inherit__map" id="__ThreeMetric_inherit__map">
-<area shape="rect" id="node3" href="classmotsfinder_1_1metric_1_1analytical_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="81,155,238,181"/>
-<area shape="rect" id="node6" href="classmotsfinder_1_1metric_1_1analytical_1_1FlatThreeMetric.html" title="Flat 3&#45;metric in Cartesian coordinates. " alt="" coords="263,155,376,181"/>
-<area shape="rect" id="node4" href="classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="5,229,137,256"/>
-<area shape="rect" id="node5" href="classmotsfinder_1_1metric_1_1analytical_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="161,229,333,256"/>
+<area shape="rect" id="node4" href="classmotsfinder_1_1metric_1_1analytical_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="81,229,238,256"/>
+<area shape="rect" id="node7" href="classmotsfinder_1_1metric_1_1analytical_1_1FlatThreeMetric.html" title="Flat 3&#45;metric in Cartesian coordinates. " alt="" coords="263,229,376,256"/>
+<area shape="rect" id="node2" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature). " alt="" coords="184,80,295,107"/>
+<area shape="rect" id="node5" href="classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="5,304,137,331"/>
+<area shape="rect" id="node6" href="classmotsfinder_1_1metric_1_1analytical_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="161,304,333,331"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4eaaca2a0641c391de759c10c79bbb0f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a4eaaca2a0641c391de759c10c79bbb0f">__init__</a> (self, <a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#aacddc911cdfe5cd5ec97b084754542d4">dx</a>=1e-8, fd_order=3)</td></tr>
-<tr class="memdesc:a4eaaca2a0641c391de759c10c79bbb0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class init for metrics.  <a href="#a4eaaca2a0641c391de759c10c79bbb0f">More...</a><br /></td></tr>
-<tr class="separator:a4eaaca2a0641c391de759c10c79bbb0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f316a2e3af7a3731d59a9835c06f7af"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a1f316a2e3af7a3731d59a9835c06f7af">at</a> (self, point)</td></tr>
-<tr class="memdesc:a1f316a2e3af7a3731d59a9835c06f7af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the metric tensor at a given point.  <a href="#a1f316a2e3af7a3731d59a9835c06f7af">More...</a><br /></td></tr>
-<tr class="separator:a1f316a2e3af7a3731d59a9835c06f7af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75feb4a96bae5b73a6cc56a9e61861cd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a75feb4a96bae5b73a6cc56a9e61861cd">diff</a> (self, point, inverse=False, diff=1, kw)</td></tr>
-<tr class="memdesc:a75feb4a96bae5b73a6cc56a9e61861cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return derivatives in x,y,z directions at the given point.  <a href="#a75feb4a96bae5b73a6cc56a9e61861cd">More...</a><br /></td></tr>
-<tr class="separator:a75feb4a96bae5b73a6cc56a9e61861cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a751c28c98bd004f531f8a672e7c536e0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a751c28c98bd004f531f8a672e7c536e0">diff_lnsqrtg</a> (self, point, kw)</td></tr>
-<tr class="memdesc:a751c28c98bd004f531f8a672e7c536e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return x,y,z derivatives of ln(sqrt(det(g))).  <a href="#a751c28c98bd004f531f8a672e7c536e0">More...</a><br /></td></tr>
-<tr class="separator:a751c28c98bd004f531f8a672e7c536e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7860018e3126b131d4cbf3e4f06175ca"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a7860018e3126b131d4cbf3e4f06175ca">christoffel</a> (self, point)</td></tr>
-<tr class="memdesc:a7860018e3126b131d4cbf3e4f06175ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the Christoffel symbols of this 3-metric.  <a href="#a7860018e3126b131d4cbf3e4f06175ca">More...</a><br /></td></tr>
-<tr class="separator:a7860018e3126b131d4cbf3e4f06175ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6603f5f7a61b3fc111176e7b8e5939ec"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a6603f5f7a61b3fc111176e7b8e5939ec">christoffel_deriv</a> (self, point)</td></tr>
-<tr class="memdesc:a6603f5f7a61b3fc111176e7b8e5939ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the derivatives of the Christoffel symbols.  <a href="#a6603f5f7a61b3fc111176e7b8e5939ec">More...</a><br /></td></tr>
-<tr class="separator:a6603f5f7a61b3fc111176e7b8e5939ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad662879ce5ef0e3c5ca735ba5edd52ce"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#ad662879ce5ef0e3c5ca735ba5edd52ce">ricci_tensor</a> (self, point)</td></tr>
-<tr class="memdesc:ad662879ce5ef0e3c5ca735ba5edd52ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the components of the Ricci tensor.  <a href="#ad662879ce5ef0e3c5ca735ba5edd52ce">More...</a><br /></td></tr>
-<tr class="separator:ad662879ce5ef0e3c5ca735ba5edd52ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:aacddc911cdfe5cd5ec97b084754542d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#aacddc911cdfe5cd5ec97b084754542d4">dx</a></td></tr>
-<tr class="memdesc:aacddc911cdfe5cd5ec97b084754542d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Step length for numerical differentiation.  <a href="#aacddc911cdfe5cd5ec97b084754542d4">More...</a><br /></td></tr>
-<tr class="separator:aacddc911cdfe5cd5ec97b084754542d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fbaab2d8f1592ed0b6e512658bf1eb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a4fbaab2d8f1592ed0b6e512658bf1eb8">fd_order</a></td></tr>
-<tr class="memdesc:a4fbaab2d8f1592ed0b6e512658bf1eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finite difference approximation order for numerical differentiation.  <a href="#a4fbaab2d8f1592ed0b6e512658bf1eb8">More...</a><br /></td></tr>
-<tr class="separator:a4fbaab2d8f1592ed0b6e512658bf1eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:a8efc33ef9e8648f08abe28e225b94885"><td class="memItemLeft" align="right" valign="top"><a id="a8efc33ef9e8648f08abe28e225b94885"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a8efc33ef9e8648f08abe28e225b94885">_mat_at</a> (self, point)</td></tr>
-<tr class="memdesc:a8efc33ef9e8648f08abe28e225b94885"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the metric tensor matrix at a given point. <br /></td></tr>
-<tr class="separator:a8efc33ef9e8648f08abe28e225b94885"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a629aa5b8809b017932f787feec890d4b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a629aa5b8809b017932f787feec890d4b">get_curv</a> (self)</td></tr>
+<tr class="memdesc:a629aa5b8809b017932f787feec890d4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the extrinsic curvature belonging to this 3-metric.  <a href="#a629aa5b8809b017932f787feec890d4b">More...</a><br /></td></tr>
+<tr class="separator:a629aa5b8809b017932f787feec890d4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69f7a8c13306be42009abc6b1cae0ae9"><td class="memItemLeft" align="right" valign="top"><a id="a69f7a8c13306be42009abc6b1cae0ae9"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_lapse</b> (self)</td></tr>
+<tr class="separator:a69f7a8c13306be42009abc6b1cae0ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29b481b49dd28a3492ab3cc36dd2444e"><td class="memItemLeft" align="right" valign="top"><a id="a29b481b49dd28a3492ab3cc36dd2444e"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_shift</b> (self)</td></tr>
+<tr class="separator:a29b481b49dd28a3492ab3cc36dd2444e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe347cde38df25038965e0131a26a9cf"><td class="memItemLeft" align="right" valign="top"><a id="afe347cde38df25038965e0131a26a9cf"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_dtlapse</b> (self)</td></tr>
+<tr class="separator:afe347cde38df25038965e0131a26a9cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a426373bb5a8c9b2e4422997f142b0be1"><td class="memItemLeft" align="right" valign="top"><a id="a426373bb5a8c9b2e4422997f142b0be1"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>get_dtshift</b> (self)</td></tr>
+<tr class="separator:a426373bb5a8c9b2e4422997f142b0be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html">_GeneralMetric</a></td></tr>
+<tr class="memitem:a1f316a2e3af7a3731d59a9835c06f7af inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a1f316a2e3af7a3731d59a9835c06f7af">at</a> (self, point)</td></tr>
+<tr class="memdesc:a1f316a2e3af7a3731d59a9835c06f7af inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the metric tensor at a given point.  <a href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a1f316a2e3af7a3731d59a9835c06f7af">More...</a><br /></td></tr>
+<tr class="separator:a1f316a2e3af7a3731d59a9835c06f7af inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f0fa5515b7e6623e1bac8676cbfbaac inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a4f0fa5515b7e6623e1bac8676cbfbaac">diff</a> (self, point, inverse=False, diff=1)</td></tr>
+<tr class="memdesc:a4f0fa5515b7e6623e1bac8676cbfbaac inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return derivatives of the metric at the given point.  <a href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a4f0fa5515b7e6623e1bac8676cbfbaac">More...</a><br /></td></tr>
+<tr class="separator:a4f0fa5515b7e6623e1bac8676cbfbaac inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0849416ea837513e1299d3f8714b2d96 inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a0849416ea837513e1299d3f8714b2d96">diff_lnsqrtg</a> (self, point)</td></tr>
+<tr class="memdesc:a0849416ea837513e1299d3f8714b2d96 inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return derivatives of ln(sqrt(det(g))).  <a href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a0849416ea837513e1299d3f8714b2d96">More...</a><br /></td></tr>
+<tr class="separator:a0849416ea837513e1299d3f8714b2d96 inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7860018e3126b131d4cbf3e4f06175ca inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a7860018e3126b131d4cbf3e4f06175ca">christoffel</a> (self, point)</td></tr>
+<tr class="memdesc:a7860018e3126b131d4cbf3e4f06175ca inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the Christoffel symbols of this metric.  <a href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a7860018e3126b131d4cbf3e4f06175ca">More...</a><br /></td></tr>
+<tr class="separator:a7860018e3126b131d4cbf3e4f06175ca inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6603f5f7a61b3fc111176e7b8e5939ec inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a6603f5f7a61b3fc111176e7b8e5939ec">christoffel_deriv</a> (self, point)</td></tr>
+<tr class="memdesc:a6603f5f7a61b3fc111176e7b8e5939ec inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the derivatives of the Christoffel symbols.  <a href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a6603f5f7a61b3fc111176e7b8e5939ec">More...</a><br /></td></tr>
+<tr class="separator:a6603f5f7a61b3fc111176e7b8e5939ec inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad662879ce5ef0e3c5ca735ba5edd52ce inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#ad662879ce5ef0e3c5ca735ba5edd52ce">ricci_tensor</a> (self, point)</td></tr>
+<tr class="memdesc:ad662879ce5ef0e3c5ca735ba5edd52ce inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the components of the Ricci tensor.  <a href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#ad662879ce5ef0e3c5ca735ba5edd52ce">More...</a><br /></td></tr>
+<tr class="separator:ad662879ce5ef0e3c5ca735ba5edd52ce inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd45666fca6ad95717e8e6e82998bdee inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#acd45666fca6ad95717e8e6e82998bdee">ricci_scalar</a> (self, point)</td></tr>
+<tr class="memdesc:acd45666fca6ad95717e8e6e82998bdee inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the scalar curvature (Ricci scalar).  <a href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#acd45666fca6ad95717e8e6e82998bdee">More...</a><br /></td></tr>
+<tr class="separator:acd45666fca6ad95717e8e6e82998bdee inherit pub_methods_classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base class for metrics, i.e. symmetric covariant 2-Tensor fields. </p>
+<div class="textblock"><p>Base class for 3-metrics on a spatial slice of spacetime. </p>
 <p>The methods child classes have to implement are:</p><ul>
-<li><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a8efc33ef9e8648f08abe28e225b94885" title="Compute the metric tensor matrix at a given point. ">_mat_at()</a> computing the metric tensor (matrix) at a given point</li>
+<li><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a8efc33ef9e8648f08abe28e225b94885" title="Compute the metric tensor matrix at a given point. ">_mat_at()</a> computing the metric tensor (matrix) at a given point</li>
+<li><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a4f0fa5515b7e6623e1bac8676cbfbaac" title="Return derivatives of the metric at the given point. ">diff()</a> computing derivatives of the metric at a given point </li>
 </ul>
-<p>The may also override the default implementations of <a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a75feb4a96bae5b73a6cc56a9e61861cd" title="Return derivatives in x,y,z directions at the given point. ">diff()</a> and <a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a751c28c98bd004f531f8a672e7c536e0" title="Return x,y,z derivatives of ln(sqrt(det(g))). ">diff_lnsqrtg()</a> if analytical derivatives are available. Otherwise, numerical finite difference (FD) differentiation is performed. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4eaaca2a0641c391de759c10c79bbb0f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4eaaca2a0641c391de759c10c79bbb0f">&#9670;&nbsp;</a></span>__init__()</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a629aa5b8809b017932f787feec890d4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a629aa5b8809b017932f787feec890d4b">&#9670;&nbsp;</a></span>get_curv()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def __init__ </td>
+          <td class="memname">def get_curv </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>self</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>dx</em> = <code>1e-8</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>fd_order</em> = <code>3</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Base class init for metrics. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dx</td><td>Step length for numerical differentiation. Default is <code>1e-8</code>. </td></tr>
-    <tr><td class="paramname">fd_order</td><td>Finite difference approximation order for numerical differentiation. Default is <code>3</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1f316a2e3af7a3731d59a9835c06f7af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f316a2e3af7a3731d59a9835c06f7af">&#9670;&nbsp;</a></span>at()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def at </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>point</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return the metric tensor at a given point. </p>
-
-</div>
-</div>
-<a id="a7860018e3126b131d4cbf3e4f06175ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7860018e3126b131d4cbf3e4f06175ca">&#9670;&nbsp;</a></span>christoffel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def christoffel </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>point</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Compute the Christoffel symbols of this 3-metric. </p>
-<dl class="section return"><dt>Returns</dt><dd>NumPy array with indices <code>[a,b,c]</code> corresponding to <img class="formulaInl" alt="$\Gamma^a_{bc}$" src="form_259.png"/>. </dd></dl>
-
-</div>
-</div>
-<a id="a6603f5f7a61b3fc111176e7b8e5939ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6603f5f7a61b3fc111176e7b8e5939ec">&#9670;&nbsp;</a></span>christoffel_deriv()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def christoffel_deriv </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>point</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Compute the derivatives of the Christoffel symbols. </p>
-<dl class="section return"><dt>Returns</dt><dd>NumPy array with indices <code>[a,b,c,d]</code> corresponding to <img class="formulaInl" alt="$\partial_a \Gamma^b_{cd}$" src="form_265.png"/>. </dd></dl>
-
-</div>
-</div>
-<a id="a75feb4a96bae5b73a6cc56a9e61861cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75feb4a96bae5b73a6cc56a9e61861cd">&#9670;&nbsp;</a></span>diff()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def diff </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>point</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>inverse</em> = <code>False</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>diff</em> = <code>1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>kw</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return derivatives in x,y,z directions at the given point. </p>
-<p>If <code>inverse==True</code>, the derivatives of the inverse metric <img class="formulaInl" alt="$ g^{ij} $" src="form_269.png"/> are returned.</p>
-<p>The optional argument <code>dx</code> may be set to a floating point value to control numerical differentiation step-size. By default, the value of <code>dx</code> as set during object creation is used. Other arguments are passed to <code>scipy.misc.derivative</code> to modify numerical finite difference order.</p>
-<p>Note that subclasses may implement analytical differentiation, in which case <code>dx</code> and other optional arguments may be ignored.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">point</td><td>3D point (tuple/list/array) at which to compute the derivatives. </td></tr>
-    <tr><td class="paramname">inverse</td><td>Whether to compute the derivatives of the inverse metric (indices up). </td></tr>
-    <tr><td class="paramname">diff</td><td>Derivative order. Default is 1.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Multidimensional list with indices <code>i1, i2, ..., k, l</code> corresponding to <img class="formulaInl" alt="$\partial_{i_1}\partial_{i_2}\ldots g_{kl}$" src="form_270.png"/> (or the inverse components if <code>inverse==True</code>). </dd></dl>
-
-</div>
-</div>
-<a id="a751c28c98bd004f531f8a672e7c536e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a751c28c98bd004f531f8a672e7c536e0">&#9670;&nbsp;</a></span>diff_lnsqrtg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def diff_lnsqrtg </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>point</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>kw</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Return x,y,z derivatives of ln(sqrt(det(g))). </p>
-<p>This computes the terms <img class="formulaInl" alt="$ \partial_i \ln(\sqrt{g}) $" src="form_271.png"/> and returns the results as a list (i.e. one element per value of <code>i</code>).</p>
-<p>Similar to <a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a75feb4a96bae5b73a6cc56a9e61861cd" title="Return derivatives in x,y,z directions at the given point. ">diff()</a>, child classes may implement more efficient analytical derivatives and ignore optional arguments such as <code>dx</code>. </p>
-
-</div>
-</div>
-<a id="ad662879ce5ef0e3c5ca735ba5edd52ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad662879ce5ef0e3c5ca735ba5edd52ce">&#9670;&nbsp;</a></span>ricci_tensor()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def ricci_tensor </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>point</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Compute the components of the Ricci tensor. </p>
-<p>This computes the components <img class="formulaInl" alt="$R_{ab} := R^c_{\ a\,cb}$" src="form_272.png"/>. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="aacddc911cdfe5cd5ec97b084754542d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacddc911cdfe5cd5ec97b084754542d4">&#9670;&nbsp;</a></span>dx</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">dx</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Step length for numerical differentiation. </p>
-
-</div>
-</div>
-<a id="a4fbaab2d8f1592ed0b6e512658bf1eb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fbaab2d8f1592ed0b6e512658bf1eb8">&#9670;&nbsp;</a></span>fd_order</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">fd_order</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Finite difference approximation order for numerical differentiation. </p>
+<p>Return the extrinsic curvature belonging to this 3-metric. </p>
+<p>The default implementation assumes a time-symmetric slice, i.e. vanishing extrinsic curvature. Implementations of non-time-symmetric slices should provide a callable with signature <code>curv(point, diff=n)</code>, where <code>n</code> is the derivative order. </p>
 
 </div>
 </div>

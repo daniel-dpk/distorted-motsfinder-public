@@ -48,10 +48,11 @@ __all__ = [
     "find_mots",
     "GeneralMotsConfig",
     "BrillLindquistConfig",
+    "prepare_ref_curve",
 ]
 
 
-def find_mots(cfg, **kw):
+def find_mots(cfg, full_output=False, **kw):
     r"""Convenience function to prepare and perform a Newton-Kantorovich search.
 
     This function takes a *configuration* object `cfg`, which should be of a
@@ -66,6 +67,9 @@ def find_mots(cfg, **kw):
 
     @param cfg
         Configuration object. Subclass of MotsFindingConfig.
+    @param full_output
+        If `True`, return the curve and the filename it is stored under.
+        Default is `False`.
     @param **kw
         Any keyword arguments take precedence over the configuration objects'
         settings. See the MotsFindingConfig documentation for the possible
@@ -85,14 +89,17 @@ def find_mots(cfg, **kw):
     cfg.verify_configuration()
     fname = _get_fname(cfg) # None in case we shouldn't save/load
     if fname and not cfg.recompute and op.isfile(fname):
-        return BaseCurve.load(fname)
+        curve = BaseCurve.load(fname)
+        return (curve, fname) if full_output else curve
     if cfg.dont_compute:
         raise FileNotFoundError("File: %s" % fname)
     c0 = _prepare_initial_curve(cfg)
     if cfg.accurate_test_res == "auto":
         cfg.accurate_test_res = max(500, 1.9*getattr(cfg.c_ref, 'num', 500))
     try:
-        curve = newton_kantorovich(c0, **cfg.newton_args)
+        curve = newton_kantorovich(
+            c0, accurate_test_res=cfg.accurate_test_res, **cfg.newton_args
+        )
     except NoConvergence:
         if not cfg.save_failed_curve:
             raise
@@ -105,7 +112,7 @@ def find_mots(cfg, **kw):
             save_to_file(
                 fname, None, showname="'None'", verbose=cfg.save_verbose
             )
-    return curve
+    return (curve, fname) if full_output else curve
 
 
 def _get_fname(cfg):
@@ -137,20 +144,18 @@ def _get_fname(cfg):
 
 def _prepare_initial_curve(cfg):
     r"""Create the initial guess curve based on the given configuration."""
-    c_ref = _prepare_ref_curve(cfg)
+    c_ref = prepare_ref_curve(cfg)
     num = cfg.num
     if num == "auto":
         num = cfg.c_ref.num
     c0 = RefParamCurve.from_curve(
         c_ref, offset_coeffs=cfg.offset_coeffs, num=num,
-        metric=cfg.get_metric(),
-        extr_curvature=cfg.get_extr_curvature(),
-        name=cfg.name
+        metric=cfg.get_metric(), name=cfg.name
     )
     return c0
 
 
-def _prepare_ref_curve(cfg):
+def prepare_ref_curve(cfg):
     r"""Prepare the reference curve based on the given configuration.
 
     If the initial reference curve `cfg.c_ref` is just a numeric value, it is
@@ -162,16 +167,14 @@ def _prepare_ref_curve(cfg):
     the stored settings.
     """
     metric = cfg.get_metric()
-    curv = cfg.get_extr_curvature()
     if isinstance(cfg.c_ref, numbers.Number):
         return StarShapedCurve.create_sphere(
-            radius=cfg.c_ref, num=1, metric=metric, extr_curvature=curv,
+            radius=cfg.c_ref, num=1, metric=metric,
         )
     if isinstance(cfg.c_ref, (list, tuple)):
         radius, origin = cfg.c_ref
         return StarShapedCurve.create_sphere(
-            radius=radius, num=1, metric=metric, extr_curvature=curv,
-            origin=origin
+            radius=radius, num=1, metric=metric, origin=origin
         )
     ref_num = cfg.ref_num
     reparam = cfg.reparam
@@ -346,10 +349,6 @@ class MotsFindingConfig():
         r"""Construct/get a metric from the specified settings."""
         pass
 
-    def get_extr_curvature(self):
-        r"""Construct/get the extrinsic curvature from the specified settings."""
-        return None
-
     @abstractmethod
     def config_str(self):
         r"""String indicating e.g. the configuration of the metric.
@@ -416,23 +415,18 @@ class MotsFindingConfig():
 
 
 class GeneralMotsConfig(MotsFindingConfig):
-    def __init__(self, metric, extr_curvature=None, fname_desc='general', **kw):
+    def __init__(self, metric, fname_desc='general', **kw):
         self.metric = metric
-        self.extr_curvature = extr_curvature
         self.fname_desc = fname_desc
         super(GeneralMotsConfig, self).__init__(**kw)
 
     @classmethod
     def from_curve(cls, curve, **kw):
         g = curve.metric
-        K = curve.extr_curvature
-        return cls(**insert_missing(kw, metric=g, extr_curvature=K))
+        return cls(**insert_missing(kw, metric=g))
 
     def get_metric(self):
         return self.metric
-
-    def get_extr_curvature(self):
-        return self.extr_curvature
 
     def config_str(self):
         return self.fname_desc

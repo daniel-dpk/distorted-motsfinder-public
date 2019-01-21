@@ -22,12 +22,30 @@ import sympy as sp
 
 
 __all__ = [
+    "nan_mat",
     "clip",
     "binomial",
     "binomial_coeffs",
     "inf_norm1d",
     "raise_all_warnings",
+    "NumericalError",
 ]
+
+
+class NumericalError(Exception):
+    r"""Exception raised for problems with numerical evaluation.
+
+    For example, a tensor field class based on numerical data may raise this
+    (or a subclass) if evaluation outside the numerical domain is requested.
+    """
+    pass
+
+
+def nan_mat(shape):
+    r"""Create a matrix of NaN values."""
+    T = np.empty(shape)
+    T[:] = np.nan
+    return T
 
 
 def clip(x, x_min, x_max):

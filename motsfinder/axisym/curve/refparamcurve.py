@@ -59,8 +59,8 @@ class RefParamCurve(ExpansionCurve):
     See the examples in the package description of curve.refparamcurve.
     """
 
-    def __init__(self, h, ref_curve, metric=None, extr_curvature=None,
-                 freeze_ref_curve=True, name=''):
+    def __init__(self, h, ref_curve, metric=None, freeze_ref_curve=True,
+                 name=''):
         r"""Create a curve from a reference curve and a offset function.
 
         Note: The offset function is not guaranteed to be the Euclidean
@@ -79,10 +79,6 @@ class RefParamCurve(ExpansionCurve):
             metric and extrinsic curvature is taken from the `ref_curve`. It
             is an error if in this case `ref_curve` is just a basic curve
             without metric information.
-        @param extr_curvature
-            Symmetric covariant 2-tensor defining the extrinsic curvature `K`.
-            Ignored if `metric` is not given, since it is then taken together
-            with the metric from the `ref_curve`.
         @param freeze_ref_curve (boolean)
             Whether to assume the reference curve as being fixed such that
             evaluators can be frozen for efficiency. Default is `True`.
@@ -92,9 +88,7 @@ class RefParamCurve(ExpansionCurve):
         """
         if metric is None:
             metric = ref_curve.metric
-            extr_curvature = ref_curve.extr_curvature
-        super(RefParamCurve, self).__init__(h, metric, extr_curvature,
-                                            name=name)
+        super(RefParamCurve, self).__init__(h, metric, name=name)
         self.ref_curve = ref_curve
         self._ref_curve_ev_override = None
         if freeze_ref_curve:
@@ -147,7 +141,7 @@ class RefParamCurve(ExpansionCurve):
 
     @staticmethod
     def from_star_shaped(star_shaped_curve, ref_curve, metric,
-                         extr_curvature=None, num=None, tol=1e-12):
+                         num=None, tol=1e-12):
         r"""Static method to create a curve from a star-shaped curve.
 
         This takes a curve in star-shaped parameterization (i.e. a
@@ -168,9 +162,6 @@ class RefParamCurve(ExpansionCurve):
             The Riemannian 3-metric defining the geometry of the surrounding
             space. You may explicitly set this to `None` to use the metric and
             extrinsic curvature from the `star_shaped_curve`.
-        @param extr_curvature
-            Symmetric covariant 2-tensor defining the extrinsic curvature `K`.
-            If not specified, time-symmetry is assumed (i.e. `K=0`).
         @param num (int)
             Resolution of the resulting curve. A higher value has the
             potential to lead to a more accurate modeling of the given
@@ -218,9 +209,7 @@ class RefParamCurve(ExpansionCurve):
             )
         if metric is None:
             metric = star_shaped_curve.metric
-            extr_curvature = star_shaped_curve.extr_curvature
-        curve = RefParamCurve(h, ref_curve, metric=metric,
-                              extr_curvature=extr_curvature)
+        curve = RefParamCurve(h, ref_curve, metric=metric)
         return curve
 
     def h_diff(self, param):
@@ -228,13 +217,12 @@ class RefParamCurve(ExpansionCurve):
 
     def copy(self):
         return type(self)(h=self.h.copy(), ref_curve=self.ref_curve,
-                          metric=self.metric,
-                          extr_curvature=self.extr_curvature, name=self.name)
+                          metric=self.metric, name=self.name)
 
     def _create_calc_obj(self, param):
         return _RefParamExpansionCalc(
             curve=self, h_fun=self._get_evaluators(), param=param,
-            metric=self.metric, extr_curvature=self.extr_curvature
+            metric=self.metric,
         )
 
     def __call__(self, param, xyz=False):

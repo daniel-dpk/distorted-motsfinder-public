@@ -107,12 +107,15 @@ Inheritance diagram for ExpansionCurve:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a786b141af00d2216853d266316d0469a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a786b141af00d2216853d266316d0469a">__init__</a> (self, h, metric, extr_curvature=None, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02">name</a>='')</td></tr>
-<tr class="memdesc:a786b141af00d2216853d266316d0469a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class constructor taking a horizon function and metric.  <a href="#a786b141af00d2216853d266316d0469a">More...</a><br /></td></tr>
-<tr class="separator:a786b141af00d2216853d266316d0469a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c98b291b96568621e2fb6a792f9f9c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#ac0c98b291b96568621e2fb6a792f9f9c">__init__</a> (self, h, metric, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02">name</a>='')</td></tr>
+<tr class="memdesc:ac0c98b291b96568621e2fb6a792f9f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class constructor taking a horizon function and metric.  <a href="#ac0c98b291b96568621e2fb6a792f9f9c">More...</a><br /></td></tr>
+<tr class="separator:ac0c98b291b96568621e2fb6a792f9f9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a452fb35a3c468c1f56497580833a223d"><td class="memItemLeft" align="right" valign="top"><a id="a452fb35a3c468c1f56497580833a223d"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>__getstate__</b> (self)</td></tr>
 <tr class="separator:a452fb35a3c468c1f56497580833a223d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37a31d38355b42e85a3da79a04e33930"><td class="memItemLeft" align="right" valign="top"><a id="a37a31d38355b42e85a3da79a04e33930"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>__setstate__</b> (self, state)</td></tr>
+<tr class="separator:a37a31d38355b42e85a3da79a04e33930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abadd30d50ea29610265ab20b4b27b5a5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#abadd30d50ea29610265ab20b4b27b5a5">h_diff</a> (self, param)</td></tr>
 <tr class="memdesc:abadd30d50ea29610265ab20b4b27b5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute derivative of this curve w.r.t. horizon function <code>h</code>.  <a href="#abadd30d50ea29610265ab20b4b27b5a5">More...</a><br /></td></tr>
 <tr class="separator:abadd30d50ea29610265ab20b4b27b5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,6 +149,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>z_distance</b> (self, 
 <tr class="memitem:a63fc2ab7c97360b53459877417ba7213"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a63fc2ab7c97360b53459877417ba7213">suspend_calc_obj</a> (self)</td></tr>
 <tr class="memdesc:a63fc2ab7c97360b53459877417ba7213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context manager to temporarily ignore the current calculator.  <a href="#a63fc2ab7c97360b53459877417ba7213">More...</a><br /></td></tr>
 <tr class="separator:a63fc2ab7c97360b53459877417ba7213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4424c4e81f70acc59bf8915971821c62"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a4424c4e81f70acc59bf8915971821c62">suspend_curv</a> (self)</td></tr>
+<tr class="memdesc:a4424c4e81f70acc59bf8915971821c62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context manager to temporarily ignore the extrinsic curvature.  <a href="#a4424c4e81f70acc59bf8915971821c62">More...</a><br /></td></tr>
+<tr class="separator:a4424c4e81f70acc59bf8915971821c62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a474b5d328f851a167e5a83cb99f7ed25"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a474b5d328f851a167e5a83cb99f7ed25">temp_metric</a> (self, metric=None)</td></tr>
 <tr class="memdesc:a474b5d328f851a167e5a83cb99f7ed25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context manager to temporarily replace the used metric.  <a href="#a474b5d328f851a167e5a83cb99f7ed25">More...</a><br /></td></tr>
 <tr class="separator:a474b5d328f851a167e5a83cb99f7ed25"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,7 +161,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>z_distance</b> (self, 
 <tr class="memitem:a8cf5616319b587bd2b9dadab56ccdb8a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8cf5616319b587bd2b9dadab56ccdb8a">expansions</a> (self, params, hdiff=None)</td></tr>
 <tr class="memdesc:a8cf5616319b587bd2b9dadab56ccdb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">As <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a98e43cf5624970bd3eae258afc9252ee" title="Compute the expansion at one parameter value. ">expansion()</a>, but on a whole set of parameter values.  <a href="#a8cf5616319b587bd2b9dadab56ccdb8a">More...</a><br /></td></tr>
 <tr class="separator:a8cf5616319b587bd2b9dadab56ccdb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a551515aad317d6d1e15f54fecd2afba3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a551515aad317d6d1e15f54fecd2afba3">average_expansion</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a174d8638900c9e8ff25509d2775bf266">area</a>=None, full_output=False)</td></tr>
+<tr class="memitem:a551515aad317d6d1e15f54fecd2afba3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a551515aad317d6d1e15f54fecd2afba3">average_expansion</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a040643ad013b3b1fddb791caaa8e37c3">area</a>=None, full_output=False)</td></tr>
 <tr class="memdesc:a551515aad317d6d1e15f54fecd2afba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average expansion across the surface.  <a href="#a551515aad317d6d1e15f54fecd2afba3">More...</a><br /></td></tr>
 <tr class="separator:a551515aad317d6d1e15f54fecd2afba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f87fe8930191d84b8a0f9c878f3078"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#af2f87fe8930191d84b8a0f9c878f3078">linearized_equation_at</a> (self, param, target_expansion=0.0)</td></tr>
@@ -170,18 +176,21 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>z_distance</b> (self, 
 <tr class="memitem:a49ef465ecbfd8d1a0f5413bda0a8f325"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a49ef465ecbfd8d1a0f5413bda0a8f325">extrinsic_surface_curvature</a> (self, param, trace=False, square=False)</td></tr>
 <tr class="memdesc:a49ef465ecbfd8d1a0f5413bda0a8f325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the extrinsic curvature tensor of the surface.  <a href="#a49ef465ecbfd8d1a0f5413bda0a8f325">More...</a><br /></td></tr>
 <tr class="separator:a49ef465ecbfd8d1a0f5413bda0a8f325"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a174d8638900c9e8ff25509d2775bf266"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a174d8638900c9e8ff25509d2775bf266">area</a> (self, full_output=False)</td></tr>
-<tr class="memdesc:a174d8638900c9e8ff25509d2775bf266"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the area of the surface represented by this curve.  <a href="#a174d8638900c9e8ff25509d2775bf266">More...</a><br /></td></tr>
-<tr class="separator:a174d8638900c9e8ff25509d2775bf266"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea5c33ef11a8f6531a62f65777be3a34"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aea5c33ef11a8f6531a62f65777be3a34">irreducible_mass</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a174d8638900c9e8ff25509d2775bf266">area</a>=None)</td></tr>
+<tr class="memitem:a040643ad013b3b1fddb791caaa8e37c3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a040643ad013b3b1fddb791caaa8e37c3">area</a> (self, full_output=False, kw)</td></tr>
+<tr class="memdesc:a040643ad013b3b1fddb791caaa8e37c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the area of the surface represented by this curve.  <a href="#a040643ad013b3b1fddb791caaa8e37c3">More...</a><br /></td></tr>
+<tr class="separator:a040643ad013b3b1fddb791caaa8e37c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea5c33ef11a8f6531a62f65777be3a34"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aea5c33ef11a8f6531a62f65777be3a34">irreducible_mass</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a040643ad013b3b1fddb791caaa8e37c3">area</a>=None)</td></tr>
 <tr class="memdesc:aea5c33ef11a8f6531a62f65777be3a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the irreducible mass.  <a href="#aea5c33ef11a8f6531a62f65777be3a34">More...</a><br /></td></tr>
 <tr class="separator:aea5c33ef11a8f6531a62f65777be3a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a321e36a1dbf23d671dda1f83832d8d07"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a321e36a1dbf23d671dda1f83832d8d07">horizon_radius</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a174d8638900c9e8ff25509d2775bf266">area</a>=None)</td></tr>
+<tr class="memitem:a321e36a1dbf23d671dda1f83832d8d07"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a321e36a1dbf23d671dda1f83832d8d07">horizon_radius</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a040643ad013b3b1fddb791caaa8e37c3">area</a>=None)</td></tr>
 <tr class="memdesc:a321e36a1dbf23d671dda1f83832d8d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the horizon radius.  <a href="#a321e36a1dbf23d671dda1f83832d8d07">More...</a><br /></td></tr>
 <tr class="separator:a321e36a1dbf23d671dda1f83832d8d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c31ce03473cd21360bef7a1f8c2a640"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a1c31ce03473cd21360bef7a1f8c2a640">stability_parameter</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177">num</a>=None, rtol=1e-12, full_output=False)</td></tr>
 <tr class="memdesc:a1c31ce03473cd21360bef7a1f8c2a640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability parameter.  <a href="#a1c31ce03473cd21360bef7a1f8c2a640">More...</a><br /></td></tr>
 <tr class="separator:a1c31ce03473cd21360bef7a1f8c2a640"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b0089d0c90487e8d014778931bd329"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a12b0089d0c90487e8d014778931bd329">stability_eigenvalue_equation_timesym</a> (self, pts)</td></tr>
+<tr class="memdesc:a12b0089d0c90487e8d014778931bd329"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eigenvalue equation evaluator for time-symmetric case.  <a href="#a12b0089d0c90487e8d014778931bd329">More...</a><br /></td></tr>
+<tr class="separator:a12b0089d0c90487e8d014778931bd329"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e0f50ccd7e5bc5c97610a83cd7b374e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a1e0f50ccd7e5bc5c97610a83cd7b374e">multipoles</a> (self, max_n=10, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177">num</a>=None, kw)</td></tr>
 <tr class="memdesc:a1e0f50ccd7e5bc5c97610a83cd7b374e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the mass multipoles I_n of the horizon.  <a href="#a1e0f50ccd7e5bc5c97610a83cd7b374e">More...</a><br /></td></tr>
 <tr class="separator:a1e0f50ccd7e5bc5c97610a83cd7b374e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,6 +213,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>z_distance</b> (self, 
 <tr class="memitem:a37a31d38355b42e85a3da79a04e33930 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a37a31d38355b42e85a3da79a04e33930">__setstate__</a> (self, state)</td></tr>
 <tr class="memdesc:a37a31d38355b42e85a3da79a04e33930 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore a complete curve from the given unpickled state.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a37a31d38355b42e85a3da79a04e33930">More...</a><br /></td></tr>
 <tr class="separator:a37a31d38355b42e85a3da79a04e33930 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade300aee3cd305ca4ada280d408f471c inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ade300aee3cd305ca4ada280d408f471c">user_data</a> (self)</td></tr>
+<tr class="memdesc:ade300aee3cd305ca4ada280d408f471c inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dictionary of custom data stored in the curve.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ade300aee3cd305ca4ada280d408f471c">More...</a><br /></td></tr>
+<tr class="separator:ade300aee3cd305ca4ada280d408f471c inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5907ca3bbf8e7cd8f40c3007338f6d02 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02">name</a> (self)</td></tr>
 <tr class="memdesc:a5907ca3bbf8e7cd8f40c3007338f6d02 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of this curve (used e.g. as label for plotting).  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02">More...</a><br /></td></tr>
 <tr class="separator:a5907ca3bbf8e7cd8f40c3007338f6d02 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,7 +309,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_create_evaluators</b>
 <tr class="separator:a56ba5441991ba928333e024d28a0c5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fc9541714bd210ee58c8528fb759026"><td class="memItemLeft" align="right" valign="top"><a id="a8fc9541714bd210ee58c8528fb759026"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8fc9541714bd210ee58c8528fb759026">_get_det_q_func</a> (self)</td></tr>
-<tr class="memdesc:a8fc9541714bd210ee58c8528fb759026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a function to evaluate det(q), see <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a174d8638900c9e8ff25509d2775bf266" title="Compute the area of the surface represented by this curve. ">area()</a> for details. <br /></td></tr>
+<tr class="memdesc:a8fc9541714bd210ee58c8528fb759026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a function to evaluate det(q). <br /></td></tr>
 <tr class="separator:a8fc9541714bd210ee58c8528fb759026"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
@@ -325,8 +337,8 @@ Additional Inherited Members</h2></td></tr>
 <li><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a56ba5441991ba928333e024d28a0c5d4" title="Create a cache/calculator for a specific parameter value. ">_create_calc_obj()</a> to create the cache/calculator object </li>
 </ul>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a786b141af00d2216853d266316d0469a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a786b141af00d2216853d266316d0469a">&#9670;&nbsp;</a></span>__init__()</h2>
+<a id="ac0c98b291b96568621e2fb6a792f9f9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c98b291b96568621e2fb6a792f9f9c">&#9670;&nbsp;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -353,12 +365,6 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>extr_curvature</em> = <code>None</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>name</em> = <code>''</code>&#160;</td>
         </tr>
         <tr>
@@ -374,7 +380,6 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">h</td><td>(<a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions. ">exprs.numexpr.NumericExpression</a>) The "horizon function" defining this curve. How this function is interpreted is up to the subclass and its calculator object. </td></tr>
     <tr><td class="paramname">metric</td><td>The Riemannian 3-metric defining the geometry of the surrounding space. </td></tr>
-    <tr><td class="paramname">extr_curvature</td><td>Symmetric covariant 2-tensor defining the extrinsic curvature <code>K</code>. If not specified, time-symmetry is assumed (i.e. <code>K=0</code>). </td></tr>
     <tr><td class="paramname">name</td><td>Name of this curve. This may be used when printing information about this curve or as label in plots. </td></tr>
   </table>
   </dd>
@@ -422,8 +427,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a174d8638900c9e8ff25509d2775bf266"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a174d8638900c9e8ff25509d2775bf266">&#9670;&nbsp;</a></span>area()</h2>
+<a id="a040643ad013b3b1fddb791caaa8e37c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a040643ad013b3b1fddb791caaa8e37c3">&#9670;&nbsp;</a></span>area()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -438,7 +443,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -451,7 +462,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Compute the area of the surface represented by this curve. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the computed area and an estimation of the error. Otherwise (default), just return the area.</td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the computed area and an estimation of the error. Otherwise (default), just return the area. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Additional keyword arguments are passed to <code>scipy.integrate.quad</code>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -463,23 +475,10 @@ Additional Inherited Members</h2></td></tr>
 <p> where </p><p class="formulaDsp">
 <img class="formulaDsp" alt="\[ q = \Pi_\sigma g = g\big|_\sigma - \underline{\nu} \otimes \underline{\nu}, \qquad q_{ab} = g_{ab} - \nu_a \nu_b \]" src="form_126.png"/>
 </p>
-<p> is the restriction of the Riemannian 3-metric <img class="formulaInl" alt="$g$" src="form_8.png"/> to the surface <img class="formulaInl" alt="$\sigma$" src="form_97.png"/>, i.e. the induced metric on <img class="formulaInl" alt="$\sigma$" src="form_97.png"/> (compare equation (2) in [1]). Here, <img class="formulaInl" alt="$\nu$" src="form_12.png"/> is the outward pointing normal of <img class="formulaInl" alt="$\sigma$" src="form_97.png"/> and <img class="formulaInl" alt="$\underline{\nu} = g(\nu,\,\cdot\,)$" src="form_127.png"/>, which is computed by the <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html" title="Abstract base class for computing the expansion at one point. ">expcalc.ExpansionCalc</a> class. Since we assume the geometry to be axisymmetric, the metric will be a conformally transformed Brill wave (cf. [2]) having a general form of </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ g = a(\rho,z)\ (d\rho^2 + dz^2) + \rho^2 b(\rho,z)\ d\varphi^2, \]" src="form_48.png"/>
-</p>
-<p> where <img class="formulaInl" alt="$a, b &gt; 0$" src="form_49.png"/>. (In the conformally flat case, we will have <img class="formulaInl" alt="$a \equiv b$" src="form_128.png"/>). Note that the components of <img class="formulaInl" alt="$g$" src="form_8.png"/> in Cartesian coordinates satisfy <img class="formulaInl" alt="$g_{zz} = a$" src="form_129.png"/> and <img class="formulaInl" alt="$g_{yy}\big|_{\varphi=0} = b$" src="form_130.png"/> as can be verified by transforming the above Brill wave to Cartesian coordinates. The surface the current curve <img class="formulaInl" alt="$\gamma$" src="form_131.png"/> represents is defined by </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ \rho(\lambda) = \gamma(\lambda)_x, \qquad z(\lambda) = \gamma(\lambda)_z. \]" src="form_132.png"/>
-</p>
-<p> Using <img class="formulaInl" alt="$d\rho = \rho' \ d\lambda$" src="form_133.png"/> and <img class="formulaInl" alt="$dz = z' \ d\lambda$" src="form_134.png"/> and expressing the components <img class="formulaInl" alt="$\nu_a$" src="form_135.png"/> with respect to <img class="formulaInl" alt="$d\lambda$" src="form_136.png"/>, <img class="formulaInl" alt="$d\varphi$" src="form_137.png"/>, we arrive at </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\begin{eqnarray*} \det q &amp;=&amp; q_{\lambda\lambda} q_{\varphi\varphi} - q_{\lambda\varphi}^2 \\ &amp;=&amp; b \rho^2 \big[ (\nu_x\rho'\cos\varphi + \nu_y\rho'\sin\varphi + \nu_z z')^2 + a\ (\rho'^2 + z'^2) \big] + a\ (\nu_y\rho\cos\varphi - \nu_x\rho\sin\varphi)^2 (\rho'^2 + z'^2) \\ \det q\big|_{\varphi=0} &amp;=&amp; b \rho^2 \big[ (\nu_x\rho' + \nu_z z')^2 + a\ (\rho'^2 + z'^2) \big]. \end{eqnarray*}" src="form_138.png"/>
-</p>
-<p> Due to the symmetry w.r.t. <img class="formulaInl" alt="$\varphi$" src="form_107.png"/>, we only have to perform a one-dimensional numerical integration to obtain the area via </p><p class="formulaDsp">
-<img class="formulaDsp" alt="\[ A = \int_0^\pi d\lambda \int_0^{2\pi}d\varphi\ \sqrt{\det q} = 2\pi \int_0^\pi d\lambda\ \sqrt{\det q\big|_{\varphi=0}}. \]" src="form_139.png"/>
-</p>
+<p> is the induced metric on <img class="formulaInl" alt="$\sigma$" src="form_97.png"/> (compare equation (2) in [1]). Here, <img class="formulaInl" alt="$\nu$" src="form_12.png"/> is the outward pointing normal of <img class="formulaInl" alt="$\sigma$" src="form_97.png"/> and <img class="formulaInl" alt="$\underline{\nu} = g(\nu,\,\cdot\,)$" src="form_127.png"/>.</p>
 <p><b>References</b> </p>
 <p>[1] Gundlach, Carsten. "Pseudospectral apparent horizon finders: An
-     efficient new algorithm." Physical Review D 57.2 (1998): 863.</p>
-<p>[2] Brill, Dieter R. "On the positive definite mass of the
-     Bondi-Weber-Wheeler time-symmetric gravitational waves." Annals of Physics 7.4 (1959): 466-483. </p>
+     efficient new algorithm." Physical Review D 57.2 (1998): 863. </p>
 
 </div>
 </div>
@@ -1290,6 +1289,37 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a12b0089d0c90487e8d014778931bd329"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12b0089d0c90487e8d014778931bd329">&#9670;&nbsp;</a></span>stability_eigenvalue_equation_timesym()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def stability_eigenvalue_equation_timesym </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pts</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Eigenvalue equation evaluator for time-symmetric case. </p>
+<p>This function is suitable to be passed as <code>eq</code> parameter to <a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html" title="Pseudospectral solver implemented as class. ">motsfinder.ndsolve.solver.NDSolver</a>. </p>
+
+</div>
+</div>
 <a id="a1c31ce03473cd21360bef7a1f8c2a640"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1c31ce03473cd21360bef7a1f8c2a640">&#9670;&nbsp;</a></span>stability_parameter()</h2>
 
@@ -1371,6 +1401,26 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Context manager to temporarily ignore the current calculator. </p>
 <p>When leaving the with-scope, the current calculator is restored. This may be useful during evaluation of expansions for perturbed curves in finite difference approximations of functional derivatives of the expansion. </p>
+
+</div>
+</div>
+<a id="a4424c4e81f70acc59bf8915971821c62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4424c4e81f70acc59bf8915971821c62">&#9670;&nbsp;</a></span>suspend_curv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def suspend_curv </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Context manager to temporarily ignore the extrinsic curvature. </p>
 
 </div>
 </div>

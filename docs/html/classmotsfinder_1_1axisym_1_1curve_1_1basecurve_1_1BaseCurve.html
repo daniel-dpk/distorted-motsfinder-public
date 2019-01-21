@@ -121,6 +121,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a37a31d38355b42e85a3da79a04e33930"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a37a31d38355b42e85a3da79a04e33930">__setstate__</a> (self, state)</td></tr>
 <tr class="memdesc:a37a31d38355b42e85a3da79a04e33930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore a complete curve from the given unpickled state.  <a href="#a37a31d38355b42e85a3da79a04e33930">More...</a><br /></td></tr>
 <tr class="separator:a37a31d38355b42e85a3da79a04e33930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade300aee3cd305ca4ada280d408f471c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ade300aee3cd305ca4ada280d408f471c">user_data</a> (self)</td></tr>
+<tr class="memdesc:ade300aee3cd305ca4ada280d408f471c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dictionary of custom data stored in the curve.  <a href="#ade300aee3cd305ca4ada280d408f471c">More...</a><br /></td></tr>
+<tr class="separator:ade300aee3cd305ca4ada280d408f471c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5907ca3bbf8e7cd8f40c3007338f6d02"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02">name</a> (self)</td></tr>
 <tr class="memdesc:a5907ca3bbf8e7cd8f40c3007338f6d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of this curve (used e.g. as label for plotting).  <a href="#a5907ca3bbf8e7cd8f40c3007338f6d02">More...</a><br /></td></tr>
 <tr class="separator:a5907ca3bbf8e7cd8f40c3007338f6d02"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -229,6 +232,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a705391f3be33314bd5788a28f7538642"><td class="memItemLeft" align="right" valign="top"><a id="a705391f3be33314bd5788a28f7538642"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>_name</b></td></tr>
 <tr class="separator:a705391f3be33314bd5788a28f7538642"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0a51965ea669ca5e8ec525a4e452731"><td class="memItemLeft" align="right" valign="top"><a id="ae0a51965ea669ca5e8ec525a4e452731"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_user_data</b></td></tr>
+<tr class="separator:ae0a51965ea669ca5e8ec525a4e452731"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for curves in the x-z-plane. </p>
@@ -1477,6 +1483,27 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Undo a <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#abdfc1c44054807f99ee5e5052ee6d4db" title="Indefinitely freeze all evaluators of this curve. ">freeze_evaluator()</a> call. </p>
+
+</div>
+</div>
+<a id="ade300aee3cd305ca4ada280d408f471c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade300aee3cd305ca4ada280d408f471c">&#9670;&nbsp;</a></span>user_data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def user_data </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dictionary of custom data stored in the curve. </p>
+<p>This may be used to store search settings used to find the curve, or physical properties like the area. Note that all stored data must be picklable in order for saving and loading of the curve to work. </p>
 
 </div>
 </div>

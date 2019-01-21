@@ -26,6 +26,7 @@ var searchData=
   ['slowtest',['slowtest',['../namespacetestutils.html#ac6e3797bfb6cd64edb18b1fdd363f365',1,'testutils']]],
   ['solution_5ffunction',['solution_function',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a25c571f8fbcb949245d68c237625c0f5',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
   ['solve',['solve',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a2535e9fc8511a790cc51d0ebb89aa513',1,'motsfinder.axisym.newton.NewtonKantorovich.solve()'],['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#aa000ae68bd4fb40ab94cef4b5ed7593b',1,'motsfinder.ndsolve.solver.NDSolver.solve()']]],
+  ['stability_5feigenvalue_5fequation_5ftimesym',['stability_eigenvalue_equation_timesym',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a12b0089d0c90487e8d014778931bd329',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['stability_5fparameter',['stability_parameter',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a1c31ce03473cd21360bef7a1f8c2a640',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['starshapedcurve',['StarShapedCurve',['../classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html',1,'motsfinder::axisym::curve::starshapedcurve']]],
   ['start_5fblock',['start_block',['../classfix__doxypypy_1_1DoxyCommentBlock.html#a45aa66bdad61d9f5411bf3bb5e18361a',1,'fix_doxypypy::DoxyCommentBlock']]],
@@ -34,5 +35,6 @@ var searchData=
   ['store_5fdomain',['store_domain',['../classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html#aa970e8ef41ef502a4eca46f8c115b405',1,'motsfinder.exprs.evaluators._Evaluator.store_domain()'],['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#aa970e8ef41ef502a4eca46f8c115b405',1,'motsfinder.exprs.numexpr.NumericExpression.store_domain()']]],
   ['str',['str',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#ae90d51e7a9050f6e809f7a1fa44fab4a',1,'motsfinder::exprs::numexpr::NumericExpression']]],
   ['sumexpression',['SumExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html',1,'motsfinder::exprs::basics']]],
-  ['suspend_5fcalc_5fobj',['suspend_calc_obj',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a63fc2ab7c97360b53459877417ba7213',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]]
+  ['suspend_5fcalc_5fobj',['suspend_calc_obj',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a63fc2ab7c97360b53459877417ba7213',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
+  ['suspend_5fcurv',['suspend_curv',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a4424c4e81f70acc59bf8915971821c62',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]]
 ];

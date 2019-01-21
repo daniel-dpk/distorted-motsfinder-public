@@ -130,6 +130,10 @@ class DpkTestCase(unittest.TestCase):
         if places is None and delta is None:
             places = 7
         if len(a) != len(b):
+            if len(a) < 100 and not b:
+                # user might want to copy results into the test
+                print("Second list empty, here is the first list:")
+                print(a)
             raise self.failureException("Lists have different lengths (%d != %d)" % (len(a), len(b)))
         fails = []
         for i in range(len(a)):

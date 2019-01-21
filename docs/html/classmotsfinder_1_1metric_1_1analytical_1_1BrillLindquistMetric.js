@@ -1,6 +1,6 @@
 var classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric =
 [
-    [ "__init__", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html#a4f6f9cd7c0316a539ee27e1b1208d79a", null ],
+    [ "__init__", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html#a511e477b3b0a301286efd6b50afd8082", null ],
     [ "d", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html#acdc7597c7b6bdbd8ba4c6ab7b00b0531", null ],
     [ "m1", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html#aec693cec2bb387fbab2f6af82588770f", null ],
     [ "m2", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html#a1df4ee23f54a67372830499898817fbf", null ],

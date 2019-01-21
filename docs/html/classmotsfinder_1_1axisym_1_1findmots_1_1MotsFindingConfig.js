@@ -7,7 +7,6 @@ var classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig =
     [ "config_str", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ad3690d9c8cd15df773ca0f37ced4fb97", null ],
     [ "copy", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aebf6261b742ae694c16790726a8c77c5", null ],
     [ "from_curve", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aed8a4f1fc80f743b02eddf90b7febde8", null ],
-    [ "get_extr_curvature", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ab4f2cd01f6520432ba911b5fdec710b8", null ],
     [ "get_metric", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a27640ba584edeb17b903cd6b0a4ff2ab", null ],
     [ "update", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a6cfde557e3a46892aed002f4b4459712", null ],
     [ "verify_configuration", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a1f8e296688804e5db9ddcc513dc792aa", null ],
