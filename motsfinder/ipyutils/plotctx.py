@@ -21,6 +21,7 @@ from ..utils import insert_missing
 
 __all__ = [
     "matplotlib_rc",
+    "simple_plot_ctx",
     "plot_ctx",
     "plot_ctx_3d",
 ]
@@ -72,8 +73,48 @@ def _equal_lengths(axes, ax):
 
 
 @contextmanager
+def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
+                    fontsize=None, save=None, ax=None, show=True, close=False,
+                    cfg_callback=None, dpi=None, save_opts=None):
+    if close and show:
+        raise ValueError("Cannot close and show figures.")
+    rc_opts = dict()
+    if usetex is not None:
+        rc_opts['text.usetex'] = usetex
+    if fontsize is not None:
+        rc_opts['font.size'] = fontsize
+    with matplotlib_rc(rc_opts):
+        if ax is None:
+            fig = plt.figure(
+                figsize=figsize, **(dict(dpi=dpi) if dpi else dict())
+            )
+            if projection is not None:
+                ax = fig.add_subplot(111, projection=projection)
+            else:
+                ax = fig.add_subplot(111)
+        else:
+            if callable(ax):
+                ax = ax()
+            fig = ax.figure
+        yield ax
+        if cfg_callback:
+            cfg_callback(ax)
+        if save is not None and save is not False:
+            if "." not in op.basename(save):
+                save += ".pdf"
+            fname = op.expanduser(save)
+            os.makedirs(op.normpath(op.dirname(fname)), exist_ok=True)
+            fig.savefig(fname, **insert_missing(save_opts or dict(),
+                                                bbox_inches='tight'))
+        if show:
+            plt.show()
+        elif close:
+            plt.close(fig)
+
+
+@contextmanager
 def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
-             ylog=False, xlim=(None, None), ylim=(None, None), pad=0,
+             ylog=False, xlim=(None, None), ylim=(None, None), pad=0, ypad=0,
              yscilimits=(-3, 3), xscilimits=None, xtick_spacing=None,
              ytick_spacing=None, title=None, xlabel=None, ylabel=None,
              tight=True, tight_layout=True, usetex=None, fontsize=None,
@@ -98,24 +139,10 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
         if equal_lengths:
             axes = "xy" if equal_lengths is True else equal_lengths
             _equal_lengths(axes, ax)
-    if close and show:
-        raise ValueError("Cannot close and show figures.")
-    rc_opts = dict()
-    if usetex is not None:
-        rc_opts['text.usetex'] = usetex
-    if fontsize is not None:
-        rc_opts['font.size'] = fontsize
-    with matplotlib_rc(rc_opts):
-        if ax is None:
-            fig = plt.figure(
-                figsize=figsize, **(dict(dpi=dpi) if dpi else dict())
-            )
-            if projection is not None:
-                ax = fig.add_subplot(111, projection=projection)
-            else:
-                ax = fig.add_subplot(111)
-        else:
-            fig = ax.figure
+    with simple_plot_ctx(figsize=figsize, projection=projection,
+                         usetex=usetex, fontsize=fontsize, save=save, ax=ax,
+                         show=show, close=close, cfg_callback=_cb, dpi=dpi,
+                         save_opts=save_opts) as ax:
         yield ax
         ax.grid(grid)
         if tight is not None:
@@ -159,25 +186,15 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
             ax.set_xlabel(xlabel, **opts)
         if tight_layout:
             opts = tight_layout if isinstance(tight_layout, dict) else dict()
-            fig.tight_layout(**opts)
+            ax.figure.tight_layout(**opts)
         if pad:
-            if not isinstance(pad, (list, tuple)):
-                pad = (pad, pad)
             ax.set_xlim(auto=True)
-            xmin, xmax = ax.get_xlim()
-            ax.set_xlim(xmin-pad[0], xmax+pad[1])
-        _cb(ax)
-        if save is not None and save is not False:
-            if "." not in op.basename(save):
-                save += ".pdf"
-            fname = op.expanduser(save)
-            os.makedirs(op.normpath(op.dirname(fname)), exist_ok=True)
-            fig.savefig(fname, **insert_missing(save_opts or dict(),
-                                                bbox_inches='tight'))
-        if show:
-            plt.show()
-        elif close:
-            plt.close(fig)
+            ax.set_xlim(*_interpret_pad(pad, *xlim, *ax.get_xlim()))
+        if ypad:
+            ax.relim()
+            ax.autoscale(axis='y')
+            ax.set_ylim(auto=True)
+            ax.set_ylim(*_interpret_pad(ypad, *ylim, *ax.get_ylim()))
 
 
 @contextmanager
@@ -211,3 +228,18 @@ def plot_ctx_3d(zlim=(None, None), zscilimits=None, ztick_spacing=None,
             if isinstance(zlabel, (list, tuple)):
                 zlabel, opts = zlabel
             ax.set_zlabel(zlabel, **opts)
+
+
+def _interpret_pad(pad, lower, upper, cur_lower, cur_upper):
+    if lower is None:
+        lower = cur_lower
+    if upper is None:
+        upper = cur_upper
+    if not isinstance(pad, (list, tuple)):
+        pad = (pad, pad)
+    w = upper - lower
+    pad = [
+        w*float(p[:-1])/100 if isinstance(p, str) and p.endswith('%') else p
+        for p in pad
+    ]
+    return lower - pad[0], upper + pad[1]

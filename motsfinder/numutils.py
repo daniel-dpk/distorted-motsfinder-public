@@ -87,7 +87,7 @@ class _BinomialCoeffs():
         return cls.__binomial_coeffs[n]
 
 
-def inf_norm1d(f1, f2=None, domain=None, Ns=50):
+def inf_norm1d(f1, f2=None, domain=None, Ns=50, xatol=1e-12):
     r"""Compute the L^inf norm of f1-f2.
 
     The `scipy.optimize.brute` method is used to find a candidate close to the
@@ -104,8 +104,9 @@ def inf_norm1d(f1, f2=None, domain=None, Ns=50):
         Domain ``[a, b]`` inside which to search for the maximum difference.
         By default, `f1` is queried for the domain.
     @param Ns
-        Number of initial samples for the `scipy.optimize.brute` call. Default
-        is `50`.
+        Number of initial samples for the `scipy.optimize.brute` call. In case
+        ``Ns <= 2``, the `brute()` step is skipped an a local extremum is
+        found inside the given `domain`. Default is `50`.
 
     @return A pair ``(x, delta)``, where `x` is the point at which the maximum
         difference was found and `delta` is the difference at that point.
@@ -122,11 +123,15 @@ def inf_norm1d(f1, f2=None, domain=None, Ns=50):
     func = lambda x: (
         -float(abs(f1(float(x))-f2(float(x)))) if a <= x <= b else 0.
     )
-    x0 = optimize.brute(func, [domain], Ns=Ns, finish=None)
-    step = (b-a)/(Ns-1)
+    if Ns <= 2:
+        bounds = [a, b]
+    else:
+        x0 = optimize.brute(func, [domain], Ns=Ns, finish=None)
+        step = (b-a)/(Ns-1)
+        bounds = [x0-step, x0+step]
     res = optimize.minimize_scalar(
-        func, bounds=[x0-step, x0+step], method='bounded',
-        options=dict(xatol=1e-12),
+        func, bounds=bounds, method='bounded',
+        options=dict(xatol=xatol),
     )
     return res.x, -res.fun
 

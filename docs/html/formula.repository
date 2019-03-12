@@ -377,3 +377,6 @@
 \form#376:$\partial_{i_1}\partial_{i_2}\ldots\nu_k$
 \form#377:$g^{ij}$
 \form#378:$\partial_i \ln(\sqrt{g})$
+\form#379:$\partial_h\Theta$
+\form#380:$\partial_{h'}\Theta$
+\form#381:$k^{AB}k_{AB}$

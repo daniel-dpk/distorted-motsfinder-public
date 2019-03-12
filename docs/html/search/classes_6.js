@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['generalmotsconfig',['GeneralMotsConfig',['../classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html',1,'motsfinder::axisym::findmots']]]
+  ['flatthreemetric',['FlatThreeMetric',['../classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html',1,'motsfinder::metric::analytical::simple']]],
+  ['fourmetric',['FourMetric',['../classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html',1,'motsfinder::metric::fourmetric']]]
 ];

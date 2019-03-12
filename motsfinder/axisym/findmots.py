@@ -36,7 +36,7 @@ import numbers
 from collections import OrderedDict
 from six import add_metaclass
 
-from ..utils import insert_missing
+from ..utils import insert_missing, timethis
 from ..numutils import raise_all_warnings
 from ..metric import BrillLindquistMetric
 from ..exprs.numexpr import save_to_file
@@ -52,7 +52,7 @@ __all__ = [
 ]
 
 
-def find_mots(cfg, full_output=False, **kw):
+def find_mots(cfg, user_data=None, full_output=False, **kw):
     r"""Convenience function to prepare and perform a Newton-Kantorovich search.
 
     This function takes a *configuration* object `cfg`, which should be of a
@@ -67,6 +67,12 @@ def find_mots(cfg, full_output=False, **kw):
 
     @param cfg
         Configuration object. Subclass of MotsFindingConfig.
+    @param user_data
+        Optional dictionary of custom data to write into the new curve's
+        `user_data` dict. Note that convergence data stored under the keys
+        ``"converged"``, ``"reason"``, ``"accurate_abs_delta"``, will override
+        items supplied here. Also, if a curve is loaded from disk, this
+        argument is ignored.
     @param full_output
         If `True`, return the curve and the filename it is stored under.
         Default is `False`.
@@ -87,18 +93,25 @@ def find_mots(cfg, full_output=False, **kw):
     if cfg.v is None:
         cfg.v = v
     cfg.verify_configuration()
-    fname = _get_fname(cfg) # None in case we shouldn't save/load
+    fname = cfg.get_fname() # None in case we shouldn't save/load
     if fname and not cfg.recompute and op.isfile(fname):
         curve = BaseCurve.load(fname)
         return (curve, fname) if full_output else curve
     if cfg.dont_compute:
         raise FileNotFoundError("File: %s" % fname)
     c0 = _prepare_initial_curve(cfg)
+    newton_args = cfg.newton_args.copy()
+    ref_curves = (
+        [(c0.ref_curve, "ref", "--k")] + newton_args.get('reference_curves', [])
+    )
+    newton_args['reference_curves'] = ref_curves
     if cfg.accurate_test_res == "auto":
         cfg.accurate_test_res = max(500, 1.9*getattr(cfg.c_ref, 'num', 500))
     try:
         curve = newton_kantorovich(
-            c0, accurate_test_res=cfg.accurate_test_res, **cfg.newton_args
+            c0, accurate_test_res=cfg.accurate_test_res,
+            user_data=user_data or dict(),
+            **newton_args
         )
     except NoConvergence:
         if not cfg.save_failed_curve:
@@ -107,39 +120,13 @@ def find_mots(cfg, full_output=False, **kw):
     if fname and not cfg.veto(curve, cfg):
         if curve:
             curve.save(fname, verbose=cfg.save_verbose,
+                       overwrite=cfg.recompute,
                        msg="res:%s" % curve.num)
         elif cfg.save_failed_curve:
             save_to_file(
                 fname, None, showname="'None'", verbose=cfg.save_verbose
             )
     return (curve, fname) if full_output else curve
-
-
-def _get_fname(cfg):
-    r"""Generate a (somewhat) unique filename for saving/loading the result.
-
-    This is used by find_mots() to save/load the resulting curves.
-    """
-    if not cfg.save:
-        return None
-    prefix = cfg.prefix
-    suffix = cfg.suffix
-    if prefix and not prefix.endswith("_"):
-        prefix = "%s_" % prefix
-    if suffix and not suffix.startswith("_"):
-        suffix = "_%s" % suffix
-    if not isinstance(cfg.c_ref, (numbers.Number, list, tuple)):
-        suffix = "_refn%d%s" % (cfg.ref_num if cfg.ref_num else cfg.c_ref.num,
-                                suffix)
-        if cfg.ref_num and cfg.reparam:
-            suffix += "_reparam"
-    folder = cfg.folder
-    if folder and not folder.endswith('/'):
-        folder += '/'
-    fname = ("%s/%s/%s%s%s_n%s%s.npy"
-             % (cfg.base_folder, cfg.v, folder, prefix, cfg.config_str(),
-                cfg.num, suffix))
-    return fname
 
 
 def _prepare_initial_curve(cfg):
@@ -181,19 +168,28 @@ def prepare_ref_curve(cfg):
     with_metric = metric if cfg.reparam_with_metric else None
     if ref_num and reparam:
         c_ref = ParametricCurve.from_curve(cfg.c_ref, num=cfg.c_ref.num)
-        with raise_all_warnings():
-            blend = 1.0
+        with raise_all_warnings(),\
+                timethis("Reparameterizing reference curve...",
+                         " done after {}", eol=False,
+                         silent=not cfg.newton_args.get('verbose', False)):
+            strategy = "arc_length"
+            opts = dict()
+            if isinstance(reparam, (list, tuple)):
+                strategy, opts = reparam
+                if isinstance(strategy, numbers.Number): # backwards compatibility
+                    alpha, beta = strategy, opts
+                    strategy = "experimental"
+                    opts = dict(alpha=alpha, beta=beta)
+            if isinstance(reparam, str):
+                strategy = reparam
             if isinstance(cfg.reparam_with_metric, numbers.Number):
                 blend = cfg.reparam_with_metric
-            if isinstance(reparam, (list, tuple)):
-                alpha, beta = reparam
-                c_ref.reparameterize_by_curvature(
-                    metric=with_metric, alpha=alpha, beta=beta,
-                    num=ref_num, blend=blend
-                )
-            else:
-                c_ref.reparameterize(metric=with_metric, num=ref_num,
-                                     blend=blend)
+                if blend and blend != 1.0 and 'blend' not in opts:
+                    opts['blend'] = blend
+            c_ref.reparameterize(
+                strategy=strategy,
+                **insert_missing(opts, num=ref_num, metric=with_metric)
+            )
     else:
         if ref_num is None:
             c_ref = cfg.c_ref
@@ -271,10 +267,15 @@ class MotsFindingConfig():
             \code{.unparsed}
                 False   # don't reparameterize
                 True    # reparameterize based on arc-length
-                2-tuple # reparameterize using experimental formula
+                2-tuple # custom reparameterization (see below)
             \endcode
-            In the last case, the two elements are taken as `alpha` and `beta`
-            parameters for the `reparameterize_by_curvature()` call.
+            In case of a 2-tuple, the first element defines the strategy as a
+            string and the second can be a dictionary with arguments. Possible
+            strategies are those supported by
+            curve.parametriccurve.ParametricCurve.reparameterize().
+            For backwards compatibility, the 2-tuple can also consist of two
+            floats. This chooses the ``"experimental"`` strategy and sets
+            `alpha` and `beta` to the two values, respectively.
             Default is `True`.
         @param reparam_with_metric
             Whether to reparameterize in curved (`True`) or flat (`False`) space.
@@ -307,6 +308,11 @@ class MotsFindingConfig():
             by a hard-coded variable in find_mots() and is changed when e.g. the
             reparameterization formula changes to avoid accidentally mixing
             results of different strategies.
+        @param simple_name
+            If `True`, the auto-generated filename contains less info. Otherwise
+            (default), it will contain the resolution of the curve and of the
+            reference curve, as well as whether the reference curve has been
+            reparameterized.
         @param **kw
             Further keyword arguments are passed directly to the
             newton_kantorovich() call. Useful settings include `auto_resolution`,
@@ -331,6 +337,7 @@ class MotsFindingConfig():
         self.folder = ''
         self.base_folder = 'data/'
         self.v = None
+        self.simple_name = False
         self.newton_args = dict()
         self.update(**kw)
         self._init_done = True
@@ -356,6 +363,41 @@ class MotsFindingConfig():
         Used in the filename of generated results.
         """
         pass
+
+    def get_fname(self):
+        r"""Generate a filename for saving/loading results."""
+        if not self.save:
+            return None
+        prefix = self.prefix
+        suffix = self.suffix
+        if prefix and not prefix.endswith("_"):
+            prefix = "%s_" % prefix
+        if suffix and not suffix.startswith("_"):
+            suffix = "_%s" % suffix
+        folder = self.folder
+        if folder and not folder.endswith('/'):
+            folder += '/'
+        if self.simple_name:
+            fname = "{base}/{folder}{prefix}{cfg}{suffix}.npy"
+        else:
+            if not isinstance(self.c_ref, (numbers.Number, list, tuple)):
+                suffix = "_refn%d%s" % (
+                    self.ref_num if self.ref_num else self.c_ref.num,
+                    suffix
+                )
+                if self.ref_num and self.reparam:
+                    suffix += "_reparam"
+            fname = "{base}/{v}/{folder}{prefix}{cfg}_n{num}{suffix}.npy"
+        fmt = dict(base=self.base_folder, v=self.v, folder=folder, prefix=prefix,
+                   cfg=self.config_str(), num=self.num, suffix=suffix)
+        return fname.format(**fmt)
+
+    def get_out_dir(self):
+        r"""Return the directory into which results should be stored."""
+        fname = self.get_fname()
+        if fname is None:
+            return None
+        return op.dirname(fname)
 
     def veto(self, curve, cfg):
         if self.veto_callback:
@@ -415,7 +457,7 @@ class MotsFindingConfig():
 
 
 class GeneralMotsConfig(MotsFindingConfig):
-    def __init__(self, metric, fname_desc='general', **kw):
+    def __init__(self, metric=None, fname_desc='general', **kw):
         self.metric = metric
         self.fname_desc = fname_desc
         super(GeneralMotsConfig, self).__init__(**kw)
@@ -426,10 +468,71 @@ class GeneralMotsConfig(MotsFindingConfig):
         return cls(**insert_missing(kw, metric=g))
 
     def get_metric(self):
+        if self.metric is None:
+            raise RuntimeError("Metric not specified for run.")
         return self.metric
 
     def config_str(self):
         return self.fname_desc
+
+    @classmethod
+    def preset(cls, preset, hname, out_folder=None, **kw):
+        r"""Create a configuration based on a manually crafted preset.
+
+        @param preset
+            One of the existing preset names.
+        @param hname
+            Name given to the horizon to find (e.g. ``'AH'``). This is used as
+            a filename prefix.
+        @param out_folder
+            Optional folder to store curves in. By default, curves are not
+            stored. If this folder is specified (and neither `save`,
+            `base_folder`, or `folder` is given as extra keyword arg), saving
+            of curves is activated and files are stored there.
+        @param **kw
+            Extra options overriding those in the preset.
+        """
+        if preset == "discrete1":
+            cfg = cls(
+                ref_num=5, num=30, atol=1e-8,
+                reparam=True, reparam_with_metric=False,
+                auto_resolution=False, accurate_test_res=None, prefix=hname,
+                save_failed_curve=True, verbose=True, v=''
+            )
+        elif preset == "discrete2":
+            cfg = cls(
+                atol=1e-8, reparam="curv2", reparam_with_metric=False,
+                disp=False, auto_resolution=True, max_resolution=8000,
+                fake_steps=0, detect_plateau=True, plateau_tol=1.5,
+                min_res=30,
+                res_increase_factor=1.4,
+                res_init_factor=1,
+                linear_regime_res_factor=1,
+                res_decrease_factor=0.75, res_decrease_accel=0.9,
+                downsampling_tol_factor=1.5, liberal_downsampling=True,
+                accurate_test_res="twice", prefix=hname,
+                save_failed_curve=True, verbose=True, simple_name=True,
+            )
+        elif preset == "discrete3":
+            # Strategy for high resolution situations with known plateau.
+            # Absolute tolerance should be specified correctly for this to
+            # work best.
+            cfg = cls.preset(
+                "discrete2", hname,
+                max_resolution=12000,
+                res_increase_factor=1.2,
+                res_decrease_factor=0.9,
+                downsampling_tol_factor=2.0,
+                liberal_downsampling=False,
+            )
+        else:
+            raise ValueError("Unknown preset: %s" % preset)
+        if out_folder:
+            cfg.update(save=True, base_folder=out_folder, folder="",
+                       simple_name=True)
+        cfg.update(fname_desc=preset)
+        cfg.update(**kw)
+        return cfg
 
 
 class BrillLindquistConfig(MotsFindingConfig):

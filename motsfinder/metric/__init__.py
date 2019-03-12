@@ -27,3 +27,4 @@ from .analytical import FlatThreeMetric, SchwarzschildSliceMetric
 from .analytical import BrillLindquistMetric
 from .helpers import christoffel_symbols, christoffel_deriv
 from .helpers import riemann_components
+from .fourmetric import FourMetric

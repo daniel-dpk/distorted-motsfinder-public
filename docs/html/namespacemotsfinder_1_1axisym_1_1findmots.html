@@ -100,17 +100,14 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html">GeneralMotsConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html">MotsFindingConfig</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>.  <a href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>.  <a href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0b72086435ad315b20a5325ecfb2cb7c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c">find_mots</a> (cfg, full_output=False, kw)</td></tr>
-<tr class="memdesc:a0b72086435ad315b20a5325ecfb2cb7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to prepare and perform a Newton-Kantorovich search.  <a href="#a0b72086435ad315b20a5325ecfb2cb7c">More...</a><br /></td></tr>
-<tr class="separator:a0b72086435ad315b20a5325ecfb2cb7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa096b965de0d01f594995efbfaecc670"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#aa096b965de0d01f594995efbfaecc670">_get_fname</a> (cfg)</td></tr>
-<tr class="memdesc:aa096b965de0d01f594995efbfaecc670"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a (somewhat) unique filename for saving/loading the result.  <a href="#aa096b965de0d01f594995efbfaecc670">More...</a><br /></td></tr>
-<tr class="separator:aa096b965de0d01f594995efbfaecc670"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad42bcdb9207208d4367d21be02f42814"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814">find_mots</a> (cfg, user_data=None, full_output=False, kw)</td></tr>
+<tr class="memdesc:ad42bcdb9207208d4367d21be02f42814"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function to prepare and perform a Newton-Kantorovich search.  <a href="#ad42bcdb9207208d4367d21be02f42814">More...</a><br /></td></tr>
+<tr class="separator:ad42bcdb9207208d4367d21be02f42814"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4b339b9eb00dbcdcdccd0b4cb37827c"><td class="memItemLeft" align="right" valign="top"><a id="ac4b339b9eb00dbcdcdccd0b4cb37827c"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ac4b339b9eb00dbcdcdccd0b4cb37827c">_prepare_initial_curve</a> (cfg)</td></tr>
 <tr class="memdesc:ac4b339b9eb00dbcdcdccd0b4cb37827c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the initial guess curve based on the given configuration. <br /></td></tr>
@@ -124,37 +121,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 <p>This module provides convenience functions to configure and run a MOTS search. Results are optionally stored to disk. If a result is found on disk, it is loaded instead of being recomputed from scratch.</p>
 <p><b>Examples</b> </p>
 <div class="fragment"><div class="line"><span class="comment"># Define the base configuration.</span></div><div class="line">base_cfg = BrillLindquistConfig(</div><div class="line">    d=0.65, m1=0.2, m2=0.8, save=<span class="keyword">True</span>, folder=<span class="stringliteral">&#39;tests&#39;</span>,</div><div class="line">    ref_num=25, reparam=(0.1, 0.5)</div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment"># Find the Apparent Horizon (AH).</span></div><div class="line">cfg = base_cfg.copy().update(c_ref=0.8, num=40, suffix=<span class="stringliteral">&#39;AH&#39;</span>, name=<span class="stringliteral">&#39;AH&#39;</span>)</div><div class="line">c_AH = find_mots(cfg)</div><div class="line"></div><div class="line"><span class="comment"># From there, step inward and find the inner common MOTS.</span></div><div class="line">cfg = base_cfg.copy().update(c_ref=c_AH, suffix=<span class="stringliteral">&#39;inner&#39;</span>, name=<span class="stringliteral">&#39;inner&#39;</span>,</div><div class="line">                             offset_coeffs=[-0.2, 0.0, 0.1])</div><div class="line">c_inner = find_mots(cfg)</div><div class="line"></div><div class="line"><span class="comment"># Plot the results.</span></div><div class="line">BaseCurve.plot_curves(c_AH, c_inner)</div></div><!-- fragment --> </div><h2 class="groupheader">Function Documentation</h2>
-<a id="aa096b965de0d01f594995efbfaecc670"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa096b965de0d01f594995efbfaecc670">&#9670;&nbsp;</a></span>_get_fname()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">def motsfinder.axisym.findmots._get_fname </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>cfg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Generate a (somewhat) unique filename for saving/loading the result. </p>
-<p>This is used by <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> to save/load the resulting curves. </p>
-
-</div>
-</div>
-<a id="a0b72086435ad315b20a5325ecfb2cb7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b72086435ad315b20a5325ecfb2cb7c">&#9670;&nbsp;</a></span>find_mots()</h2>
+<a id="ad42bcdb9207208d4367d21be02f42814"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad42bcdb9207208d4367d21be02f42814">&#9670;&nbsp;</a></span>find_mots()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,6 +132,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>user_data</em> = <code>None</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -186,11 +160,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 </div><div class="memdoc">
 
 <p>Convenience function to prepare and perform a Newton-Kantorovich search. </p>
-<p>This function takes a <em>configuration</em> object <code>cfg</code>, which should be of a subclass of <a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html" title="Configuration class for find_mots(). ">MotsFindingConfig</a>. It then prepares an appropriate reference shape for the search and the initial "guess" (identical to the prepared reference shape) and calls the <a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#a2c65a6ca64e8c4a88988043f8e49cf45" title="Do a Newton type search to find a MOTS. ">newton.newton_kantorovich()</a> method.</p>
+<p>This function takes a <em>configuration</em> object <code>cfg</code>, which should be of a subclass of <a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html" title="Configuration class for find_mots(). ">MotsFindingConfig</a>. It then prepares an appropriate reference shape for the search and the initial "guess" (identical to the prepared reference shape) and calls the <a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#a07bd447136c9537221096f7c8ef3384a" title="Do a Newton type search to find a MOTS. ">newton.newton_kantorovich()</a> method.</p>
 <p>Additionally, a somewhat unique filename for the specified configuration is generated. If this file exists, its is loaded and returned instead of actually running a search. Otherwise, a generated result will be stored to this file by default.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cfg</td><td>Configuration object. Subclass of <a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html" title="Configuration class for find_mots(). ">MotsFindingConfig</a>. </td></tr>
+    <tr><td class="paramname">user_data</td><td>Optional dictionary of custom data to write into the new curve's <code>user_data</code> dict. Note that convergence data stored under the keys <code>"converged"</code>, <code>"reason"</code>, <code>"accurate_abs_delta"</code>, will override items supplied here. Also, if a curve is loaded from disk, this argument is ignored. </td></tr>
     <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the curve and the filename it is stored under. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">**kw</td><td>Any keyword arguments take precedence over the configuration objects' settings. See the <a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html" title="Configuration class for find_mots(). ">MotsFindingConfig</a> documentation for the possible arguments.</td></tr>
   </table>

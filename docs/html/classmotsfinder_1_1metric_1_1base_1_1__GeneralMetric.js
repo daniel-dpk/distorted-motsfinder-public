@@ -1,5 +1,6 @@
 var classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric =
 [
+    [ "__call__", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a2e79c8eb5d592c7f932d8f1a697ebe40", null ],
     [ "_compute_inverse_diff", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a83089470041d94230d8ed5b60a70dc23", null ],
     [ "_mat_at", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a8efc33ef9e8648f08abe28e225b94885", null ],
     [ "at", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a1f316a2e3af7a3731d59a9835c06f7af", null ],

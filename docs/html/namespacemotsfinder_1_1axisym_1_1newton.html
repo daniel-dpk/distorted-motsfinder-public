@@ -112,13 +112,13 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2c65a6ca64e8c4a88988043f8e49cf45"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#a2c65a6ca64e8c4a88988043f8e49cf45">newton_kantorovich</a> (initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0, atol=1e-12, accurate_test_res=500, auto_resolution=True, max_resolution=1000, linear_regime_threshold=1e-2, mat_solver='scipy.solve', fake_steps=3, plot_steps=False, reference_curves=(), plot_deltas=False, verbose=False, disp=True, parallel=False)</td></tr>
-<tr class="memdesc:a2c65a6ca64e8c4a88988043f8e49cf45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do a Newton type search to find a MOTS.  <a href="#a2c65a6ca64e8c4a88988043f8e49cf45">More...</a><br /></td></tr>
-<tr class="separator:a2c65a6ca64e8c4a88988043f8e49cf45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07bd447136c9537221096f7c8ef3384a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#a07bd447136c9537221096f7c8ef3384a">newton_kantorovich</a> (initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0, atol=1e-12, accurate_test_res=500, auto_resolution=True, max_resolution=1000, linear_regime_threshold=1e-2, mat_solver='scipy.solve', fake_steps=3, plot_steps=False, reference_curves=(), plot_deltas=False, verbose=False, disp=True, parallel=False, kw)</td></tr>
+<tr class="memdesc:a07bd447136c9537221096f7c8ef3384a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Do a Newton type search to find a MOTS.  <a href="#a07bd447136c9537221096f7c8ef3384a">More...</a><br /></td></tr>
+<tr class="separator:a07bd447136c9537221096f7c8ef3384a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of a Newton-Kantorovich method to find MOTSs. </p>
-<p>This module contains the Newton-Kantorovich finder <a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#a2c65a6ca64e8c4a88988043f8e49cf45" title="Do a Newton type search to find a MOTS. ">newton_kantorovich()</a>, which is a high-level function to search for MOTSs based on an initial guess.</p>
+<p>This module contains the Newton-Kantorovich finder <a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#a07bd447136c9537221096f7c8ef3384a" title="Do a Newton type search to find a MOTS. ">newton_kantorovich()</a>, which is a high-level function to search for MOTSs based on an initial guess.</p>
 <p>A basic description of the method can be found in <a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#boyd2001">[1]</a>, Appendix C, and in <a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#pookkolb2018_1">[2]</a>.</p>
 <p><b>Examples</b> </p>
 <div class="fragment"><div class="line">metric = BrillLindquistMetric(m1=1, m2=1, d=1.4, axis=<span class="stringliteral">&#39;z&#39;</span>)</div><div class="line">c0 = StarShapedCurve.create_sphere(radius=2.0, num=100, metric=metric)</div><div class="line">c_AH = newton_kantorovich(c0, verbose=<span class="keyword">True</span>)</div><div class="line">c_AH.plot(label=<span class="stringliteral">&#39;AH&#39;</span>)</div></div><!-- fragment --><p><b>References</b> </p>
@@ -126,8 +126,8 @@ Functions</h2></td></tr>
      Dover Publications Inc." New York (2001).</p>
 <p><a class="anchor" id="pookkolb2018_1"></a>[2] D. Pook-Kolb, O. Birnholtz, B. Krishnan and E. Schnetter, "The existence and stability of marginally trapped surfaces." arXiv:1811.10405 [gr-qc]. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a2c65a6ca64e8c4a88988043f8e49cf45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c65a6ca64e8c4a88988043f8e49cf45">&#9670;&nbsp;</a></span>newton_kantorovich()</h2>
+<a id="a07bd447136c9537221096f7c8ef3384a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07bd447136c9537221096f7c8ef3384a">&#9670;&nbsp;</a></span>newton_kantorovich()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -238,7 +238,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>parallel</em> = <code>False</code>&#160;</td>
+          <td class="paramname"><em>parallel</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -258,7 +264,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">step_mult</td><td>(float, optional) Factor to multiply the Newton steps with. </td></tr>
     <tr><td class="paramname">rtol</td><td>Float indicating when to stop taking more steps. If the maximum expansion (or its deviation from <code>c</code>) divided by the maximum expansion of the initial evaluation is less or equal to <code>rtol</code>, we consider the Newton steps to have converged. Default is <code>0</code>. </td></tr>
     <tr><td class="paramname">atol</td><td>Float indicating the absolute expansion below which we stop taking more Newton steps. Default is <code>1e-12</code>. </td></tr>
-    <tr><td class="paramname">accurate_test_res</td><td>Number of samples to check the expansion at to decide upon convergence. If zero or <code>None</code>, convergence is only checked at the collocation points and <code>auto_resolution</code> has no effect. Default is <code>500</code>. </td></tr>
+    <tr><td class="paramname">accurate_test_res</td><td>Number of samples to check the expansion at to decide upon convergence. If <code>'twice'</code>, uses two times the curve's resolution. If zero or <code>None</code>, convergence is only checked at the collocation points and <code>auto_resolution</code> has no effect. Default is <code>500</code>. </td></tr>
     <tr><td class="paramname">auto_resolution</td><td>Boolean indicating whether the resolution should be increased if insufficient resolution is detected. Default: <code>True</code>. </td></tr>
     <tr><td class="paramname">max_resolution</td><td>Maximum resolution to increase to. Failure to converge at this resolution will terminate the search. Default: <code>1000</code>. </td></tr>
     <tr><td class="paramname">linear_regime_threshold</td><td>Float indicating the absolute (see <code>atol</code>) expansion below which we take full Newton steps to accelerate convergence. Default is <code>1e-2</code>. </td></tr>
@@ -270,6 +276,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">verbose</td><td>Whether to print status information during the Newton search. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">disp</td><td>Whether to raise <a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html" title="Base for exceptions indicating failed convergence of Newton steps. ">NoConvergence</a> (or subclasses) when the desired tolerance could not be reached in the number of steps or resolution. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">parallel</td><td>Whether to evaluate the equation using multiple processes in parallel. If <code>True</code>, uses all available threads. If an integer, uses that many threads. Default is <code>False</code>, i.e. don't compute in parallel. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Remaining keyword arguments are set as attributes on the solver object. </td></tr>
   </table>
   </dd>
 </dl>

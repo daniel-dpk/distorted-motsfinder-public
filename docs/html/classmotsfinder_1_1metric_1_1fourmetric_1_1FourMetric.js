@@ -2,7 +2,7 @@ var classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric =
 [
     [ "__init__", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#af6d147a0fccc848856d34bac0372b2df", null ],
     [ "_ddg3", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#a3abb81932f7bef3e1a12e36b33ff66c9", null ],
-    [ "_dg3", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#a7765668a652f47e847a11726d999890b", null ],
+    [ "_dg3", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#a053eff6ef890880d2ed8a503739feb49", null ],
     [ "_mat_at", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#a8efc33ef9e8648f08abe28e225b94885", null ],
     [ "d2lapse", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#a87efd22a1b6892f387a1c0f50b56f39e", null ],
     [ "d2shift", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#afd33e596bb8415de3d40d91fbbeca79a", null ],

@@ -1,9 +1,6 @@
-r"""@package motsfinder.metric.analytical
+r"""@package motsfinder.metric.analytical.simple
 
-Analytically implemented metrics.
-
-These metrics are known analytically and hence provide the optimal (floating
-point) accuracy.
+Simple metrics in conformally flat form.
 
 
 @b Examples
@@ -21,7 +18,7 @@ from abc import abstractmethod
 import numpy as np
 from scipy import linalg
 
-from .base import _ThreeMetric
+from ..base import _ThreeMetric
 
 
 __all__ = [
@@ -44,6 +41,21 @@ class FlatThreeMetric(_ThreeMetric):
         if diff == 0:
             return self.at(point).inv if inverse else self.at(point).mat
         return np.zeros([3] * (diff+2))
+
+    def diff_lnsqrtg(self, point):
+        return np.zeros(3)
+
+    def christoffel(self, point):
+        return np.zeros((3, 3, 3))
+
+    def christoffel_deriv(self, point):
+        return np.zeros((3, 3, 3, 3))
+
+    def ricci_tensor(self, point):
+        return np.zeros((3, 3))
+
+    def ricci_scalar(self, point):
+        return 0.0
 
 
 class _ConformallyFlatMetric(_ThreeMetric):

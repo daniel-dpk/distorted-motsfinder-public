@@ -261,11 +261,14 @@ class ExpansionCalc(object):
         D = s.dot(s_up)
         return (A, B, C, D), trK
 
-    def expansion(self):
+    def expansion(self, ingoing=False):
         r"""Compute the expansion at the configured point.
 
         This implements equation (11) in \ref thornburg2003_1 "[1]".
         """
+        if ingoing:
+            A, B, C, D = self.ABCD
+            return -A/D**1.5 - B/D**0.5 + C/D - self.trK
         if self._Th is None:
             A, B, C, D = self.ABCD
             self._Th = A/D**1.5 + B/D**0.5 + C/D - self.trK

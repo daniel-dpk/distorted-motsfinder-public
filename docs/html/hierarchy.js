@@ -1,21 +1,46 @@
 var hierarchy =
 [
     [ "_BinomialCoeffs", "classmotsfinder_1_1numutils_1_1__BinomialCoeffs.html", null ],
+    [ "_DiscreteField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html", [
+      [ "DiscreteScalarField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1DiscreteScalarField.html", [
+        [ "_ScalarField", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html", null ],
+        [ "SioScalarField", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html", null ]
+      ] ],
+      [ "DiscreteSym2TensorField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1DiscreteSym2TensorField.html", [
+        [ "_Sym2TensorField", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__Sym2TensorField.html", null ],
+        [ "SioSym2TensorField", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioSym2TensorField.html", null ]
+      ] ],
+      [ "DiscreteVectorField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1DiscreteVectorField.html", [
+        [ "_VectorField", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__VectorField.html", null ],
+        [ "SioVectorField", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html", null ]
+      ] ]
+    ] ],
     [ "_FuncWrap", "classmotsfinder_1_1utils_1_1__FuncWrap.html", null ],
+    [ "_PropResult", "classmotsfinder_1_1axisym_1_1trackmots_1_1__PropResult.html", null ],
     [ "_Runner", "classmotsfinder_1_1utils_1_1__Runner.html", null ],
+    [ "BBox", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1BBox.html", null ],
+    [ "ConstraintAnalyzer", "classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html", null ],
     [ "DoxyCommentBlock", "classfix__doxypypy_1_1DoxyCommentBlock.html", null ],
     [ "Exception", null, [
+      [ "IntegrationError", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1IntegrationError.html", null ],
       [ "NoConvergence", "classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html", [
         [ "InsufficientResolutionOrRoundoff", "classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html", null ],
         [ "StepLimitExceeded", "classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html", null ]
       ] ],
+      [ "AuxResultMissing", "classmotsfinder_1_1axisym_1_1trackmots_1_1AuxResultMissing.html", null ],
+      [ "GridDataError", "classmotsfinder_1_1metric_1_1discrete_1_1numerical_1_1GridDataError.html", null ],
       [ "NDSolveError", "classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html", null ],
       [ "NumericalError", "classmotsfinder_1_1numutils_1_1NumericalError.html", null ]
     ] ],
+    [ "GridPatch", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html", [
+      [ "DataPatch", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html", null ]
+    ] ],
+    [ "InitHelper", "classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html", null ],
     [ "MotsFindingConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html", [
       [ "BrillLindquistConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html", null ],
       [ "GeneralMotsConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html", null ]
     ] ],
+    [ "MOTSTracker", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html", null ],
     [ "object", null, [
       [ "BaseCurve", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html", [
         [ "ExpansionCurve", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html", [
@@ -70,12 +95,17 @@ var hierarchy =
       ] ],
       [ "_GeneralMetric", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html", [
         [ "_ThreeMetric", "classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html", [
-          [ "_ConformallyFlatMetric", "classmotsfinder_1_1metric_1_1analytical_1_1__ConformallyFlatMetric.html", [
-            [ "BrillLindquistMetric", "classmotsfinder_1_1metric_1_1analytical_1_1BrillLindquistMetric.html", null ],
-            [ "SchwarzschildSliceMetric", "classmotsfinder_1_1metric_1_1analytical_1_1SchwarzschildSliceMetric.html", null ]
+          [ "_ConformallyFlatMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html", [
+            [ "BrillLindquistMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html", null ],
+            [ "SchwarzschildSliceMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1SchwarzschildSliceMetric.html", null ]
           ] ],
-          [ "FlatThreeMetric", "classmotsfinder_1_1metric_1_1analytical_1_1FlatThreeMetric.html", null ]
-        ] ]
+          [ "FlatThreeMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html", null ],
+          [ "DiscreteMetric", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html", [
+            [ "DiscretizedMetric", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html", null ],
+            [ "SioMetric", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html", null ]
+          ] ]
+        ] ],
+        [ "FourMetric", "classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html", null ]
       ] ],
       [ "MetricTensor", "classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html", null ],
       [ "_SpectralBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html", [
@@ -94,6 +124,8 @@ var hierarchy =
       [ "_MpPi", "classmotsfinder_1_1pickle__helpers_1_1__MpPi.html", null ],
       [ "TestSettings", "classtestutils_1_1TestSettings.html", null ]
     ] ],
+    [ "SignatureQuantities", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html", null ],
+    [ "SioProject", "classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html", null ],
     [ "TestCase", null, [
       [ "DpkTestCase", "classtestutils_1_1DpkTestCase.html", null ]
     ] ],

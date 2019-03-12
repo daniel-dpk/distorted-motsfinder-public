@@ -1,0 +1,408 @@
+# Make horizon finder work?
+# Add puncture tracker?
+
+ActiveThorns = "
+    ADMBase
+    ADMCoupling
+    ADMMacros
+    # AEILocalInterp
+    # AHFinderDirect
+    Boundary
+    Carpet
+    CarpetIOASCII
+    CarpetIOBasic
+    CarpetIOScalar
+    # CarpetInterp
+    CarpetLib
+    CarpetReduce
+    # CarpetRegrid2
+    CarpetSimulationIO
+    CartGrid3D
+    Cartoon2D
+    CoordBase
+    CoordGauge
+    DriftCorrect5
+    IOUtil
+    InitBase
+    ML_BSSN
+    ML_BSSN_Helper
+    MoL
+    NaNChecker
+    # NewRad
+    # PunctureTracker
+    # QuasiLocalMeasures
+    SpaceMask
+    SphericalSurface
+    StaticConformal
+    SymBase
+    SystemTopology
+    TerminationTrigger
+    Time
+    TimerReport
+    TmunuBase
+    TwoPunctures
+"
+
+
+
+### Domain
+
+$order = 4
+
+driver::ghost_size = $order - 1
+
+grid::type = "coordbase"
+Carpet::domain_from_coordbase = yes
+
+CoordBase::domainsize = "minmax"
+CoordBase::spacing = "gridspacing"
+
+$res = 256
+
+CoordBase::xmin =  0.0
+CoordBase::ymin =  0.0
+CoordBase::zmin = -8.5
+CoordBase::xmax = +8.5
+CoordBase::ymax =  0.0
+CoordBase::zmax = +8.5
+CoordBase::dx = 1.0 / $res
+CoordBase::dy = 1.0 / $res
+CoordBase::dz = 1.0 / $res
+
+CoordBase::boundary_size_x_lower = $order - 1
+CoordBase::boundary_size_y_lower = $order - 1
+CoordBase::boundary_size_z_lower = $order - 1
+CoordBase::boundary_size_x_upper = $order - 1
+CoordBase::boundary_size_y_upper = $order - 1
+CoordBase::boundary_size_z_upper = $order - 1
+
+CoordBase::boundary_shiftout_x_lower = 1
+CoordBase::boundary_shiftout_y_lower = 1
+CoordBase::boundary_shiftout_y_upper = 1
+
+Cartoon2D::cartoon_active = yes
+Cartoon2D::order = $order
+
+# MoL::ODE_Method = "Euler"
+# MoL::MoL_Intermediate_Steps = 1
+# MoL::MoL_Num_Scratch_Levels = 0
+MoL::ODE_Method = "RK4"
+MoL::MoL_Intermediate_Steps = 4
+MoL::MoL_Num_Scratch_Levels = 1
+# MoL::ODE_Method = "RK87"
+# MoL::MoL_Intermediate_Steps = 13
+# MoL::MoL_Num_Scratch_Levels = 13
+Time::dtfac = 0.25   # 0.5
+
+cactus::terminate = "time"
+cactus::cctk_final_time = 5.0
+# cactus::cctk_itlast = 1
+
+
+
+### Physics
+
+ADMBase::initial_data = "twopunctures"
+ADMBase::initial_lapse = "twopunctures-averaged"
+ADMBase::initial_shift = "zero"
+ADMBase::initial_dtlapse = "zero"
+ADMBase::initial_dtshift = "zero"
+
+TwoPunctures::par_b = 0.375
+TwoPunctures::par_m_plus = 1.0
+TwoPunctures::par_m_minus = 0.25
+TwoPunctures::TP_Tiny = 1.0e-2
+TwoPunctures::grid_setup_method = "evaluation"
+TwoPunctures::swap_xz = yes
+
+ADMBase::evolution_method = "ML_BSSN"
+ADMBase::lapse_evolution_method = "ML_BSSN"
+ADMBase::shift_evolution_method = "ML_BSSN"
+ADMBase::dtlapse_evolution_method = "ML_BSSN"
+ADMBase::dtshift_evolution_method = "ML_BSSN"
+
+ML_BSSN::conformalMethod = 1    # W
+ML_BSSN::harmonicN = 1          # 1+log
+ML_BSSN::harmonicF = 2.0        # 1+log
+ML_BSSN::ShiftGammaCoeff = 0.75
+ML_BSSN::BetaDriver = 1.0
+ML_BSSN::advectLapse = 1
+ML_BSSN::advectShift = 1
+
+ML_BSSN::epsDiss = 0.3
+
+# ML_BSSN::initial_boundary_condition = "extrapolate-gammas"
+# ML_BSSN::rhs_boundary_condition = "NewRad"
+# Boundary::radpower = 2
+ML_BSSN::initial_boundary_condition = "scalar"
+ML_BSSN::rhs_boundary_condition = "scalar"
+
+ML_BSSN::fdorder = $order
+
+ML_BSSN::timelevels = 2
+ML_BSSN::other_timelevels = 2
+
+# SphericalSurface::nsurfaces = 4
+# SphericalSurface::maxntheta = 39
+# SphericalSurface::maxnphi   = 76
+# 
+# SphericalSurface::ntheta      [0] = 39
+# SphericalSurface::nphi        [0] = 76
+# SphericalSurface::nghoststheta[0] = 2
+# SphericalSurface::nghostsphi  [0] = 2
+# 
+# SphericalSurface::ntheta      [1] = 39
+# SphericalSurface::nphi        [1] = 76
+# SphericalSurface::nghoststheta[1] = 2
+# SphericalSurface::nghostsphi  [1] = 2
+# 
+# SphericalSurface::ntheta      [2] = 39
+# SphericalSurface::nphi        [2] = 76
+# SphericalSurface::nghoststheta[2] = 2
+# SphericalSurface::nghostsphi  [2] = 2
+# 
+# SphericalSurface::ntheta      [3] = 39
+# SphericalSurface::nphi        [3] = 76
+# SphericalSurface::nghoststheta[3] = 2
+# SphericalSurface::nghostsphi  [3] = 2
+
+# PunctureTracker::track                      [0] = yes
+# PunctureTracker::initial_z                  [0] = +0.375
+# PunctureTracker::which_surface_to_store_info[0] = 0
+
+# PunctureTracker::track                      [1] = yes
+# PunctureTracker::initial_z                  [1] = -0.375
+# PunctureTracker::which_surface_to_store_info[1] = 1
+
+# AHFinderDirect::verbose_level = "algorithm highlights"
+# AHFinderDirect::find_every = 16
+# AHFinderDirect::run_at_CCTK_POST_RECOVER_VARIABLES = no
+# 
+# AHFinderDirect::move_origins = yes
+# AHFinderDirect::reshape_while_moving = yes
+# AHFinderDirect::predict_origin_movement = yes
+# 
+# AHFinderDirect::geometry_interpolator_name = "Lagrange polynomial interpolation"
+# AHFinderDirect::geometry_interpolator_pars = "order=4"
+# AHFinderDirect::surface_interpolator_name = "Lagrange polynomial interpolation"
+# AHFinderDirect::surface_interpolator_pars = "order=4"
+# 
+# AHFinderDirect::output_h_every = 0
+# 
+# AHFinderDirect::N_horizons = 4
+# 
+# # First individual horizon
+# AHFinderDirect::origin_z                             [1] = +0.375
+# AHFinderDirect::initial_guess__coord_sphere__z_center[1] = +0.375
+# AHFinderDirect::initial_guess__coord_sphere__radius  [1] =  0.2
+# AHFinderDirect::which_surface_to_store_info          [1] = 0
+# AHFinderDirect::reset_horizon_after_not_finding      [1] = no
+# AHFinderDirect::track_origin_from_grid_scalar        [1] = yes
+# AHFinderDirect::track_origin_source_x                [1] = "PunctureTracker::pt_loc_x[0]"
+# AHFinderDirect::track_origin_source_y                [1] = "PunctureTracker::pt_loc_y[0]"
+# AHFinderDirect::track_origin_source_z                [1] = "PunctureTracker::pt_loc_z[0]"
+# 
+# # Second individual horizon
+# AHFinderDirect::origin_z                             [2] = -0.375
+# AHFinderDirect::initial_guess__coord_sphere__z_center[2] = -0.375
+# AHFinderDirect::initial_guess__coord_sphere__radius  [2] =  0.3
+# AHFinderDirect::which_surface_to_store_info          [2] = 1
+# AHFinderDirect::reset_horizon_after_not_finding      [2] = no
+# AHFinderDirect::track_origin_from_grid_scalar        [2] = yes
+# AHFinderDirect::track_origin_source_x                [2] = "PunctureTracker::pt_loc_x[1]"
+# AHFinderDirect::track_origin_source_y                [2] = "PunctureTracker::pt_loc_y[1]"
+# AHFinderDirect::track_origin_source_z                [2] = "PunctureTracker::pt_loc_z[1]"
+# 
+# # Outer common horizon
+# AHFinderDirect::initial_guess__coord_sphere__radius  [3] = 0.7
+# AHFinderDirect::which_surface_to_store_info          [3] = 2
+# AHFinderDirect::reset_horizon_after_not_finding      [3] = no
+# 
+# # Inner common horizon
+# AHFinderDirect::initial_guess__coord_sphere__radius  [4] = 0.7
+# AHFinderDirect::smoothing_factor                     [4] = -0.1
+# AHFinderDirect::shiftout_factor                      [4] =  0.9
+# AHFinderDirect::which_surface_to_store_info          [4] = 3
+# AHFinderDirect::reset_horizon_after_not_finding      [4] = no
+# 
+# QuasiLocalMeasures::verbose              = yes
+# QuasiLocalMeasures::interpolator         = "Lagrange polynomial interpolation"
+# QuasiLocalMeasures::interpolator_options = "order=4"
+# QuasiLocalMeasures::spatial_order        = 4
+# 
+# QuasiLocalMeasures::num_surfaces     = 4
+# QuasiLocalMeasures::surface_index[0] = 0
+# QuasiLocalMeasures::surface_index[1] = 1
+# QuasiLocalMeasures::surface_index[2] = 2
+# QuasiLocalMeasures::surface_index[3] = 3
+
+
+
+### Output
+
+NaNChecker::check_every = 1
+NaNChecker::action_if_found = "terminate"
+NaNChecker::check_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtlapse
+    ADMBase::dtshift
+    ML_BSSN::ML_log_confac
+    ML_BSSN::ML_metric
+    ML_BSSN::ML_Gamma
+    ML_BSSN::ML_trace_curv
+    ML_BSSN::ML_curv
+    ML_BSSN::ML_lapse
+    ML_BSSN::ML_dtlapse
+    ML_BSSN::ML_shift
+    ML_BSSN::ML_dtshift
+    ML_BSSN::ML_Ham
+    ML_BSSN::ML_mom
+"
+
+IO::out_dir = $parfile
+
+IOBasic::outInfo_every = 1
+IOBasic::outInfo_vars = "
+    ADMBase::lapse
+    ML_BSSN::H
+    # PunctureTracker::pt_loc_z[0]
+    # PunctureTracker::pt_loc_z[1]
+"
+
+IOScalar::one_file_per_group = yes
+IOScalar::all_reductions_in_one_file = yes
+IOScalar::outScalar_every = $res
+IOScalar::outScalar_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtlapse
+    ADMBase::dtshift
+    # ML_BSSN::ML_log_confac
+    # ML_BSSN::ML_metric
+    # ML_BSSN::ML_Gamma
+    # ML_BSSN::ML_trace_curv
+    # ML_BSSN::ML_curv
+    # ML_BSSN::ML_lapse
+    # ML_BSSN::ML_dtlapse
+    # ML_BSSN::ML_shift
+    # ML_BSSN::ML_dtshift
+    ML_BSSN::ML_Ham
+    ML_BSSN::ML_mom
+"
+
+IOASCII::one_file_per_group = yes
+IOASCII::compact_format = yes
+IOASCII::out1D_every = $res
+IOASCII::out1D_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtlapse
+    ADMBase::dtshift
+    # ML_BSSN::ML_log_confac
+    # ML_BSSN::ML_metric
+    # ML_BSSN::ML_Gamma
+    # ML_BSSN::ML_trace_curv
+    # ML_BSSN::ML_curv
+    # ML_BSSN::ML_lapse
+    # ML_BSSN::ML_dtlapse
+    # ML_BSSN::ML_shift
+    # ML_BSSN::ML_dtshift
+    ML_BSSN::ML_Ham
+    ML_BSSN::ML_mom
+    # PunctureTracker::pt_loc[0]
+    # PunctureTracker::pt_loc[1]
+"
+
+# IOASCII::out3D_every = 1
+# IOASCII::out3D_vars = "
+#     ADMBase::metric
+#     ADMBase::curv
+#     ADMBase::lapse
+#     ADMBase::shift
+#     ADMBase::dtlapse
+#     ADMBase::dtshift
+#     ML_BSSN::ML_log_confac
+#     ML_BSSN::ML_metric
+#     ML_BSSN::ML_Gamma
+#     ML_BSSN::ML_trace_curv
+#     ML_BSSN::ML_curv
+#     ML_BSSN::ML_lapse
+#     ML_BSSN::ML_dtlapse
+#     ML_BSSN::ML_shift
+#     ML_BSSN::ML_dtshift
+#     ML_BSSN::ML_Ham
+#     ML_BSSN::ML_mom
+# "
+
+$nioprocs = 1
+
+CarpetSimulationIO::async_output = yes
+CarpetSimulationIO::max_nioprocs = $nioprocs
+CarpetSimulationIO::output_ghost_zones = no
+CarpetSimulationIO::output_symmetry_zones = no
+CarpetSimulationIO::output_asdf = no
+CarpetSimulationIO::output_hdf5 = yes
+CarpetSimulationIO::out_every = $res
+CarpetSimulationIO::out_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtlapse
+    ADMBase::dtshift
+    ML_BSSN::ML_Ham
+    ML_BSSN::ML_mom
+    # PunctureTracker::pt_loc[0]
+    # PunctureTracker::pt_loc[1]
+    # QuasiLocalMeasures::qlm_3determinant
+    # QuasiLocalMeasures::qlm_coordinates
+    # QuasiLocalMeasures::qlm_grid_int
+    # QuasiLocalMeasures::qlm_grid_real
+    # QuasiLocalMeasures::qlm_invariant_coordinates
+    # QuasiLocalMeasures::qlm_killed_twometric
+    # QuasiLocalMeasures::qlm_killing_vector
+    # QuasiLocalMeasures::qlm_multipole_moments
+    # QuasiLocalMeasures::qlm_newman_penrose
+    # QuasiLocalMeasures::qlm_ricci_scalars
+    # QuasiLocalMeasures::qlm_scalars
+    # QuasiLocalMeasures::qlm_shapes
+    # QuasiLocalMeasures::qlm_state
+    # QuasiLocalMeasures::qlm_tetrad_l
+    # QuasiLocalMeasures::qlm_tetrad_m
+    # QuasiLocalMeasures::qlm_tetrad_n
+    # QuasiLocalMeasures::qlm_twometric
+    # QuasiLocalMeasures::qlm_weyl_scalars
+    # SphericalSurface::sf_active
+    # SphericalSurface::sf_coordinate_descriptors
+    # SphericalSurface::sf_info
+    # SphericalSurface::sf_origin
+    # SphericalSurface::sf_radius
+    # SphericalSurface::sf_valid
+"
+
+CarpetSimulationIO::checkpoint = yes
+IO::checkpoint_every = 1024
+IO::checkpoint_ID = yes
+IO::checkpoint_on_terminate = yes
+IO::checkpoint_dir = $parfile
+
+IO::recover = "autoprobe"
+IO::recover_dir = $parfile
+
+TerminationTrigger::max_walltime = 24.0
+TerminationTrigger::on_remaining_walltime = 30   # minutes
+TerminationTrigger::output_remtime_every_minutes = 30
+TerminationTrigger::termination_from_file = yes
+TerminationTrigger::termination_file = "TERMINATE"
+TerminationTrigger::create_termination_file = yes
+
+TimerReport::out_every = $res
+TimerReport::out_filename = "TimerReport"
+TimerReport::n_top_timers = 100

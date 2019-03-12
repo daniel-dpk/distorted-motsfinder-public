@@ -115,9 +115,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ae40e8a7c57156a8cd59d647d6d73f9bb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#ae40e8a7c57156a8cd59d647d6d73f9bb">binomial_coeffs</a> (n)</td></tr>
 <tr class="memdesc:ae40e8a7c57156a8cd59d647d6d73f9bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute all binomial coefficients n choose k for 0 &lt;= k &lt;= n.  <a href="#ae40e8a7c57156a8cd59d647d6d73f9bb">More...</a><br /></td></tr>
 <tr class="separator:ae40e8a7c57156a8cd59d647d6d73f9bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e36c2ab6d833bc863875d5fd9d44649"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a9e36c2ab6d833bc863875d5fd9d44649">inf_norm1d</a> (f1, f2=None, domain=None, Ns=50)</td></tr>
-<tr class="memdesc:a9e36c2ab6d833bc863875d5fd9d44649"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the L^inf norm of f1-f2.  <a href="#a9e36c2ab6d833bc863875d5fd9d44649">More...</a><br /></td></tr>
-<tr class="separator:a9e36c2ab6d833bc863875d5fd9d44649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b97c44db7e45216d0cc0b32acfa54a9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a4b97c44db7e45216d0cc0b32acfa54a9">inf_norm1d</a> (f1, f2=None, domain=None, Ns=50, xatol=1e-12)</td></tr>
+<tr class="memdesc:a4b97c44db7e45216d0cc0b32acfa54a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the L^inf norm of f1-f2.  <a href="#a4b97c44db7e45216d0cc0b32acfa54a9">More...</a><br /></td></tr>
+<tr class="separator:a4b97c44db7e45216d0cc0b32acfa54a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a24489f5e58131c2fa6ad0ef9d36c732b">inverse_2x2_matrix_derivative</a> (A, dA=None, ddA=None, diff=1)</td></tr>
 <tr class="memdesc:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute derivatives of the inverse of a 2x2 matrix.  <a href="#a24489f5e58131c2fa6ad0ef9d36c732b">More...</a><br /></td></tr>
 <tr class="separator:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -218,8 +218,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9e36c2ab6d833bc863875d5fd9d44649"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e36c2ab6d833bc863875d5fd9d44649">&#9670;&nbsp;</a></span>inf_norm1d()</h2>
+<a id="a4b97c44db7e45216d0cc0b32acfa54a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b97c44db7e45216d0cc0b32acfa54a9">&#9670;&nbsp;</a></span>inf_norm1d()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,7 +246,13 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>Ns</em> = <code>50</code>&#160;</td>
+          <td class="paramname"><em>Ns</em> = <code>50</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>xatol</em> = <code>1e-12</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -263,7 +269,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">f1</td><td>First function. May also be a <code>NumericExpression</code>. </td></tr>
     <tr><td class="paramname">f2</td><td>Second function. May also be a <code>NumericExpression</code>. If not given, simply finds the maximum absolute value of <code>f1</code>. </td></tr>
     <tr><td class="paramname">domain</td><td>Domain <code>[a, b]</code> inside which to search for the maximum difference. By default, <code>f1</code> is queried for the domain. </td></tr>
-    <tr><td class="paramname">Ns</td><td>Number of initial samples for the <code>scipy.optimize.brute</code> call. Default is <code>50</code>.</td></tr>
+    <tr><td class="paramname">Ns</td><td>Number of initial samples for the <code>scipy.optimize.brute</code> call. In case <code>Ns &lt;= 2</code>, the <code>brute()</code> step is skipped an a local extremum is found inside the given <code>domain</code>. Default is <code>50</code>.</td></tr>
   </table>
   </dd>
 </dl>

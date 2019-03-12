@@ -107,12 +107,6 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae99a0d2f72e280ba31fd67afd3544101"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1exprs_1_1numexpr.html#ae99a0d2f72e280ba31fd67afd3544101">save_to_file</a> (filename, data, overwrite=False, verbose=True, showname='data', mkpath=True)</td></tr>
-<tr class="memdesc:ae99a0d2f72e280ba31fd67afd3544101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save an object to disk.  <a href="#ae99a0d2f72e280ba31fd67afd3544101">More...</a><br /></td></tr>
-<tr class="separator:ae99a0d2f72e280ba31fd67afd3544101"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5379f44e1ad68837e8209a56c5cf243a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1exprs_1_1numexpr.html#a5379f44e1ad68837e8209a56c5cf243a">load_from_file</a> (filename)</td></tr>
-<tr class="memdesc:a5379f44e1ad68837e8209a56c5cf243a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from disk.  <a href="#a5379f44e1ad68837e8209a56c5cf243a">More...</a><br /></td></tr>
-<tr class="separator:a5379f44e1ad68837e8209a56c5cf243a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a431e93084ddbcd4a9f8be44c7cdf02e3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1exprs_1_1numexpr.html#a431e93084ddbcd4a9f8be44c7cdf02e3">isclose</a> (a, b, rel_tol=None, abs_tol=None, use_mp=False)</td></tr>
 <tr class="memdesc:a431e93084ddbcd4a9f8be44c7cdf02e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test if two numbers agree within an absolute/relative tolerance.  <a href="#a431e93084ddbcd4a9f8be44c7cdf02e3">More...</a><br /></td></tr>
 <tr class="separator:a431e93084ddbcd4a9f8be44c7cdf02e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,95 +175,6 @@ Variables</h2></td></tr>
 
 <p>Test if two numbers agree within an absolute/relative tolerance. </p>
 <p>For floating point comparison (i.e. if <code>use_mp==False</code>), the default relative tolerance is <code>1e-9</code> and the absolute one <code>0.0</code>. </p>
-
-</div>
-</div>
-<a id="a5379f44e1ad68837e8209a56c5cf243a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5379f44e1ad68837e8209a56c5cf243a">&#9670;&nbsp;</a></span>load_from_file()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def motsfinder.exprs.numexpr.load_from_file </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Load an object from disk. </p>
-<p>If the object had been stored using <a class="el" href="namespacemotsfinder_1_1exprs_1_1numexpr.html#ae99a0d2f72e280ba31fd67afd3544101" title="Save an object to disk. ">save_to_file()</a>, the result should be a perfect copy of the object.</p>
-<p><b>Notes</b> </p>
-<p>This assumes the object is the only element of a list stored in the file, which will be the case if the file was created using <a class="el" href="namespacemotsfinder_1_1exprs_1_1numexpr.html#ae99a0d2f72e280ba31fd67afd3544101" title="Save an object to disk. ">save_to_file()</a>. If the data is not a single-element list, it is returned as is. </p>
-
-</div>
-</div>
-<a id="ae99a0d2f72e280ba31fd67afd3544101"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae99a0d2f72e280ba31fd67afd3544101">&#9670;&nbsp;</a></span>save_to_file()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def motsfinder.exprs.numexpr.save_to_file </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>filename</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>overwrite</em> = <code>False</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>verbose</em> = <code>True</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>showname</em> = <code>'data'</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>mkpath</em> = <code>True</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Save an object to disk. </p>
-<p>This uses <code>numpy.save()</code> to store an object in a file. Use <a class="el" href="namespacemotsfinder_1_1exprs_1_1numexpr.html#a5379f44e1ad68837e8209a56c5cf243a" title="Load an object from disk. ">load_from_file()</a> to restore the data afterwards.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filename</td><td>The file name to store the data in. An extension <code>'.npy'</code> will be added if not already there. </td></tr>
-    <tr><td class="paramname">overwrite</td><td>Whether to overwrite an existing file with the same name. If <code>False</code> (default) and such a file exists, a <code>RuntimeError</code> is raised. </td></tr>
-    <tr><td class="paramname">verbose</td><td>Whether to print when the file was written. Default is <code>True</code>. </td></tr>
-    <tr><td class="paramname">showname</td><td>Name to print in the confirmation message in case <code>verbose==True</code>.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p><b>Notes</b> </p>
-<p>The data will be put into a 1-element list to avoid creating 0-dimensional numpy arrays. </p>
 
 </div>
 </div>

@@ -5,19 +5,27 @@ General utilities for simplifying certain tasks in Python.
 
 from __future__ import print_function
 import functools
+import importlib.util
 from builtins import range, map
 
+from glob import glob
 import os
 import os.path as op
+import re
 import subprocess
 import time
 from timeit import default_timer
 import datetime
 from contextlib import contextmanager
 
+import numpy as np
+
 
 __all__ = [
     "get_git_commit",
+    "import_file_as_module",
+    "lmap",
+    "lrange",
     "isiterable",
     "get_chunks",
     "parallel_compute",
@@ -28,6 +36,8 @@ __all__ = [
     "print_indented",
     "timethis",
     "cache_method_results",
+    "find_file",
+    "find_files",
 ]
 
 
@@ -45,10 +55,22 @@ def get_git_commit():
     return result.decode('utf-8').strip()
 
 
+def import_file_as_module(fname, mname='loaded_module'):
+    spec = importlib.util.spec_from_file_location(mname, fname)
+    cfg_module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cfg_module)
+    return cfg_module
+
+
 def lmap(func, *iterables):
     r"""Implementation of `map` that returns a list instead of a generator."""
     # This is efficient even in Python 2 due to the builtins.map import.
     return list(map(func, *iterables))
+
+
+def lrange(*args):
+    r"""Convenience wrapper to call `list(range(...))`."""
+    return list(range(*args))
 
 
 def isiterable(obj):
@@ -300,7 +322,7 @@ def timethis(start_msg=None, end_msg="Elapsed time: {}", silent=False, eol=True)
         start_msg = "Started: {now}"
     if start_msg is not None:
         print(start_msg.format(now=time.strftime('%Y-%m-%d %H:%M:%S')),
-              end='\n' if eol else '')
+              end='\n' if eol else '', flush=not eol)
     start = default_timer()
     try:
         yield
@@ -360,3 +382,134 @@ def cache_method_results(key=None):
                 return result
         return wrapper
     return cache_decorator
+
+
+def save_to_file(filename, data, overwrite=False, verbose=True,
+                 showname='data', mkpath=True):
+    r"""Save an object to disk.
+
+    This uses `numpy.save()` to store an object in a file. Use
+    load_from_file() to restore the data afterwards.
+
+    @param filename
+        The file name to store the data in. An extension ``'.npy'`` will be
+        added if not already there.
+    @param overwrite
+        Whether to overwrite an existing file with the same name. If `False`
+        (default) and such a file exists, a `RuntimeError` is raised.
+    @param verbose
+        Whether to print when the file was written. Default is `True`.
+    @param showname
+        Name to print in the confirmation message in case `verbose==True`.
+
+    @b Notes
+
+    The data will be put into a 1-element list to avoid creating 0-dimensional
+    numpy arrays.
+    """
+    filename = op.expanduser(filename)
+    if not filename.endswith('.npy'):
+        filename += '.npy'
+    if mkpath:
+        os.makedirs(op.normpath(op.dirname(filename)), exist_ok=True)
+    if op.exists(filename) and not overwrite:
+        raise RuntimeError("File already exists.")
+    np.save(filename, [data])
+    if verbose:
+        print("%s saved to: %s" % (showname, filename))
+
+
+def load_from_file(filename):
+    r"""Load an object from disk.
+
+    If the object had been stored using save_to_file(), the result should be a
+    perfect copy of the object.
+
+    @b Notes
+
+    This assumes the object is the only element of a list stored in the file,
+    which will be the case if the file was created using save_to_file(). If
+    the data is not a single-element list, it is returned as is.
+    """
+    filename = op.expanduser(filename)
+    result = np.load(filename)
+    if result.shape == (1,):
+        return result[0]
+    # Not a single value. Return as is.
+    return result
+
+
+def find_file(pattern, recursive=False, skip_regex=None, regex=None,
+              load=False, full_output=False, verbose=False):
+    r"""Find a file based on a glob pattern and optional regex patterns.
+
+    Optionally, a matching file can be loaded. In this case, it is ignored if
+    the file exists but contains no data (i.e. `None` was saved).
+
+    @param pattern
+        Shell glob pattern. May contain ``'**'`` if `recursive=True`.
+    @param recursive
+        Activate recursive wildcard ``'**'`` in `pattern`. Default is `False`.
+    @param skip_regex
+        Files matching this regex will be ignored.
+    @param regex
+        If given, only files matching this regex will be considered.
+    @param load
+        If `True`, load the file and return the data. Default is `False`.
+    @param full_output
+        If `load=True`, return both the data and filename. Default is `False`,
+        i.e. only return the data. Ignored if `load=False`.
+    @param verbose
+        Print a note in case data was loaded from a file.
+    """
+    result = find_files(pattern, recursive=recursive, skip_regex=skip_regex,
+                        regex=regex, load=load, full_output=full_output,
+                        max_num=1, verbose=verbose)
+    if len(result) == 1:
+        return result[0]
+    raise FileNotFoundError("No data found for pattern: %s" % pattern)
+
+
+def find_files(pattern, recursive=False, skip_regex=None, regex=None,
+               load=False, full_output=False, max_num=None, verbose=False):
+    r"""Find files based on a glob pattern and optional regex patterns.
+
+    Optionally, all matching files can be loaded. In this case, files are
+    ignored if they contains no data (i.e. `None` was saved).
+
+    @param pattern
+        Shell glob pattern. May contain ``'**'`` if `recursive=True`.
+    @param recursive
+        Activate recursive wildcard ``'**'`` in `pattern`. Default is `False`.
+    @param skip_regex
+        Files matching this regex will be ignored.
+    @param regex
+        If given, only files matching this regex will be considered.
+    @param load
+        If `True`, load the files and return the data. Default is `False`.
+    @param full_output
+        If `load=True`, return both the data and filenames. Default is
+        `False`, i.e. only return the data. Ignored if `load=False`.
+    @param max_num
+        Maximum number of files to collect. Default is to collect all
+        matching files.
+    @param verbose
+        Print a note in case data was loaded from a file.
+    """
+    result = []
+    for fn in glob(pattern, recursive=recursive):
+        if skip_regex and re.search(skip_regex, fn):
+            continue
+        if regex and not re.search(regex, fn):
+            continue
+        if load:
+            obj = load_from_file(fn)
+            if obj:
+                if verbose:
+                    print("Data loaded: %s" % fn)
+                result.append((obj, fn) if full_output else obj)
+        else:
+            result.append(fn)
+        if max_num and len(result) == max_num:
+            break
+    return result

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['metrictensor',['MetricTensor',['../classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html',1,'motsfinder::metric::base']]],
-  ['motsfindingconfig',['MotsFindingConfig',['../classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html',1,'motsfinder::axisym::findmots']]]
+  ['identityexpression',['IdentityExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1IdentityExpression.html',1,'motsfinder::exprs::basics']]],
+  ['inithelper',['InitHelper',['../classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html',1,'motsfinder::axisym::initialguess']]],
+  ['insufficientresolutionorroundoff',['InsufficientResolutionOrRoundoff',['../classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html',1,'motsfinder::axisym::newton']]],
+  ['integrationerror',['IntegrationError',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1IntegrationError.html',1,'motsfinder::axisym::curve::expcurve']]]
 ];

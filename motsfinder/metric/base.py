@@ -108,6 +108,9 @@ class _GeneralMetric(object):
         * diff() computing derivatives of the metric at a given point
     """
 
+    def __call__(self, point):
+        return self.diff(point, diff=0)
+
     def at(self, point):
         r"""Return the metric tensor at a given point."""
         return MetricTensor(self._mat_at(point))

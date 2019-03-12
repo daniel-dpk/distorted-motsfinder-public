@@ -104,32 +104,59 @@ class TestStarshapedcurve(DpkTestCase):
         # The Schwarzschild radius is 2m.
         self.assertAlmostEqual(c.horizon_radius(), 2*metric.m)
 
-    def test_z_distance(self):
+    def _test_z_distance(self, allow_intersection):
+        ai = allow_intersection
         metric = BrillLindquistMetric(m1=2.4, m2=0.8, d=1.6, axis='z')
         d = metric.d
-        r1, r2 = 0.4, 1.1
+        r1, r2, r3, r4 = 0.4, 1.1, 0.5, 0.5
+        # c1 points on z-axis: 0.4 and 1.2
         c1 = StarShapedCurve.create_sphere(radius=r1, num=1, metric=metric,
                                            origin=(0, d/2))
+        # c2 points on z-axis: -1.9 and 0.3
         c2 = StarShapedCurve.create_sphere(radius=r2, num=1, metric=metric,
                                            origin=(0, -d/2))
+        # c3 points on z-axis: -0.5 and 0.5
+        c3 = StarShapedCurve.create_sphere(radius=r3, num=1, metric=metric)
+        # c4 points on z-axis: -0.4 and 0.6
+        c4 = StarShapedCurve.create_sphere(radius=r4, num=1, metric=metric,
+                                           origin=(0, 0.1))
+        # c4 points on z-axis: -1.6 and 1.6
+        c5 = StarShapedCurve.create_sphere(radius=d, num=1, metric=metric)
         fl = None
-        self.assertAlmostEqual(c1.z_distance_using_metric(fl), d/2 - r1)
-        self.assertAlmostEqual(c2.z_distance_using_metric(fl), 0.0)
-        self.assertAlmostEqual(c1.z_distance(), 4.9137593596979325)
-        self.assertAlmostEqual(c2.z_distance(), 0.0)
-        self.assertAlmostEqual(c1.z_distance_using_metric(fl, c2), d - r1 - r2)
-        self.assertAlmostEqual(c2.z_distance_using_metric(fl, c1), d - r1 - r2)
-        self.assertAlmostEqual(c1.z_distance(c2), 1.6233677938493223)
-        self.assertAlmostEqual(c2.z_distance(c1), 1.6233677938493223)
-        c3 = StarShapedCurve.create_sphere(radius=d, num=1, metric=metric)
-        self.assertAlmostEqual(c1.z_distance_using_metric(fl, c3), 0.0)
-        self.assertAlmostEqual(c2.z_distance_using_metric(fl, c3), 0.0)
-        self.assertAlmostEqual(c1.z_distance(c3), 0.0)
-        self.assertAlmostEqual(c2.z_distance(c3), 0.0)
-        self.assertAlmostEqual(c3.z_distance_using_metric(fl, c1), 0.0)
-        self.assertAlmostEqual(c3.z_distance_using_metric(fl, c2), 0.0)
-        self.assertAlmostEqual(c3.z_distance(c1), 0.0)
-        self.assertAlmostEqual(c3.z_distance(c2), 0.0)
+        kw = dict(allow_intersection=allow_intersection)
+        self.assertAlmostEqual(c1.z_distance_using_metric(fl, **kw), d/2 - r1)
+        self.assertAlmostEqual(c2.z_distance_using_metric(fl, **kw),
+                               -0.3 if ai else 0.0)
+        self.assertAlmostEqual(c3.z_distance_using_metric(fl, **kw),
+                               -0.5 if ai else 0.0)
+        self.assertAlmostEqual(c4.z_distance_using_metric(fl, **kw),
+                               -0.4 if ai else 0.0)
+        self.assertAlmostEqual(c1.z_distance(**kw), 4.9137593596979325)
+        self.assertAlmostEqual(c2.z_distance(**kw),
+                               -3.2903915658486094 if ai else 0.0)
+        self.assertAlmostEqual(c1.z_distance_using_metric(fl, c2, **kw), d - r1 - r2)
+        self.assertAlmostEqual(c2.z_distance_using_metric(fl, c1, **kw), d - r1 - r2)
+        self.assertAlmostEqual(c1.z_distance(c2, **kw), 1.6233677938493223)
+        self.assertAlmostEqual(c2.z_distance(c1, **kw), 1.6233677938493223)
+        self.assertAlmostEqual(c1.z_distance_using_metric(fl, c5, **kw),
+                               -1.2 if ai else 0.0)
+        self.assertAlmostEqual(c2.z_distance_using_metric(fl, c5, **kw),
+                               -1.9 if ai else 0.0)
+        # only if intersection is disallowed, since we'd integrate over the
+        # singularity otherwise
+        if not ai:
+            self.assertAlmostEqual(c1.z_distance(c5, **kw), 0.0)
+            self.assertAlmostEqual(c2.z_distance(c5, **kw), 0.0)
+            self.assertAlmostEqual(c5.z_distance(c1, **kw), 0.0)
+            self.assertAlmostEqual(c5.z_distance(c2, **kw), 0.0)
+        self.assertAlmostEqual(c5.z_distance_using_metric(fl, c1, **kw),
+                               -1.2 if ai else 0.0)
+        self.assertAlmostEqual(c5.z_distance_using_metric(fl, c2, **kw),
+                               -1.9 if ai else 0.0)
+
+    def test_z_distance(self):
+        self._test_z_distance(allow_intersection=False)
+        self._test_z_distance(allow_intersection=True)
 
 
 def run_tests():

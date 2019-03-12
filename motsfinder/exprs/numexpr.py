@@ -39,13 +39,11 @@ from __future__ import print_function
 
 from contextlib import contextmanager
 from abc import ABCMeta, abstractmethod
-import os
-import os.path as op
 
 from six import add_metaclass, iteritems
-import numpy as np
 from mpmath import mp, fp
 
+from ..utils import save_to_file, load_from_file
 from ..pickle_helpers import prepare_dict, restore_dict
 from .common import _update_domains, _zero_function
 from .evaluators import TrivialEvaluator, EvaluatorFactory
@@ -55,61 +53,6 @@ __all__ = [
     "NumericExpression",
     "SimpleExpression",
 ]
-
-
-def save_to_file(filename, data, overwrite=False, verbose=True,
-                 showname='data', mkpath=True):
-    r"""Save an object to disk.
-
-    This uses `numpy.save()` to store an object in a file. Use
-    load_from_file() to restore the data afterwards.
-
-    @param filename
-        The file name to store the data in. An extension ``'.npy'`` will be
-        added if not already there.
-    @param overwrite
-        Whether to overwrite an existing file with the same name. If `False`
-        (default) and such a file exists, a `RuntimeError` is raised.
-    @param verbose
-        Whether to print when the file was written. Default is `True`.
-    @param showname
-        Name to print in the confirmation message in case `verbose==True`.
-
-    @b Notes
-
-    The data will be put into a 1-element list to avoid creating 0-dimensional
-    numpy arrays.
-    """
-    filename = op.expanduser(filename)
-    if not filename.endswith('.npy'):
-        filename += '.npy'
-    if mkpath:
-        os.makedirs(op.normpath(op.dirname(filename)), exist_ok=True)
-    if op.exists(filename) and not overwrite:
-        raise RuntimeError("File already exists.")
-    np.save(filename, [data])
-    if verbose:
-        print("%s saved to: %s" % (showname, filename))
-
-
-def load_from_file(filename):
-    r"""Load an object from disk.
-
-    If the object had been stored using save_to_file(), the result should be a
-    perfect copy of the object.
-
-    @b Notes
-
-    This assumes the object is the only element of a list stored in the file,
-    which will be the case if the file was created using save_to_file(). If
-    the data is not a single-element list, it is returned as is.
-    """
-    filename = op.expanduser(filename)
-    result = np.load(filename)
-    if result.shape == (1,):
-        return result[0]
-    # Not a single value. Return as is.
-    return result
 
 
 class ExpressionWarning(UserWarning):

@@ -73,7 +73,7 @@ def newton_kantorovich(initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0,
                        fake_steps=3,
                        plot_steps=False, reference_curves=(),
                        plot_deltas=False, verbose=False, disp=True,
-                       parallel=False):
+                       parallel=False, **kw):
     r"""Do a Newton type search to find a MOTS.
 
     This function performs scaled Newton steps to solve the nonlinear problem
@@ -106,9 +106,9 @@ def newton_kantorovich(initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0,
         taking more Newton steps. Default is `1e-12`.
     @param accurate_test_res
         Number of samples to check the expansion at to decide upon
-        convergence. If zero or `None`, convergence is only checked at the
-        collocation points and `auto_resolution` has no effect. Default is
-        `500`.
+        convergence. If ``'twice'``, uses two times the curve's resolution. If
+        zero or `None`, convergence is only checked at the collocation points
+        and `auto_resolution` has no effect. Default is `500`.
     @param auto_resolution
         Boolean indicating whether the resolution should be increased if
         insufficient resolution is detected. Default: `True`.
@@ -151,6 +151,9 @@ def newton_kantorovich(initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0,
         Whether to evaluate the equation using multiple processes in parallel.
         If `True`, uses all available threads. If an integer, uses that many
         threads. Default is `False`, i.e. don't compute in parallel.
+    @param **kw
+        Remaining keyword arguments are set as attributes on the solver
+        object.
     """
     solver = NewtonKantorovich(max_steps=steps, step_mult=step_mult,
                                atol=atol, rtol=rtol, verbose=verbose)
@@ -166,6 +169,8 @@ def newton_kantorovich(initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0,
     solver.reference_curves = reference_curves
     solver.disp = disp
     solver.parallel = parallel
+    for key, val in kw.items():
+        setattr(solver, key, val)
     return solver.solve(initial_curve)
 
 
@@ -186,9 +191,14 @@ class NewtonKantorovich(object):
                  "target_expansion", "accurate_test_res", "auto_resolution",
                  "max_resolution", "linear_regime_threshold", "mat_solver",
                  "__fake_convergent_steps", "max_fake_convergent_steps",
-                 "res_increase_factor", "plot_steps", "plot_deltas",
-                 "reference_curves", "disp", "parallel",
-                 "_prev_accurate_delta")
+                 "res_increase_factor", "res_decrease_factor",
+                 "res_decrease_accel", "res_init_factor",
+                 "downsampling_tol_factor", "linear_regime_res_factor",
+                 "min_res", "detect_plateau", "plateau_tol",
+                 "liberal_downsampling", "plot_steps", "plot_deltas",
+                 "plot_opts", "reference_curves", "disp", "parallel",
+                 "_prev_accurate_delta", "_prev_res_accurate_delta",
+                 "user_data")
 
     def __init__(self, max_steps=50, step_mult=0.5, atol=1e-12, rtol=0,
                  verbose=False):
@@ -235,12 +245,42 @@ class NewtonKantorovich(object):
         self.max_fake_convergent_steps = 3
         ## Factor by which to increase the resolution in case insufficient
         ## resolution is detected.
-        self.res_increase_factor = 1.5
+        self.res_increase_factor = 1.5 # should be > 1
+        ## Once converged and with `auto_resolution==True`, this controls in
+        ## which steps the resolution is reduced as long as the tolerance is
+        ## maintained.
+        self.res_decrease_factor = 0.9 # should be < 1
+        ## This accelerates the resolution decreasing steps with each step.
+        self.res_decrease_accel = 0.95 # should be <= 1
+        ## Factor by which errors can increase during downsampling while still
+        ## staying below the configured absolute tolerance.
+        self.downsampling_tol_factor = 5.0
+        ## Initial resolution multiplier before starting the search.
+        self.res_init_factor = 1
+        ## Once the linear regime is reached, the resolution is multiplied by
+        ## this factor.
+        self.linear_regime_res_factor = 1
+        ## Minimum resolution when decreasing the resolution.
+        self.min_res = 1
+        ## Whether to stop increasing the resolution when it stops producing
+        ## more accurate results.
+        self.detect_plateau = False
+        ## Plateau is detected if new results are not at least `plateau_tol`
+        ## times better than previous results.
+        self.plateau_tol = 1.5
+        ## If `True`, ignore `atol` while downsampling and only consider
+        ## `downsampling_tol_factor`.
+        self.liberal_downsampling = False
         self.plot_steps = False
         self.plot_deltas = False
+        ## Options used for plotting the Newton steps.
+        self.plot_opts = dict()
         self.reference_curves = ()
         self.parallel = False
+        ## Custom data to store in the final curve (excluding convergence data).
+        self.user_data = dict()
         self._prev_accurate_delta = None
+        self._prev_res_accurate_delta = None
 
     def solve(self, initial_curve):
         r"""Perform the actual Newton steps to find a solution.
@@ -259,8 +299,9 @@ class NewtonKantorovich(object):
 
     def _solve(self, initial_curve, pool=None):
         r"""Wrapped function for performing the Newton steps."""
-        # TODO: detect when we diverge and stop
         curve = initial_curve.copy()
+        if self.user_data:
+            curve.user_data.update(**self.user_data)
         step_mult = self.step_mult
         self.__fake_convergent_steps = 0
         eq = _LinearExpansionEquation(
@@ -270,6 +311,14 @@ class NewtonKantorovich(object):
             parallel=self.parallel,
             pool=pool
         )
+        initial_res = curve.num
+        new_res = max(self.min_res, int(round(self.res_init_factor * curve.num)))
+        if new_res != curve.num and step_mult != 1.0:
+            if self.verbose:
+                print("Initial steps with resolution %s" % new_res)
+            curve.resample(new_res)
+        curve.user_data['converged'] = False
+        curve.user_data['reason'] = "unspecified"
         for i in range(self.max_steps):
             self._plot_step(curve, step=i)
             d = ndsolve(
@@ -291,7 +340,17 @@ class NewtonKantorovich(object):
                     "desired tolerance within %d steps."
                     % (self.max_steps)
                 )
+                curve.user_data['reason'] = "step limit"
             if eq.prev_abs_delta <= self.linear_regime_threshold:
+                if step_mult != 1.0:
+                    if self.linear_regime_res_factor == "restore":
+                        new_res = initial_res
+                    elif self.linear_regime_res_factor != 1:
+                        new_res = int(round(self.linear_regime_res_factor*curve.num))
+                    if new_res != curve.num:
+                        if self.verbose:
+                            print("  Upsampling to %d in linear regime" % new_res)
+                        self._change_resolution(curve, d, new_res)
                 step_mult = 1.0
             curve.h.a_n += step_mult * np.asarray(d.a_n)
             self._plot_delta(d, step=i)
@@ -305,20 +364,26 @@ class NewtonKantorovich(object):
         the result is not (much) worse. We allow the result to become worse by
         a small amount but no worse than the tolerance.
         """
+        prev_delta = self._prev_accurate_delta
         if (not self.auto_resolution or not eq.has_accurate_test()
                 or not self.atol or self.rtol):
             # downsampling only safe if we're just using `atol`
             return
-        prev_delta = self._prev_accurate_delta
-        tol = min(5*prev_delta, self.atol)
+        tol = self.downsampling_tol_factor * prev_delta
+        if not self.liberal_downsampling:
+            if prev_delta >= self.atol:
+                return
+            tol = min(tol, self.atol)
         test_curve = curve.copy()
         res = test_curve.num
-        f = 0.9
+        f = self.res_decrease_factor
         downsampled_delta = prev_delta
         while True:
+            if res <= self.min_res:
+                break
             prev_delta = downsampled_delta
             downsampled_delta = eq.accurate_abs_delta(
-                test_curve.resample(int(f*res))
+                test_curve.resample(max(self.min_res, int(f*res)))
             )
             if downsampled_delta > tol:
                 # Downsampled curve not OK anymore, use previous resolution
@@ -327,7 +392,8 @@ class NewtonKantorovich(object):
                 # new_res == res  =>  seems the horizon function is zero
                 break
             res = test_curve.num
-            f *= 0.95
+            # sample down slightly more aggressive next round
+            f *= self.res_decrease_accel
         if self.verbose and res != curve.num:
             print("  Curve downsampled to %s, accurate error now %g"
                   % (res, prev_delta))
@@ -358,6 +424,8 @@ class NewtonKantorovich(object):
         # that, in case `rtol` is used (i.e. nonzero) and satisfied, we have
         # converged by that criterion.
         if eq.prev_rel_delta <= self.rtol:
+            curve.user_data['converged'] = True
+            curve.user_data['reason'] = "converged"
             return True
         # Expansion is below tolerance at the collocation points. Now check it
         # is low elsewhere too.
@@ -375,12 +443,18 @@ class NewtonKantorovich(object):
         tolerance lies below the roundoff plateau). In case we're allowed to,
         the resolution is then increased and more steps are taken.
         """
-        self._prev_accurate_delta = eq.accurate_abs_delta(curve)
-        if not self.atol or self._prev_accurate_delta <= self.atol:
+        def _p(msg):
+            if self.verbose:
+                print(msg)
+        accurate_delta = eq.accurate_abs_delta(curve)
+        self._prev_accurate_delta = accurate_delta
+        if not self.atol or accurate_delta <= self.atol:
             # We really have converged (or should not check).
-            if eq.has_accurate_test() and self.verbose:
-                print("  Accurate error = %g at resolution %s"
-                      % (self._prev_accurate_delta, curve.num))
+            if eq.has_accurate_test():
+                _p("  Accurate error = %g at resolution %s"
+                   % (accurate_delta, curve.num))
+            curve.user_data['converged'] = True
+            curve.user_data['reason'] = "converged"
             return True
         # Expansion is not low enough. This is a "fake convergent" step.
         self.__fake_convergent_steps += 1
@@ -388,13 +462,20 @@ class NewtonKantorovich(object):
             # We allow some fake steps to account for the case that the
             # violating values need just one or two extra steps to converge.
             return False
+        if self.detect_plateau:
+            prev_res_delta = self._prev_res_accurate_delta
+            if prev_res_delta and self.plateau_tol*accurate_delta >= prev_res_delta:
+                # increasing the resolution did not help appreciably
+                _p("  Plateau detected; remaining error = %g at resolution %s"
+                   % (accurate_delta, curve.num))
+                curve.user_data['converged'] = True
+                curve.user_data['reason'] = "plateau"
+                return True
         # We probably need a higher resolution since several fake convergent
         # steps have been taken now.
         if not self.auto_resolution or curve.num >= self.max_resolution:
-            if self.verbose:
-                print("  Accurate error still %g > %g..."
-                      " stopping with resolution %d"
-                      % (self._prev_accurate_delta, self.atol, curve.num))
+            _p("  Accurate error still %g > %g... stopping with resolution %d"
+               % (accurate_delta, self.atol, curve.num))
             self._raise(  # only raises if self.disp==True
                 InsufficientResolutionOrRoundoff,
                 "Newton-Kantorovich search converged only "
@@ -403,18 +484,22 @@ class NewtonKantorovich(object):
             )
             # We can't expect further progress. Since we should not report
             # convergence problems, we might as well return now.
+            curve.user_data['reason'] = "insufficient resolution or roundoff"
             return True
         # Increase resolution and take more steps.
+        self._prev_res_accurate_delta = accurate_delta
         num = min(int(self.res_increase_factor * curve.num),
                   self.max_resolution)
-        if self.verbose:
-            print("  Accurate error still %g > %g..."
-                  " increasing resolution %d -> %d"
-                  % (self._prev_accurate_delta, self.atol, curve.num, num))
-        curve.resample(num)
-        d.resample(num)
+        _p("  Accurate error still %g > %g... increasing resolution %d -> %d"
+           % (accurate_delta, self.atol, curve.num, num))
+        self._change_resolution(curve, d, num)
         self.__fake_convergent_steps = 0
         return False
+
+    def _change_resolution(self, curve, d, res):
+        res = max(self.min_res, res)
+        curve.resample(res)
+        d.resample(res)
 
     def _raise(self, ex_cls, msg):
         r"""Raise an exception depending on the `disp` setting.
@@ -428,20 +513,15 @@ class NewtonKantorovich(object):
         r"""Plot the result of a Newton step together with reference curve."""
         if not self.plot_steps:
             return
-        from ..ipyutils import plot_curve
-        ax = None
-        for c, opts in self.reference_curves:
-            if not isinstance(opts, dict):
-                opts = dict(label=opts)
-            ax = c.plot(
-                show=False, ax=ax,
-                **insert_missing(opts, l=None, label=None, copy_x=True, lw=2)
-            )
-        ax = curve.plot(title=r"curve at step %d" % (step),
-                        label=None, l='-k', lw=1, ax=ax, show=False)
+        opts = self.plot_opts.copy()
+        opts['title'] = opts.get('title', "step {step}").format(step=step)
+        ax = curve.plot_curves(
+            (curve, 'trial', '-k'), *self.reference_curves,
+            show=False, **opts
+        )
         curve.plot(
             points=curve.h.collocation_points(min(50, curve.num)),
-            label=None, l='.k', ax=ax
+            label=None, ax=ax, **insert_missing(opts, l='.k')
         )
 
     def _plot_delta(self, delta, step):
@@ -513,8 +593,15 @@ class _LinearExpansionEquation(object):
         maximum absolute value.
         """
         if not self.has_accurate_test():
-            return self.prev_rel_delta
-        res = int(self.accurate_test_res)
+            return self.prev_abs_delta
+        if self.accurate_test_res == "twice":
+            res = 2 * curve.num
+        else:
+            res = int(self.accurate_test_res)
         pts = np.linspace(0, np.pi, res+1, endpoint=False)[1:]
         values = np.asarray(curve.expansions(pts))
-        return np.max(np.absolute(values - self.c))
+        accurate_delta = np.max(np.absolute(values - self.c))
+        curve.user_data['accurate_abs_delta'] = dict(
+            points=pts, values=values, max=accurate_delta
+        )
+        return accurate_delta

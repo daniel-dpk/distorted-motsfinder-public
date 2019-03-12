@@ -110,9 +110,10 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         parameter allows adding a bit of extra space.
     @param mark_points (list/tuple or (list/tuple, linestyle), optional)
         Mark these points on the plot of the function. The default linestyle
-        is ``'ok'``, which sets black dots at the points. To get smaller dots,
-        use e.g. ``'.k'``. If `True` is used instead of actual values, uses
-        the points at which the function is sampled.
+        is ``'o'``, which sets large dots at the points. The color is chosen
+        to be the same as the plotted line. To get e.g. smaller black dots,
+        use ``'.k'``. If `True` is used instead of actual values, uses the
+        points at which the function is sampled.
         Also allows an argument ``(pts, linestyle, opts)``, where `opts` is a
         dict of options passed to `ax.plot`.
     @param zero_line (boolean, optional)
@@ -258,7 +259,7 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         if zero_line:
             ax.plot(space, [0] * len(space), '-k' if zero_line is True else zero_line)
         f1 = (lambda x: abs(fun(x))) if absolute else fun
-        ax.plot(space, [f1(x-offset) for x in space], l1, label=label1, **kw1)
+        line, = ax.plot(space, [f1(x-offset) for x in space], l1, label=label1, **kw1)
         if f2 is not None:
             _f2 = f2
             f2 = (lambda x: abs(_f2(x))) if absolute else _f2
@@ -276,7 +277,9 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
                 except ValueError:
                     pts, ls, marker_opts = mark_points
             else:
-                pts, ls = mark_points, 'ok'
+                pts, ls = mark_points, 'o'
+            if 'color' not in marker_opts and not any(c in ls for c in 'bgrcmykw'):
+                marker_opts['color'] = line.get_color()
             pts = [p for p in pts if space[0] <= p <= space[-1]]
             ax.plot(pts, [f1(x-offset) for x in pts], ls, **marker_opts)
         if label is not None:

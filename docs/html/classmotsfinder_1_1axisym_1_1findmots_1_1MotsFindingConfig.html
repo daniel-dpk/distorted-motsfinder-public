@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('classmotsfinder_1_1axisym_1_1findmots_
 </div><!--header-->
 <div class="contents">
 
-<p>Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>.  
+<p>Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>.  
  <a href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for MotsFindingConfig:</div>
@@ -118,6 +118,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad3690d9c8cd15df773ca0f37ced4fb97"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ad3690d9c8cd15df773ca0f37ced4fb97">config_str</a> (self)</td></tr>
 <tr class="memdesc:ad3690d9c8cd15df773ca0f37ced4fb97"><td class="mdescLeft">&#160;</td><td class="mdescRight">String indicating e.g.  <a href="#ad3690d9c8cd15df773ca0f37ced4fb97">More...</a><br /></td></tr>
 <tr class="separator:ad3690d9c8cd15df773ca0f37ced4fb97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5d98de652807c95852760c2988eaf6f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#af5d98de652807c95852760c2988eaf6f">get_fname</a> (self)</td></tr>
+<tr class="memdesc:af5d98de652807c95852760c2988eaf6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate a filename for saving/loading results.  <a href="#af5d98de652807c95852760c2988eaf6f">More...</a><br /></td></tr>
+<tr class="separator:af5d98de652807c95852760c2988eaf6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac69b680ec80dda412e126dc644ec8f5e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ac69b680ec80dda412e126dc644ec8f5e">get_out_dir</a> (self)</td></tr>
+<tr class="memdesc:ac69b680ec80dda412e126dc644ec8f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the directory into which results should be stored.  <a href="#ac69b680ec80dda412e126dc644ec8f5e">More...</a><br /></td></tr>
+<tr class="separator:ac69b680ec80dda412e126dc644ec8f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae8656d7ff183b7913bcc540b31a7221"><td class="memItemLeft" align="right" valign="top"><a id="aae8656d7ff183b7913bcc540b31a7221"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>veto</b> (self, curve, cfg)</td></tr>
 <tr class="separator:aae8656d7ff183b7913bcc540b31a7221"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,6 +202,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac4055e3a20b6b3af3d10590ea446ef6c"><td class="memItemLeft" align="right" valign="top"><a id="ac4055e3a20b6b3af3d10590ea446ef6c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>v</b></td></tr>
 <tr class="separator:ac4055e3a20b6b3af3d10590ea446ef6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2d5c8e5c2be852aa306d001d9bbf393"><td class="memItemLeft" align="right" valign="top"><a id="ad2d5c8e5c2be852aa306d001d9bbf393"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>simple_name</b></td></tr>
+<tr class="separator:ad2d5c8e5c2be852aa306d001d9bbf393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ab99f88ddd9d91e7acfb8099ad9ead0"><td class="memItemLeft" align="right" valign="top"><a id="a7ab99f88ddd9d91e7acfb8099ad9ead0"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>newton_args</b></td></tr>
 <tr class="separator:a7ab99f88ddd9d91e7acfb8099ad9ead0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,8 +223,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a965332c500b195628c954c2bdf1ad220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>. </p>
-<p>This stores all the settings for the <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> runs.</p>
+<div class="textblock"><p>Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>. </p>
+<p>This stores all the settings for the <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> runs.</p>
 <p>The folder to store results in is constructed as follows: </p><pre class="fragment">./{base_folder}/{v}/{folder}/{prefix}{cfg_str}_n{num}_refn{ref_num}_{suffix}.npy
 </pre><p>The individual parts are described in the respective parameter docs of <a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a33b0b614c2c46ab0c27d6c9d2e882cd4" title="Initialize a new configuration object. ">__init__()</a> except for <code>cfg_str</code> which is generated by the respective subclass and may e.g. indicate the configuration of the metric. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -249,7 +258,7 @@ Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>Name of the curve (used e.g. for labels in some plots). Default is `''`. </td></tr>
-    <tr><td class="paramname">c_ref</td><td>Reference shape. Either a float, i.e. the radius of a circle to use, or any curve object which will be converted to a parametric curve. Must be set unless overridden via the <code>c_ref</code> kwarg to <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>. </td></tr>
+    <tr><td class="paramname">c_ref</td><td>Reference shape. Either a float, i.e. the radius of a circle to use, or any curve object which will be converted to a parametric curve. Must be set unless overridden via the <code>c_ref</code> kwarg to <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>. </td></tr>
     <tr><td class="paramname">num</td><td>Initial resolution of the solution. The default <code>'auto'</code> will use the reference shape's resolution. Note that if <code>auto_resolution</code> is <code>True</code> (either due to its default value or by setting it explicitly here as extra search argument (see below)), this is likely not going to be the actual resolution of the solution, which may be higher or lower. Default is <code>'auto'</code>. </td></tr>
     <tr><td class="paramname">ref_num</td><td>Resolution of the prepared reference shape. Downsampling significantly (to e.g. <code>20..80</code>) can increase the attainable accuracy by a large amount. If <code>c_ref</code> is a float (i.e. a sphere is created), then <code>ref_num</code> is ignored. Otherwise, if not given, the reference shape is used as-is without reparameterization. </td></tr>
     <tr><td class="paramname">recompute</td><td>Whether to start the search even if a result file exists. Default is <code>False</code>. </td></tr>
@@ -258,7 +267,7 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">save_verbose</td><td>Whether to print a message containing the filename when saving a curve. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">save_failed_curve</td><td>Whether to save a dummy file to indicate a curve was searched but not found. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">offset_coeffs</td><td>Coefficients used as initial offset from the reference curve. See <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html#a02fbdb18ac86e46b624272d0597c4a00" title="Static method to create a curve from a reference curve. ">curve.refparamcurve.RefParamCurve.from_curve()</a>. Default is the empty list. </td></tr>
-    <tr><td class="paramname">reparam</td><td>Whether and how to reparameterize the reference shape. Possible values are: <div class="fragment"><div class="line">False   # don&#39;t reparameterize</div><div class="line">True    # reparameterize based on arc-length</div><div class="line">2-tuple # reparameterize using experimental formula</div></div><!-- fragment --> In the last case, the two elements are taken as <code>alpha</code> and <code>beta</code> parameters for the <code>reparameterize_by_curvature()</code> call. Default is <code>True</code>. </td></tr>
+    <tr><td class="paramname">reparam</td><td>Whether and how to reparameterize the reference shape. Possible values are: <div class="fragment"><div class="line">False   # don&#39;t reparameterize</div><div class="line">True    # reparameterize based on arc-length</div><div class="line">2-tuple # custom reparameterization (see below)</div></div><!-- fragment --> In case of a 2-tuple, the first element defines the strategy as a string and the second can be a dictionary with arguments. Possible strategies are those supported by <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#abc5b96c82a5d027d0ffe0b4e9210f6c4" title="Reparameterize the curve using a given strategy. ">curve.parametriccurve.ParametricCurve.reparameterize()</a>. For backwards compatibility, the 2-tuple can also consist of two floats. This chooses the <code>"experimental"</code> strategy and sets <code>alpha</code> and <code>beta</code> to the two values, respectively. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">reparam_with_metric</td><td>Whether to reparameterize in curved (<code>True</code>) or flat (<code>False</code>) space. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">accurate_test_res</td><td>Resolution for performing the accurate convergence tests. The default <code>'auto'</code> will use <code>1.9</code> times the resolution of the (unprepared) reference shape but at least <code>500</code>. Default is <code>'auto'</code>. </td></tr>
     <tr><td class="paramname">veto_callback</td><td>Optional callback to veto saving a result to file. It is called as <code>veto_callback(curve, cfg)</code>. If this function returns <code>False</code>, no veto is issued and the curve is saved. A return value of <code>True</code> raises a veto and the curve is not stored to disk. </td></tr>
@@ -266,7 +275,8 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">suffix</td><td>Suffix string for the filenames. Default is <code>''</code>. </td></tr>
     <tr><td class="paramname">folder</td><td>Name of the folder to put result files in. Default is <code>''</code>. </td></tr>
     <tr><td class="paramname">base_folder</td><td>Name of the base folder to store result files in. Default is <code>'data/'</code>. </td></tr>
-    <tr><td class="paramname">v</td><td>Optional override for the version string indicating the current algorithm in the folder name to store results in. This is usually set by a hard-coded variable in <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> and is changed when e.g. the reparameterization formula changes to avoid accidentally mixing results of different strategies. </td></tr>
+    <tr><td class="paramname">v</td><td>Optional override for the version string indicating the current algorithm in the folder name to store results in. This is usually set by a hard-coded variable in <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> and is changed when e.g. the reparameterization formula changes to avoid accidentally mixing results of different strategies. </td></tr>
+    <tr><td class="paramname">simple_name</td><td>If <code>True</code>, the auto-generated filename contains less info. Otherwise (default), it will contain the resolution of the curve and of the reference curve, as well as whether the reference curve has been reparameterized. </td></tr>
     <tr><td class="paramname">**kw</td><td>Further keyword arguments are passed directly to the newton_kantorovich() call. Useful settings include <code>auto_resolution</code>, <code>max_resolution</code>, <code>step_mult</code>, <code>verbose</code>, and others. </td></tr>
   </table>
   </dd>
@@ -375,6 +385,26 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af5d98de652807c95852760c2988eaf6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5d98de652807c95852760c2988eaf6f">&#9670;&nbsp;</a></span>get_fname()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def get_fname </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generate a filename for saving/loading results. </p>
+
+</div>
+</div>
 <a id="a27640ba584edeb17b903cd6b0a4ff2ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a27640ba584edeb17b903cd6b0a4ff2ab">&#9670;&nbsp;</a></span>get_metric()</h2>
 
@@ -392,6 +422,26 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Construct/get a metric from the specified settings. </p>
+
+</div>
+</div>
+<a id="ac69b680ec80dda412e126dc644ec8f5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac69b680ec80dda412e126dc644ec8f5e">&#9670;&nbsp;</a></span>get_out_dir()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def get_out_dir </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the directory into which results should be stored. </p>
 
 </div>
 </div>
@@ -422,7 +472,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Replace settings with the given parameters. </p>
-<p>Any setting not recognized as option for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a0b72086435ad315b20a5325ecfb2cb7c" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> is stored as extra argument for the newton_kantorovich() call. </p>
+<p>Any setting not recognized as option for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> is stored as extra argument for the newton_kantorovich() call. </p>
 
 </div>
 </div>

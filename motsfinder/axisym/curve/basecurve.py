@@ -26,10 +26,10 @@ from scipy.integrate import quad
 from scipy.optimize import minimize_scalar, brute, brentq
 import numpy as np
 
+from ...utils import save_to_file, load_from_file
 from ...numutils import inf_norm1d, clip
 from ...pickle_helpers import prepare_dict, restore_dict
 from ...utils import insert_missing, update_dict, isiterable
-from ...exprs.numexpr import save_to_file, load_from_file
 
 
 __all__ = [
@@ -73,6 +73,8 @@ class BaseCurve(object):
         * #__call__() to evaluate the curve at a given parameter value. This
           returns the position (in x-z-coordinates) of the point on the curve.
         * _diff() returning the derivative of the two component functions.
+        * collocation_points() returning the collocation or discretization
+          points of the current curve representation.
 
     This class will then automatically compute tangent and normal vectors and
     any (supported) derivatives.
@@ -240,6 +242,11 @@ class BaseCurve(object):
 
         @return The coordinates of the corresponding point on the curve.
         """
+        pass
+
+    @abstractmethod
+    def collocation_points(self, **kw):
+        r"""Return the collocation points of the current curve representation."""
         pass
 
     @abstractmethod
@@ -413,7 +420,7 @@ class BaseCurve(object):
             return val
 
     def z_distance(self, other_curve=None, atol=1e-12, rtol=1e-12, limit=100,
-                   full_output=False):
+                   allow_intersection=False, full_output=False):
         r"""Compute the z-distance to another curve or the origin.
 
         Curves in axisymmetry represent surfaces. These, by construction, have
@@ -448,6 +455,10 @@ class BaseCurve(object):
         @param limit
             Maximum number of subdivisions in the adaptive integration
             routine. Default is `100`.
+        @param allow_intersection
+            If `False` (default), surfaces that intersect are defined to have
+            zero distance. If `True`, the distance of the points intersecting
+            the z-axis is still computed and returned as negative number.
         @param full_output
             If `True`, return the computed result and an estimation of the
             error. Otherwise (default), just return the result.
@@ -463,11 +474,13 @@ class BaseCurve(object):
         """
         return self.z_distance_using_metric(
             metric=None, other_curve=other_curve, atol=atol, rtol=rtol,
-            limit=limit, full_output=full_output
+            limit=limit, allow_intersection=allow_intersection,
+            full_output=full_output
         )
 
     def z_distance_using_metric(self, metric, other_curve=None, atol=1e-12,
-                                rtol=1e-12, limit=100, full_output=False):
+                                rtol=1e-12, limit=100,
+                                allow_intersection=False, full_output=False):
         r"""Compute z-distance to another curve \wrt a given metric.
 
         Similar to z_distance(), but allows you to specify an arbitrary
@@ -488,6 +501,10 @@ class BaseCurve(object):
         @param limit
             Maximum number of subdivisions in the adaptive integration
             routine. Default is `100`.
+        @param allow_intersection
+            If `False` (default), surfaces that intersect are defined to have
+            zero distance. If `True`, the distance of the points intersecting
+            the z-axis is still computed and returned as negative number.
         @param full_output
             If `True`, return the computed result and an estimation of the
             error. Otherwise (default), just return the result.
@@ -509,15 +526,20 @@ class BaseCurve(object):
             b2 = other_curve(np.pi)[1]
             if a2 < b2:
                 a2, b2 = b2, a2
+        # We now have a1 >= b1 and a2 >= b2.
+        if a1 < a2:
+            # This curve is "above" the other one. Swap them.
+            a1, b1, a2, b2 = a2, b2, a1, b1
+        # We now have two intervals [b1, a1] and [b2, a2] with a1 >= a2.
         # Are the two intervals disjoint?
-        if not (a1 >= b1 > a2 >= b2 or a2 >= b2 > a1 >= b1):
-            # No, distance is zero by definition.
+        if not allow_intersection and b1 <= a2:
+            # No, distance is zero by definition if we don't allow intersection.
             return (0.0, 0.0) if full_output else 0.0
-        if a1 >= b1 > a2 >= b2:
-            # This curve lies "above" the other one on the z-axis.
+        c1 = (a1 + b1) / 2.0
+        c2 = (a2 + b2) / 2.0
+        if c2 < c1:
             a, b = a2, b1
         else:
-            # The other curve lies "above" this one on the z-axis.
             a, b = a1, b2
         if metric is None:
             dist = b - a
@@ -689,6 +711,40 @@ class BaseCurve(object):
                 return norm(self(t)-other_curve(t))
             return inf_norm1d(f, domain=self.domain, **kw)
 
+    def point_distances(self, params=None):
+        r"""Return the coordinate distances of points along the curve.
+
+        For `N` parameter values given as `params`, the result will be `N-1`
+        distances.
+        """
+        if params is None:
+            params = self.collocation_points()
+        with self.fix_evaluator():
+            pts = np.array([self(la) for la in params])
+        deltas = np.diff(pts, axis=0)
+        distances = norm(deltas, axis=1)
+        return distances
+
+    def plot_distances(self, params=None, **kw):
+        r"""Convenience method for quickly plotting coordinate distances of collocation points."""
+        from ...ipyutils import plot_data
+        if params is None:
+            params = self.collocation_points()
+        if 'distances' in kw:
+            distances = kw.pop('distances')
+        else:
+            distances = self.point_distances(params=params)
+        return plot_data(
+            params[:-1], distances,
+            **insert_missing(
+                kw,
+                figsize=(4, 2.4), dpi=110,
+                ylog=True,
+                xlabel=r"curve parameter $\lambda$",
+                ylabel=r"coordinate distance",
+            )
+        )
+
     def plot(self, lw=2, equal_lengths=True, copy_x=True, **kw):
         r"""Plot the curve represented by this object.
 
@@ -771,7 +827,7 @@ class BaseCurve(object):
                 else:
                     curve, label = curve
                 if isinstance(label, dict):
-                    opts = label
+                    opts = label.copy()
                     label = opts.pop('label', None)
                     fmt = opts.pop('l', fmt)
             if cmap is not None:

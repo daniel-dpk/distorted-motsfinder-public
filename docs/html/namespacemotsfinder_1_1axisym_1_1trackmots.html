@@ -82,6 +82,7 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1axisym_1_1track
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">motsfinder.axisym.trackmots Namespace Reference</div>  </div>
@@ -91,36 +92,153 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1axisym_1_1track
 <p>Track a single MOTS through slices of a simulation.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1__PropResult.html">_PropResult</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1AuxResultMissing.html">AuxResultMissing</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raised when a result is missing required for computing a property.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1AuxResultMissing.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html">MOTSTracker</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2a3961188b62487d4b7b6cc56e96feda"><td class="memItemLeft" align="right" valign="top"><a id="a2a3961188b62487d4b7b6cc56e96feda"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>track_mots</b> (hname, sim_dir, out_base_dir, folder, initial_guess, compute=True, two_pass=True, cfg_callback=None, props=None, area_rtol=1e-5, verbosity=1, cfg)</td></tr>
-<tr class="separator:a2a3961188b62487d4b7b6cc56e96feda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51fb59add0ab88026f206908ca24cfe3"><td class="memItemLeft" align="right" valign="top"><a id="a51fb59add0ab88026f206908ca24cfe3"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_compute_props</b> (c, props, area_rtol)</td></tr>
-<tr class="separator:a51fb59add0ab88026f206908ca24cfe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06b65a7bef6db29efa4ce7553e951270"><td class="memItemLeft" align="right" valign="top"><a id="a06b65a7bef6db29efa4ce7553e951270"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_call_find_mots</b> (cfg, pass_nr, cfg_callback, kw)</td></tr>
-<tr class="separator:a06b65a7bef6db29efa4ce7553e951270"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7cf0755c5acb7011a268d63dcdecdf87"><td class="memItemLeft" align="right" valign="top"><a id="a7cf0755c5acb7011a268d63dcdecdf87"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_try_to_load_curve</b> (cfg, two_pass, cfg_callback)</td></tr>
-<tr class="separator:a7cf0755c5acb7011a268d63dcdecdf87"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03cc683db706fe8cc39eeba12dd54ded"><td class="memItemLeft" align="right" valign="top"><a id="a03cc683db706fe8cc39eeba12dd54ded"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_get_sio_files</b> (sim_dir, disp=True)</td></tr>
-<tr class="separator:a03cc683db706fe8cc39eeba12dd54ded"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae771df75a13019ad0724d7bb9a266e8"><td class="memItemLeft" align="right" valign="top"><a id="aae771df75a13019ad0724d7bb9a266e8"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_get_sim_dir</b> (folder)</td></tr>
-<tr class="separator:aae771df75a13019ad0724d7bb9a266e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac0233a9fd75b4d9b90478f0f9df1e9a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#aac0233a9fd75b4d9b90478f0f9df1e9a">track_mots</a> (hname, sim_dir, out_base_dir, folder, initial_guess, MOTS_map=None, kw)</td></tr>
+<tr class="memdesc:aac0233a9fd75b4d9b90478f0f9df1e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track one MOTS through slices of simulation data.  <a href="#aac0233a9fd75b4d9b90478f0f9df1e9a">More...</a><br /></td></tr>
+<tr class="separator:aac0233a9fd75b4d9b90478f0f9df1e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91cae3999d40d585d81fdb034f0c8e8a"><td class="memItemLeft" align="right" valign="top"><a id="a91cae3999d40d585d81fdb034f0c8e8a"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>compute_props</b> (hname, c, props, area_rtol=1e-6, verbosity=True, MOTS_map=None, fname=None, c_past=None, c_future=None)</td></tr>
+<tr class="separator:a91cae3999d40d585d81fdb034f0c8e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="memItemLeft" align="right" valign="top"><a id="a77a21db5fdaf991e42b1f98c7980b6e6"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_area</b> (c, v=None, kw)</td></tr>
+<tr class="separator:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c4c3a77b71a5b5a2c9612386811e0ea"><td class="memItemLeft" align="right" valign="top"><a id="a6c4c3a77b71a5b5a2c9612386811e0ea"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>_stability</b> (c, min_num)</td></tr>
 <tr class="separator:a6c4c3a77b71a5b5a2c9612386811e0ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05c670b89df15dab820147f5cfd6fa41"><td class="memItemLeft" align="right" valign="top"><a id="a05c670b89df15dab820147f5cfd6fa41"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_max_ricci</b> (c, Ns, eps)</td></tr>
-<tr class="separator:a05c670b89df15dab820147f5cfd6fa41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad75204ddca479824b4e1fbff97e4371e"><td class="memItemLeft" align="right" valign="top"><a id="ad75204ddca479824b4e1fbff97e4371e"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_ricci</b> (c, Ns, eps, xatol)</td></tr>
+<tr class="separator:ad75204ddca479824b4e1fbff97e4371e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29f6cb86269adcd9545af40b14a3d9a4"><td class="memItemLeft" align="right" valign="top"><a id="a29f6cb86269adcd9545af40b14a3d9a4"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_mean_curv</b> (c, Ns, eps, xatol)</td></tr>
+<tr class="separator:a29f6cb86269adcd9545af40b14a3d9a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0b01649bf7fe310586e92afda62e548"><td class="memItemLeft" align="right" valign="top"><a id="ac0b01649bf7fe310586e92afda62e548"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_curv_squared</b> (c, Ns, eps, xatol)</td></tr>
+<tr class="separator:ac0b01649bf7fe310586e92afda62e548"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab38bb8a1d45203f058296abf3423185"><td class="memItemLeft" align="right" valign="top"><a id="aab38bb8a1d45203f058296abf3423185"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_sample_and_extremum</b> (c, func, Ns, eps, xatol)</td></tr>
+<tr class="separator:aab38bb8a1d45203f058296abf3423185"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbae4d351f62714e5d2cb32d0b51939c"><td class="memItemLeft" align="right" valign="top"><a id="acbae4d351f62714e5d2cb32d0b51939c"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_ingoing_exp</b> (c, Ns, eps)</td></tr>
+<tr class="separator:acbae4d351f62714e5d2cb32d0b51939c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1cc69004997ed0ff17e2731acf16bc7"><td class="memItemLeft" align="right" valign="top"><a id="aa1cc69004997ed0ff17e2731acf16bc7"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_avg_ingoing_exp</b> (c, epsabs, limit)</td></tr>
+<tr class="separator:aa1cc69004997ed0ff17e2731acf16bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab69b760f1f48bd4d4dc563d1fe97195d"><td class="memItemLeft" align="right" valign="top"><a id="ab69b760f1f48bd4d4dc563d1fe97195d"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_point_dists</b> (c)</td></tr>
+<tr class="separator:ab69b760f1f48bd4d4dc563d1fe97195d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6bb5f0c1100c58b1bf6096ab1ec3217"><td class="memItemLeft" align="right" valign="top"><a id="af6bb5f0c1100c58b1bf6096ab1ec3217"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_neck</b> (c, xtol, epsrel)</td></tr>
+<tr class="separator:af6bb5f0c1100c58b1bf6096ab1ec3217"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ec4af6f2ed778c88ccb9bb2c43bae8e"><td class="memItemLeft" align="right" valign="top"><a id="a4ec4af6f2ed778c88ccb9bb2c43bae8e"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_dist_top_bot</b> (c, rtol, allow_intersection, other_run, other_hname, out_dir)</td></tr>
+<tr class="separator:a4ec4af6f2ed778c88ccb9bb2c43bae8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f60f265c13b534167bfd7a56bea7dd5"><td class="memItemLeft" align="right" valign="top"><a id="a4f60f265c13b534167bfd7a56bea7dd5"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_z_dist_to_inner</b> (c, rtol, where, other_run, other_hname, out_dir)</td></tr>
+<tr class="separator:a4f60f265c13b534167bfd7a56bea7dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab195886dbf3de098b13ffb4f0db5338d"><td class="memItemLeft" align="right" valign="top"><a id="ab195886dbf3de098b13ffb4f0db5338d"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_signature</b> (c, N, eps, c_past, c_future, has_past, has_future)</td></tr>
+<tr class="separator:ab195886dbf3de098b13ffb4f0db5338d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32aa275cf3e3908af45358d43e8d4c73"><td class="memItemLeft" align="right" valign="top"><a id="a32aa275cf3e3908af45358d43e8d4c73"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_get_aux_curve</b> (out_dir, hname, it, disp=True)</td></tr>
+<tr class="separator:a32aa275cf3e3908af45358d43e8d4c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Track a single MOTS through slices of a simulation. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="aac0233a9fd75b4d9b90478f0f9df1e9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac0233a9fd75b4d9b90478f0f9df1e9a">&#9670;&nbsp;</a></span>track_mots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.axisym.trackmots.track_mots </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>hname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sim_dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>out_base_dir</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>folder</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>initial_guess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>MOTS_map</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Track one MOTS through slices of simulation data. </p>
+<p>The tracker basically has two "modes" to run in:</p><ol type="1">
+<li>Find mode: Try to locate MOTSs in each slice</li>
+<li>Property mode: Compute area, stability, etc., of previously found MOTSs</li>
+</ol>
+<p>The idea is that the two modes can potentially be run in parallel: You start with a finding run. After the first few MOTSs have been found and stored in the output folder, a property runner can be invoked to compute physical properties parallel to the finding run. If desired, the property runner can be instructed to wait for results of the finder in case it catches up.</p>
+<p>For some tasks, the finder or property runner need to consider sibling MOTSs (e.g. to compute distances between MOTSs) or future/past MOTSs of the same tube (e.g. to compute the signature). Sibling MOTSs are located using the following assumptions:</p><ul>
+<li>Each MOTS has their own output folder</li>
+<li>Each of these folders belong to a "run", i.e. a common parent folder</li>
+</ul>
+<p>This should be accomplished by setting <code>folder</code> appropriately, e.g.: </p><pre class="fragment">folder="foo/run1/AH"
+</pre><p>An example file structure (with <code>out_base_dir="some/path"</code>) might be: </p><pre class="fragment">some/path/foo/run1/AH/AH_discrete_it0000000000.npy
+some/path/foo/run1/AH/AH_discrete_it0000000001.npy
+some/path/foo/run1/top/top_discrete_it0000000000.npy
+some/path/foo/run1/top/top_discrete_it0000000001.npy
+some/path/foo/run1/bot/bot_discrete_it0000000000.npy
+some/path/foo/run1/bot/bot_discrete_it0000000001.npy
+some/path/foo/run1/inner/inner_discrete_it0000000000.npy
+some/path/foo/run2/inner/inner_discrete_it0000000000.npy
+some/path/foo/run2/inner/inner_discrete_it0000000001.npy
+</pre><p>Here, the apparent horizon, the top, and bottom MOTSs were found in slices 0 and 1. The inner common MOTS was only found in slice 0. Upon changing settings, we managed to find it in slice 0 and 1 and stored the results under <code>run2</code>.</p>
+<p>To make the tracker aware of the <code>top</code> and <code>bot</code> MOTSs from <code>run1</code> when computing properties of <code>run2/inner</code>, you supply a mapping from MOTS name (e.g. <code>top</code>, <code>bot</code>) to the run to take it from (e.g. <code>run1</code>). This is done using the <code>MOTS_map</code> parameter like so: </p><pre class="fragment">MOTS_map=dict(top="run1", bot="run1")
+</pre><p>A missing entry in the <code>MOTS_map</code> means we should take the MOTS from the current run. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

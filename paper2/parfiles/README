@@ -1,0 +1,118 @@
+This describes the various parameter files (and hence physics
+configurations) we are examining
+
+
+
+1. brill-lindquist-res256.par and brill-lindquist-res512.par
+
+The original setup
+
+par_b = 0.375       # half separation
+par_m_plus = 0.5    # mass of m+ puncture
+par_m_minus = 0.8   # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 10.0        # simulation end time
+T_fine = 10.0       # begin of fine output
+
+Another run:
+T_max = 4.25        # simulation end time
+T_fine = 4.0        # begin of fine output
+
+
+
+2. brill-lindquist-2-res256.par
+
+Shortly before common MOTSs form
+
+par_b = 0.5         # half separation
+par_m_plus = 0.5    # mass of m+ puncture
+par_m_minus = 0.8   # mass of m- puncture
+
+R_max = 9.0         # outer boundary
+T_max = 5.5         # simulation end time
+T_fine = 5.5        # begin of fine output
+
+Another run:
+T_max = 4.75        # simulation end time
+T_fine = 3.5        # begin of fine output
+
+
+
+3. brill-lindquist-3-res256.par
+
+A little longer before common MOTSs form
+
+par_b = 0.6         # half separation
+par_m_plus = 0.5    # mass of m+ puncture
+par_m_minus = 0.8   # mass of m- puncture
+
+R_max = 9.5         # outer boundary
+T_max = 6.0         # simulation end time
+T_fine = 6.0        # begin of fine output
+
+Another run:
+T_max = 5.25        # simulation end time
+T_fine = 3.25       # begin of fine output
+
+
+
+4. brill-lindquist-4-res256.par
+
+Higher mass ratio (1:4) with common MOTSs already formed
+
+par_b = 0.375        # half separation
+par_m_plus = 1.0     # mass of m+ puncture
+par_m_minus = 0.25   # mass of m- puncture
+
+R_max = 8.5          # outer boundary
+T_max = 5.0          # simulation end time
+T_fine = 5.0         # begin of fine output
+
+Another run:
+T_max = 3.25         # simulation end time
+T_fine = 3.0         # begin of fine output
+
+Note: mass ratio is inverted, i.e. m+ > m- ?
+
+
+
+5. brill-lindquist-5-res256.par and brill-lindquist-5-res512.par
+
+Largest separation d=1.3
+
+par_b = 0.65        # half separation
+par_m_plus = 0.5    # mass of m+ puncture
+par_m_minus = 0.8   # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 5.75        # simulation end time
+T_fine = 5.0        # begin of fine output
+
+
+
+6. brill-lindquist-6-res256.par
+
+One at distance d=0.8
+
+par_b = 0.4         # half separation
+par_m_plus = 0.5    # mass of m+ puncture
+par_m_minus = 0.8   # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 4.5         # simulation end time
+T_fine = 3.5        # begin of fine output
+
+
+
+7. brill-lindquist-7-res256.par
+
+One at distance d=0.9
+
+par_b = 0.45        # half separation
+par_m_plus = 0.5    # mass of m+ puncture
+par_m_minus = 0.8   # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 4.75        # simulation end time
+T_fine = 3.75       # begin of fine output

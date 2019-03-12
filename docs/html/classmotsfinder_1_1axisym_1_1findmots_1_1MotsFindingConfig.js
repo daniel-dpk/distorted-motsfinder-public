@@ -7,7 +7,9 @@ var classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig =
     [ "config_str", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ad3690d9c8cd15df773ca0f37ced4fb97", null ],
     [ "copy", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aebf6261b742ae694c16790726a8c77c5", null ],
     [ "from_curve", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aed8a4f1fc80f743b02eddf90b7febde8", null ],
+    [ "get_fname", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#af5d98de652807c95852760c2988eaf6f", null ],
     [ "get_metric", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a27640ba584edeb17b903cd6b0a4ff2ab", null ],
+    [ "get_out_dir", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ac69b680ec80dda412e126dc644ec8f5e", null ],
     [ "update", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a6cfde557e3a46892aed002f4b4459712", null ],
     [ "verify_configuration", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a1f8e296688804e5db9ddcc513dc792aa", null ],
     [ "veto", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aae8656d7ff183b7913bcc540b31a7221", null ],
@@ -29,6 +31,7 @@ var classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig =
     [ "save", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#afe343e9c5415974b74f2804f52eaaaab", null ],
     [ "save_failed_curve", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a55b555ea6d11f1543337cf52307976cf", null ],
     [ "save_verbose", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a2bbc15728f925b709fa38bf3ed045005", null ],
+    [ "simple_name", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ad2d5c8e5c2be852aa306d001d9bbf393", null ],
     [ "suffix", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#af57fdbdb7d09e0557b2c4533b3353975", null ],
     [ "v", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ac4055e3a20b6b3af3d10590ea446ef6c", null ],
     [ "veto_callback", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ad35dcb0afb34c8f0924e6275e465faae", null ]

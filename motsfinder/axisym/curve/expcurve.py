@@ -16,11 +16,12 @@ from math import fsum
 import numpy as np
 from scipy import linalg
 from scipy.integrate import quad
+from scipy.optimize import minimize_scalar, bracket
 from scipy.special import sph_harm
 
 from ...utils import insert_missing, isiterable, parallel_compute
 from ...numutils import clip
-from ...metric import FlatThreeMetric
+from ...metric import FlatThreeMetric, FourMetric
 from ...ndsolve import ndsolve, NDSolver, CosineBasis
 from ...ndsolve import DirichletCondition
 from .basecurve import BaseCurve
@@ -88,6 +89,9 @@ class ExpansionCurve(BaseCurve):
         r"""Compute derivative of this curve \wrt horizon function `h`."""
         pass
 
+    def collocation_points(self, lobatto=False, **kw):
+        return self.h.collocation_points(lobatto=lobatto, **kw)
+
     def arc_length(self, a=0, b=np.pi, atol=1e-12, rtol=1e-12,
                    full_output=False):
         return self.arc_length_using_metric(metric=self.metric, a=a, b=b,
@@ -95,10 +99,11 @@ class ExpansionCurve(BaseCurve):
                                             full_output=full_output)
 
     def z_distance(self, other_curve=None, atol=1e-12, rtol=1e-12, limit=100,
-                   full_output=False):
+                   allow_intersection=False, full_output=False):
         return self.z_distance_using_metric(
             metric=self.metric, other_curve=other_curve, atol=atol, rtol=rtol,
-            limit=limit, full_output=full_output
+            limit=limit, allow_intersection=allow_intersection,
+            full_output=full_output
         )
 
     def inner_z_distance(self, other_curve, where='top', **kw):
@@ -110,7 +115,7 @@ class ExpansionCurve(BaseCurve):
         how close the two surfaces are from being identical, i.e. it computes
         the distance of two corresponding points.
 
-        In this function, we take either the top or bottom point of a both
+        In this function, we take either the top or bottom points of both
         surfaces on the z-axis and compute their distance.
 
         @param other_curve
@@ -123,15 +128,15 @@ class ExpansionCurve(BaseCurve):
             the two points. By default, takes the current metric stored in
             this curve. Explicitely specify `None` to get the coordinate
             distance.
+        @param **kw
+            Further keyword arguments are passed to arc_length_using_metric().
         """
         metric = kw.pop('metric', self.metric)
-        if kw:
-            raise ValueError('Unexpected arguments: %s' % (kw,))
         if where not in ('top', 'bottom'):
             raise ValueError('Unknown location: %s' % where)
         t = 0 if where == 'top' else np.pi
         line = ParametricCurve.create_line_segment(self(t), other_curve(t))
-        return line.arc_length_using_metric(metric=metric)
+        return line.arc_length_using_metric(metric=metric, **kw)
 
     def inner_x_distance(self, other_curve, where='zero', **kw):
         r"""Compute the x-distance of two points of this and another curve.
@@ -160,10 +165,10 @@ class ExpansionCurve(BaseCurve):
             the two points. By default, takes the current metric stored in
             this curve. Explicitely specify `None` to get the coordinate
             distance.
+        @param **kw
+            Further keyword arguments are passed to arc_length_using_metric().
         """
         metric = kw.pop('metric', self.metric)
-        if kw:
-            raise ValueError('Unexpected arguments: %s' % (kw,))
         if where not in ('zero', 'max'):
             raise ValueError('Unknown location: %s' % where)
         if where == 'zero':
@@ -172,7 +177,7 @@ class ExpansionCurve(BaseCurve):
             t1 = self.find_max_x()
         t2 = other_curve.find_line_intersection(point=self(t1), vector=[1, 0])
         line = ParametricCurve.create_line_segment(self(t1), other_curve(t2))
-        return line.arc_length_using_metric(metric=metric)
+        return line.arc_length_using_metric(metric=metric, **kw)
 
     def get_calc_obj(self, param):
         r"""Create or reuse a calculator object for a given parameter value.
@@ -279,23 +284,42 @@ class ExpansionCurve(BaseCurve):
         finally:
             self.metric = metric_orig
 
-    def expansion(self, param, hdiff=None):
+    def expansion(self, param, hdiff=None, ingoing=False):
         r"""Compute the expansion at one parameter value.
 
         This function can also compute derivatives of the expansion w.r.t. the
         horizon function `h` or one of its derivatives.
+
+        @param param
+            Parameter (i.e. \f$\lambda\f$ value) specifying the point on the
+            curve at which to compute the expansion of the surface.
+        @param hdiff
+            If given, compute the functional derivative of the expansion
+            w.r.t. a derivative of the horizon function. For example, if
+            ``hdiff==0``, compute \f$\partial_h\Theta\f$ and for ``hdiff==1``,
+            compute \f$\partial_{h'}\Theta\f$. If `None` (default), compute
+            the expansion.
+        @param ingoing
+            By default, the outgoing null geodesics' expansion is returned. If
+            ``ingoing==True``, the expansion of the ingoing null geodesics is
+            computed instead. Functional derivatives of the ingoing expansion
+            are not currently implemented.
         """
         calc = self.get_calc_obj(param)
         if hdiff is None:
-            return calc.expansion()
+            return calc.expansion(ingoing=ingoing)
+        if ingoing:
+            raise NotImplementedError
         return calc.diff(hdiff=hdiff)
 
-    def expansions(self, params, hdiff=None):
+    def expansions(self, params, hdiff=None, ingoing=False):
         r"""As expansion(), but on a whole set of parameter values."""
         with self.fix_evaluator():
-            return [self.expansion(p, hdiff=hdiff) for p in params]
+            return [self.expansion(p, hdiff=hdiff, ingoing=ingoing)
+                    for p in params]
 
-    def average_expansion(self, area=None, full_output=False):
+    def average_expansion(self, ingoing=False, area=None, full_output=False,
+                          **kw):
         r"""Compute the average expansion across the surface.
 
         This computes the average expansion
@@ -303,25 +327,84 @@ class ExpansionCurve(BaseCurve):
             \overline\Theta = \frac{1}{A} \int \Theta \sqrt{q}\ d^2x.
         \f]
 
+        @param ingoing
+            Whether to average over the ingoing (`True`) or outgoing (`False`)
+            expansion. Default is `False`.
         @param area
             Optionally re-use an already computed area value.
         @param full_output
             If `True`, return the average expansion and the estimated error.
             Otherwise return just the average expansion. Default is `False`.
+        @param **kw
+            Additional keyword arguments are passed to `scipy.integrate.quad`.
         """
         with self.fix_evaluator():
             if area is None:
                 area = self.area()
-            det_q = self._get_det_q_func()
+            det_q = self.get_det_q_func()
             def integrand(la):
-                Th = self.expansion(la)
+                Th = self.expansion(la, ingoing=ingoing)
                 return Th * np.sqrt(det_q(la))
-            res, err = quad(integrand, a=0, b=np.pi)
+            res, err = quad(integrand, a=0, b=np.pi, **kw)
             ex = 2*np.pi/area * res
             err = 2*np.pi/area * err
             if full_output:
                 return ex, err
             return ex
+
+    def signature_quantities(self, pts, past_curve=None, future_curve=None):
+        if past_curve is None and future_curve is None:
+            raise TypeError("Either a past or future curve (or both) must "
+                            "be specified.")
+        delta_time = None
+        if (future_curve and past_curve
+                and future_curve.metric.time < past_curve.metric.time):
+            future_curve, past_curve = past_curve, future_curve
+        if future_curve:
+            delta_time = future_curve.metric.time - self.metric.time
+        if past_curve:
+            dt = self.metric.time - past_curve.metric.time
+            if delta_time and abs(dt-delta_time) > 1e-8:
+                raise ValueError("Future and past curves different time "
+                                 "distances away")
+            delta_time = dt
+        if delta_time <= 0.0:
+            raise ValueError("Curves not in increasing coordinate time.")
+        future_it = future_curve.metric.iteration if future_curve else None
+        past_it = past_curve.metric.iteration if past_curve else None
+        with self.fix_evaluator(), \
+                (past_curve or self).fix_evaluator(), \
+                (future_curve or self).fix_evaluator():
+            metric4 = FourMetric(self.metric)
+            results = []
+            for pt in pts:
+                calc = self.get_calc_obj(pt)
+                point = calc.point
+                g4 = metric4.at(point).mat
+                n = metric4.normal(point)
+                g3_inv = calc.g.inv
+                nu3_cov = calc.covariant_normal(diff=0)
+                nu3 = g3_inv.dot(nu3_cov)
+                nu = np.zeros((4,))
+                nu[1:] = nu3
+                k = n - nu
+                l = n + nu
+                if past_curve and future_curve:
+                    xfuture = future_curve(pt, xyz=True)
+                    xpast = past_curve(pt, xyz=True)
+                    xdot = (xfuture - xpast) / (2*delta_time)
+                elif future_curve:
+                    xfuture = future_curve(pt, xyz=True)
+                    xdot = (xfuture - point) / delta_time
+                else:
+                    xpast = past_curve(pt, xyz=True)
+                    xdot = (point - xpast) / delta_time
+                tau = np.ones((4,))
+                tau[1:] = xdot
+                results.append(SignatureQuantities(pt, g4, l, k, tau,
+                                                   future_it=future_it,
+                                                   past_it=past_it))
+            return results
 
     def linearized_equation_at(self, param, target_expansion=0.0):
         r"""Return the terms of the linearized version of H=0 at one point."""
@@ -412,19 +495,27 @@ class ExpansionCurve(BaseCurve):
             calc = self.get_calc_obj(param)
             return calc.extrinsic_curvature(trace=trace, square=square)
 
-    def area(self, full_output=False, **kw):
+    def area(self, full_output=False, disp=False, **kw):
         r"""Compute the area of the surface represented by this curve.
 
+        Note that no warning will be generated in case the integral does not
+        converge properly. To obtain information about such warnings, either
+        set ``disp=True`` to raise an error in these cases, or use
+        ``full_output=True`` and check if the last returned element is `None`
+        (signaling no problem was found).
+
         @param full_output
-            If `True`, return the computed area and an estimation of the
-            error. Otherwise (default), just return the area.
+            If `True`, return a 4-tuple containing the computed area, an
+            estimated error, the `infodict` result of `scipy.integrate.quad`
+            and any generated warning message. This fourth element will be
+            `None` in case no warning occurred. Default is `False`.
+        @param disp
+            If `Ture`, raise any warnings generated during integration as an
+            `IntegrationError`.
         @param **kw
             Additional keyword arguments are passed to `scipy.integrate.quad`.
 
-        @return The computed area. If `full_output==True`, returns a pair
-            ``(A, err)``, where `A` is the area computed from numerical 1D
-            integration (see below) and `err` is the estimated remaining error
-            as returned from `scipy.integrate.quad`.
+        @return The computed area. See also `full_output` above.
 
         @b Notes
 
@@ -448,21 +539,35 @@ class ExpansionCurve(BaseCurve):
             efficient new algorithm." Physical Review D 57.2 (1998): 863.
         """
         with self.fix_evaluator():
-            det_q = self._get_det_q_func()
-            res, err = quad(lambda t: np.sqrt(det_q(t)), a=0, b=np.pi, **kw)
+            result = quad(
+                self.get_area_integrand(), a=0, b=np.pi, full_output=True,
+                **kw
+            )
+            if len(result) == 4:
+                res, err, info, warning = result
+                if disp:
+                    raise IntegrationError(warning)
+            else:
+                res, err, info = result
+                warning = None
             area = 2*np.pi * res
             err = 2*np.pi * err
             if full_output:
-                return area, err
+                return area, err, info, warning
             return area
 
-    def _get_det_q_func(self):
+    def get_det_q_func(self):
         r"""Create a function to evaluate det(q)."""
         def det_q(param):
             calc = self.get_calc_obj(param)
             q = calc.induced_metric()
             return linalg.det(q)
         return det_q
+
+    def get_area_integrand(self):
+        det_q = self.get_det_q_func()
+        integrand = lambda t: np.sqrt(det_q(t))
+        return integrand
 
     def irreducible_mass(self, area=None):
         r"""Compute the irreducible mass.
@@ -593,7 +698,7 @@ class ExpansionCurve(BaseCurve):
             if self.extr_curvature is None:
                 eq = self.stability_eigenvalue_equation_timesym
             else:
-                raise NotImplementedError
+                eq = self.stability_eigenvalue_equation_general
         solver = NDSolver(
             eq=eq,
             basis=CosineBasis(domain=(0, np.pi), num=num, lobatto=False),
@@ -630,6 +735,111 @@ class ExpansionCurve(BaseCurve):
             Ric = self.metric.ricci_tensor(calc.point)
             Rnn = Ric.dot(nu).dot(nu)
             op[0] += -Rnn - k2
+        return operator_values.T, 0.0
+
+    def stability_eigenvalue_equation_general(self, pts):
+        r"""Eigenvalue equation evaluator for the general case.
+
+        This function is suitable to be passed as `eq` parameter to
+        motsfinder.ndsolve.solver.NDSolver.
+        """
+        metric4 = FourMetric(self.metric)
+        # Values for 3 derivative orders (0,1,2) per point.
+        operator_values = np.zeros((len(pts), 3))
+        for pt, op in zip(pts, operator_values):
+            calc = self.get_calc_obj(pt)
+            point = calc.point
+            g3_inv = calc.g.inv
+            dg3_inv = self.metric.diff(point, diff=1, inverse=True)
+            g4 = metric4.at(point).mat
+            n = metric4.normal(point)
+            dn = metric4.normal(point, diff=1) # shape=(4,4), a,b -> del_a n^b
+            nu3_cov = calc.covariant_normal(diff=0)
+            nu3 = g3_inv.dot(nu3_cov)
+            nu = np.zeros((4,))
+            nu[1:] = nu3
+            dnu3_cov = calc.covariant_normal(diff=1)
+            dnu3 = (
+                np.einsum('ijk,k->ij', dg3_inv, nu3_cov)
+                + np.einsum('jk,ik->ij', g3_inv, dnu3_cov)
+            )
+            dnu = np.zeros((4, 4)) # a,b -> del_a nu^b (normal of MOTS)
+            dnu[0,1:] = np.nan # don't know time derivatives of MOTS's normal
+            dnu[1:,1:] = dnu3
+            k = n - nu # ingoing future-pointing null normal (shape=4) k^a
+            l = n + nu # outgoing future-pointing null normal (shape=4) l^a
+            k_cov = g4.dot(k) # k_a
+            l_cov = g4.dot(l) # l_a
+            dux3 = calc.diff_xyz_wrt_laph(diff=1) # shape=(2,3), A,i -> del_A x^i
+            dl = dn + dnu # shape=(4,4), a,b -> del_a l^b
+            G4 = metric4.christoffel(point)
+            # shape=(4,4), a,b -> nabla_a l^b  (NaN for a=0)
+            cov_a_l = dl + np.einsum('min,n', G4, l)
+            cov_A_l = np.einsum('Ai,im->Am', dux3, cov_a_l[1:]) # nabla_A l^mu
+            s_A = -0.5 * np.einsum('m,Am->A', k_cov, cov_A_l) # torsion of l^mu
+            q_inv = calc.induced_metric(inverse=True) # q^AB
+            dg4 = metric4.diff(point, diff=1) # shape=(4,4,4), c,a,b -> del_c g_ab
+            dl_cov = (
+                np.einsum('ija,a->ij', dg4, l)
+                + np.einsum('ja,ia->ij', g4, dl)
+            )
+            K_AB_l = -( # shape=(2,2), A,B -> K^mu_AB l_mu
+                np.einsum('Ai,Bj,ij->AB', dux3, dux3, dl_cov[1:,1:])
+                - np.einsum('Ai,Bj,aij,a->AB', dux3, dux3, G4[:,1:,1:], l_cov)
+            )
+            dq = calc.induced_metric(diff=1) # shape=(2,2,2), C,A,B -> del_C q_AB
+            # TODO: remove duplication
+            # Laplacian:
+            op[1] += -(
+                0.5 * np.einsum('AB,C,CAB', q_inv, q_inv[:,0], dq)
+                - np.einsum('CA,B,CAB', q_inv, q_inv[0,:], dq)
+            )
+            op[2] += -q_inv[0,0]
+            # 2nd term: 2 s^A D_A zeta = 2 s^lambda partial_lambda zeta
+            s_A_up = q_inv.dot(s_A) # s^A (contravariant torsion)
+            op[1] += 2 * s_A_up[0]
+            # Terms with no differentiation: (1/2 R_S - Y - s^2 + Ds) zeta
+            R_S = calc.ricci_scalar()
+            Y = 0.5 * np.einsum('AB,AC,BD,CD', K_AB_l, q_inv, q_inv, K_AB_l)
+            s2 = s_A_up.dot(s_A) # s^A s_A
+            # Now the most involved one: Ds = 2nabla_A s^A  (2nabla: cov.der. on MOTS)
+            G2 = calc.christoffel() # A,B,C -> Gamma^A_BC (Christoffel on MOTS)
+            ddn = metric4.normal(point, diff=2) # shape=(4,4,4), a,b,c -> del_a del_b n^c
+            ddg3_inv = np.asarray(self.metric.diff(point, diff=2, inverse=True))
+            ddnu3_cov = calc.covariant_normal(diff=2) # shape=(3,3,3), i,j,k -> del_i del_j nu_k
+            ddnu3 = (
+                np.einsum('ijkl,l->ijk', ddg3_inv, nu3_cov)
+                + np.einsum('ikl,jl->ijk', dg3_inv, dnu3_cov)
+                + np.einsum('jkl,il->ijk', dg3_inv, dnu3_cov)
+                + np.einsum('kl,ijl->ijk', g3_inv, ddnu3_cov)
+            )
+            ddnu = np.zeros((4, 4, 4)) # a,b,c -> del_a del_b nu^c
+            ddnu[1:,1:,1:] = ddnu3
+            ddnu[0,:,1:] = ddnu[:,0,1:] = np.nan
+            ddl = ddn + ddnu # shape=(4,4,4), a,b,c -> del_a del_b l^c
+            ddux3 = calc.diff_xyz_wrt_laph(diff=2) # shape=(2,2,3), A,B,i -> del_A del_B x^i
+            dG4 = metric4.christoffel_deriv(point)
+            # du_cov_i_l = del_A nabla_i l^a
+            #   = del_A x^j (del_i del_j l^a + del_j G^a_ib l^b + G^a_ib del_j l^b)
+            #   -> shape=(2,3,4)
+            du_cov_i_l = (
+                np.einsum('Aj,ija->Aia', dux3, ddl[1:,1:,:])
+                + np.einsum('Aj,jaib,b->Aia', dux3, dG4[1:,:,1:,:], l)
+                + np.einsum('Aj,aib,jb->Aia', dux3, G4[:,1:,:], dl[1:,:])
+            )
+            dk = dn - dnu # shape=(4,4), a,b -> del_a k^b
+            duk_cov = ( # shape=(2,4), A,a -> del_A k_a
+                np.einsum('Ai,iab,b->Aa', dux3, dg4[1:,:,:], k)
+                + np.einsum('ab,Ai,ib->Aa', g4, dux3, dk[1:,:])
+            )
+            ds_cov = -0.5 * ( # shape=(2,2), A,B -> del_A s_B
+                np.einsum('Aa,Ba->AB', duk_cov, cov_A_l)
+                + np.einsum('a,ABi,ia->AB', k_cov, ddux3, cov_a_l[1:,:])
+                + np.einsum('a,Bi,Aia->AB', k_cov, dux3, du_cov_i_l)
+            )
+            Ds = (np.einsum('AB,AB', q_inv, ds_cov)
+                  - np.einsum('AB,CAB,C', q_inv, G2, s_A))
+            op[0] += 0.5 * R_S - Y - s2 + Ds
         return operator_values.T, 0.0
 
     def multipoles(self, max_n=10, num=None, **kw):
@@ -671,7 +881,7 @@ class ExpansionCurve(BaseCurve):
                     return val
             return wrapper
         with self.fix_evaluator():
-            det_q = _cached(self._get_det_q_func())
+            det_q = _cached(self.get_det_q_func())
             R2 = self.horizon_radius()**2
             def zeta_eq(pts):
                 return (0, 1), [-np.sqrt(det_q(pt))/R2 for pt in pts]
@@ -698,8 +908,44 @@ class ExpansionCurve(BaseCurve):
                 I_n.append(0.25 * quad(integrand(n), a=0, b=np.pi)[0])
             return I_n
 
+    def circumference(self, param):
+        r"""Return the circumference of the surface at the given parameter."""
+        pt = self(param, xyz=True)
+        gyy = self.metric.at(pt).mat[1,1]
+        return 2*np.pi * pt[0] * np.sqrt(gyy)
+
+    def x_distance(self, param, **kw):
+        r"""Return the proper length of a coordinate line from the curve to the z-axis."""
+        x, z = self(param)
+        def integrand(t):
+            gxx = self.metric.at([t*x, 0.0, z]).mat[0,0]
+            return np.sqrt(gxx)
+        return x * quad(integrand, a=0, b=1, **kw)[0]
+
+    def find_neck(self, algo='coord', xtol=1e-8, **kw):
+        if algo == 'circumference':
+            f = self.circumference
+        elif algo in ('coord', 'proper_x_dist'):
+            f = lambda param: self(param)[0]
+        else:
+            raise ValueError("Unknown algorithm: %s" % algo)
+        func = lambda param: f(clip(param, 0, np.pi))
+        func_neg = lambda param: -f(clip(param, 0, np.pi))
+        with self.fix_evaluator():
+            xa, xb, xc = bracket(func_neg, 0.0, 0.1, grow_limit=2)[:3]
+            res = minimize_scalar(func_neg, bracket=(xa, xb, xc), options=dict(xtol=1e-1))
+            x_max = res.x
+            xa, xb, xc = bracket(func, x_max, x_max+0.1, grow_limit=2)[:3]
+            if algo == 'proper_x_dist':
+                func = lambda param: self.x_distance(param, **kw)
+                xa, xb, xc = bracket(func, xb, xb+1e-2, grow_limit=2)[:3]
+                res = minimize_scalar(func, bracket=(xa, xb, xc), options=dict(xtol=xtol))
+            else:
+                res = minimize_scalar(func, bracket=(xa, xb, xc), options=dict(xtol=xtol))
+            return res.x, res.fun
+
     def plot_expansion(self, c=0, points=500, name=r"\gamma", figsize=(5, 3),
-                       verbose=True, **kw):
+                       verbose=True, ingoing=False, **kw):
         r"""Convenience function to plot the expansion along the curve.
 
         This may help in quickly judging convergence. The parameter `c` is
@@ -711,7 +957,7 @@ class ExpansionCurve(BaseCurve):
             pts = points
         else:
             pts = np.linspace(0, np.pi, points+1, endpoint=False)[1:]
-        values = np.asarray(self.expansions(pts)) - c
+        values = np.asarray(self.expansions(pts, ingoing=ingoing)) - c
         if verbose:
             max_vio = np.max(np.absolute(values))
             print("Max violation at given points: %s" % max_vio)
@@ -739,3 +985,36 @@ class ExpansionCurve(BaseCurve):
                 title=r"Coefficients of horizon function of $%s$" % name
             )
         )
+
+
+class SignatureQuantities():
+    __slots__ = ("param", "l", "k", "tau", "l_cov", "k_cov", "tau_cov",
+                 "tau_l", "tau_k", "future_it", "past_it")
+
+    def __init__(self, param, g4, l, k, tau, future_it, past_it):
+        self.param = param
+        self.l = l
+        self.k = k
+        self.tau = tau
+        self.k_cov = g4.dot(k)
+        self.l_cov = g4.dot(l)
+        self.tau_cov = g4.dot(tau)
+        self.tau_l = self.tau_cov.dot(l)
+        self.tau_k = self.tau_cov.dot(k)
+        self.future_it = future_it
+        self.past_it = past_it
+
+    def signature(self):
+        if self.tau_l * self.tau_k > 0.0:
+            # normal is spacelike => 3-surface is timelike
+            return -1
+        if self.tau_l * self.tau_k < 0.0:
+            # normal is timelike => 3-surface is spacelike
+            return 1
+        # normal is null => 3-surface is null
+        return 0
+
+
+class IntegrationError(Exception):
+    r"""Raised for non-converging integrals or if accuracy cannot be reached."""
+    pass

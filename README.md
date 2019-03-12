@@ -1,5 +1,9 @@
 # MOTS Finder
 
+
+[![DOI](https://zenodo.org/badge/159724600.svg)](https://zenodo.org/badge/latestdoi/159724600)
+
+
 This project implements an algorithm for numerically finding MOTSs that are
 not star-shaped. The current implementation is limited to the axisymmetric
 case but the ideas it is based on easily generalize to the fully
@@ -21,8 +25,11 @@ For any questions/comments/ideas, feel free to contact
 
 ## Prerequisites
 
-* Python 3
-* SciPy, NumPy, Jupyter, matplotlib
+* Python 3.6.6
+* SciPy 1.1.0, NumPy 1.14.3
+* [SimulationIO](https://github.com/eschnett/SimulationIO) with its
+  prerequisites and Python 3 bindings
+* Jupyter, matplotlib
 
 To build the documentation:
 

@@ -25,7 +25,7 @@ var classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc =
     [ "dg_inv", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#af7f5e41ecca1a978f7c58ae1d5b3fd0b", null ],
     [ "diff", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a781b37688e52fb93887ebfdc7e1758f0", null ],
     [ "diff_xyz_wrt_laph", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#ae91b45ebc66b0ccca7c87995d0e3ba77", null ],
-    [ "expansion", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#ab28da41214f8fe9813d4d182a668cc8a", null ],
+    [ "expansion", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a9e4a36287a99788dab38b553b48649cd", null ],
     [ "extrinsic_curvature", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a7c04c1956267c5fed4f27ebab4e73178", null ],
     [ "get_dh_ABCDtrK", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a61cf585ed7eeb098f5b623471c231619", null ],
     [ "get_dhp_ABCD", "classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#af74daa2494d72f701d0fb1af5d760586", null ],
