@@ -101,21 +101,26 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ace8a06c60294bff7fac52214a41f999c"><td class="memItemLeft" align="right" valign="top"><a id="ace8a06c60294bff7fac52214a41f999c"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_default_lapse</b> (point, diff=0)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1fourmetric.html#ace8a06c60294bff7fac52214a41f999c">_default_lapse</a> (point, diff=0)</td></tr>
+<tr class="memdesc:ace8a06c60294bff7fac52214a41f999c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default lapse function set to constant 1.0. <br /></td></tr>
 <tr class="separator:ace8a06c60294bff7fac52214a41f999c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37481cea4e440b25210b300c42e94c14"><td class="memItemLeft" align="right" valign="top"><a id="a37481cea4e440b25210b300c42e94c14"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_default_dtlapse</b> (point, diff=0)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1fourmetric.html#a37481cea4e440b25210b300c42e94c14">_default_dtlapse</a> (point, diff=0)</td></tr>
+<tr class="memdesc:a37481cea4e440b25210b300c42e94c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default lapse time derivative set to constant 0.0. <br /></td></tr>
 <tr class="separator:a37481cea4e440b25210b300c42e94c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1223a825ad43b8d60f70016c47e942df"><td class="memItemLeft" align="right" valign="top"><a id="a1223a825ad43b8d60f70016c47e942df"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_default_shift</b> (point, diff=0)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1fourmetric.html#a1223a825ad43b8d60f70016c47e942df">_default_shift</a> (point, diff=0)</td></tr>
+<tr class="memdesc:a1223a825ad43b8d60f70016c47e942df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default shift vector field set to constant zero. <br /></td></tr>
 <tr class="separator:a1223a825ad43b8d60f70016c47e942df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cd69d255e7daf5218e7844590adf0bf"><td class="memItemLeft" align="right" valign="top"><a id="a8cd69d255e7daf5218e7844590adf0bf"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_default_dtshift</b> (point, diff=0)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1fourmetric.html#a8cd69d255e7daf5218e7844590adf0bf">_default_dtshift</a> (point, diff=0)</td></tr>
+<tr class="memdesc:a8cd69d255e7daf5218e7844590adf0bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default shift time derivative set to constant zero vector. <br /></td></tr>
 <tr class="separator:a8cd69d255e7daf5218e7844590adf0bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Spacetime metric constructed from 3-metric and lapse, shift. </p>
-<p>This represents a spacetime 4-metric which is constructed from the spatial slice 3-metric and lapse/shift fields. To compute derivatives of this metric (in order to construct e.g. the Christoffel symbols), the extrinsic curvature needs to be supplied as well. </p>
+<p>This represents a spacetime 4-metric which is constructed from the spatial slice 3-metric and lapse/shift fields. To compute derivatives of this metric (in order to construct e.g. the Christoffel symbols), the extrinsic curvature as well as time derivatives of lapse and shift need to be supplied as well.</p>
+<p>Note that some components of the resulting matrices (indicated in the documentation of <a class="el" href="classmotsfinder_1_1metric_1_1fourmetric_1_1FourMetric.html#a4f0fa5515b7e6623e1bac8676cbfbaac" title="Return derivatives of the metric at the given point. ">FourMetric.diff()</a>) will not be computed at the moment since these require second time derivatives of lapse and shift and are not used for the components of the 4-Christoffel symbols entering the formulas that have been used thus far. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

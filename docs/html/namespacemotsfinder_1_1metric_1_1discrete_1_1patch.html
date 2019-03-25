@@ -88,7 +88,7 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1metric_1_1discr
 </div><!--header-->
 <div class="contents">
 
-<p>Data patches containing data on grids.  
+<p>Data patches containing axisymmetric data on grids.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -104,7 +104,11 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Data patches containing data on grids. </p>
+<div class="textblock"><p>Data patches containing axisymmetric data on grids. </p>
+<p>The idea is to represent the numerical data via a matrix of values plus some metadata containing information of how to map these values to physical coordinates. This may then represent either a scalar field on some part of the xz-plane, or a (part of a) single component of a vector or higher tensor field. To construct complete fields such as the 3-metric or extrinsic curvature, these patches may be used as individual components.</p>
+<p>The <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1BBox.html" title="Bounding box for index ranges of matrix patches. ">BBox</a> class represents a simple <em>index</em> bounding box (i.e. without mapping to physical coordinates) used to map the 0-based matrix indices to indices of a fictitious large grid covering the full (finite) domain.</p>
+<p>The <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html" title="This class represents an individual patch (block) of a field. ">GridPatch</a> then adds information needed to map matrix elements to physical coordinates (and vice versa).</p>
+<p>Finally, the <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html" title="Represents a patch of field (component) data in axisymmetry. ">DataPatch</a> extends <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html" title="This class represents an individual patch (block) of a field. ">GridPatch</a> with actual data. The main feature of a <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html" title="This class represents an individual patch (block) of a field. ">GridPatch</a> is the ability to evaluate the data at arbitrary points within the domain using Lagrange interpolation, as well as evaluating and interpolating the first and second derivatives of the discrete data. The patch objects also handle an optional (active, by default) cache storing all Lagrange polynomials of 5-point 1-D "strips" on the grid that have bean generated thus far. Practical tests show that this greatly reduces computational cost in cases where evaluations between grid points are close to each other. This happens in practice e.g. when the grid is evaluated along trial surfaces in a non-linear Newton-like search close to convergence of these surfaces. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

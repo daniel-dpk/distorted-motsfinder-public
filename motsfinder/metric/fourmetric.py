@@ -5,7 +5,13 @@ Spacetime metric constructed from 3-metric and lapse, shift.
 This represents a spacetime 4-metric which is constructed from the spatial
 slice 3-metric and lapse/shift fields. To compute derivatives of this metric
 (in order to construct e.g. the Christoffel symbols), the extrinsic curvature
-needs to be supplied as well.
+as well as time derivatives of lapse and shift need to be supplied as well.
+
+Note that some components of the resulting matrices (indicated in the
+documentation of FourMetric.diff()) will not be computed at the moment since
+these require second time derivatives of lapse and shift and are not used for
+the components of the 4-Christoffel symbols entering the formulas that have
+been used thus far.
 """
 
 from __future__ import print_function
@@ -28,8 +34,122 @@ __all__ = [
 
 
 class FourMetric(_GeneralMetric):
-    r"""Spacetime metric class using 3-metric and lapse, shift for construction."""
+    r"""Spacetime metric class using 3-metric and lapse, shift for construction.
+
+    Note that currently, if either of the lapse or shift fields or their time
+    derivatives is not available, a trivial default field is used silently.
+    If you need derivatives of the metric (e.g. for Christoffel symbols), make
+    sure the correct fields are being used (or that the default ones can be
+    used without affecting your results in unexpected ways).
+
+    @b Examples
+
+    ```
+        g3 = SioMetric('the/simulation/file.it0000001234.s5')
+        g4 = FourMetric(g3)
+        G = g4.christoffel(point=(0.2, 0.0, 0.5))
+        dG = g4.christoffel_deriv(point=(0.2, 0.0, 0.5))
+        # dG[0] will be four 4x4 nan-matrices
+        # dG[1], dG[2], dG[3] will be four 4x4 matrices each
+    ```
+
+    @b Notes
+
+    The spacetime metric \f$g_{\mu\nu}\f$ is constructed from the 3-metric
+    \f$h_{ij}\f$ via
+    \f[
+        g = -(\alpha^2 - \beta_i \beta^i)\ dt^2
+            + \beta_i (dt \otimes dx^i + dx^i \otimes dt)
+            + h_{ij}\ dx^i \otimes dx^j,
+    \f]
+    that is, we have
+    \f{eqnarray*}{
+        g_{00} &=& -(\alpha^2 - \beta_i \beta^i), \\
+        g_{i0} &=& g_{0i} = \beta_i := h_{ij} \beta^j \\
+        g_{ij} &=& h_{ij}.
+    \f}
+    Here, \f$\alpha\f$ is the lapse function and \f$\beta^i\f$ the shift
+    vector field.
+    From the evolution equation
+    \f[
+        \dot h_{ij} = -2 \alpha K_{ij}
+            + {}^{(3)}\nabla_i \beta_j
+            + {}^{(3)}\nabla_j \beta_i,
+    \f]
+    where `K` is the extrinsic curvature of the spatial slice in spacetime and
+    \f${}^{(3)}\nabla\f$ the Levi-Civita covariant derivative of the 3-metric
+    `h`, we get the following components of the derivative of the 4-metric:
+    \f{eqnarray*}{
+        \partial_\mu g_{00} &=& -2 \alpha \alpha_{,\mu}
+            + (\partial_\mu h_{ij}) \beta^i \beta^j
+            + 2 h_{ij} \beta^i_{,\mu} \beta^j
+            \\
+        \partial_\mu g_{0i} &=& \partial_\mu \beta_i
+            = (\partial_\mu h_{ij}) \beta^j + h_{ij} \beta^j_{,\mu}
+            \\
+        \partial_0 g_{ij} &=& -2 \alpha K_{ij}
+            + {}^{(3)}\nabla_i \beta_j
+            + {}^{(3)}\nabla_j \beta_i
+            \\
+        \partial_i g_{jk} &=& \partial_i h_{jk}.
+    \f}
+    We still need
+    \f[
+        {}^{(3)}\nabla_i \beta_j
+            = h_{jk} {}^{(3)}\nabla_i \beta^k
+            = h_{jk} \big(
+                \partial_i \beta^k + {}^{(3)}\Gamma^k_{il} \beta^l
+            \big)
+    \f]
+    to compute all the terms.
+
+    For the second derivatives \f$\partial_\mu\partial_\nu g_{\alpha\beta}\f$,
+    we explicitly exclude \f$\mu=\nu=0\f$ to avoid second time derivatives of
+    lapse and shift (in computations, these values will be set to ``NaN``).
+    The formulas then become simply (but a little lengthy):
+    \f{eqnarray*}{
+        \partial_\mu\partial_\nu g_{00} &=&
+            -2(\alpha_{,\mu}\alpha_{,\nu} + \alpha\alpha_{,\mu\nu})
+            +(\partial_\mu\partial_\nu h_{jk}) \beta^j \beta^k
+            \\&&
+            +2\big[ (\partial_\mu h_{jk}) \beta^j_{,\nu} \beta^k
+                    +(\partial_\nu h_{jk}) \beta^j_{,\mu} \beta^k \big]
+            +2h_{jk} (\beta^j_{,\mu\nu}\beta^k + \beta^j_{,\mu}\beta^k_{,\nu})
+            \\
+        \partial_\mu\partial_\nu g_{0i} &=&
+            (\partial_\mu\partial_\nu h_{ij}) \beta^j
+            +(\partial_\mu h_{ij}) \beta^j_{,\nu}
+            +(\partial_\nu h_{ij}) \beta^j_{,\mu}
+            +h_{ij} \beta^j_{,\mu\nu}
+            \\
+        \partial_i\partial_0 g_{jk} &=&
+            -2\alpha_{,i} K_{jk}
+            -2\alpha(\partial_i K_{jk})
+            +\partial_i {}^{(3)}\nabla_j \beta_k
+            +\partial_i {}^{(3)}\nabla_k \beta_j
+            \\
+        \partial_i\partial_j g_{kl} &=&
+            \partial_i\partial_j h_{kl}.
+    \f}
+    For concrete computations, we again need to spell out one of the terms:
+    \f[
+        \partial_i {}^{(3)}\nabla_j \beta_k
+            = (\partial_i h_{kl}) {}^{(3)}\nabla_j \beta^l
+              +h_{kl} \big[
+                \beta^l_{,ij}
+                +(\partial_i {}^{(3)}\Gamma^l_{jm}) \beta^m
+                +{}^{(3)}\Gamma^l_{jm} \beta^m_{,i}
+              \big].
+    \f]
+    """
+
     def __init__(self, three_metric):
+        r"""Create a 4-metric from a given 3-metric.
+
+        The 3-metric is responsible for providing all information required for
+        embedding the slice in spacetime, i.e. it provides the extrinsic
+        curvature and lapse, shift (and their time derivatives).
+        """
         super(FourMetric, self).__init__()
         self._g3 = three_metric
         self._lapse = three_metric.get_lapse()
@@ -68,6 +188,34 @@ class FourMetric(_GeneralMetric):
         return g4
 
     def diff(self, point, inverse=False, diff=1):
+        r"""Return derivatives of the metric at the given point.
+
+        @param point
+            Point (tuple/list/array) in the current slice at which to compute
+            the derivatives. Note that the time coordinate is inferred from
+            the provided 3-metric, i.e. only supply the 3-D coordinates here.
+        @param inverse
+            Whether to compute the derivatives of the inverse metric (indices
+            up).
+        @param diff
+            Derivative order. Default is 1.
+
+        @return Multidimensional list with indices `i1, i2, ..., k, l`
+            corresponding to \f$\partial_{i_1}\partial_{i_2}\ldots g_{kl}\f$
+            (or the inverse components if ``inverse==True``).
+
+        @b Notes
+
+        First derivatives are completely implements and second derivatives are
+        implement except for second time derivatives. This means that all
+        returned matrices will contain computed data except the following:
+
+            g4.diff(point, diff=2)[0,0]  # a 4x4 nan-matrix
+
+        This corresponds to the double time derivative of the metric. Note
+        that the elements not computed will be set to ``NaN`` to ensure that
+        no wrong results will propagate through computations undetected.
+        """
         if inverse:
             return self._compute_inverse_diff(point, diff=diff)
         if diff == 0:
@@ -143,7 +291,10 @@ class FourMetric(_GeneralMetric):
         return np.array([dtshift] + dxshift.tolist())
 
     def d2lapse(self, point):
-        r"""Second spacetime derivative of lapse, shape is `(4, 4)`."""
+        r"""Second spacetime derivative of lapse, shape is `(4, 4)`.
+
+        Double time derivatives are not computed and set to ``NaN``.
+        """
         d2xlapse = self._lapse(point, diff=2)
         dtxlapse = self._dtlapse(point, diff=1)
         d2lapse = np.zeros((4, 4)) # a,b -> partial_a partial_b lapse
@@ -153,7 +304,10 @@ class FourMetric(_GeneralMetric):
         return d2lapse
 
     def d2shift(self, point):
-        r"""Second spacetime derivative of shift, shape is `(4, 4, 3)`."""
+        r"""Second spacetime derivative of shift, shape is `(4, 4, 3)`.
+
+        Double time derivatives are not computed and set to ``NaN``.
+        """
         d2xshift = self._shift(point, diff=2) # a,b,m -> partial_a partial_b shift^m
         dtxshift = self._dtshift(point, diff=1) # a,m -> partial_a partial_t shift^m
         d2shift = np.zeros((4, 4, 3)) # mu,nu,m -> partial_mu partial_nu shift^m
@@ -192,7 +346,18 @@ class FourMetric(_GeneralMetric):
         return ddg3
 
     def normal(self, point, diff=0):
-        r"""Timelike normal vector to the slice."""
+        r"""Timelike normal vector to the slice.
+
+        @param point
+            3-D point in the slice to evaluate at. The time coordinate is
+            implicitly taken from the 3-metric.
+        @param diff
+            Derivative order to compute. Default is 0, i.e. no derivative.
+            Note that none of the time derivatives is currently implemented
+            and all such values are set to ``NaN``. This means that any
+            component with a derivative index being zero will be ``NaN``.
+            Spatial derivatives of the time component are computed, however.
+        """
         lapse = self._lapse(point)
         shift = self._shift(point)
         if diff == 0:
@@ -229,17 +394,21 @@ class FourMetric(_GeneralMetric):
 
 
 def _default_lapse(point, diff=0):
+    r"""Default lapse function set to constant 1.0."""
     if diff:
         return np.zeros(shape=[3] * diff)
     return 1.0
 
 def _default_dtlapse(point, diff=0):
+    r"""Default lapse time derivative set to constant 0.0."""
     if diff:
         return np.zeros(shape=[3] * diff)
     return 0.0
 
 def _default_shift(point, diff=0):
+    r"""Default shift vector field set to constant zero."""
     return np.zeros(shape=[3] * (diff + 1))
 
 def _default_dtshift(point, diff=0):
+    r"""Default shift time derivative set to constant zero vector."""
     return np.zeros(shape=[3] * (diff + 1))

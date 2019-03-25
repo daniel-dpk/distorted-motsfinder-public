@@ -107,8 +107,8 @@ Functions</h2></td></tr>
 <tr class="memitem:a173e954db0978fdccd52b777cdaeb31d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a173e954db0978fdccd52b777cdaeb31d">get_git_commit</a> ()</td></tr>
 <tr class="memdesc:a173e954db0978fdccd52b777cdaeb31d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the output of <code>git describe</code> to identify the current version.  <a href="#a173e954db0978fdccd52b777cdaeb31d">More...</a><br /></td></tr>
 <tr class="separator:a173e954db0978fdccd52b777cdaeb31d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa694a6d3fc2c127e76197a96fe598db6"><td class="memItemLeft" align="right" valign="top"><a id="aa694a6d3fc2c127e76197a96fe598db6"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>import_file_as_module</b> (fname, mname='loaded_module')</td></tr>
+<tr class="memitem:aa694a6d3fc2c127e76197a96fe598db6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#aa694a6d3fc2c127e76197a96fe598db6">import_file_as_module</a> (fname, mname='loaded_module')</td></tr>
+<tr class="memdesc:aa694a6d3fc2c127e76197a96fe598db6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a filename, load it as a Python module.  <a href="#aa694a6d3fc2c127e76197a96fe598db6">More...</a><br /></td></tr>
 <tr class="separator:aa694a6d3fc2c127e76197a96fe598db6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68146af748f68e2ddec6d956b76086da"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a68146af748f68e2ddec6d956b76086da">lmap</a> (func, iterables)</td></tr>
 <tr class="memdesc:a68146af748f68e2ddec6d956b76086da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of <code>map</code> that returns a list instead of a generator.  <a href="#a68146af748f68e2ddec6d956b76086da">More...</a><br /></td></tr>
@@ -403,6 +403,37 @@ Variables</h2></td></tr>
 
 <p>Return the output of <code>git describe</code> to identify the current version. </p>
 <p>Note that <code>git</code> has to be installed and the project source needs to be in a git repository at runtime. </p>
+
+</div>
+</div>
+<a id="aa694a6d3fc2c127e76197a96fe598db6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa694a6d3fc2c127e76197a96fe598db6">&#9670;&nbsp;</a></span>import_file_as_module()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.utils.import_file_as_module </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mname</em> = <code>'loaded_module'</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Given a filename, load it as a Python module. </p>
+<p>Any classes or functions defined in the file can then be retrieved as attributes from the returned module. This allows e.g. filenames to be provided as arguments to functions in case a function should be loaded from that file during runtime. </p>
 
 </div>
 </div>

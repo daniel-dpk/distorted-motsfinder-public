@@ -33,7 +33,7 @@ For any questions/comments/ideas, feel free to contact
 
 To build the documentation:
 
-* Doxygen, dot (e.g. via graphviz), LaTex (e.g. via texlive)
+* Doxygen, dot (e.g. via graphviz), LaTeX (e.g. via texlive)
 * doxypypy (e.g. via `pip install doxypypy`)
 
 

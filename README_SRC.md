@@ -45,7 +45,6 @@ The remaining files have the following role:
 config.cfg           # Config template for setting up the virtualenv (see contents)
 Doxyfile             # Doxygen configuration
 doxystyle_tweaks.css # Custom style settings for the html documentation
-pylintrc             # Settings for running Pylint
 LICENSE.txt          # Project license (MIT)
 README.md            # Main readme file with examples runnable in Jupyter
 README_SRC.md        # This readme describing the source

@@ -1,5 +1,5 @@
 <map id="DiscreteScalarField" name="DiscreteScalarField">
-<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html" title="_ScalarField" alt="" coords="5,155,100,181"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html" title="Represents a scalar field with one component. " alt="" coords="125,155,231,181"/>
-<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html" title="General field baseclass for scalars, vectors, or higher tensors. " alt="" coords="62,5,169,32"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html" title="Axisymmetric discrete scalar field created from a scalar function. " alt="" coords="5,155,100,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html" title="Represents an axisymmetric scalar field with one component. " alt="" coords="125,155,231,181"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html" title="General field base class for scalars, vectors, or higher tensors. " alt="" coords="62,5,169,32"/>
 </map>

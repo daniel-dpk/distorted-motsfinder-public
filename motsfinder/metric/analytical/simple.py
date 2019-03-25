@@ -2,7 +2,6 @@ r"""@package motsfinder.metric.analytical.simple
 
 Simple metrics in conformally flat form.
 
-
 @b Examples
 
 ```

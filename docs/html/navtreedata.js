@@ -26,9 +26,9 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html#a27640ba584edeb17b903cd6b0a4ff2ab",
-"classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4",
-"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a2e2b42c7f04d7b99fca4853febf3a403",
-"classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a8e123567df79f0eb5b554d595e328177",
+"classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#a8a6287602630db6aeffcb6cf5787a216",
+"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a271d068cb1029687509eaf23b3c7799f",
+"classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a8bd583808a8e110ac9c55f01f210fb6b",
 "namespacemotsfinder_1_1metric_1_1discrete_1_1discretize.html"
 ];
 

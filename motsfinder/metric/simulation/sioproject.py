@@ -2,8 +2,9 @@ r"""@package motsfinder.metric.simulation.sioproject
 
 SimulationIO low-level wrapper functions and classes.
 
-See package docstring of `motsfinder/metric/simulation/__init__.py` for more
-general information and examples.
+See the package docstring of motsfinder.metric.simulation (in the file
+`motsfinder/metric/simulation/__init__.py`) for more general information and
+examples.
 """
 
 import os.path as op
@@ -29,6 +30,8 @@ class SioProject():
 
     This class can be used to get field (or field component) data and other
     information stored in the data file of a slice of spacetime.
+
+    Note that the data is assumed to be axisymmetric.
     """
 
     def __init__(self, hdf5_file):
@@ -88,6 +91,7 @@ class SioProject():
         return [bbox[1,i]-bbox[0,i] for i in range(3)]
 
     def has_field(self, field_name):
+        r"""Return whether data for a particular field is available."""
         return field_name in self.project.fields()
 
     def field_blocks(self, field, component=None, read=False):
@@ -126,6 +130,9 @@ class SioProject():
         The data consists of a tuple of the six independent components
         (matrices) of the symmetric tensor field. The order of components is
         `xx`, `xy==yx`, `xz==zx`, `yy`, `yz==zy`, `zz`.
+
+        @param field
+            Field name or object as understood by field_blocks().
         """
         comp = ['00', '01', '02', '11', '12', '22']
         blocks = [self.field_blocks(field, c, read=True) for c in comp]
@@ -157,13 +164,13 @@ class SioProject():
     def field_component_matrix(self, field, component):
         r"""Construct one big matrix by stitching together all patches of a field component.
 
-        The result is a SioDataPatch object containing the full data of the
+        The result is a DataPatch object containing the full data of the
         component of the specified field. Note that only the ``y==0`` slice of
         the data is extracted even if the data contains ghost points in the
         y-direction.
 
         @param field
-            The field object or name to consider.
+            The field object or name (as understood by field_blocks()).
         @param component
             The field's component to extract the data of.
         """
@@ -197,7 +204,7 @@ class SioProject():
     def metric_component_matrix(self, component):
         r"""Stitch together all patches of a component of the metric.
 
-        The result is one SioDataPatch object containing the data in one big
+        The result is one DataPatch object containing the data in one big
         matrix.
         """
         return self.field_component_matrix('admbase::metric', component)
@@ -205,7 +212,7 @@ class SioProject():
     def curv_component_matrix(self, component):
         r"""Stitch together all patches of a component of the extrinsic curvature.
 
-        The result is one SioDataPatch object containing the data in one big
+        The result is one DataPatch object containing the data in one big
         matrix.
         """
         return self.field_component_matrix('admbase::curv', component)

@@ -102,8 +102,8 @@ Functions</h2></td></tr>
 <tr class="memitem:aa6c16832366b91b2bba921d4e824d828"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotctx.html#aa6c16832366b91b2bba921d4e824d828">_equal_lengths</a> (axes, ax)</td></tr>
 <tr class="memdesc:aa6c16832366b91b2bba921d4e824d828"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify an Axis object to have equal length axes.  <a href="#aa6c16832366b91b2bba921d4e824d828">More...</a><br /></td></tr>
 <tr class="separator:aa6c16832366b91b2bba921d4e824d828"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a296f62cc6dea680fd8dfe38fd12844b5"><td class="memItemLeft" align="right" valign="top"><a id="a296f62cc6dea680fd8dfe38fd12844b5"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>simple_plot_ctx</b> (figsize=(6, 2), projection=None, usetex=None, fontsize=None, save=None, ax=None, show=True, close=False, cfg_callback=None, dpi=None, save_opts=None)</td></tr>
+<tr class="memitem:a296f62cc6dea680fd8dfe38fd12844b5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a296f62cc6dea680fd8dfe38fd12844b5">simple_plot_ctx</a> (figsize=(6, 2), projection=None, usetex=None, fontsize=None, save=None, ax=None, show=True, close=False, cfg_callback=None, dpi=None, save_opts=None)</td></tr>
+<tr class="memdesc:a296f62cc6dea680fd8dfe38fd12844b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple context for creating an setting up a figure and axis/axes.  <a href="#a296f62cc6dea680fd8dfe38fd12844b5">More...</a><br /></td></tr>
 <tr class="separator:a296f62cc6dea680fd8dfe38fd12844b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c9089b92d2d96e78fa01eecbb829b8f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a6c9089b92d2d96e78fa01eecbb829b8f">plot_ctx</a> (figsize=(6, 2), projection=None, grid=True, xlog=False, ylog=False, xlim=(None, None), ylim=(None, None), pad=0, ypad=0, yscilimits=(-3, 3), xscilimits=None, xtick_spacing=None, ytick_spacing=None, title=None, xlabel=None, ylabel=None, tight=True, tight_layout=True, usetex=None, fontsize=None, save=None, ax=None, show=True, close=False, cfg_callback=None, equal_lengths=False, dpi=None, save_opts=None)</td></tr>
 <tr class="memdesc:a6c9089b92d2d96e78fa01eecbb829b8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context manager for preparing a figure and applying configuration.  <a href="#a6c9089b92d2d96e78fa01eecbb829b8f">More...</a><br /></td></tr>
@@ -472,6 +472,91 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_interpret_pad</b> (pa
 </div><div class="memdoc">
 
 <p>As <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a6c9089b92d2d96e78fa01eecbb829b8f" title="Context manager for preparing a figure and applying configuration. ">plot_ctx()</a>, but for 3-dimensional plots of e.g. surfaces. </p>
+
+</div>
+</div>
+<a id="a296f62cc6dea680fd8dfe38fd12844b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a296f62cc6dea680fd8dfe38fd12844b5">&#9670;&nbsp;</a></span>simple_plot_ctx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.ipyutils.plotctx.simple_plot_ctx </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>figsize</em> = <code>(6,&#160;2)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>projection</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>usetex</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fontsize</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>save</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ax</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>show</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>close</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cfg_callback</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dpi</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>save_opts</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Simple context for creating an setting up a figure and axis/axes. </p>
+<p>The given <code>ax</code> axis object can be a callable, in which case it is used to create an axis object (which it should return) and infer the figure from that axis. This will be done in context of the other settings, most notably the <code>fontsize</code> and <code>usetex</code> configurations, which should be active during axis creation. </p>
 
 </div>
 </div>

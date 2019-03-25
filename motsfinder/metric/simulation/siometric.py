@@ -1,9 +1,13 @@
 r"""@package motsfinder.metric.simulation.siometric
 
-The simulation-data based metric class.
+The simulation-data based metric class for axisymmetric cases.
 
-See package docstring of `motsfinder/metric/simulation/__init__.py` for more
-general information and examples.
+See the package docstring of motsfinder.metric.simulation (in the file
+`motsfinder/metric/simulation/__init__.py`) for more general information and
+examples.
+
+The classes in this module implement the field classes of ..discrete.tensors
+and the ..discrete.metric.DiscreteMetric class.
 """
 
 from ..discrete import DiscreteMetric, DiscreteScalarField
@@ -23,7 +27,7 @@ __all__ = [
 
 
 class SioScalarField(DiscreteScalarField):
-    r"""Represents a scalar field with one component."""
+    r"""Represents an axisymmetric scalar field with one component."""
 
     def __init__(self, sio_metric, field_name):
         r"""Create a scalar field using the given metric.
@@ -43,7 +47,7 @@ class SioScalarField(DiscreteScalarField):
 
 
 class SioVectorField(DiscreteVectorField):
-    r"""Represents a vector field with three spatial components."""
+    r"""Represents an axisymmetric vector field with three spatial components."""
 
     def __init__(self, sio_metric, field_name):
         r"""Create a vector field using the given metric.
@@ -63,6 +67,8 @@ class SioVectorField(DiscreteVectorField):
 
 
 class SioSym2TensorField(DiscreteSym2TensorField):
+    r"""Represents an axisymmetric symmetric 2-tensor field."""
+
     def __init__(self, sio_metric, field_name):
         r"""Create a symmetric 2-tensor field using the given metric.
 
@@ -81,15 +87,19 @@ class SioSym2TensorField(DiscreteSym2TensorField):
 
 
 class SioMetric(DiscreteMetric):
-    r"""Riemannian 3-metric of a slice read from simulation data.
+    r"""Axisymmetric Riemannian 3-metric of a slice read from simulation data.
 
     The filename of the data file is stored as instance variable. When storing
     this object to disk (or in general when pickling it), the actual data is
     skipped and only the configuration and file name is stored. Upon loading
     (unpickling), the data is not immediately read from disk. Instead, it is
     loaded lazily, i.e. when first needed. This allows efficient loading of,
-    for example, curve objects for plotting as they store a reference to the
-    metric.
+    for example, curve objects for plotting without loading the slice into
+    memory.
+
+    See the package docstring of motsfinder.metric.simulation (in the file
+    `motsfinder/metric/simulation/__init__.py`) for more general information
+    and examples.
     """
 
     def __init__(self, hdf5_file):
@@ -140,6 +150,7 @@ class SioMetric(DiscreteMetric):
 
     @property
     def project(self):
+        r"""SioProject pointing to the slice data (lazily loaded)."""
         if self._project is None:
             self._project = SioProject(self.data_file)
         return self._project
@@ -198,6 +209,16 @@ class SioMetric(DiscreteMetric):
 
 
 def create_field(cls, metric, field_name):
+    r"""Create a field object only if the slice contains its data.
+
+    @param cls
+        Field class to create (e.g. SioVectorField).
+    @param metric
+        The metric to connect with the field object.
+    @param field_name
+        Name under which this field is stored in the numerical data, for
+        example ``"admbase::lapse"``.
+    """
     if metric.project.has_field(field_name):
         return cls(metric, field_name)
     return None

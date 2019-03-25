@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#a8a6287602630db6aeffcb6cf5787a216":[2,0,1,1,0,13,7],
 "classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4":[2,0,1,1,0,13,2],
 "classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#aa69f2b3e155ae201c8cd3e4e58bf3542":[2,0,1,1,0,13,6],
 "classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#aed77f5b2780f9112af9d4e39b106960f":[2,0,1,1,0,13,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html#a8efc33ef9e8648f08abe28e225b94885":[2,0,1,3,0,0,0,0],
 "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html#ac719f72e8c1d4698373899472fb931b0":[2,0,1,3,0,0,0,4],
 "classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html":[2,0,1,3,1,2],
-"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a2436a72dbc776e248e60a2528a93c3c4":[2,0,1,3,1,2,1],
-"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a271d068cb1029687509eaf23b3c7799f":[2,0,1,3,1,2,0]
+"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a2436a72dbc776e248e60a2528a93c3c4":[2,0,1,3,1,2,1]
 };

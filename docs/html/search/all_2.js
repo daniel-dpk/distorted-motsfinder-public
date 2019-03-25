@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['backwards',['backwards',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#ad1359dbac39d971319c53b898ae108d2',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
   ['basecurve',['BaseCurve',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html',1,'motsfinder::axisym::curve::basecurve']]],
   ['basis',['basis',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#aab9307766634cb9bd688077c77563627',1,'motsfinder::ndsolve::solver::NDSolver']]],
   ['basis_5fvalues',['basis_values',['../classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#af31113aebcc6e5cdfbe6c5e398440827',1,'motsfinder::exprs::trig::_TrigEval']]],

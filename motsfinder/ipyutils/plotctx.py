@@ -76,6 +76,14 @@ def _equal_lengths(axes, ax):
 def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
                     fontsize=None, save=None, ax=None, show=True, close=False,
                     cfg_callback=None, dpi=None, save_opts=None):
+    r"""Simple context for creating an setting up a figure and axis/axes.
+
+    The given `ax` axis object can be a callable, in which case it is used to
+    create an axis object (which it should return) and infer the figure from
+    that axis. This will be done in context of the other settings, most
+    notably the `fontsize` and `usetex` configurations, which should be active
+    during axis creation.
+    """
     if close and show:
         raise ValueError("Cannot close and show figures.")
     rc_opts = dict()

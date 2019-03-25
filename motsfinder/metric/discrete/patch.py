@@ -1,6 +1,31 @@
 r"""@package motsfinder.metric.discrete.patch
 
-Data patches containing data on grids.
+Data patches containing axisymmetric data on grids.
+
+The idea is to represent the numerical data via a matrix of values plus some
+metadata containing information of how to map these values to physical
+coordinates. This may then represent either a scalar field on some part of the
+xz-plane, or a (part of a) single component of a vector or higher tensor
+field. To construct complete fields such as the 3-metric or extrinsic
+curvature, these patches may be used as individual components.
+
+The BBox class represents a simple *index* bounding box (i.e. without mapping
+to physical coordinates) used to map the 0-based matrix indices to indices of
+a fictitious large grid covering the full (finite) domain.
+
+The GridPatch then adds information needed to map matrix elements to physical
+coordinates (and vice versa).
+
+Finally, the DataPatch extends GridPatch with actual data. The main feature of
+a GridPatch is the ability to evaluate the data at arbitrary points within the
+domain using Lagrange interpolation, as well as evaluating and interpolating
+the first and second derivatives of the discrete data. The patch objects also
+handle an optional (active, by default) cache storing all Lagrange polynomials
+of 5-point 1-D "strips" on the grid that have bean generated thus far.
+Practical tests show that this greatly reduces computational cost in cases
+where evaluations between grid points are close to each other. This happens in
+practice e.g. when the grid is evaluated along trial surfaces in a non-linear
+Newton-like search close to convergence of these surfaces.
 """
 
 import itertools
@@ -26,7 +51,9 @@ class BBox():
     r"""Bounding box for index ranges of matrix patches.
 
     These can be used to "patch together" the individual blocks of data to
-    construct one large matrix containing the data for the complete domain.
+    construct one large matrix containing the data for the complete domain
+    (i.e. there is no information here to map the grid to physical
+    coordinates).
     """
 
     __slots__ = ("lower", "upper")
@@ -251,9 +278,16 @@ class DataPatch(GridPatch):
         self._lagrange_cache = [] if caching else None
 
     @classmethod
-    def from_patch(cls, patch, mat, symmetry):
+    def from_patch(cls, patch, mat, symmetry, **kw):
+        r"""Construct a DataPatch from a GridPatch and data matrix.
+
+        @param patch
+            The DataPatch object for which we have the data.
+        @param mat,symmetry,**kw
+            See the respective parameters of #__init__().
+        """
         return cls(origin=patch.origin, deltas=patch.deltas, box=patch.box,
-                   mat=mat, symmetry=symmetry)
+                   mat=mat, symmetry=symmetry, **kw)
 
     def __getstate__(self):
         r"""Return a picklable state object."""
@@ -268,6 +302,7 @@ class DataPatch(GridPatch):
         self._lagrange_cache = self.__dict__.get('_lagrange_cache', [])
 
     def set_caching(self, caching=True):
+        r"""Specify whether to cache the interpolating Lagrange polynomials."""
         if caching and not self.caching:
             self._lagrange_cache = []
         if not caching:
@@ -275,6 +310,7 @@ class DataPatch(GridPatch):
 
     @property
     def caching(self):
+        r"""Whether caching of interpolating Lagrange polynomials is enabled."""
         return isinstance(self._lagrange_cache, list)
 
     def get_region(self, xra, yra, zra):
@@ -287,14 +323,10 @@ class DataPatch(GridPatch):
         respected to create the missing elements by rotating the existing data
         by pi.
 
-        @param xra
-            Range of x-indices given as a 2-tuple/list ``xra = (xmin, xmax)``.
-            Note that the index ``xmin`` will be included while ``xmax`` will
-            not (like for e.g. `range()`).
-        @param yra
-            As `xra`, but for the y-axis.
-        @param zra
-            As `xra`, but for the z-axis.
+        @param xra,yra,zra
+            Range of x-, y-, z-indices (respectively) given as a 2-tuple/list
+            ``xra = (xmin, xmax)``. Note that the index ``xmin`` will be
+            included while ``xmax`` will not (like for e.g. `range()`).
         """
         try:
             return self._get_region(xra, yra, zra)
@@ -362,6 +394,21 @@ class DataPatch(GridPatch):
                            cache=self._get_cache(diff=0), base_idx=(i,j,k))
 
     def _get_cache(self, diff=0, sub_idx=0):
+        r"""Return a dict to use as cache for a given derivative order.
+
+        The cache is implemented such that each partial derivative has its own
+        dict. For example, there is a separate cache for:
+            * the component values themselves
+            * the x-derivative
+            * the z-derivative
+            * ...
+            * the xz-derivative
+            * ...
+
+        To implement this, set `diff` to the derivative order and `sub_idx` to
+        an index unique for the particular partial derivative (e.g. 0 for
+        xx-derivative, 1 for the xy-derivative, etc.).
+        """
         try:
             cache = self._lagrange_cache
             while len(cache) <= diff:
@@ -399,8 +446,8 @@ class DataPatch(GridPatch):
             `f_x` is the x-derivative and `f_z` the z-derivative. For
             ``diff=2``, returns a list with three elements
             ``[f_xx, f_zz, f_xz]``, where `f_xx` is the data twice
-            differentiated w.r.t. x, etc. For ``diff=0`` returns the result of
-            interpolate().
+            differentiated w.r.t. x, etc. For ``diff=0``, returns the result
+            of interpolate().
 
         @param point
             (Physical) coordinates of the point at which to interpolate.
@@ -408,7 +455,7 @@ class DataPatch(GridPatch):
             Derivative order. Can be `0`, `1` or `2`. Default is `1`.
         @param interp
             Whether to interpolate at all or evaluate at the closest grid
-            point. Default is `True`.
+            point. Default is `True` (i.e. do interpolation).
         """
         if diff == 0:
             return self.interpolate(point, interp=interp)

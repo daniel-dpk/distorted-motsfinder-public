@@ -111,8 +111,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aacb60fdd2b67fb3d5e705af3d9f2f712"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#aacb60fdd2b67fb3d5e705af3d9f2f712">total_shape</a> (self)</td></tr>
 <tr class="memdesc:aacb60fdd2b67fb3d5e705af3d9f2f712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shape a matrix needs to have to store all data.  <a href="#aacb60fdd2b67fb3d5e705af3d9f2f712">More...</a><br /></td></tr>
 <tr class="separator:aacb60fdd2b67fb3d5e705af3d9f2f712"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0c7e1fd3d90d1eb919705fbb5fb409e"><td class="memItemLeft" align="right" valign="top"><a id="aa0c7e1fd3d90d1eb919705fbb5fb409e"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>has_field</b> (self, field_name)</td></tr>
+<tr class="memitem:aa0c7e1fd3d90d1eb919705fbb5fb409e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#aa0c7e1fd3d90d1eb919705fbb5fb409e">has_field</a> (self, field_name)</td></tr>
+<tr class="memdesc:aa0c7e1fd3d90d1eb919705fbb5fb409e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether data for a particular field is available.  <a href="#aa0c7e1fd3d90d1eb919705fbb5fb409e">More...</a><br /></td></tr>
 <tr class="separator:aa0c7e1fd3d90d1eb919705fbb5fb409e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30033946dbaa560115bd76fa929ccadc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a30033946dbaa560115bd76fa929ccadc">field_blocks</a> (self, field, component=None, read=False)</td></tr>
 <tr class="memdesc:a30033946dbaa560115bd76fa929ccadc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generator to iterate over all blocks/patches and extract data.  <a href="#a30033946dbaa560115bd76fa929ccadc">More...</a><br /></td></tr>
@@ -162,7 +162,8 @@ Private Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Wraps a simulation data file to conveniently extract data from it. </p>
-<p>This class can be used to get field (or field component) data and other information stored in the data file of a slice of spacetime. </p>
+<p>This class can be used to get field (or field component) data and other information stored in the data file of a slice of spacetime.</p>
+<p>Note that the data is assumed to be axisymmetric. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="abe26867bbb95aabe6e8df7d7017a76f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abe26867bbb95aabe6e8df7d7017a76f9">&#9670;&nbsp;</a></span>__init__()</h2>
@@ -269,7 +270,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Stitch together all patches of a component of the extrinsic curvature. </p>
-<p>The result is one SioDataPatch object containing the data in one big matrix. </p>
+<p>The result is one DataPatch object containing the data in one big matrix. </p>
 
 </div>
 </div>
@@ -370,7 +371,13 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return a generator to iterate over patches and their data. </p>
-<p>The data consists of a tuple of the six independent components (matrices) of the symmetric tensor field. The order of components is <code>xx</code>, <code>xy==yx</code>, <code>xz==zx</code>, <code>yy</code>, <code>yz==zy</code>, <code>zz</code>. </p>
+<p>The data consists of a tuple of the six independent components (matrices) of the symmetric tensor field. The order of components is <code>xx</code>, <code>xy==yx</code>, <code>xz==zx</code>, <code>yy</code>, <code>yz==zy</code>, <code>zz</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Field name or object as understood by <a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a30033946dbaa560115bd76fa929ccadc" title="Generator to iterate over all blocks/patches and extract data. ">field_blocks()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -407,10 +414,10 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Construct one big matrix by stitching together all patches of a field component. </p>
-<p>The result is a SioDataPatch object containing the full data of the component of the specified field. Note that only the <code>y==0</code> slice of the data is extracted even if the data contains ghost points in the y-direction.</p>
+<p>The result is a DataPatch object containing the full data of the component of the specified field. Note that only the <code>y==0</code> slice of the data is extracted even if the data contains ghost points in the y-direction.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">field</td><td>The field object or name to consider. </td></tr>
+    <tr><td class="paramname">field</td><td>The field object or name (as understood by <a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a30033946dbaa560115bd76fa929ccadc" title="Generator to iterate over all blocks/patches and extract data. ">field_blocks()</a>). </td></tr>
     <tr><td class="paramname">component</td><td>The field's component to extract the data of. </td></tr>
   </table>
   </dd>
@@ -486,6 +493,36 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aa0c7e1fd3d90d1eb919705fbb5fb409e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0c7e1fd3d90d1eb919705fbb5fb409e">&#9670;&nbsp;</a></span>has_field()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def has_field </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>field_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return whether data for a particular field is available. </p>
+
+</div>
+</div>
 <a id="a6c0c149ba469b3f9d672b17b9e1c3bfb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c0c149ba469b3f9d672b17b9e1c3bfb">&#9670;&nbsp;</a></span>iteration()</h2>
 
@@ -533,7 +570,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Stitch together all patches of a component of the metric. </p>
-<p>The result is one SioDataPatch object containing the data in one big matrix. </p>
+<p>The result is one DataPatch object containing the data in one big matrix. </p>
 
 </div>
 </div>

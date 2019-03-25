@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('classmotsfinder_1_1axisym_1_1findmots_
 </div><!--header-->
 <div class="contents">
 
-<p>Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>.  
+<p>Abstract configuration base class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>.  
  <a href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for MotsFindingConfig:</div>
@@ -100,7 +100,7 @@ Inheritance diagram for MotsFindingConfig:</div>
 <div class="center"><img src="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig__inherit__graph.png" border="0" usemap="#MotsFindingConfig_inherit__map" alt="Inheritance graph"/></div>
 <map name="MotsFindingConfig_inherit__map" id="MotsFindingConfig_inherit__map">
 <area shape="rect" id="node2" href="classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html" title="Configuration for finding MOTSs in Brill&#45;Lindquist metrics. " alt="" coords="5,80,140,107"/>
-<area shape="rect" id="node3" href="classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html" title="GeneralMotsConfig" alt="" coords="164,80,299,107"/>
+<area shape="rect" id="node3" href="classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html" title="General purpose MOTS finding configuration settings. " alt="" coords="164,80,299,107"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -124,8 +124,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac69b680ec80dda412e126dc644ec8f5e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#ac69b680ec80dda412e126dc644ec8f5e">get_out_dir</a> (self)</td></tr>
 <tr class="memdesc:ac69b680ec80dda412e126dc644ec8f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the directory into which results should be stored.  <a href="#ac69b680ec80dda412e126dc644ec8f5e">More...</a><br /></td></tr>
 <tr class="separator:ac69b680ec80dda412e126dc644ec8f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae8656d7ff183b7913bcc540b31a7221"><td class="memItemLeft" align="right" valign="top"><a id="aae8656d7ff183b7913bcc540b31a7221"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>veto</b> (self, curve, cfg)</td></tr>
+<tr class="memitem:aae8656d7ff183b7913bcc540b31a7221"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aae8656d7ff183b7913bcc540b31a7221">veto</a> (self, curve, cfg)</td></tr>
+<tr class="memdesc:aae8656d7ff183b7913bcc540b31a7221"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called after a curve is found to check whether to store it.  <a href="#aae8656d7ff183b7913bcc540b31a7221">More...</a><br /></td></tr>
 <tr class="separator:aae8656d7ff183b7913bcc540b31a7221"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3eee86220e9eb0119ea0065a3922849b"><td class="memItemLeft" align="right" valign="top"><a id="a3eee86220e9eb0119ea0065a3922849b"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>__setattr__</b> (self, attr, value)</td></tr>
@@ -223,7 +223,7 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a965332c500b195628c954c2bdf1ad220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>. </p>
+<div class="textblock"><p>Abstract configuration base class for <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a>. </p>
 <p>This stores all the settings for the <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> runs.</p>
 <p>The folder to store results in is constructed as follows: </p><pre class="fragment">./{base_folder}/{v}/{folder}/{prefix}{cfg_str}_n{num}_refn{ref_num}_{suffix}.npy
 </pre><p>The individual parts are described in the respective parameter docs of <a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a33b0b614c2c46ab0c27d6c9d2e882cd4" title="Initialize a new configuration object. ">__init__()</a> except for <code>cfg_str</code> which is generated by the respective subclass and may e.g. indicate the configuration of the metric. </p>
@@ -277,7 +277,7 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">base_folder</td><td>Name of the base folder to store result files in. Default is <code>'data/'</code>. </td></tr>
     <tr><td class="paramname">v</td><td>Optional override for the version string indicating the current algorithm in the folder name to store results in. This is usually set by a hard-coded variable in <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#ad42bcdb9207208d4367d21be02f42814" title="Convenience function to prepare and perform a Newton-Kantorovich search. ">find_mots()</a> and is changed when e.g. the reparameterization formula changes to avoid accidentally mixing results of different strategies. </td></tr>
     <tr><td class="paramname">simple_name</td><td>If <code>True</code>, the auto-generated filename contains less info. Otherwise (default), it will contain the resolution of the curve and of the reference curve, as well as whether the reference curve has been reparameterized. </td></tr>
-    <tr><td class="paramname">**kw</td><td>Further keyword arguments are passed directly to the newton_kantorovich() call. Useful settings include <code>auto_resolution</code>, <code>max_resolution</code>, <code>step_mult</code>, <code>verbose</code>, and others. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Further keyword arguments are passed directly to the .<a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#a07bd447136c9537221096f7c8ef3384a" title="Do a Newton type search to find a MOTS. ">newton.newton_kantorovich()</a> call. Useful settings include <code>auto_resolution</code>, <code>max_resolution</code>, <code>step_mult</code>, <code>verbose</code>, and others. Those not documented elsewhere are documented as public class attributes of .<a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html" title="Class implementing the Newton-Kantorovich steps. ">newton.NewtonKantorovich</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -493,6 +493,44 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Check that the given configuration makes some sense. </p>
+
+</div>
+</div>
+<a id="aae8656d7ff183b7913bcc540b31a7221"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae8656d7ff183b7913bcc540b31a7221">&#9670;&nbsp;</a></span>veto()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def veto </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curve</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cfg</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Called after a curve is found to check whether to store it. </p>
+<p>This is called with the solution <code>curve</code> and current configuration <code>cfg</code> prior to saving the curve. If we return a <code>True</code> value here, the curve is not saved to disk.</p>
+<p>The actual veto callback being executed is set as <code>veto_callback</code> configuration option. If given, it should be a callable accepting the two arguments <code>curve, cfg</code>. By default, no veto is issued. </p>
 
 </div>
 </div>

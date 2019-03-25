@@ -1,6 +1,9 @@
 r"""@package motsfinder.metric.discrete.numerical
 
 Numerical low-level computations and helpers.
+
+These are used by e.g. the .patch.DataPatch classes to perform their
+interpolation and differentiation on grids of data.
 """
 
 import itertools
@@ -72,7 +75,9 @@ def _apply_along_first_axis(func, mat, *args, **kwargs):
     r"""Similar to np.apply_along_axis(), but call func with the fixed indices.
 
     In contrast to `np.apply_along_axis()`, `func` is called with the tuple
-    `ii` of indices fixed in `mat` as second positional argument.
+    `ii` of indices that are fixed in `mat` as second positional argument.
+    This provides context for where the function is being evaluated in the
+    matrix which may be used to implement e.g. caching mechanisms.
     """
     shape = mat[1:] if isinstance(mat, tuple) else mat.shape[1:]
     out = np.zeros(shape)
@@ -91,6 +96,13 @@ def _interp1d(arr, ii, coord, linear, cache=None, base_idx=None):
 
     @param arr
         1-D array-like with values.
+    @param ii
+        In case a `cache` is used, the parameter `ii` should consist of
+        indices that are *not* varied along the axis currently interpolated
+        along. These are added to the last indices of `base_idx` to generate a
+        unique key for the data of this axis, which will still be the same
+        each time this strip of data is encountered (i.e. even if it is at a
+        different position in the matrix patch currently considered).
     @param coord
         Float indicating the coordinate in relative index space at which to
         interpolate.
@@ -150,10 +162,8 @@ def _diff_4th_order_xz(mat, region, dx, dz, diff=1):
         Region of grid points at which to compute the derivatives. Should
         consist of three iterables of indices, the tensor product of which
         defines the actual set of indices in the region.
-    @param dx
-        Physical distance of grid points in coordinate space along first axis.
-    @param dz
-        Physical distance of grid points in coordinate space along third axis.
+    @param dx,dz
+        Physical distance of grid points in coordinate space along the axes.
     @param diff
         Derivative order. Should be `1` or `2`. Default is `1`.
     """

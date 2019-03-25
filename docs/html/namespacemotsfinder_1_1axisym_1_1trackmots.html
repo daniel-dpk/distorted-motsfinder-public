@@ -95,11 +95,13 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1axisym_1_1track
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1__PropResult.html">_PropResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple storage class to help return results of computations.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1__PropResult.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1AuxResultMissing.html">AuxResultMissing</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raised when a result is missing required for computing a property.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1AuxResultMissing.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html">MOTSTracker</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for coordinating tracking a MOTS through slices.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -107,55 +109,223 @@ Functions</h2></td></tr>
 <tr class="memitem:aac0233a9fd75b4d9b90478f0f9df1e9a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#aac0233a9fd75b4d9b90478f0f9df1e9a">track_mots</a> (hname, sim_dir, out_base_dir, folder, initial_guess, MOTS_map=None, kw)</td></tr>
 <tr class="memdesc:aac0233a9fd75b4d9b90478f0f9df1e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Track one MOTS through slices of simulation data.  <a href="#aac0233a9fd75b4d9b90478f0f9df1e9a">More...</a><br /></td></tr>
 <tr class="separator:aac0233a9fd75b4d9b90478f0f9df1e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91cae3999d40d585d81fdb034f0c8e8a"><td class="memItemLeft" align="right" valign="top"><a id="a91cae3999d40d585d81fdb034f0c8e8a"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>compute_props</b> (hname, c, props, area_rtol=1e-6, verbosity=True, MOTS_map=None, fname=None, c_past=None, c_future=None)</td></tr>
+<tr class="memitem:a91cae3999d40d585d81fdb034f0c8e8a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a91cae3999d40d585d81fdb034f0c8e8a">compute_props</a> (hname, c, props, area_rtol=1e-6, verbosity=True, MOTS_map=None, fname=None, c_past=None, c_future=None)</td></tr>
+<tr class="memdesc:a91cae3999d40d585d81fdb034f0c8e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute properties and store them in the curve object.  <a href="#a91cae3999d40d585d81fdb034f0c8e8a">More...</a><br /></td></tr>
 <tr class="separator:a91cae3999d40d585d81fdb034f0c8e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="memItemLeft" align="right" valign="top"><a id="a77a21db5fdaf991e42b1f98c7980b6e6"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_area</b> (c, v=None, kw)</td></tr>
+<tr class="memitem:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a77a21db5fdaf991e42b1f98c7980b6e6">_area</a> (c, v=None, kw)</td></tr>
+<tr class="memdesc:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the area for the curve.  <a href="#a77a21db5fdaf991e42b1f98c7980b6e6">More...</a><br /></td></tr>
 <tr class="separator:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c4c3a77b71a5b5a2c9612386811e0ea"><td class="memItemLeft" align="right" valign="top"><a id="a6c4c3a77b71a5b5a2c9612386811e0ea"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_stability</b> (c, min_num)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a6c4c3a77b71a5b5a2c9612386811e0ea">_stability</a> (c, min_num)</td></tr>
+<tr class="memdesc:a6c4c3a77b71a5b5a2c9612386811e0ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability spectrum for the curve. <br /></td></tr>
 <tr class="separator:a6c4c3a77b71a5b5a2c9612386811e0ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad75204ddca479824b4e1fbff97e4371e"><td class="memItemLeft" align="right" valign="top"><a id="ad75204ddca479824b4e1fbff97e4371e"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_ricci</b> (c, Ns, eps, xatol)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ad75204ddca479824b4e1fbff97e4371e">_ricci</a> (c, Ns, eps, xatol)</td></tr>
+<tr class="memdesc:ad75204ddca479824b4e1fbff97e4371e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the Ricci scalar and its maximum along the curve. <br /></td></tr>
 <tr class="separator:ad75204ddca479824b4e1fbff97e4371e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29f6cb86269adcd9545af40b14a3d9a4"><td class="memItemLeft" align="right" valign="top"><a id="a29f6cb86269adcd9545af40b14a3d9a4"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_mean_curv</b> (c, Ns, eps, xatol)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a29f6cb86269adcd9545af40b14a3d9a4">_mean_curv</a> (c, Ns, eps, xatol)</td></tr>
+<tr class="memdesc:a29f6cb86269adcd9545af40b14a3d9a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the mean curvature and its maximum along the curve. <br /></td></tr>
 <tr class="separator:a29f6cb86269adcd9545af40b14a3d9a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0b01649bf7fe310586e92afda62e548"><td class="memItemLeft" align="right" valign="top"><a id="ac0b01649bf7fe310586e92afda62e548"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_curv_squared</b> (c, Ns, eps, xatol)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ac0b01649bf7fe310586e92afda62e548">_curv_squared</a> (c, Ns, eps, xatol)</td></tr>
+<tr class="memdesc:ac0b01649bf7fe310586e92afda62e548"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the curvature square and its maximum along the curve. <br /></td></tr>
 <tr class="separator:ac0b01649bf7fe310586e92afda62e548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab38bb8a1d45203f058296abf3423185"><td class="memItemLeft" align="right" valign="top"><a id="aab38bb8a1d45203f058296abf3423185"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_sample_and_extremum</b> (c, func, Ns, eps, xatol)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#aab38bb8a1d45203f058296abf3423185">_sample_and_extremum</a> (c, func, Ns, eps, xatol)</td></tr>
+<tr class="memdesc:aab38bb8a1d45203f058296abf3423185"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample a property along the curve and find its maximum. <br /></td></tr>
 <tr class="separator:aab38bb8a1d45203f058296abf3423185"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbae4d351f62714e5d2cb32d0b51939c"><td class="memItemLeft" align="right" valign="top"><a id="acbae4d351f62714e5d2cb32d0b51939c"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_ingoing_exp</b> (c, Ns, eps)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#acbae4d351f62714e5d2cb32d0b51939c">_ingoing_exp</a> (c, Ns, eps)</td></tr>
+<tr class="memdesc:acbae4d351f62714e5d2cb32d0b51939c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the ingoing expansion along the curve. <br /></td></tr>
 <tr class="separator:acbae4d351f62714e5d2cb32d0b51939c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1cc69004997ed0ff17e2731acf16bc7"><td class="memItemLeft" align="right" valign="top"><a id="aa1cc69004997ed0ff17e2731acf16bc7"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_avg_ingoing_exp</b> (c, epsabs, limit)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#aa1cc69004997ed0ff17e2731acf16bc7">_avg_ingoing_exp</a> (c, epsabs, limit)</td></tr>
+<tr class="memdesc:aa1cc69004997ed0ff17e2731acf16bc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average ingoing expansion across the MOTS. <br /></td></tr>
 <tr class="separator:aa1cc69004997ed0ff17e2731acf16bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab69b760f1f48bd4d4dc563d1fe97195d"><td class="memItemLeft" align="right" valign="top"><a id="ab69b760f1f48bd4d4dc563d1fe97195d"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_point_dists</b> (c)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ab69b760f1f48bd4d4dc563d1fe97195d">_point_dists</a> (c)</td></tr>
+<tr class="memdesc:ab69b760f1f48bd4d4dc563d1fe97195d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the coordinate distances of all collocation points. <br /></td></tr>
 <tr class="separator:ab69b760f1f48bd4d4dc563d1fe97195d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6bb5f0c1100c58b1bf6096ab1ec3217"><td class="memItemLeft" align="right" valign="top"><a id="af6bb5f0c1100c58b1bf6096ab1ec3217"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_neck</b> (c, xtol, epsrel)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#af6bb5f0c1100c58b1bf6096ab1ec3217">_neck</a> (c, xtol, epsrel)</td></tr>
+<tr class="memdesc:af6bb5f0c1100c58b1bf6096ab1ec3217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find and compute various neck properties for the inner common MOTS. <br /></td></tr>
 <tr class="separator:af6bb5f0c1100c58b1bf6096ab1ec3217"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ec4af6f2ed778c88ccb9bb2c43bae8e"><td class="memItemLeft" align="right" valign="top"><a id="a4ec4af6f2ed778c88ccb9bb2c43bae8e"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_dist_top_bot</b> (c, rtol, allow_intersection, other_run, other_hname, out_dir)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a4ec4af6f2ed778c88ccb9bb2c43bae8e">_dist_top_bot</a> (c, rtol, allow_intersection, other_run, other_hname, out_dir)</td></tr>
+<tr class="memdesc:a4ec4af6f2ed778c88ccb9bb2c43bae8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the proper distance of the two individual MOTSs. <br /></td></tr>
 <tr class="separator:a4ec4af6f2ed778c88ccb9bb2c43bae8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f60f265c13b534167bfd7a56bea7dd5"><td class="memItemLeft" align="right" valign="top"><a id="a4f60f265c13b534167bfd7a56bea7dd5"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_z_dist_to_inner</b> (c, rtol, where, other_run, other_hname, out_dir)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a4f60f265c13b534167bfd7a56bea7dd5">_z_dist_to_inner</a> (c, rtol, where, other_run, other_hname, out_dir)</td></tr>
+<tr class="memdesc:a4f60f265c13b534167bfd7a56bea7dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the proper distance of inner and individual MOTSs. <br /></td></tr>
 <tr class="separator:a4f60f265c13b534167bfd7a56bea7dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab195886dbf3de098b13ffb4f0db5338d"><td class="memItemLeft" align="right" valign="top"><a id="ab195886dbf3de098b13ffb4f0db5338d"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_signature</b> (c, N, eps, c_past, c_future, has_past, has_future)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ab195886dbf3de098b13ffb4f0db5338d">_signature</a> (c, N, eps, c_past, c_future, has_past, has_future)</td></tr>
+<tr class="memdesc:ab195886dbf3de098b13ffb4f0db5338d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the signature of the world tube traces out by MOTSs. <br /></td></tr>
 <tr class="separator:ab195886dbf3de098b13ffb4f0db5338d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32aa275cf3e3908af45358d43e8d4c73"><td class="memItemLeft" align="right" valign="top"><a id="a32aa275cf3e3908af45358d43e8d4c73"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_get_aux_curve</b> (out_dir, hname, it, disp=True)</td></tr>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a32aa275cf3e3908af45358d43e8d4c73">_get_aux_curve</a> (out_dir, hname, it, disp=True)</td></tr>
+<tr class="memdesc:a32aa275cf3e3908af45358d43e8d4c73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an auxiliary curve for the given iteration. <br /></td></tr>
 <tr class="separator:a32aa275cf3e3908af45358d43e8d4c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Track a single MOTS through slices of a simulation. </p>
-</div><h2 class="groupheader">Function Documentation</h2>
+<p><b>Examples</b> </p>
+<div class="fragment"><div class="line"><span class="comment"># Example of a run finding the AH in a sequence of slices.</span></div><div class="line">track_mots(</div><div class="line">    hname=<span class="stringliteral">&#39;AH&#39;</span>,</div><div class="line">    sim_dir=<span class="stringliteral">&#39;data/simulation/brill-lindquist-res256&#39;</span>,</div><div class="line">    out_base_dir=<span class="stringliteral">&#39;results&#39;</span>,</div><div class="line">    folder=<span class="stringliteral">&#39;BL-res256/run1/AH&#39;</span>,</div><div class="line">    initial_guess=<span class="stringliteral">&#39;results/BL-res256/init/AH_discrete1_it0000000000.npy&#39;</span>,</div><div class="line">    compute=<span class="keyword">True</span>,</div><div class="line">    two_pass=<span class="keyword">False</span>,</div><div class="line">    props=[],</div><div class="line">    strategy=2,</div><div class="line">    verbosity=2,</div><div class="line">    timings=<span class="keyword">True</span>,</div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment"># Example of a run for computing the properties in parallel.</span></div><div class="line">track_mots(</div><div class="line">    hname=<span class="stringliteral">&#39;AH&#39;</span>,</div><div class="line">    sim_dir=<span class="stringliteral">&#39;data/simulation/brill-lindquist-res256&#39;</span>,</div><div class="line">    out_base_dir=<span class="stringliteral">&#39;results&#39;</span>,</div><div class="line">    folder=<span class="stringliteral">&#39;BL-res256/run1/AH&#39;</span>,</div><div class="line">    initial_guess=<span class="keywordtype">None</span>,  <span class="comment"># not needed for a property run</span></div><div class="line">    compute=<span class="keyword">False</span>,</div><div class="line">    two_pass=<span class="keyword">False</span>,</div><div class="line">    props=[<span class="stringliteral">&#39;all&#39;</span>],</div><div class="line">    strategy=2,</div><div class="line">    verbosity=2,</div><div class="line">    timings=<span class="keyword">True</span>,</div><div class="line">    retry_after=180,  <span class="comment"># wait 3 minutes for new results and try again</span></div><div class="line">)</div></div><!-- fragment --><p>These examples assume the initial guess for the MOTS has been found e.g. using .<a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html" title="Helper to find the initial MOTSs for a Brill-Lindquist-like metric. ">initialguess.InitHelper</a> and that the apparent horizon already exists in the first slice.</p>
+<p>In case the initial guess for the AH is successful in, say, slice 2048, then we need to run two sets of the above trackers, one going forward in slices and one going backwards. This would be accomplished by adding the following arguments:</p>
+<div class="fragment"><div class="line">initial_guess=<span class="stringliteral">&#39;results/BL-res256/init/AH_discrete1_it0000002048.npy&#39;</span>,</div><div class="line">start_slice=2048,</div><div class="line">backwards=<span class="keyword">False</span>,</div></div><!-- fragment --><p>And for the backwards direction:</p>
+<div class="fragment"><div class="line">initial_guess=<span class="stringliteral">&#39;results/BL-res256/init/AH_discrete1_it0000002048.npy&#39;</span>,</div><div class="line">start_slice=2048,</div><div class="line">backwards=<span class="keyword">True</span>,</div></div><!-- fragment --> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a77a21db5fdaf991e42b1f98c7980b6e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77a21db5fdaf991e42b1f98c7980b6e6">&#9670;&nbsp;</a></span>_area()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.axisym.trackmots._area </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>v</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the area for the curve. </p>
+<p>The parameter <code>v</code> is ignored here and can be used to force recomputation of the area for curves already containing an area result. </p>
+
+</div>
+</div>
+<a id="a91cae3999d40d585d81fdb034f0c8e8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91cae3999d40d585d81fdb034f0c8e8a">&#9670;&nbsp;</a></span>compute_props()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.axisym.trackmots.compute_props </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>hname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>props</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>area_rtol</em> = <code>1e-6</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbosity</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>MOTS_map</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fname</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>c_past</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>c_future</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute properties and store them in the curve object. </p>
+<p>All computed properties will be stored under the property's name in the curve's <code>user_data</code> dictionary. The arguments used for this computation are additionally stored under the key <code>prop_args</code>, where <code>prop</code> is the property name. Some properties produce extra output. This is then stored under <code>prop_extras</code>.</p>
+<p>The properties that can be computed here are:</p><ul>
+<li><b>ingoing_exp</b>: Expansion of the ingoing null normals. This is computed on a grid of points (in curve parameter space) the density of which is determined by the curve's resolution.</li>
+<li><b>avg_ingoing_exp</b>: Average ingoing expansion, averaged over the MOTSs surface area.</li>
+<li><b>area</b>: Surface area of the MOTS. This produces extra data (as explained above) containing information about the convergence of the integral.</li>
+<li><b>ricci</b>: Ricci scalar computed on a grid of points with density dependent on the curve resolution. Additionally, the maximum absolute value of the Ricci scalar along the curve is found and stored. Inspect the actual data (dictionary) for details.</li>
+<li><b>mean_curv</b>: Similar to <code>ricci</code>, but compute the trace of the extrinsic curvature of the MOTS in the slice instead.</li>
+<li><b>curv2</b>: Similar to <code>mean_curv</code>, but compute the "square" <img class="formulaInl" alt="$k_{AB}k^{AB}$" src="form_404.png"/> of the MOTS's extrinsic curvature.</li>
+<li><b>stability</b>: Compute the spectrum of the stability operator. The number of eigenvalues returned depends on the curve's resolution, but at least 30 eigenvalues are computed.</li>
+<li><b>neck</b>: Find the neck based on various criteria and compute various properties at this point, like proper circumference or proper distance to the z-axis. Only computed for a MOTS with <code>hname="inner"</code>.</li>
+<li><b>dist_top_bot</b>: Proper distance (along the z-axis) of the two individual MOTSs. Only computed for a MOTS with <code>hname="bot"</code>.</li>
+<li><b>z_dist_top_inner</b>: Proper distance of the highest point on the z-axis of the inner common MOTS and the top individual MOTS. Only compute for a MOTS with <code>hname="inner"</code>.</li>
+<li><b>z_dist_bot_inner</b>: Proper distance of the lowest point on the z-axis of the inner common MOTS and the bottom individual MOTS. Only compute for a MOTS with <code>hname="inner"</code>.</li>
+<li><b>signature</b>: Signature of the MOTT traced out by the series of MOTSs. The number of points at which the signature is computed depends on the curve's resolution</li>
+<li><b>point_dists</b>: Coordinate distances of the collocation points along the curve. May be useful to compare against the spatial coordinate resolution of the numerical grid.</li>
+</ul>
+<p>Some properties are only computed for certain horizons. The horizon specific properties are:</p><ul>
+<li>for <code>"bot"</code>: <code>dist_top_bot</code></li>
+<li>for <code>"inner"</code>: <code>neck, z_dist_top_inner, z_dist_bot_inner</code></li>
+</ul>
+<p>The <code>signature</code> is only computed if at least one of <code>c_past</code> or <code>c_future</code> is supplied.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hname</td><td>Name of horizon. Determines which kinds of properties are being computed (see above). </td></tr>
+    <tr><td class="paramname">c</td><td>Curve representing the MOTS in axisymmetry. </td></tr>
+    <tr><td class="paramname">props</td><td>Sequence of properties to compute (see above for the possible values). Use the string <code>"all"</code> to compute all possible properties. </td></tr>
+    <tr><td class="paramname">area_rtol</td><td>Relative tolerance for the area integral. Setting this too low will result in integration warnings being produced and possibly underestimated residual errors. </td></tr>
+    <tr><td class="paramname">verbosity</td><td>Whether to print progress information. </td></tr>
+    <tr><td class="paramname">MOTS_map</td><td>Dictionary indicating from which runs auxiliary MOTSs should be loaded (used e.g. for the various distances). </td></tr>
+    <tr><td class="paramname">fname</td><td>File name under which the MOTS is stored. This is currently just used to infer the run name for finding auxiliary MOTSs. </td></tr>
+    <tr><td class="paramname">c_past,c_future</td><td>Optional MOTSs of the previous and next slices, respectively. These are used to compute the signature of the world tube traced out by the evolution of the MOTS. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aac0233a9fd75b4d9b90478f0f9df1e9a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aac0233a9fd75b4d9b90478f0f9df1e9a">&#9670;&nbsp;</a></span>track_mots()</h2>
 
@@ -213,11 +383,13 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_get_aux_curve</b> (ou
 </div><div class="memdoc">
 
 <p>Track one MOTS through slices of simulation data. </p>
+<p>See the package documentation for ..<a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html" title="Track a single MOTS through slices of a simulation. ">axisym.trackmots</a> for examples of invoking the tracker.</p>
 <p>The tracker basically has two "modes" to run in:</p><ol type="1">
 <li>Find mode: Try to locate MOTSs in each slice</li>
 <li>Property mode: Compute area, stability, etc., of previously found MOTSs</li>
 </ol>
 <p>The idea is that the two modes can potentially be run in parallel: You start with a finding run. After the first few MOTSs have been found and stored in the output folder, a property runner can be invoked to compute physical properties parallel to the finding run. If desired, the property runner can be instructed to wait for results of the finder in case it catches up.</p>
+<p>Computed properties are stored as <code>user_data</code> of the curve object. After computing the properties, the file from where the curve was loaded is overwritten with the new curve containing the computed data. Note that this introduces an issue happening if two <em>property runners</em> compute (potentially different) properties of the same curve in parallel, since the one finishing last will effectively erase the results computed by the others. This means you should let only one property runner work on a curve at a time. No check is done to enforce this.</p>
 <p>For some tasks, the finder or property runner need to consider sibling MOTSs (e.g. to compute distances between MOTSs) or future/past MOTSs of the same tube (e.g. to compute the signature). Sibling MOTSs are located using the following assumptions:</p><ul>
 <li>Each MOTS has their own output folder</li>
 <li>Each of these folders belong to a "run", i.e. a common parent folder</li>
@@ -234,7 +406,19 @@ some/path/foo/run2/inner/inner_discrete_it0000000000.npy
 some/path/foo/run2/inner/inner_discrete_it0000000001.npy
 </pre><p>Here, the apparent horizon, the top, and bottom MOTSs were found in slices 0 and 1. The inner common MOTS was only found in slice 0. Upon changing settings, we managed to find it in slice 0 and 1 and stored the results under <code>run2</code>.</p>
 <p>To make the tracker aware of the <code>top</code> and <code>bot</code> MOTSs from <code>run1</code> when computing properties of <code>run2/inner</code>, you supply a mapping from MOTS name (e.g. <code>top</code>, <code>bot</code>) to the run to take it from (e.g. <code>run1</code>). This is done using the <code>MOTS_map</code> parameter like so: </p><pre class="fragment">MOTS_map=dict(top="run1", bot="run1")
-</pre><p>A missing entry in the <code>MOTS_map</code> means we should take the MOTS from the current run. </p>
+</pre><p>A missing entry in the <code>MOTS_map</code> means we should take the MOTS from the current run.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">hname</td><td>Name of the horizon to track. This determines the file names as well as which properties are computed. For example, the distance between top and bottom MOTS is computed only if this MOTS has <code>hname="bot"</code> and a sibling MOTS for the same slice named <code>hname="top"</code> has already been found and stored. Similarly, the <em>neck</em> location and properties as well as the distance to the <code>"top"</code> and <code>"bot"</code> MOTSs is computed only for a run with <code>hname="inner"</code>. Examples <code>"AH"</code>, <code>"top"</code>, <code>"bot"</code>, <code>"inner"</code>. </td></tr>
+    <tr><td class="paramname">sim_dir</td><td>Folder to find the simulation slices in. Slices from all subfolders are found and sorted alphanumerically. Slices with the same base name (i.e. ignoring differently named parent folders) as one already in the list are skipped. Example <code>"data/simulation/brill-lindquist-2-res256"</code>. </td></tr>
+    <tr><td class="paramname">out_base_dir</td><td>Parent folder for all the results. Example: <code>"./results"</code>. </td></tr>
+    <tr><td class="paramname">folder</td><td>Sub folder of the <code>out_base_dir</code> containing results for this specific configuration and run. Example: <code>"BL-2-res256/run1/AH"</code>. If configured as in the examples and the MOTS configuration is set to use a <code>simple_name</code> (see the documentation of .<a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a33b0b614c2c46ab0c27d6c9d2e882cd4" title="Initialize a new configuration object. ">findmots.MotsFindingConfig.__init__()</a>), then the curves will be stored in <code>./results/BL-2-res256/run1/AH</code>. </td></tr>
+    <tr><td class="paramname">initial_guess</td><td>Curve or filename or float to use as initial guess for tracking this MOTS. Differentiation between the different MOTSs to track through slices happens by using different initial guesses. You may use the .<a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html" title="Helper to find the initial MOTSs for a Brill-Lindquist-like metric. ">initialguess.InitHelper</a> to help obtaining initial guesses for different MOTSs in a particular slice. </td></tr>
+    <tr><td class="paramname">MOTS_map</td><td>Optional map (<code>dict</code>) specifying from which run the auxiliary MOTSs required for certain tasks should be taken. See above for examples. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Additional keyword arguments configure the settings of the <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html" title="Class for coordinating tracking a MOTS through slices. ">MOTSTracker</a> (see its documented public attributes). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

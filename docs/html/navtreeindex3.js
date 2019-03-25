@@ -1,5 +1,6 @@
 var NAVTREEINDEX3 =
 {
+"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a271d068cb1029687509eaf23b3c7799f":[2,0,1,3,1,2,0],
 "classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a2e2b42c7f04d7b99fca4853febf3a403":[2,0,1,3,1,2,11],
 "classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a311626909916b7ce474916ddff79f964":[2,0,1,3,1,2,7],
 "classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a328a3b314114c8bad470ed82481e1c45":[2,0,1,3,1,2,4],
@@ -99,7 +100,6 @@ var NAVTREEINDEX3 =
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html":[2,0,1,3,2,3,1],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a0af1bce5072ac71e50b01f33836f9dcd":[2,0,1,3,2,3,1,5],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a102ccc14cc083be5db5e8a8bd3a7e9c5":[2,0,1,3,2,3,1,11],
-"classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a1206b0302e9a76eb6d3f19753f354c94":[2,0,1,3,2,3,1,8],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a15904f703f220971b38af4ce4927bf9c":[2,0,1,3,2,3,1,9],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a15b0fa50b6b60880f828b47d72a2af7e":[2,0,1,3,2,3,1,0],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a34079cedfcd0dcc6476bf9f1076e8cbd":[2,0,1,3,2,3,1,13],
@@ -108,6 +108,7 @@ var NAVTREEINDEX3 =
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a6c9d7223544178b31029b4faf26d95c5":[2,0,1,3,2,3,1,6],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a72162b8c39a3681c6a320b00710ac14b":[2,0,1,3,2,3,1,10],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a75eee6501709e88666649a6e398365d1":[2,0,1,3,2,3,1,14],
+"classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a82fad8bfb063f29b7290e8601a14a0a5":[2,0,1,3,2,3,1,8],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a850a07283f95f3f3a9e1e7f1186d42c0":[2,0,1,3,2,3,1,3],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a9409443db875741bbcc3db7264f18ca9":[2,0,1,3,2,3,1,12],
 "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#ab770e86eb6a636b318b345b994729165":[2,0,1,3,2,3,1,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a380d5390ef502955cc3004264c739049":[2,0,1,4,0,0,0,8],
 "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a4a6c2fbb7ed09923ad9ecfc831e85c3f":[2,0,1,4,0,0,0,23],
 "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a4c3a358572dcbbc235d824868164272a":[2,0,1,4,0,0,0,26],
-"classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a4db25210759793611e7ba301f4dce561":[2,0,1,4,0,0,0,10],
-"classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a8bd583808a8e110ac9c55f01f210fb6b":[2,0,1,4,0,0,0,19]
+"classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a4db25210759793611e7ba301f4dce561":[2,0,1,4,0,0,0,10]
 };

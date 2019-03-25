@@ -89,33 +89,80 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1metric_1_1simul
 </div><!--header-->
 <div class="contents">
 
-<p>The simulation-data based metric class.  
+<p>The simulation-data based metric class for axisymmetric cases.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html">SioMetric</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Riemannian 3-metric of a slice read from simulation data.  <a href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axisymmetric Riemannian 3-metric of a slice read from simulation data.  <a href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html">SioScalarField</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a scalar field with one component.  <a href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an axisymmetric scalar field with one component.  <a href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioSym2TensorField.html">SioSym2TensorField</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an axisymmetric symmetric 2-tensor field.  <a href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioSym2TensorField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html">SioVectorField</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a vector field with three spatial components.  <a href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents an axisymmetric vector field with three spatial components.  <a href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a6317d82aaf3a16add5c5dcfb5d7db5c1"><td class="memItemLeft" align="right" valign="top"><a id="a6317d82aaf3a16add5c5dcfb5d7db5c1"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>create_field</b> (cls, metric, field_name)</td></tr>
+<tr class="memitem:a6317d82aaf3a16add5c5dcfb5d7db5c1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1simulation_1_1siometric.html#a6317d82aaf3a16add5c5dcfb5d7db5c1">create_field</a> (cls, metric, field_name)</td></tr>
+<tr class="memdesc:a6317d82aaf3a16add5c5dcfb5d7db5c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a field object only if the slice contains its data.  <a href="#a6317d82aaf3a16add5c5dcfb5d7db5c1">More...</a><br /></td></tr>
 <tr class="separator:a6317d82aaf3a16add5c5dcfb5d7db5c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The simulation-data based metric class. </p>
-<p>See package docstring of <code>motsfinder/metric/simulation/__init__.py</code> for more general information and examples. </p>
-</div></div><!-- contents -->
+<div class="textblock"><p>The simulation-data based metric class for axisymmetric cases. </p>
+<p>See the package docstring of <a class="el" href="namespacemotsfinder_1_1metric_1_1simulation.html" title="Axisymmetric metrics read from simulation data using SimulationIO. ">motsfinder.metric.simulation</a> (in the file <code>motsfinder/metric/simulation/__init__.py</code>) for more general information and examples.</p>
+<p>The classes in this module implement the field classes of ..<a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1tensors.html" title="Various abstract discrete tensor classes, from scalars to (0,2)-tensors. ">discrete.tensors</a> and the ..<a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html" title="Base class for discrete axisymmetric metrics. ">discrete.metric.DiscreteMetric</a> class. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a6317d82aaf3a16add5c5dcfb5d7db5c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6317d82aaf3a16add5c5dcfb5d7db5c1">&#9670;&nbsp;</a></span>create_field()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.metric.simulation.siometric.create_field </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cls</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>metric</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>field_name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a field object only if the slice contains its data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cls</td><td>Field class to create (e.g. <a class="el" href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html" title="Represents an axisymmetric vector field with three spatial components. ">SioVectorField</a>). </td></tr>
+    <tr><td class="paramname">metric</td><td>The metric to connect with the field object. </td></tr>
+    <tr><td class="paramname">field_name</td><td>Name under which this field is stored in the numerical data, for example <code>"admbase::lapse"</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

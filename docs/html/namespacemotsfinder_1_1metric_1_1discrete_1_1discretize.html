@@ -95,24 +95,83 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1metric_1_1discr
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html">_ScalarField</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axisymmetric discrete scalar field created from a scalar function.  <a href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__Sym2TensorField.html">_Sym2TensorField</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axisymmetric discrete tensor field created from a matrix-valued function.  <a href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__Sym2TensorField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__VectorField.html">_VectorField</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Axisymmetric discrete vector field created from a vector-valued function.  <a href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__VectorField.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html">DiscretizedMetric</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Full discrete slice geometry generated from (analytical) functions.  <a href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a70ad45cca20ed38a84b7b4edd9caa12c"><td class="memItemLeft" align="right" valign="top"><a id="a70ad45cca20ed38a84b7b4edd9caa12c"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_eval</b> (func, arg, default)</td></tr>
+<tr class="memitem:a70ad45cca20ed38a84b7b4edd9caa12c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1discretize.html#a70ad45cca20ed38a84b7b4edd9caa12c">_eval</a> (func, arg, default)</td></tr>
+<tr class="memdesc:a70ad45cca20ed38a84b7b4edd9caa12c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate a function, returning a given default in case of error.  <a href="#a70ad45cca20ed38a84b7b4edd9caa12c">More...</a><br /></td></tr>
 <tr class="separator:a70ad45cca20ed38a84b7b4edd9caa12c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helpers to create discrete versions of (e.g. analytical) metrics. </p>
-<p>These can be used to compare results obtained with analytically implemented metrics with those of the discrete metric classes. </p>
-</div></div><!-- contents -->
+<p>These can be used to compare results obtained with analytically implemented metrics with those of the discrete metric classes.</p>
+<p><b>Examples</b> </p>
+<div class="fragment"><div class="line"><span class="comment"># Use a simple Brill-Lindquist metric as example here.</span></div><div class="line">m1 = 0.2; m2 = 0.8; d = 0.6</div><div class="line">gBL = BrillLindquistMetric(d=d, m1=m1, m2=m2)</div><div class="line"></div><div class="line"><span class="comment"># This creates the discrete version of it.</span></div><div class="line">res = 128; radius = 2</div><div class="line">g = DiscretizedMetric(</div><div class="line">    patch=DiscretizedMetric.construct_patch(res=res, radius=radius),</div><div class="line">    metric=gBL,</div><div class="line">    curv=gBL.get_curv(), <span class="comment"># not needed here as gBL is time symmetric</span></div><div class="line">)</div><div class="line"></div><div class="line"><span class="comment"># To demonstrate that this metric can be used as usual, we find the four</span></div><div class="line"><span class="comment"># MOTSs in it.</span></div><div class="line">h = InitHelper(</div><div class="line">    metric=g,</div><div class="line">    out_base=<span class="stringliteral">&quot;some/output/folder_res%s&quot;</span> % res,</div><div class="line">    suffix=<span class="stringliteral">&quot;discrete&quot;</span>,</div><div class="line">)</div><div class="line">curves = h.find_four_MOTSs(m1=m1, m2=m2, d=d, plot=<span class="keyword">True</span>)</div></div><!-- fragment --> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a70ad45cca20ed38a84b7b4edd9caa12c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70ad45cca20ed38a84b7b4edd9caa12c">&#9670;&nbsp;</a></span>_eval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.metric.discrete.discretize._eval </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>arg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>default</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Evaluate a function, returning a given default in case of error. </p>
+<p>If evaluating the function succeeds, the produced value is returned. If, however, a <code>FloatingPointError</code> is raised, the given default value is returned instead.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>Callable to evaluate. </td></tr>
+    <tr><td class="paramname">arg</td><td>Argument to call <code>func</code> with. </td></tr>
+    <tr><td class="paramname">default</td><td>Value to return in case of <code>FloatingPointError</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

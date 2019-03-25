@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['origin',['origin',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html#a06dbc3a3eb5aaab80edf32ea607f1ef3',1,'motsfinder::metric::discrete::patch::GridPatch']]]
+  ['neck_5ftrick_5fthresholds',['neck_trick_thresholds',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a26a581cf5d1713935a7fee21d5921982',1,'motsfinder::axisym::trackmots::MOTSTracker']]]
 ];

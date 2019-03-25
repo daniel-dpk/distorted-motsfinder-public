@@ -2,7 +2,11 @@ var searchData=
 [
   ['raise_5fall_5fwarnings',['raise_all_warnings',['../namespacemotsfinder_1_1numutils.html#a037496c5c59fcf131f27ee81af4d8636',1,'motsfinder::numutils']]],
   ['raise_5fidx',['raise_idx',['../classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a311626909916b7ce474916ddff79f964',1,'motsfinder::metric::base::MetricTensor']]],
+  ['ref_5fnum_5ffactor',['ref_num_factor',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#ab27d8628449a2f1be881f40874b66966',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['ref_5fsmoothing',['ref_smoothing',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#af78c84bff8304d5c95a16a6ba9d1e8f5',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['reference_5fcurves',['reference_curves',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#ae2c7bb902353b200a201fed6e51dfb78',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
   ['refparamcurve',['RefParamCurve',['../classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html',1,'motsfinder::axisym::curve::refparamcurve']]],
+  ['release_5ffile_5fhandle',['release_file_handle',['../classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#af69344e38826be74811e1c8020b89c7d',1,'motsfinder::metric::discrete::metric::DiscreteMetric']]],
   ['reload_5fall',['reload_all',['../namespacemotsfinder_1_1ipyutils_1_1reloading.html#acab27cb2eba1ad6f8354a49cd4c460a8',1,'motsfinder::ipyutils::reloading']]],
   ['reparameterize',['reparameterize',['../classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#abc5b96c82a5d027d0ffe0b4e9210f6c4',1,'motsfinder::axisym::curve::parametriccurve::ParametricCurve']]],
   ['reparameterize_5fby_5farc_5flength',['reparameterize_by_arc_length',['../classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#afff7eb6d0a7de9aa2ec92a48a18dab24',1,'motsfinder::axisym::curve::parametriccurve::ParametricCurve']]],
@@ -14,14 +18,16 @@ var searchData=
   ['res_5finit_5ffactor',['res_init_factor',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#acce03bc0e27a8cc48c48c93714d1d432',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
   ['resample',['resample',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a0e237fcc955d9e464d5c32fc84a840f9',1,'motsfinder.axisym.curve.expcurve.ExpansionCurve.resample()'],['../classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#a0e237fcc955d9e464d5c32fc84a840f9',1,'motsfinder.axisym.curve.parametriccurve.ParametricCurve.resample()'],['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#afbc6d958ccf100ffb45357d88aa30efe',1,'motsfinder.exprs.series.SeriesExpression.resample()']]],
   ['reset',['reset',['../classfix__doxypypy_1_1DoxyCommentBlock.html#a51829b63adb24ac48d350dee60181002',1,'fix_doxypypy::DoxyCommentBlock']]],
-  ['reset_5fcache',['reset_cache',['../classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html#a9b4f39b173ff2e7e06c0e05f1eae1517',1,'motsfinder::metric::discrete::tensors::_DiscreteField']]],
+  ['reset_5fcache',['reset_cache',['../classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a9b4f39b173ff2e7e06c0e05f1eae1517',1,'motsfinder.metric.discrete.metric.DiscreteMetric.reset_cache()'],['../classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html#a9b4f39b173ff2e7e06c0e05f1eae1517',1,'motsfinder.metric.discrete.tensors._DiscreteField.reset_cache()']]],
   ['resize_5fcoeffs',['resize_coeffs',['../namespacemotsfinder_1_1exprs_1_1series.html#aedd59a49e4016ac1c1f319dffb0586f8',1,'motsfinder::exprs::series']]],
   ['restore_5fdict',['restore_dict',['../namespacemotsfinder_1_1pickle__helpers.html#a34ee80af3d184c6d7ae24a9b6c116f65',1,'motsfinder::pickle_helpers']]],
   ['restore_5fvalue',['restore_value',['../namespacemotsfinder_1_1pickle__helpers.html#a2e71e4b0a3b1495ae7fdcba0cade38cd',1,'motsfinder::pickle_helpers']]],
+  ['retry_5fafter',['retry_after',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a7c7a098f8fb9762eabf93023784c39a9',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
   ['ricci_5fscalar',['ricci_scalar',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#ae5dcd5322e3a34af3c21ae93ace09e22',1,'motsfinder.axisym.curve.expcalc.ExpansionCalc.ricci_scalar()'],['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a05b59585b2daf3036737fe2e3a3a9f80',1,'motsfinder.axisym.curve.expcurve.ExpansionCurve.ricci_scalar()'],['../classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#acd45666fca6ad95717e8e6e82998bdee',1,'motsfinder.metric.base._GeneralMetric.ricci_scalar()']]],
   ['ricci_5ftensor',['ricci_tensor',['../classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#ad662879ce5ef0e3c5ca735ba5edd52ce',1,'motsfinder::metric::base::_GeneralMetric']]],
   ['riemann',['riemann',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a83061b6997c7588f6531b746efbaa1ad',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
   ['riemann_5fcomponents',['riemann_components',['../namespacemotsfinder_1_1metric_1_1helpers.html#aa416643a8da709e36879d34d1cb0ae38',1,'motsfinder::metric::helpers']]],
   ['robincondition',['RobinCondition',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1RobinCondition.html',1,'motsfinder::ndsolve::bcs']]],
-  ['rotate_5fto_5fxz_5fplane',['rotate_to_xz_plane',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0d8fe559aeaa7a8bd70a89a39bb2fb94',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]]
+  ['rotate_5fto_5fxz_5fplane',['rotate_to_xz_plane',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0d8fe559aeaa7a8bd70a89a39bb2fb94',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
+  ['rtol',['rtol',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a7978e9a4674f869e6b2950e2f6262ca5',1,'motsfinder::axisym::newton::NewtonKantorovich']]]
 ];

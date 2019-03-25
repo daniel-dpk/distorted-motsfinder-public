@@ -126,6 +126,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Numerical low-level computations and helpers. </p>
+<p>These are used by e.g. the .<a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html" title="Represents a patch of field (component) data in axisymmetry. ">patch.DataPatch</a> classes to perform their interpolation and differentiation on grids of data. </p>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a2b1fd42cf66e9f6b262783179aa635f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b1fd42cf66e9f6b262783179aa635f6">&#9670;&nbsp;</a></span>_apply_along_first_axis()</h2>
@@ -174,7 +175,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 </div><div class="memdoc">
 
 <p>Similar to np.apply_along_axis(), but call func with the fixed indices. </p>
-<p>In contrast to <code>np.apply_along_axis()</code>, <code>func</code> is called with the tuple <code>ii</code> of indices fixed in <code>mat</code> as second positional argument. </p>
+<p>In contrast to <code>np.apply_along_axis()</code>, <code>func</code> is called with the tuple <code>ii</code> of indices that are fixed in <code>mat</code> as second positional argument. This provides context for where the function is being evaluated in the matrix which may be used to implement e.g. caching mechanisms. </p>
 
 </div>
 </div>
@@ -238,8 +239,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
   <table class="params">
     <tr><td class="paramname">mat</td><td>Matrix with the values to use. Must have at least 2 additional points in the first and third axes on the borders of the given <code>region</code>. </td></tr>
     <tr><td class="paramname">region</td><td>Region of grid points at which to compute the derivatives. Should consist of three iterables of indices, the tensor product of which defines the actual set of indices in the region. </td></tr>
-    <tr><td class="paramname">dx</td><td>Physical distance of grid points in coordinate space along first axis. </td></tr>
-    <tr><td class="paramname">dz</td><td>Physical distance of grid points in coordinate space along third axis. </td></tr>
+    <tr><td class="paramname">dx,dz</td><td>Physical distance of grid points in coordinate space along the axes. </td></tr>
     <tr><td class="paramname">diff</td><td>Derivative order. Should be <code>1</code> or <code>2</code>. Default is <code>1</code>. </td></tr>
   </table>
   </dd>
@@ -310,6 +310,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">arr</td><td>1-D array-like with values. </td></tr>
+    <tr><td class="paramname">ii</td><td>In case a <code>cache</code> is used, the parameter <code>ii</code> should consist of indices that are <em>not</em> varied along the axis currently interpolated along. These are added to the last indices of <code>base_idx</code> to generate a unique key for the data of this axis, which will still be the same each time this strip of data is encountered (i.e. even if it is at a different position in the matrix patch currently considered). </td></tr>
     <tr><td class="paramname">coord</td><td>Float indicating the coordinate in relative index space at which to interpolate. </td></tr>
     <tr><td class="paramname">linear</td><td>If <code>True</code>, perform simple linear interpolation instead of Lagrange interpolation. </td></tr>
     <tr><td class="paramname">cache</td><td>Dictionary to use as cache. If given, <code>base_idx</code> must also be supplied. </td></tr>

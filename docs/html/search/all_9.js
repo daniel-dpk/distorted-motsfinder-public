@@ -1,6 +1,7 @@
 var searchData=
 [
   ['identityexpression',['IdentityExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1IdentityExpression.html',1,'motsfinder::exprs::basics']]],
+  ['import_5ffile_5fas_5fmodule',['import_file_as_module',['../namespacemotsfinder_1_1utils.html#aa694a6d3fc2c127e76197a96fe598db6',1,'motsfinder::utils']]],
   ['impose',['impose',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1RobinCondition.html#a4311119d69a74e5bdc98549e345210d6',1,'motsfinder::ndsolve::bcs::RobinCondition']]],
   ['in_5fblock',['in_block',['../classfix__doxypypy_1_1DoxyCommentBlock.html#a74ede44fe619a863d05b2f0ace823d47',1,'fix_doxypypy::DoxyCommentBlock']]],
   ['induced_5fmetric',['induced_metric',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#aa99cd55325239093f83fa7c81f61a402',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
@@ -8,6 +9,9 @@ var searchData=
   ['inf_5fnorm1d',['inf_norm1d',['../namespacemotsfinder_1_1numutils.html#a4b97c44db7e45216d0cc0b32acfa54a9',1,'motsfinder::numutils']]],
   ['init',['init',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a9ea7391b1d06b4bcc3ff8e84bb00b76d',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
   ['inithelper',['InitHelper',['../classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html',1,'motsfinder::axisym::initialguess']]],
+  ['initial_5fguess',['initial_guess',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#acd8bd825883b37ae98248e22b6bde577',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['initial_5fnum',['initial_num',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#aa33776394cbe9135ba57259aae253093',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['initial_5fstride',['initial_stride',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a1c8ec32799ac419bfce7ce831cd2c21e',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
   ['inner_5fx_5fdistance',['inner_x_distance',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a38381b28dbb789e67f67a08a290f9894',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['inner_5fz_5fdistance',['inner_z_distance',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a19133ee49b35bf3a7bdd5f06a48cb63d',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['insert_5fmissing',['insert_missing',['../namespacemotsfinder_1_1utils.html#a87603dd598dba8318e6e8252113baa4e',1,'motsfinder::utils']]],

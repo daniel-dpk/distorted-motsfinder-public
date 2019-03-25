@@ -200,7 +200,7 @@ def prepare_ref_curve(cfg):
 
 @add_metaclass(ABCMeta)
 class MotsFindingConfig():
-    r"""Configuration class for find_mots().
+    r"""Abstract configuration base class for find_mots().
 
     This stores all the settings for the find_mots() runs.
 
@@ -315,8 +315,10 @@ class MotsFindingConfig():
             reparameterized.
         @param **kw
             Further keyword arguments are passed directly to the
-            newton_kantorovich() call. Useful settings include `auto_resolution`,
-            `max_resolution`, `step_mult`, `verbose`, and others.
+            .newton.newton_kantorovich() call. Useful settings include
+            `auto_resolution`, `max_resolution`, `step_mult`, `verbose`, and
+            others. Those not documented elsewhere are documented as public
+            class attributes of .newton.NewtonKantorovich.
         """
         self.name = ''
         self.c_ref = None
@@ -400,6 +402,16 @@ class MotsFindingConfig():
         return op.dirname(fname)
 
     def veto(self, curve, cfg):
+        r"""Called after a curve is found to check whether to store it.
+
+        This is called with the solution `curve` and current configuration
+        `cfg` prior to saving the curve. If we return a `True` value here, the
+        curve is not saved to disk.
+
+        The actual veto callback being executed is set as `veto_callback`
+        configuration option. If given, it should be a callable accepting the
+        two arguments ``curve, cfg``. By default, no veto is issued.
+        """
         if self.veto_callback:
             return self.veto_callback(curve, cfg)
         return False
@@ -457,13 +469,49 @@ class MotsFindingConfig():
 
 
 class GeneralMotsConfig(MotsFindingConfig):
+    r"""General purpose MOTS finding configuration settings.
+
+    These settings are applicable to both analytical (e.g. Brill-Lindquist)
+    metrics and numerical discrete data. You have to supply the actual metric
+    to consider prior to or while calling find_mots(). From the metric itself,
+    any extrinsic curvature will be taken and used to compute the expansion
+    and linearised expansion equation.
+
+    While using the MOTS finder, some combinations of the many available
+    configuration options have turned out to produce good results. The most
+    important ones have been collected in so-called *presets*, which can be
+    used via the preset() class method.
+    """
+
     def __init__(self, metric=None, fname_desc='general', **kw):
+        r"""Create a new configuration with default settings.
+
+        By default, no metric is specified. However, before calling
+        find_mots(), a metric should be set using the update() method or using
+        a keyword argument in the find_mots() call itself.
+
+        @param metric
+            The slice's metric to use. The extrinsic curvature will be
+            obtained from this metric.
+        @param fname_desc
+            Short string used to construct filenames for resulting curves.
+        @param **kw
+            Additional arguments set the specific options described in
+            MotsFindingConfig.__init__() and .newton.newton_kantorovich().
+            Further options not explained there are documented as public class
+            attributes of .newton.NewtonKantorovich.
+        """
         self.metric = metric
         self.fname_desc = fname_desc
         super(GeneralMotsConfig, self).__init__(**kw)
 
     @classmethod
     def from_curve(cls, curve, **kw):
+        r"""Create default settings taking just the metric of the given curve.
+
+        The optional keyword arguments can be used to set all the remaining
+        options.
+        """
         g = curve.metric
         return cls(**insert_missing(kw, metric=g))
 
@@ -479,8 +527,34 @@ class GeneralMotsConfig(MotsFindingConfig):
     def preset(cls, preset, hname, out_folder=None, **kw):
         r"""Create a configuration based on a manually crafted preset.
 
+        The currently available presets are:
+            * **discrete1**:
+                Fixed resolution with no accuracy detection and flat space
+                reparameterization of the reference curve. This provides
+                relatively fast results with no control over accuracy.
+                Probably rarely used in practice.
+            * **discrete2**:
+                Best option if the roundoff plateau is not known. Accuracy is
+                optimized by increasing the resolution until the roundoff
+                plateau is detected. Results are downsampled as long as the
+                residual error does not increase significantly, even if this
+                residual error lies above the absolute tolerance.
+            * **discrete3**:
+                Best option if the accuracy that can be obtained (i.e. where
+                the plateau lies) is known at call time. For best results, set
+                the `atol` tolerance slightly above this plateau level. The
+                maximum resolution is set to 12000 and a found curve is
+                downsampled more aggressively as long as `atol` is not
+                surpassed by the error. However, no downsampling is allowed if
+                the `atol` setting would be violated. Hence, setting `atol`
+                too low will push the resolution up to the maximum of 12000
+                within just a few steps.
+
+        In practice, ``"discrete2"`` has turned out to be a well rounded
+        configuration in all but the very extreme cases.
+
         @param preset
-            One of the existing preset names.
+            One of the above preset names.
         @param hname
             Name given to the horizon to find (e.g. ``'AH'``). This is used as
             a filename prefix.
@@ -490,7 +564,10 @@ class GeneralMotsConfig(MotsFindingConfig):
             `base_folder`, or `folder` is given as extra keyword arg), saving
             of curves is activated and files are stored there.
         @param **kw
-            Extra options overriding those in the preset.
+            Extra options overriding those in the preset. These are documented
+            in MotsFindingConfig.__init__() and .newton.newton_kantorovich().
+            Further options not explained there are documented as public class
+            attributes of .newton.NewtonKantorovich.
         """
         if preset == "discrete1":
             cfg = cls(

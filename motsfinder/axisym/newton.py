@@ -121,8 +121,8 @@ def newton_kantorovich(initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0,
     @param mat_solver
         (string, optional)
         Matrix solver method to use. Default is ``'scipy.solve'``, which is a
-        fast solver with floating point accuracy. See `ndsolve` for
-        more information.
+        fast solver with floating point accuracy. See
+        ..ndsolve.solver.ndsolve() for more information.
     @param fake_steps
         Number of additional steps taken when the solution has converged at
         the collocation points but not yet between them. After these steps,
@@ -153,7 +153,8 @@ def newton_kantorovich(initial_curve, c=0.0, steps=50, step_mult=0.5, rtol=0,
         threads. Default is `False`, i.e. don't compute in parallel.
     @param **kw
         Remaining keyword arguments are set as attributes on the solver
-        object.
+        object. They are documented as public class attributes of
+        NewtonKantorovich.
     """
     solver = NewtonKantorovich(max_steps=steps, step_mult=step_mult,
                                atol=atol, rtol=rtol, verbose=verbose)
@@ -228,24 +229,53 @@ class NewtonKantorovich(object):
         """
         ## Maximum number of Newton steps to take.
         self.max_steps = max_steps
+        ## Factor to multiply the Newton steps with.
         self.step_mult = step_mult
+        ## Absolute tolerance. If the error at the collocation points falls
+        ## below this threshold, the result is assumed to be converged.
+        ## However, if accurate convergence detection is active, this
+        ## tolerance serves as threshold to reach before the result is
+        ## considered converged. The `auto_resolution` setting then controls
+        ## whether the resolution is increased to reach this tolerance.
         self.atol = atol
+        ## Relative tolerance currently not implemented in a meaningful way.
+        ## Until then, it is best to set (or leave) it at zero.
         self.rtol = rtol
+        ## Whether to print status information during the Newton search.
         self.verbose = verbose
+        ## Expansion of the surface to find. Default is zero (i.e. to find a
+        ## MOTS).
         self.target_expansion = 0.0
+        ## Resolution used to check convergence between collocation points. If
+        ## ``'twice'``, uses two times the curve's resolution. If zero or
+        ## `None`, convergence is only checked at the collocation points and
+        ## `auto_resolution` has no effect. Default is `500`.
         self.accurate_test_res = 500
+        ## Whether the resolution should be increased if insufficient
+        ## resolution is detected. Default: `True`.
         self.auto_resolution = True
+        ## Maximum resolution to increase to. Failure to converge at this
+        ## resolution will terminate the search. Default: `1000`.
         self.max_resolution = 1000
+        ## Whether to raise NoConvergence (or subclasses) when the desired
+        ## tolerance could not be reached in the number of steps or
+        ## resolution. Default is `True`.
         self.disp = True
+        ## Float indicating the absolute (see `atol`) expansion below which we
+        ## take full Newton steps to accelerate convergence. Default is
+        ## `1e-2`.
         self.linear_regime_threshold = 1e-2
+        ## Matrix solver method to use. Default is ``'scipy.solve'``, which is
+        ## a fast solver with floating point accuracy. See
+        ## ..ndsolve.solver.ndsolve() for more information.
         self.mat_solver = 'scipy.solve'
         self.__fake_convergent_steps = 0
         ## Steps to take when we have already converged at the collocation
         ## points but not everywhere yet.
         self.max_fake_convergent_steps = 3
         ## Factor by which to increase the resolution in case insufficient
-        ## resolution is detected.
-        self.res_increase_factor = 1.5 # should be > 1
+        ## resolution is detected (should be > 1.0).
+        self.res_increase_factor = 1.5
         ## Once converged and with `auto_resolution==True`, this controls in
         ## which steps the resolution is reduced as long as the tolerance is
         ## maintained.
@@ -271,11 +301,19 @@ class NewtonKantorovich(object):
         ## If `True`, ignore `atol` while downsampling and only consider
         ## `downsampling_tol_factor`.
         self.liberal_downsampling = False
+        ## Whether to plot each Newton step.
         self.plot_steps = False
+        ## Whether to plot the solutions to the linear problem of the Newton
+        ## steps.
         self.plot_deltas = False
         ## Options used for plotting the Newton steps.
         self.plot_opts = dict()
+        ## Optional curves to add to the Newton step plots.
         self.reference_curves = ()
+        ## Whether to evaluate the equation at the collocation points in
+        ## parallel processes. Note that for numerical (grid) data, this may
+        ## lead to an immense increase in memory usage, so it is best to use
+        ## this only for analytical metrics.
         self.parallel = False
         ## Custom data to store in the final curve (excluding convergence data).
         self.user_data = dict()
@@ -497,6 +535,10 @@ class NewtonKantorovich(object):
         return False
 
     def _change_resolution(self, curve, d, res):
+        r"""Resample the curve and current linear solution.
+
+        This respects the configured minimal resolution.
+        """
         res = max(self.min_res, res)
         curve.resample(res)
         d.resample(res)
@@ -535,6 +577,7 @@ class NewtonKantorovich(object):
 
 class _LinearExpansionEquation(object):
     r"""Compute the linearized expansion equation and keep track of results."""
+
     def __init__(self, curve, target_expansion=0,
                  accurate_test_res=None, parallel=False, pool=None):
         r"""Init function.
@@ -551,6 +594,7 @@ class _LinearExpansionEquation(object):
         @param pool
             Optional processing pool to re-use instead of creating a new one.
         """
+        ## Current curve object.
         self.curve = curve
         ## Target expansion (0 for MOTSs).
         self.c = target_expansion
@@ -583,6 +627,8 @@ class _LinearExpansionEquation(object):
         return self._max_deltas[-1]
 
     def has_accurate_test(self):
+        r"""Return whether we should perform accurate convergence tests
+        between collocation points."""
         return bool(self.accurate_test_res)
 
     def accurate_abs_delta(self, curve):

@@ -5,6 +5,7 @@ var classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker =
     [ "_base_cfg", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#aa42837968f6c9b68bb8e2e649b654bec", null ],
     [ "_call_find_mots", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a896797332428867d3c2e6c1426265801", null ],
     [ "_compute_properties", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a002858574b5f92c20d9b75ec51481062", null ],
+    [ "_copy_curve", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#ab8a09236457386cc3e07f1397b74ec7e", null ],
     [ "_do_step", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a90ca89846cfe222370ee22efcf1760a7", null ],
     [ "_get_cfg", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#aae9bc8b079ac4b660b3ac82c19a730c4", null ],
     [ "_get_future_past_curves", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a2c4dfe5f3297179e36d4546281884418", null ],

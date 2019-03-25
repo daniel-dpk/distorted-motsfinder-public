@@ -95,18 +95,75 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1axisym_1_1initi
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html">InitHelper</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper to find the initial MOTSs for a Brill-Lindquist-like metric.  <a href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a2f8746b774562e0a4bf758bfdd066163"><td class="memItemLeft" align="right" valign="top"><a id="a2f8746b774562e0a4bf758bfdd066163"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>_is_same_curve</b> (curve1, curve2, tol=1e-8)</td></tr>
+<tr class="memitem:a2f8746b774562e0a4bf758bfdd066163"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1initialguess.html#a2f8746b774562e0a4bf758bfdd066163">_is_same_curve</a> (curve1, curve2, tol=1e-8)</td></tr>
+<tr class="memdesc:a2f8746b774562e0a4bf758bfdd066163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return whether two given curves appear to be the same.  <a href="#a2f8746b774562e0a4bf758bfdd066163">More...</a><br /></td></tr>
 <tr class="separator:a2f8746b774562e0a4bf758bfdd066163"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Helpers for determining MOTSs without data from previous steps. </p>
+<p>The <a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html" title="Helper to find the initial MOTSs for a Brill-Lindquist-like metric. ">InitHelper</a> class assumes the metric to roughly resemble a Brill-Lindquist setting to construct estimates for the four different MOTSs that usually appear there:</p><ul>
+<li>the common apparent horizon (<code>AH</code>)</li>
+<li>the two individual MOTSs (<code>top</code> and <code>bot</code>)</li>
+<li>the inner (unstable) branch of the common horizon (<code>inner</code>)</li>
+</ul>
+<p>The AH and the two individual horizons are found starting from suitable round spheres as initial guesses. These should be relatively easy to find. Adjust the individual masses and distance parameters in case these are not found successfully.</p>
+<p>For the inner common MOTS, the strategy here is to take the AH and then find constant expansion surfaces (CESs) close to it with expansion <code>&lt; 0</code> to go inwards. At some point, the minimal expansion for which a CES exists is found (approximately). At this point, increasing the expansion can either take us on the way back to the AH, or towards the inner common MOTS. To take the correct direction, we "jump" over the exact minimum (assuming we're away from it on the order of the smallest expansion step size considered) by repeating the previous shape change and finding a CES of the same expansion but different shape (i.e. "on the other side" of the minimum). Increasing the expansion in small steps from there then leads to the inner MOTS.</p>
+<p>This "jump" is a critical point in the current strategy: It may fail to converge (if the artificial shape change is too large) or it may simply find the previous CES again (if the change is too small). There is therefore the possibility to tweak this change using, among others, the <code>jump_mult</code> parameter to scale the applied change.</p>
+<p>During the whole search, interim results are stored to disk and reused when the helper is rerun, at least if an <code>out_base</code> folder is specified. This means that you can easily tweak the settings and quickly find out if they help in finding all the MOTSs. In most cases, though, the defaults will suffice and even tweaking <code>jump_mult</code> is rarely needed.</p>
 <p><b>Examples</b> </p>
-<div class="fragment"><div class="line">it = 0 <span class="comment"># initial iteration of the simulation</span></div><div class="line">g = SioMetric(find_file(<span class="stringliteral">&quot;simulation_run/**/*it%010d.s5&quot;</span> % it),</div><div class="line">              recursive=<span class="keyword">True</span>, verbose=<span class="keyword">True</span>)</div><div class="line">h = InitHelper(metric=g, out_base=<span class="stringliteral">&quot;some/output/folder&quot;</span>,</div><div class="line">               suffix=<span class="stringliteral">&quot;it%010d&quot;</span> % it)</div><div class="line"></div><div class="line"><span class="comment"># This will try to find the AH and the two individual MOTSs first,</span></div><div class="line"><span class="comment"># followed by a search for the inner common MOTS by starting at the AH and</span></div><div class="line"><span class="comment"># using constant expansion surfaces (CESs) to approach the MOTS.</span></div><div class="line">h.find_four_MOTSs(m1=0.5, m2=0.8, d=0.75, plot=<span class="keyword">True</span>)</div></div><!-- fragment --> </div></div><!-- contents -->
+<p>The first example finds the initial MOTSs of an analytical Brill-Lindquist configuration: </p><div class="fragment"><div class="line">g = BrillLindquistMetric(d=0.6, m1=0.2, m2=0.8)</div><div class="line">h = InitHelper(</div><div class="line">    metric=g, out_base=<span class="stringliteral">&quot;some/output/folder&quot;</span>,</div><div class="line">    suffix=<span class="stringliteral">&quot;d%s_m%s_%s&quot;</span> % (g.d, g.m1, g.m2)</div><div class="line">)</div><div class="line">curves = h.find_four_MOTSs(m1=g.m1, m2=g.m2, d=g.d, plot=<span class="keyword">True</span>)</div></div><!-- fragment --><p>This example uses simulation data to find the initial MOTSs in: </p><div class="fragment"><div class="line">it = 0 <span class="comment"># initial iteration of the simulation</span></div><div class="line">g = SioMetric(find_file(<span class="stringliteral">&quot;simulation_run/**/*it%010d.s5&quot;</span> % it),</div><div class="line">              recursive=<span class="keyword">True</span>, verbose=<span class="keyword">True</span>)</div><div class="line">h = InitHelper(metric=g, out_base=<span class="stringliteral">&quot;some/output/folder&quot;</span>,</div><div class="line">               suffix=<span class="stringliteral">&quot;it%010d&quot;</span> % it)</div><div class="line"></div><div class="line"><span class="comment"># Note: The numbers are just examples for a specific case.</span></div><div class="line">curves = h.find_four_MOTSs(m1=0.5, m2=0.8, d=0.75, plot=<span class="keyword">True</span>)</div></div><!-- fragment --> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2f8746b774562e0a4bf758bfdd066163"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f8746b774562e0a4bf758bfdd066163">&#9670;&nbsp;</a></span>_is_same_curve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.axisym.initialguess._is_same_curve </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curve1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curve2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-8</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return whether two given curves appear to be the same. </p>
+<p>This aims to find out whether the curves describe the same geometrical object (i.e. irrespective of their parameterization). To do this, the curves are both first parameterized by arc length in coordinate space and then compared point-by-point. If the largest distance is smaller than the given tolerance <code>tol</code>, then the curves are assumed to be equivalent.</p>
+<p>Note that the curves themselves are not modified by this function. </p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

@@ -8,7 +8,7 @@ var classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch =
     [ "at", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a0af1bce5072ac71e50b01f33836f9dcd", null ],
     [ "caching", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a6c9d7223544178b31029b4faf26d95c5", null ],
     [ "diff", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#ab770e86eb6a636b318b345b994729165", null ],
-    [ "from_patch", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a1206b0302e9a76eb6d3f19753f354c94", null ],
+    [ "from_patch", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a82fad8bfb063f29b7290e8601a14a0a5", null ],
     [ "get_region", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a15904f703f220971b38af4ce4927bf9c", null ],
     [ "interpolate", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a72162b8c39a3681c6a320b00710ac14b", null ],
     [ "set_caching", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a102ccc14cc083be5db5e8a8bd3a7e9c5", null ],

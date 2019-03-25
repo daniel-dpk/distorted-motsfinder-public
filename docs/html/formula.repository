@@ -380,3 +380,26 @@
 \form#379:$\partial_h\Theta$
 \form#380:$\partial_{h'}\Theta$
 \form#381:$k^{AB}k_{AB}$
+\form#382:$\sqrt{\mathcal{H}_a\mathcal{H}^a}$
+\form#383:$\mathcal{H}_b = D^a(K_{ab} - g_{ab} K^c_{\ c})$
+\form#384:$h_{ij}$
+\form#385:\[ g (\alpha^2 - \beta_i \beta^i)\ dt^2 + \beta_i (dt \otimes dx^i + dx^i \otimes dt) + h_{ij}\ dx^i \otimes dx^j, \]
+\form#386:\begin{eqnarray*} g_{00} &=& - (\alpha^2 - \beta_i \beta^i), \\ g_{i0} &=& g_{0i} = \beta_i := h_{ij} \beta^j \\ g_{ij} &=& h_{ij}. \end{eqnarray*}
+\form#387:$g_{\mu\nu}$
+\form#388:\[ g = -(\alpha^2 - \beta_i \beta^i)\ dt^2 + \beta_i (dt \otimes dx^i + dx^i \otimes dt) + h_{ij}\ dx^i \otimes dx^j, \]
+\form#389:\begin{eqnarray*} g_{00} &=& -(\alpha^2 - \beta_i \beta^i), \\ g_{i0} &=& g_{0i} = \beta_i := h_{ij} \beta^j \\ g_{ij} &=& h_{ij}. \end{eqnarray*}
+\form#390:$\beta^i$
+\form#391:\[ \dot h_{ij} = -2 \alpha K_{ij} + {}^{(3)}\nabla_i \beta_j + {}^{(3)}\nabla_j \beta_i, \]
+\form#392:${}^{(3)}\nabla$
+\form#393:\begin{eqnarray*} \partial_\mu g_{00} &=& -2 \alpha \alpha_{,\mu} + (\partial_mu h_{ij}) \beta^i \beta^j + 2 h_{ij} \beta^i_{,\mu} \beta^j \end{eqnarray*}
+\form#394:\begin{eqnarray*} \partial_\mu g_{00} &=& -2 \alpha \alpha_{,\mu} + (\partial_\mu h_{ij}) \beta^i \beta^j + 2 h_{ij} \beta^i_{,\mu} \beta^j \end{eqnarray*}
+\form#395:\begin{eqnarray*} \partial_\mu g_{00} &=& -2 \alpha \alpha_{,\mu} + (\partial_\mu h_{ij}) \beta^i \beta^j + 2 h_{ij} \beta^i_{,\mu} \beta^j \\ \partial_\mu g_{0i} &=& \partial_\mu \beta_i = (\partial_\mu h_{ij}) \beta^j + h_{ij} \beta^j_{,\mu} \\ \partial_0 g_{ij} &=& -2 \alpha K_{ij} + {}^{(3)}\nabla_i \beta_j + {}^{(3)}\nabla_j \beta_i \\ \partial_i g_{jk} &=& \partial_i h_{jk}. \end{eqnarray*}
+\form#396:\begin{eqnarray*} {}^{(3)}\nabla_i \beta_j = h_{jk} {}^{(3)}\nabla_i \beta^k = h_{jk} \big( \partial_i \beta^k + {}^{(3)}\Gamma^k_{i\ell} \beta^\ell \big) \end{eqnarray*}
+\form#397:$\partial_\mu\partial_\nu g_{\alpha\beta}$
+\form#398:$\mu=\nu=0$
+\form#399:\begin{eqnarray*} \partial_\mu\partial_\nu g_{00} &=& -2(\alpha_{,\mu}\alpha_{,\nu} + \alpha\alpha_{,\mu\nu}) +(\partial_\mu\partial_\nu h_{jk}) \beta^j \beta^k \\&& +2((\partial_\mu h_{jk}) \beta^j_{,\nu} \beta^k + (\partial_\nu h_{jk}) \beta^j_{,\mu} \beta^k) +2h_{jk} (\beta^j_{,\mu\nu}\beta^k + \beta^j_{,\mu}\beta^k_{,\nu}) \end{eqnarray*}
+\form#400:\begin{eqnarray*} \partial_\mu\partial_\nu g_{00} &=& -2(\alpha_{,\mu}\alpha_{,\nu} + \alpha\alpha_{,\mu\nu}) +(\partial_\mu\partial_\nu h_{jk}) \beta^j \beta^k \\&& +2\big[ (\partial_\mu h_{jk}) \beta^j_{,\nu} \beta^k +(\partial_\nu h_{jk}) \beta^j_{,\mu} \beta^k \big] +2h_{jk} (\beta^j_{,\mu\nu}\beta^k + \beta^j_{,\mu}\beta^k_{,\nu}) \\ \partial_\mu\partial_\nu g_{0i} &=& (\partial_\mu\partial_\nu h_{ij}) \beta^j +(\partial_\mu h_{ij}) \beta^j_{,\nu} +(\partial_\nu h_{ij}) \beta^j_{,\mu} +h_{ij} \beta^j_{,\mu\nu} \\ \partial_i\partial_0 g_{jk} &=& \\ \partial_i\partial_j g_{kl} &=& \partial_i\partial_j h_{kl} \end{eqnarray*}
+\form#401:\begin{eqnarray*} \partial_\mu\partial_\nu g_{00} &=& -2(\alpha_{,\mu}\alpha_{,\nu} + \alpha\alpha_{,\mu\nu}) +(\partial_\mu\partial_\nu h_{jk}) \beta^j \beta^k \\&& +2\big[ (\partial_\mu h_{jk}) \beta^j_{,\nu} \beta^k +(\partial_\nu h_{jk}) \beta^j_{,\mu} \beta^k \big] +2h_{jk} (\beta^j_{,\mu\nu}\beta^k + \beta^j_{,\mu}\beta^k_{,\nu}) \\ \partial_\mu\partial_\nu g_{0i} &=& (\partial_\mu\partial_\nu h_{ij}) \beta^j +(\partial_\mu h_{ij}) \beta^j_{,\nu} +(\partial_\nu h_{ij}) \beta^j_{,\mu} +h_{ij} \beta^j_{,\mu\nu} \\ \partial_i\partial_0 g_{jk} &=& -2\alpha_{,i} K_{jk} -2\alpha(\partial_i K_{jk}) +\partial_i {}^{(3)}\nabla_j \beta_k +\partial_i {}^{(3)}\nabla_k \beta_j \\ \partial_i\partial_j g_{kl} &=& \partial_i\partial_j h_{kl}. \end{eqnarray*}
+\form#402:\[ {}^{(3)}\nabla_i \beta_j = h_{jk} {}^{(3)}\nabla_i \beta^k = h_{jk} \big( \partial_i \beta^k + {}^{(3)}\Gamma^k_{il} \beta^l \big) \]
+\form#403:\[ \partial_i {}^{(3)}\nabla_j \beta_k = (\partial_i h_{kl}) {}^{(3)}\nabla_j \beta^l +h_{kl} \big[ \beta^l_{,ij} +(\partial_i {}^{(3)}\Gamma^l_{jm}) \beta^m +{}^{(3)}\Gamma^l_{jm} \beta^m_{,i} \big]. \]
+\form#404:$k_{AB}k^{AB}$

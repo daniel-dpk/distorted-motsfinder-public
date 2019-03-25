@@ -97,16 +97,16 @@ Namespaces</h2></td></tr>
 <tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1discretize"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helpers to create discrete versions of (e.g. analytical) metrics. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemotsfinder_1_1metric_1_1discrete_1_1metric"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1metric.html">metric</a></td></tr>
-<tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1metric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metrics interpolated from data on a grid. <br /></td></tr>
+<tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1metric"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base class for discrete metrics. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemotsfinder_1_1metric_1_1discrete_1_1numerical"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html">numerical</a></td></tr>
 <tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1numerical"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerical low-level computations and helpers. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemotsfinder_1_1metric_1_1discrete_1_1patch"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1patch.html">patch</a></td></tr>
-<tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1patch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data patches containing data on grids. <br /></td></tr>
+<tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1patch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data patches containing axisymmetric data on grids. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemotsfinder_1_1metric_1_1discrete_1_1tensors"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1tensors.html">tensors</a></td></tr>
-<tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1tensors"><td class="mdescLeft">&#160;</td><td class="mdescRight">Various discrete tensors, from scalars to (0,2)-tensors. <br /></td></tr>
+<tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1tensors"><td class="mdescLeft">&#160;</td><td class="mdescRight">Various abstract discrete tensor classes, from scalars to (0,2)-tensors. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemotsfinder_1_1metric_1_1discrete_1_1utils"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1utils.html">utils</a></td></tr>
 <tr class="memdesc:namespacemotsfinder_1_1metric_1_1discrete_1_1utils"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility functions for inspecting discrete data. <br /></td></tr>
@@ -114,6 +114,7 @@ Namespaces</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Metrics interpolated from data on a grid. </p>
+<p>The classes in this module mainly serve as base classes for concrete discrete metric implementations. An exception is the .<a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html" title="Base class for discrete axisymmetric metrics. ">metric.DiscreteMetric</a> class, which is used mainly for testing discrete metrics against analytical metrics and determine e.g. required resolutions. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

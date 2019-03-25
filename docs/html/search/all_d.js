@@ -6,6 +6,8 @@ var searchData=
   ['ndsolve',['ndsolve',['../namespacemotsfinder_1_1ndsolve_1_1solver.html#aa9b143582d20b970c4f3001cad8fa3b5',1,'motsfinder::ndsolve::solver']]],
   ['ndsolveerror',['NDSolveError',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html',1,'motsfinder::ndsolve::bcs']]],
   ['ndsolver',['NDSolver',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html',1,'motsfinder::ndsolve::solver']]],
+  ['neck_5ftrick',['neck_trick',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#aeefa806c0241123693fbe09763456857',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['neck_5ftrick_5fthresholds',['neck_trick_thresholds',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a26a581cf5d1713935a7fee21d5921982',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
   ['neumanncondition',['NeumannCondition',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1NeumannCondition.html',1,'motsfinder::ndsolve::bcs']]],
   ['newton_5fkantorovich',['newton_kantorovich',['../namespacemotsfinder_1_1axisym_1_1newton.html#a07bd447136c9537221096f7c8ef3384a',1,'motsfinder::axisym::newton']]],
   ['newtonkantorovich',['NewtonKantorovich',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html',1,'motsfinder::axisym::newton']]],

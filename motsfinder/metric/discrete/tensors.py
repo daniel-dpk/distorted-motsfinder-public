@@ -1,6 +1,21 @@
 r"""@package motsfinder.metric.discrete.tensors
 
-Various discrete tensors, from scalars to (0,2)-tensors.
+Various abstract discrete tensor classes, from scalars to (0,2)-tensors.
+
+These abstract classes provide all the functionality needed for representing
+tensors such as the extrinsic curvature, metric, lapse function and shift
+vector field. The only missing part is the actual generation/acquisition of
+data using the _DiscreteField._load_data() method.
+
+Note that even though a symmetric (0,2)-tensor can represent a metric, by
+convention a full .metric.DiscreteMetric also has the responsibility to
+provide the other fields required to define the geometry and embedding
+(extrinsic curvature) of the slice in spacetime as well as (possibly) the
+lapse function and shift vector field. Therefore, the DiscreteSym2TensorField
+class may be used to *implement* such a metric using numerical data on a grid.
+
+Examples of such implementations currently include
+.discretize.DiscretizedMetric and ..simulation.siometric.
 """
 
 from abc import ABCMeta, abstractmethod
@@ -21,22 +36,30 @@ __all__ = []
 # pylint: disable=bad-whitespace
 
 
-# TODO: Redo docstrings
 @add_metaclass(ABCMeta)
 class _DiscreteField():
-    r"""General field baseclass for scalars, vectors, or higher tensors.
+    r"""General field base class for scalars, vectors, or higher tensors.
 
-    This baseclass coordinates lazy-loading of the data from disk when
+    This base class coordinates lazy-loading of the data from disk when
     subclasses access the `components` property. It also handles caching
     results evaluated at the most recent point.
 
     Subclasses need to implement the following methods:
         * _eval() - to evaluate the field (components) at a particular given
           point
+        * _load_data() - to load (or generate) the discrete data
+
+    Usually, one would subclass not this class directly but one of the other
+    classes of this module, namely DiscreteScalarField, DiscreteVectorField,
+    DiscreteSym2TensorField. Then, only _load_data() needs to be implemented.
     """
 
     def __init__(self, discrete_metric):
-        r"""Create a new field object belonging to the given metric."""
+        r"""Create a new field object belonging to the given metric.
+
+        The metric is responsible for coordinating the cache as well as
+        loading/unloading of the data (hence the bi-directional relationship).
+        """
         ## DiscreteMetric object this field curvature belongs to.
         self.metric = discrete_metric
         ## Lazily loaded numerical data.
@@ -54,20 +77,57 @@ class _DiscreteField():
 
     @abstractmethod
     def _eval(self, point, interp, diff):
-        r"""Evaluate the field (or derivatives) at a given point."""
+        r"""Evaluate the field (or derivatives) at a given point.
+
+        @param point
+            Point in physical space.
+        @param interp
+            Whether interpolation between numerical grid points should be
+            performed.
+        @param diff
+            Derivative order of the field to compute. Results depend on the
+            tensor type of the field.
+        """
         pass
 
     @abstractmethod
     def _load_data(self):
-        r"""Generate or load the data from a file."""
+        r"""Generate or load the data from a file.
+
+        This method should be overridden to generate or load the full data
+        into memory. This includes all components in case the field is a
+        tensor having more than one component. This method should not set any
+        member variables but instead return the data as a list of component
+        DataPatch objects.
+
+        Note that even scalars should return a (one-element) list of data
+        patches.
+        """
         pass
 
     def load_data(self):
-        r"""Generate or load the data from a file."""
+        r"""Generate or load the data from a file.
+
+        Note that this method coordinates the lazy-loading of the actual data
+        and hence it should not be overridden by child classes for this
+        purpose. Instead, _load_data() should be overridden.
+        """
         if self._field_data is None:
             self._field_data = self._load_data()
 
     def unload_data(self):
+        r"""Free the memory occupied by loaded numerical data.
+
+        If the data is needed at a later time, a reloading/regeneration of the
+        data will be performed, so only use this if it is not needed anymore.
+
+        On the other hand, since this data may occupy large amounts of memory,
+        it should be unloaded if results referring to it are to be kept in
+        memory. A prime example is determining MOTSs in a sequence of slices,
+        while reusing previous results for the next steps. In that case, the
+        data should be unloaded prior to moving on to the next slice to not
+        accumulate multiple slices in memory.
+        """
         self._field_data = None
 
     def reset_cache(self):
@@ -98,13 +158,13 @@ class _DiscreteField():
         In case `interp` is not specified, respects the `interpolate`
         attribute of the corresponding metric object.
 
-        @return If ``diff=0``, returns the field
-            (components) at the given `point`. For a scalar field, this will
-            be a float while e.g. for a `0,2`-tensor, a 3x3 matrix is
-            returned. If ``diff>0``, the first `diff` axes run over the
-            partial derivative direction. For example, for a `0,2`-tensor `T`
-            and with ``diff==1``, returns a 3x3x3 matrix `dT`, where
-            ``dT[i,j,k]`` corresponds to \f$\partial_i T_{jk}\f$.
+        @return If ``diff=0``, returns the field (components) at the given
+            `point`. For a scalar field, this will be a float while e.g. for a
+            `0,2`-tensor, a 3x3 matrix is returned. If ``diff>0``, the first
+            `diff` axes run over the partial derivative direction. For
+            example, for a `0,2`-tensor `T` and with ``diff==1``, returns a
+            3x3x3 matrix `dT`, where ``dT[i,j,k]`` corresponds to
+            \f$\partial_i T_{jk}\f$.
 
         @param point
             Point in coordinate space at which to evaluate/interpolate.
@@ -138,7 +198,11 @@ class _DiscreteField():
 
 
 class DiscreteScalarField(_DiscreteField):
-    r"""Represents a scalar field with one component."""
+    r"""Represents a scalar field with one component.
+
+    Subclass this class and implement the _load_data() method to generate or
+    load the data.
+    """
     # pylint: disable=abstract-method
 
     def _eval(self, point, interp, diff):
@@ -165,7 +229,11 @@ class DiscreteScalarField(_DiscreteField):
 
 
 class DiscreteVectorField(_DiscreteField):
-    r"""Represents a vector field with three spatial components."""
+    r"""Represents a vector field with three spatial components.
+
+    Subclass this class and implement the _load_data() method to generate or
+    load the data.
+    """
     # pylint: disable=abstract-method
 
     def _eval(self, point, interp, diff):
@@ -224,6 +292,11 @@ class DiscreteVectorField(_DiscreteField):
 
 
 class DiscreteSym2TensorField(_DiscreteField):
+    r"""Represents a symmetric 2-tensor field.
+
+    Subclass this class and implement the _load_data() method to generate or
+    load the data.
+    """
     # pylint: disable=abstract-method
 
     def _eval(self, point, interp, diff):

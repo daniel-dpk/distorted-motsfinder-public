@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['param',['param',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a51f20d6b1b54a2eee3be0e8adc96a0ae',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
-  ['plateau_5ftol',['plateau_tol',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a6a92f506c0da628ce6c766d69de6cdd7',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
-  ['plot_5fopts',['plot_opts',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#abdecb13d6086fc6b73eba15dbab5521e',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
-  ['point',['point',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a643590f4015338d12714af03d61a0ac9',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
-  ['project',['project',['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a3cda4e9d60a1bb5c721d972f6031a96d',1,'motsfinder::metric::simulation::sioproject::SioProject']]]
+  ['opts',['opts',['../classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#aa17b9f50d41f0a8e95659986136435dd',1,'motsfinder::axisym::initialguess::InitHelper']]],
+  ['origin',['origin',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html#a06dbc3a3eb5aaab80edf32ea607f1ef3',1,'motsfinder::metric::discrete::patch::GridPatch']]],
+  ['out_5fbase',['out_base',['../classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a7e73eb5b8a2ab0624e00d77024d0d04e',1,'motsfinder::axisym::initialguess::InitHelper']]],
+  ['out_5fbase_5fdir',['out_base_dir',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a97c55931ec7c90e15768a67312c25e7e',1,'motsfinder::axisym::trackmots::MOTSTracker']]]
 ];

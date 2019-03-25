@@ -56,6 +56,13 @@ def get_git_commit():
 
 
 def import_file_as_module(fname, mname='loaded_module'):
+    r"""Given a filename, load it as a Python module.
+
+    Any classes or functions defined in the file can then be retrieved as
+    attributes from the returned module. This allows e.g. filenames to be
+    provided as arguments to functions in case a function should be loaded
+    from that file during runtime.
+    """
     spec = importlib.util.spec_from_file_location(mname, fname)
     cfg_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(cfg_module)

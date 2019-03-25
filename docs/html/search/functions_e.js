@@ -1,6 +1,7 @@
 var searchData=
 [
   ['parallel_5fcompute',['parallel_compute',['../namespacemotsfinder_1_1utils.html#a8d57374f88cea7c205139eec98a9295d',1,'motsfinder::utils']]],
+  ['patch',['patch',['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html#a913e737d5f4310f0c31eaa74a1a60869',1,'motsfinder::metric::discrete::discretize::DiscretizedMetric']]],
   ['patches',['patches',['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a3aee6db31c049ff30e0fd0c22c253c14',1,'motsfinder::metric::simulation::sioproject::SioProject']]],
   ['plot',['plot',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a3abd3fbea9be82da82aa7b20982edd18',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
   ['plot_5f1d',['plot_1d',['../namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a',1,'motsfinder::ipyutils::plotting']]],
@@ -21,6 +22,7 @@ var searchData=
   ['plot_5ftri',['plot_tri',['../namespacemotsfinder_1_1ipyutils_1_1plotting3d.html#a29030e9682b260b7f60dfe5c98a839de',1,'motsfinder::ipyutils::plotting3d']]],
   ['plot_5ftri_5fcut',['plot_tri_cut',['../namespacemotsfinder_1_1ipyutils_1_1plotting3d.html#aefc313eb3cda280d71fac13212a07383',1,'motsfinder::ipyutils::plotting3d']]],
   ['point_5fdistances',['point_distances',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a30fd2069205163d29380e6e8dd5e62d8',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
+  ['points_5fclose_5fto_5fcurve',['points_close_to_curve',['../classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a7faa1213c4779bda9956ee53a67fdc93',1,'motsfinder::metric::discrete::utils::ConstraintAnalyzer']]],
   ['prepare_5fdict',['prepare_dict',['../namespacemotsfinder_1_1pickle__helpers.html#acf13e96a1089e05cb5f6a1b8c9f3cb26',1,'motsfinder::pickle_helpers']]],
   ['prepare_5ffor_5fpoint',['prepare_for_point',['../classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a5b5c4c451156fccbe8f7349e2aef69df',1,'motsfinder::metric::discrete::metric::DiscreteMetric']]],
   ['prepare_5fgrid',['prepare_grid',['../namespacemotsfinder_1_1ipyutils_1_1plotting3d.html#a8e1b4eca87bc4164a22461ce84c8596a',1,'motsfinder::ipyutils::plotting3d']]],
@@ -32,6 +34,7 @@ var searchData=
   ['print_5findented',['print_indented',['../namespacemotsfinder_1_1utils.html#a99f355c92c05f8f7ef81684ae7260abd',1,'motsfinder::utils']]],
   ['print_5ftree',['print_tree',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#ab497042123139f29b7c94c4cd947001d',1,'motsfinder::exprs::numexpr::NumericExpression']]],
   ['process_5fpool',['process_pool',['../namespacemotsfinder_1_1utils.html#ac8d7ec30ae29488e5a4e680dc42a1f01',1,'motsfinder::utils']]],
+  ['project',['project',['../classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html#aa94b5c99131c4c7b358f19df60d30dde',1,'motsfinder::metric::simulation::siometric::SioMetric']]],
   ['psi',['psi',['../classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html#ac719f72e8c1d4698373899472fb931b0',1,'motsfinder::metric::analytical::simple::_ConformallyFlatMetric']]],
   ['pts',['pts',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a9370d1a5ac18ed6f64973088687f8d69',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
   ['pts_5finternal',['pts_internal',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#adf73d8137e7c0c161c63d0737a5f9d0e',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]]

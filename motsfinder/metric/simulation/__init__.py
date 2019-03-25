@@ -1,17 +1,14 @@
 r"""@package motsfinder.metric.simulation
 
-Axisymmetric metrics read from simulation data.
+Axisymmetric metrics read from simulation data using `SimulationIO`.
 
-The classes in this module interpret simulation results on a grid of points
-and build 3-metric objects that can be evaluated at any point in the
-simulation domain. Lagrange interpolation is used to evaluate between the grid
-points. Derivatives of the metric are obtained by first computing derivatives
-on a patch of grid points using finite differencing and then interpolating the
-results using Lagrange interpolation.
+The classes in this module implement a ..discrete.metric.DiscreteMetric by
+reading in the data using SimulationIO [1]. Examples of parameter files
+producing compatible output using the Einstein Toolkit [2,3] can be found in
+the ``paper2/parfiles/`` directory.
 
-This module requires the `SimulationIO` Python library available at:
-
-    https://github.com/eschnett/SimulationIO
+To simplify handling of multi-patch data, the fields are collected into single
+large matrices.
 
 
 @b Examples
@@ -40,17 +37,32 @@ We can read in a component of e.g. the metric and plot it using:
 Using the data as a metric for the MOTS finder is easy too:
 ```
     metric = SioMetric(fname)
-    cfg = GeneralMotsConfig(metric, metric.get_curv(), c_ref=1.0, num=20,
-                            atol=1e-5, accurate_test_res=None,
-                            auto_resolution=False)
-    c = find_mots(cfg, verbose=True)
+    cfg = GeneralMotsConfig.preset(
+        "discrete2", hname="AH", metric=metric, num=30,
+    )
+    c = find_mots(cfg, c_ref=1.0, verbose=True)
     c.plot(label="MOTS")
 ```
 
-The above obviously requires the initial guess to be sufficiently close to the
-MOTS in order to converge. Note also that we use no auto-resolution and a
-relatively high tolerance due to the data usually having less accuracy than
-analytically implemented metrics like the Brill-Lindquist metric.
+In the above example, we take a round (coordinate) sphere of radius 1.0 as
+initial guess. Whether this converges to a MOTS obviously depends on the data
+at hand.
+
+
+@b References
+
+[1] Erik Schnetter, & Jonah Miller. (2019, January 27). eschnett/SimulationIO:
+    Allow specifying compression options when writing datasets (Version
+    version/8.0.0). Zenodo. http://doi.org/10.5281/zenodo.2550800
+
+[2] Einstein Toolkit: Open software for relativistic astrophysics.
+    http://einsteintoolkit.org/.
+
+[3] F. Löffler, J. Faber, E. Bentivegna, T. Bode, P. Diener, R. Haas, I.
+    Hinder, B. C. Mundim, C. D. Ott, E. Schnetter, G. Allen, M. Campanelli,
+    and P. Laguna. The Einstein Toolkit: A Community Computational
+    Infrastructure for Relativistic Astrophysics. Class. Quantum Grav.,
+    29(11):115001, 2012.
 """
 
 from .sioproject import SioProject

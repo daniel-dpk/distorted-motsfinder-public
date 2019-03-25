@@ -2,6 +2,8 @@ var searchData=
 [
   ['eigenvalues',['eigenvalues',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a280cc9d8aeddcb741338cfc65fe9cf52',1,'motsfinder::ndsolve::solver::NDSolver']]],
   ['embedexpression2d',['EmbedExpression2D',['../classmotsfinder_1_1exprs_1_1basics_1_1EmbedExpression2D.html',1,'motsfinder::exprs::basics']]],
+  ['empty_5fmat',['empty_mat',['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html#a0fde62964a27d4bebb856c21ad6f23d9',1,'motsfinder::metric::discrete::discretize::DiscretizedMetric']]],
+  ['end_5fslice',['end_slice',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#ac96f43fbbc3485f75a915f1c0a418b5a',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
   ['ends_5fblock',['ends_block',['../classfix__doxypypy_1_1DoxyCommentBlock.html#aefb8e5a58c23215db27cb2491c8a3162',1,'fix_doxypypy::DoxyCommentBlock']]],
   ['eps',['eps',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1__FuncVariation.html#adc2185da0dc4b67332d77d61d41d56c5',1,'motsfinder.axisym.curve.expcalc._FuncVariation.eps()'],['../classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a197d24dea5c9e6562d698672aeca0c2d',1,'motsfinder.exprs.basics.DivisionExpression2D.eps()']]],
   ['eval_5fsym_5faxisym_5fmatrix',['eval_sym_axisym_matrix',['../namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a6d9c2fdff2dd4e11eb2d4dbaf9886c43',1,'motsfinder::metric::discrete::numerical']]],

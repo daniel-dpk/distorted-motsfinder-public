@@ -268,7 +268,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">auto_resolution</td><td>Boolean indicating whether the resolution should be increased if insufficient resolution is detected. Default: <code>True</code>. </td></tr>
     <tr><td class="paramname">max_resolution</td><td>Maximum resolution to increase to. Failure to converge at this resolution will terminate the search. Default: <code>1000</code>. </td></tr>
     <tr><td class="paramname">linear_regime_threshold</td><td>Float indicating the absolute (see <code>atol</code>) expansion below which we take full Newton steps to accelerate convergence. Default is <code>1e-2</code>. </td></tr>
-    <tr><td class="paramname">mat_solver</td><td>(string, optional) Matrix solver method to use. Default is <code>'scipy.solve'</code>, which is a fast solver with floating point accuracy. See <code>ndsolve</code> for more information. </td></tr>
+    <tr><td class="paramname">mat_solver</td><td>(string, optional) Matrix solver method to use. Default is <code>'scipy.solve'</code>, which is a fast solver with floating point accuracy. See ..<a class="el" href="namespacemotsfinder_1_1ndsolve_1_1solver.html#aa9b143582d20b970c4f3001cad8fa3b5" title="Numerically solve a linear differential equation. ">ndsolve.solver.ndsolve()</a> for more information. </td></tr>
     <tr><td class="paramname">fake_steps</td><td>Number of additional steps taken when the solution has converged at the collocation points but not yet between them. After these steps, the resolution is increased (or the search terminated). </td></tr>
     <tr><td class="paramname">plot_steps</td><td>(boolean, optional) Whether to plot each Newton step. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">reference_curves</td><td>(iterable, optional) Iterable of <code>(curve, options)</code> pairs to be plotted together with each step for comparison. The options part should either be a label string or a <code>dict</code> with options to be passed to <code>plot_curve</code>. </td></tr>
@@ -276,7 +276,7 @@ Functions</h2></td></tr>
     <tr><td class="paramname">verbose</td><td>Whether to print status information during the Newton search. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">disp</td><td>Whether to raise <a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html" title="Base for exceptions indicating failed convergence of Newton steps. ">NoConvergence</a> (or subclasses) when the desired tolerance could not be reached in the number of steps or resolution. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">parallel</td><td>Whether to evaluate the equation using multiple processes in parallel. If <code>True</code>, uses all available threads. If an integer, uses that many threads. Default is <code>False</code>, i.e. don't compute in parallel. </td></tr>
-    <tr><td class="paramname">**kw</td><td>Remaining keyword arguments are set as attributes on the solver object. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Remaining keyword arguments are set as attributes on the solver object. They are documented as public class attributes of <a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html" title="Class implementing the Newton-Kantorovich steps. ">NewtonKantorovich</a>. </td></tr>
   </table>
   </dd>
 </dl>

@@ -4,7 +4,7 @@ Base classes for implementations of different metrics.
 
 These base classes implement some of the functionality any metric needs to
 provide such as computing Christoffel symbols. Child classes may override some
-of these (notably computing the derivatives) for better accuracy/perfomance.
+of these for better accuracy/perfomance.
 
 Good examples of implementations are the analytical metrics in
 motsfinder.metric.analytical.
@@ -248,13 +248,17 @@ class _ThreeMetric(_GeneralMetric):
         return None
 
     def get_lapse(self):
+        r"""Return the lapse function on the slice."""
         return None
 
     def get_shift(self):
+        r"""Return the shift vector field on the slice."""
         return None
 
     def get_dtlapse(self):
+        r"""Return the time derivative of lapse."""
         return None
 
     def get_dtshift(self):
+        r"""Return the time derivative of shift."""
         return None

@@ -4,6 +4,31 @@ Helpers to create discrete versions of (\eg analytical) metrics.
 
 These can be used to compare results obtained with analytically implemented
 metrics with those of the discrete metric classes.
+
+@b Examples
+
+```
+    # Use a simple Brill-Lindquist metric as example here.
+    m1 = 0.2; m2 = 0.8; d = 0.6
+    gBL = BrillLindquistMetric(d=d, m1=m1, m2=m2)
+
+    # This creates the discrete version of it.
+    res = 128; radius = 2
+    g = DiscretizedMetric(
+        patch=DiscretizedMetric.construct_patch(res=res, radius=radius),
+        metric=gBL,
+        curv=gBL.get_curv(), # not needed here as gBL is time symmetric
+    )
+
+    # To demonstrate that this metric can be used as usual, we find the four
+    # MOTSs in it.
+    h = InitHelper(
+        metric=g,
+        out_base="some/output/folder_res%s" % res,
+        suffix="discrete",
+    )
+    curves = h.find_four_MOTSs(m1=m1, m2=m2, d=d, plot=True)
+```
 """
 
 import numpy as np
@@ -21,7 +46,20 @@ __all__ = [
 
 
 class _ScalarField(DiscreteScalarField):
+    r"""Axisymmetric discrete scalar field created from a scalar function.
+
+    This samples a (e.g. analytical) function on a grid to create a discrete
+    version of it.
+
+    The grid is defined by the configuration of the metric this field is
+    associated with.
+    """
+
     def __init__(self, metric, func):
+        r"""Create a scalar field from the given function.
+
+        The `metric` defines the discretization (i.e. resolution, domain).
+        """
         super(_ScalarField, self).__init__(metric)
         self.__func = func
 
@@ -36,7 +74,23 @@ class _ScalarField(DiscreteScalarField):
 
 
 class _VectorField(DiscreteVectorField):
+    r"""Axisymmetric discrete vector field created from a vector-valued function.
+
+    This samples a (e.g. analytical) function on a grid to create a discrete
+    version of it.
+
+    The grid is defined by the configuration of the metric this field is
+    associated with.
+    """
+
     def __init__(self, metric, func):
+        r"""Create a vector field from the given function.
+
+        The `metric` defines the discretization (i.e. resolution, domain).
+
+        `func` should be a callable returning three floats: the x-, y-, and
+        z-components of the vector.
+        """
         super(_VectorField, self).__init__(metric)
         self.__func = func
 
@@ -58,7 +112,22 @@ class _VectorField(DiscreteVectorField):
 
 
 class _Sym2TensorField(DiscreteSym2TensorField):
+    r"""Axisymmetric discrete tensor field created from a matrix-valued function.
+
+    This samples a (e.g. analytical) function on a grid to create a discrete
+    version of it.
+
+    The grid is defined by the configuration of the metric this field is
+    associated with.
+    """
+
     def __init__(self, metric, func):
+        r"""Create a tensor field from the given function.
+
+        The `metric` defines the discretization (i.e. resolution, domain).
+
+        `func` should be a callable returning a symmetric 3x3 matrix.
+        """
         super(_Sym2TensorField, self).__init__(metric)
         self.__func = func
 
@@ -93,8 +162,36 @@ class _Sym2TensorField(DiscreteSym2TensorField):
 
 
 class DiscretizedMetric(DiscreteMetric):
+    r"""Full discrete slice geometry generated from (analytical) functions.
+
+    This takes a 3-metric (..base._ThreeMetric) and optionally callables to
+    evaluate e.g. the extrinsic curvature and builds matrices for all the
+    different components. This allows discretization of analytical metrics to
+    e.g. compare results at different discrete resolutions.
+    """
+
     def __init__(self, patch, metric, curv=None, lapse=None, shift=None,
                  dtlapse=None, dtshift=None):
+        r"""Construct a discrete metric on a given patch.
+
+        @param patch
+            Definition of the discretization (i.e. domain, resolution). Use
+            the convenience class method construct_patch() to easily generate
+            such a patch.
+        @param metric
+            3-metric tensor field. Should be axisymmetric. A valid example is
+            ..analytical.simple.BrillLindquistMetric.
+        @param curv
+            Callable returning symmetric 3x3 matrices representing the
+            extrinsic curvature of the 3-slice embedded in spacetime.
+        @param lapse,dtlapse
+            Lapse function (scalar) and its time derivative (also scalar),
+            respectively. Both are callables returning scalar values.
+        @param shift,dtshift
+            Shift vector field and its time derivative, respectively. Both
+            callables should return 3 floats for the x-, y-, z-components of
+            the field at the specified point.
+        """
         super(DiscretizedMetric, self).__init__()
         self._patch = patch
         self._metric = _Sym2TensorField(self, metric)
@@ -106,6 +203,20 @@ class DiscretizedMetric(DiscreteMetric):
 
     @classmethod
     def construct_patch(cls, res, radius, origin=(0., 0., 0.)):
+        r"""Class method to create a patch definition from a given resolution.
+
+        This creates a patch to be used for constructing a DiscretizedMetric.
+        The domain is specified using an origin and "radius" (the domain is,
+        of course, rectangular).
+
+        @param res
+            Resolution. There will be `res` grid points per unit per axis.
+        @param radius
+            Coordinate distance from `origin` to include in the domain.
+        @param origin
+            Origin of the patch around which the radius defines the full
+            domain. Default is ``0,0,0``.
+        """
         origin = np.asarray(origin)
         origin[2] -= radius
         deltas = 1./res * np.identity(3)
@@ -117,9 +228,11 @@ class DiscretizedMetric(DiscreteMetric):
 
     @property
     def patch(self):
+        r"""Patch property used during construction."""
         return self._patch
 
     def empty_mat(self):
+        r"""Empty (zero) matrix of the correct shape for the full domain."""
         return np.zeros(shape=self.patch.shape)
 
     def all_field_objects(self):
@@ -146,6 +259,19 @@ class DiscretizedMetric(DiscreteMetric):
 
 
 def _eval(func, arg, default):
+    r"""Evaluate a function, returning a given default in case of error.
+
+    If evaluating the function succeeds, the produced value is returned. If,
+    however, a `FloatingPointError` is raised, the given default value is
+    returned instead.
+
+    @param func
+        Callable to evaluate.
+    @param arg
+        Argument to call `func` with.
+    @param default
+        Value to return in case of `FloatingPointError`.
+    """
     try:
         return func(arg)
     except FloatingPointError:

@@ -1,7 +1,12 @@
 var searchData=
 [
-  ['res_5fdecrease_5faccel',['res_decrease_accel',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aa9dd66a32356bfd71137df42be8c73a4',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
-  ['res_5fdecrease_5ffactor',['res_decrease_factor',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aaf04768a60d8ed848631d375af2804e4',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
-  ['res_5fincrease_5ffactor',['res_increase_factor',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a2a8554f9bf9e62e8ea1636d5b8fe9432',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
-  ['res_5finit_5ffactor',['res_init_factor',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#acce03bc0e27a8cc48c48c93714d1d432',1,'motsfinder::axisym::newton::NewtonKantorovich']]]
+  ['parallel',['parallel',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#adfa699c1fb198b4d5003250cd5ca3a33',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
+  ['param',['param',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a51f20d6b1b54a2eee3be0e8adc96a0ae',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
+  ['plateau_5ftol',['plateau_tol',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a6a92f506c0da628ce6c766d69de6cdd7',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
+  ['plot_5fdeltas',['plot_deltas',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a6c6f12f721ca870a1850a7dea5127053',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
+  ['plot_5fopts',['plot_opts',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#abdecb13d6086fc6b73eba15dbab5521e',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
+  ['plot_5fsteps',['plot_steps',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aaeab428f5259eaf9e99d4ad27f11d92a',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
+  ['point',['point',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a643590f4015338d12714af03d61a0ac9',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
+  ['project',['project',['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a3cda4e9d60a1bb5c721d972f6031a96d',1,'motsfinder::metric::simulation::sioproject::SioProject']]],
+  ['props',['props',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a9d1ec934f8e79ce27d917b16f0404a5d',1,'motsfinder::axisym::trackmots::MOTSTracker']]]
 ];

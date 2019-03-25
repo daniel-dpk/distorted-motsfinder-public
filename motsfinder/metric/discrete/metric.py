@@ -1,6 +1,13 @@
 r"""@package motsfinder.metric.discrete.metric
 
-Metrics interpolated from data on a grid.
+Base class for discrete metrics.
+
+The DiscreteMetric class is an abstract class implementing most of the
+functionality required for a ..base._ThreeMetric. The missing part is the
+definition of actual numerical data. There are currently two implementations
+of this abstract class, serving at the same time as examples:
+    * .discretize.DiscretizedMetric
+    * ..simulation.siometric.SioMetric
 """
 
 from abc import ABCMeta, abstractmethod
@@ -19,7 +26,33 @@ __all__ = [
 
 @add_metaclass(ABCMeta)
 class DiscreteMetric(_ThreeMetric):
+    r"""Base class for discrete axisymmetric metrics.
+
+    This subclass of ..base._ThreeMetric implements the memory management of
+    numerical data for a metric and other fields defining the geometry and
+    embedding of the slice into spacetime.
+
+    Subclasses should implement:
+        * _get_metric() - constructing the metric as a .tensors.DiscreteSym2TensorField
+        * all_field_objects() - return all fields as a list
+
+    The reason to have the latter of the two is to allow metrics that don't
+    supply a lapse and/or shift field but still have an easy way to keep track
+    of all fields (for caching and memory management purposes).
+
+    Optionally, subclasses may implement:
+        * get_curv() - extrinsic curvature (.tensors.DiscreteSym2TensorField)
+        * get_lapse() - lapse function (.tensors.DiscreteScalarField)
+        * get_shift() - lapse function (.tensors.DiscreteVectorField)
+        * get_dtlapse() - (.tensors.DiscreteScalarField)
+        * get_dtshift() - (.tensors.DiscreteVectorField)
+
+    If all of these are supplied, then the full 4-metric can be evaluated on
+    the slice.
+    """
+
     def __init__(self):
+        r"""This base constructor initializes the properties."""
         super(DiscreteMetric, self).__init__()
         ## Whether Lagrange interpolation should be done.
         self._interpolate = True
@@ -32,10 +65,24 @@ class DiscreteMetric(_ThreeMetric):
 
     @abstractmethod
     def _get_metric(self):
+        r"""Abstract method to create/load numerical metric data.
+
+        This method should return a .tensors.DiscreteSym2TensorField built
+        from the component matrices of the metric. It is called only once
+        (lazily) and the object is *not* destroyed even when calling
+        unload_data(). Instead, the field's unload_data() method is called.
+
+        This method is the hook for subclasses to implement their method of
+        generating/loading the numerical data.
+        """
         pass
 
     @abstractmethod
     def all_field_objects(self):
+        r"""Abstract method supplying all defined field objects as a list.
+
+        See .discretize.DiscretizedMetric for a simple example.
+        """
         pass
 
     def __getstate__(self):
@@ -46,6 +93,14 @@ class DiscreteMetric(_ThreeMetric):
 
     @property
     def field(self):
+        r"""Field attribute containing the actual field object.
+
+        The object is lazily loaded (i.e. on first access) and kept as
+        instance attribute. Note that this access does not imply that data is
+        loaded or generated. This is handled by the field object itself.
+
+        The result is a .tensors.DiscreteSym2TensorField.
+        """
         if self._metric_field is None:
             self._metric_field = self._get_metric()
         return self._metric_field
@@ -66,6 +121,14 @@ class DiscreteMetric(_ThreeMetric):
 
     @property
     def save_full_data(self):
+        r"""Read/write property specifying whether the full grid data should
+        be stored.
+
+        This is `False` by default. If set to `True` instead, saving this
+        object (or more generally "pickling" it) will include the numerical
+        data on the full grid. For large slice data, this will basically store
+        the full slice.
+        """
         return self._save_full_data
     @save_full_data.setter
     def save_full_data(self, value):
@@ -85,7 +148,7 @@ class DiscreteMetric(_ThreeMetric):
             `False` (default) and such a file exists, a `RuntimeError` is
             raised.
         @param verbose
-            Whether to print a message upon success.
+            Whether to print a message upon success. Default is `True`.
         """
         prev_value = self.save_full_data
         try:
@@ -103,7 +166,7 @@ class DiscreteMetric(_ThreeMetric):
 
     @staticmethod
     def load(filename):
-        r"""Static function to load an expression object from disk."""
+        r"""Static function to load a metric from disk."""
         metric = load_from_file(filename)
         metric.save_full_data = metric.__dict__.pop(
             '_prev_save_full_data', False
@@ -183,6 +246,12 @@ class DiscreteMetric(_ThreeMetric):
         return point
 
     def load_data(self, *which):
+        r"""Load/generate the full numerical data.
+
+        Without arguments, all fields are loaded to memory. If one or more
+        arguments are given, only those fields are loaded. Possible arguments
+        are: ``metric, curv, lapse, shift, dtlapse, dtshift``.
+        """
         if len(which) > 1:
             for field_name in which:
                 self.load_data(field_name)
@@ -210,25 +279,36 @@ class DiscreteMetric(_ThreeMetric):
             raise ValueError("Unknown field: %s" % field_name)
 
     def unload_data(self):
+        r"""Free memory from all numerical field matrix data."""
         for field in self.all_field_objects():
             if field:
                 field.unload_data()
         self.reset_cache()
 
     def release_file_handle(self):
+        r"""Convenience method to signal child classes they should release any file handles.
+
+        This does nothing by default. Subclasses may implement this method to
+        free access to any files currently opened by this class. It may be
+        called by users of this class in case they deem file access to be
+        finished (e.g. after loading all required data).
+        """
         pass
 
     def reset_cache(self):
+        r"""Reset the cache of all fields."""
         for field in self.all_field_objects():
             if field:
                 field.reset_cache()
 
     def grid(self, xz_plane=True, ghost=0, full_output=False):
+        r"""Convenience method delegating to .patch.DataPatch.grid()."""
         return self.field.components[0].grid(
             xz_plane=xz_plane, ghost=ghost, full_output=full_output
         )
 
     def snap_to_grid(self, point):
+        r"""Convenience method delegating to .patch.DataPatch.snap_to_grid()."""
         return self.field.components[0].snap_to_grid(point)
 
     @property
