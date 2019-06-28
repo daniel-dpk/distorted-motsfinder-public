@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['offsetexpression',['OffsetExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1OffsetExpression.html',1,'motsfinder::exprs::basics']]],
+  ['optimize_5fbipolar_5fscaling',['optimize_bipolar_scaling',['../namespacemotsfinder_1_1axisym_1_1trackmots.html#a2670272f6854daf98f8a96767308fbec',1,'motsfinder::axisym::trackmots']]],
   ['opts',['opts',['../classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#aa17b9f50d41f0a8e95659986136435dd',1,'motsfinder::axisym::initialguess::InitHelper']]],
   ['origin',['origin',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html#a06dbc3a3eb5aaab80edf32ea607f1ef3',1,'motsfinder.metric.discrete.patch.GridPatch.origin()'],['../classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html#a5f8def1066f74d0ef60d91104c152463',1,'motsfinder.axisym.curve.starshapedcurve.StarShapedCurve.origin()']]],
   ['out_5fbase',['out_base',['../classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a7e73eb5b8a2ab0624e00d77024d0d04e',1,'motsfinder::axisym::initialguess::InitHelper']]],

@@ -217,12 +217,17 @@ class DiscretizedMetric(DiscreteMetric):
             Origin of the patch around which the radius defines the full
             domain. Default is ``0,0,0``.
         """
-        origin = np.asarray(origin)
+        origin = np.array(origin) # make a copy to not mutate input
+        xmin = max(0., origin[0] - radius)
+        xmax = origin[0] + radius
+        origin[0] = xmin
         origin[2] -= radius
         deltas = 1./res * np.identity(3)
         box = BBox(
             lower=[0, 0, 0],
-            upper=[int(round(res*radius))+1, 1, int(round(2*res*radius))+1],
+            upper=[int(round(res*(xmax-xmin)))+1,
+                   1,
+                   int(round(2*res*radius))+1],
         )
         return GridPatch(origin=origin, deltas=deltas, box=box)
 
@@ -274,5 +279,5 @@ def _eval(func, arg, default):
     """
     try:
         return func(arg)
-    except FloatingPointError:
+    except (FloatingPointError, ZeroDivisionError):
         return default

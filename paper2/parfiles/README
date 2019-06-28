@@ -116,3 +116,59 @@ par_m_minus = 0.8   # mass of m- puncture
 R_max = 10.0        # outer boundary
 T_max = 4.75        # simulation end time
 T_fine = 3.75       # begin of fine output
+
+
+
+9. brill-lindquist-9-res256.par
+
+Same *irreducible* mass ratio as BL-3 and same *proper* distance as BL-6
+
+par_b = 0.40480421586           # half separation
+par_m_minus = 0.814259649085    # mass of m+ puncture
+par_m_plus = 0.485740350915     # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 5.0         # simulation end time
+T_fine = 4.0        # begin of fine output
+
+
+
+12. brill-lindquist-12-res120.par
+
+Same *irreducible* mass ratio as BL-6 and same *proper* distance as BL-3
+
+par_b = 0.595933579113          # half separation
+par_m_minus = 0.786563860005    # mass of m+ puncture
+par_m_plus = 0.513436139995     # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 5.75        # simulation end time
+T_fine = 4.75       # begin of fine output
+
+
+
+13. brill-lindquist-13-res120.par
+
+Same *irreducible* mass ratio as BL-2 and same *proper* distance as BL-3
+
+par_b = 0.598236268531          # half separation
+par_m_minus = 0.794325971775    # mass of m+ puncture
+par_m_plus = 0.505674028225     # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 5.75        # simulation end time
+T_fine = 4.75       # begin of fine output
+
+
+
+14. brill-lindquist-14-res256.par
+
+Between BL-2 and BL-3, i.e. coordinate distance d=1.1
+
+par_b = 0.55        # half separation
+par_m_minus = 0.8   # mass of m+ puncture
+par_m_plus = 0.5    # mass of m- puncture
+
+R_max = 10.0        # outer boundary
+T_max = 5.25        # simulation end time
+T_fine = 4.25       # begin of fine output

@@ -100,10 +100,12 @@ Inheritance diagram for BaseCurve:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve__inherit__graph.png" border="0" usemap="#BaseCurve_inherit__map" alt="Inheritance graph"/></div>
 <map name="BaseCurve_inherit__map" id="BaseCurve_inherit__map">
-<area shape="rect" id="node3" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion. " alt="" coords="76,155,195,181"/>
-<area shape="rect" id="node6" href="classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x&#45;z&#45;plane. " alt="" coords="219,155,339,181"/>
-<area shape="rect" id="node4" href="classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html" title="Represent a curve as offset function relative to another curve. " alt="" coords="5,229,121,256"/>
-<area shape="rect" id="node5" href="classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html" title="Represent as angle&#45;dependent distance from some origin. " alt="" coords="146,229,271,256"/>
+<area shape="rect" id="node3" href="classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html" title="Base class for parametric curves in the x&#45;z&#45;plane. " alt="" coords="108,155,259,181"/>
+<area shape="rect" id="node6" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion. " alt="" coords="283,155,401,181"/>
+<area shape="rect" id="node4" href="classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html" title="Parametric curve in bipolar coordinates. " alt="" coords="5,229,103,256"/>
+<area shape="rect" id="node5" href="classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x&#45;z&#45;plane. " alt="" coords="127,229,247,256"/>
+<area shape="rect" id="node7" href="classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html" title="Represent a curve as offset function relative to another curve. " alt="" coords="280,229,396,256"/>
+<area shape="rect" id="node8" href="classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html" title="Represent as angle&#45;dependent distance from some origin. " alt="" coords="421,229,546,256"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -145,6 +147,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (self, value)
 <tr class="memitem:a6174ee487da3aeeb80f401bac6659a5b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a6174ee487da3aeeb80f401bac6659a5b">force_evaluator_update</a> (self)</td></tr>
 <tr class="memdesc:a6174ee487da3aeeb80f401bac6659a5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force all cached evaluators to be refreshed.  <a href="#a6174ee487da3aeeb80f401bac6659a5b">More...</a><br /></td></tr>
 <tr class="separator:a6174ee487da3aeeb80f401bac6659a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebf6261b742ae694c16790726a8c77c5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#aebf6261b742ae694c16790726a8c77c5">copy</a> (self)</td></tr>
+<tr class="memdesc:aebf6261b742ae694c16790726a8c77c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an independent copy of this curve.  <a href="#aebf6261b742ae694c16790726a8c77c5">More...</a><br /></td></tr>
+<tr class="separator:aebf6261b742ae694c16790726a8c77c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac216f7b7ba5435436bdb601aebe7b284"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac216f7b7ba5435436bdb601aebe7b284">__call__</a> (self, param, xyz=False)</td></tr>
 <tr class="memdesc:ac216f7b7ba5435436bdb601aebe7b284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate the curve at a particular parameter value.  <a href="#ac216f7b7ba5435436bdb601aebe7b284">More...</a><br /></td></tr>
 <tr class="separator:ac216f7b7ba5435436bdb601aebe7b284"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,6 +174,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (self, value)
 <tr class="memitem:a0bf941a618b577b673e4d897bca584d7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0bf941a618b577b673e4d897bca584d7">arc_length_using_metric</a> (self, metric, a=0, b=np.pi, atol=1e-12, rtol=1e-12, limit=100, full_output=False)</td></tr>
 <tr class="memdesc:a0bf941a618b577b673e4d897bca584d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the length of this curve w.r.t. a given metric.  <a href="#a0bf941a618b577b673e4d897bca584d7">More...</a><br /></td></tr>
 <tr class="separator:a0bf941a618b577b673e4d897bca584d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0947d643e386c5ab4ac57734fabfec58"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0947d643e386c5ab4ac57734fabfec58">proper_length_map</a> (self, num=None, evaluators=True, full_output=False, kw)</td></tr>
+<tr class="memdesc:a0947d643e386c5ab4ac57734fabfec58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate functions to map between curve parameter and proper length.  <a href="#a0947d643e386c5ab4ac57734fabfec58">More...</a><br /></td></tr>
+<tr class="separator:a0947d643e386c5ab4ac57734fabfec58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2053028a7c722407c3e0156724d8969"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ad2053028a7c722407c3e0156724d8969">z_distance</a> (self, other_curve=None, atol=1e-12, rtol=1e-12, limit=100, allow_intersection=False, full_output=False)</td></tr>
 <tr class="memdesc:ad2053028a7c722407c3e0156724d8969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the z-distance to another curve or the origin.  <a href="#ad2053028a7c722407c3e0156724d8969">More...</a><br /></td></tr>
 <tr class="separator:ad2053028a7c722407c3e0156724d8969"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -252,6 +260,7 @@ Private Attributes</h2></td></tr>
 <p>Curves are expected to require one or more numeric expressions for their internal representation, which themselves need to be converted to evaluators before being usable. The extra step of converting expressions to evaluators can (and should) be avoided in case the underlying expression does not change. This is easily accomplished with the mechanisms for "freezing" evaluators provided by this base class. To utilize this mechanism, make sure your subclass provides all required evaluators in its <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#af3056926ad0964c2b80f97a192ad8c89" title="Return evaluator(s) of any internal numeric expressions. ">_create_evaluators()</a> implementation and also uses evaluators only by calling <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a75b8e6492987bf60783852923929d88b" title="Provide new or cached evaluators for any used expression object. ">_get_evaluators()</a>.</p>
 <p>To temporarily freeze evaluators to their current state, use the <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a6386ff53ecf46bc525a3cb16448ae413" title="Context to temporarily fix the evaluator(s) of used expressions. ">fix_evaluator()</a> context, e.g.:</p>
 <div class="fragment"><div class="line">with curve.fix_evaluator():</div><div class="line">    <span class="keywordflow">for</span> p <span class="keywordflow">in</span> np.linspace(0, np.pi, 1000):</div><div class="line">        do_sth(curve(p))</div></div><!-- fragment --><p>Subclasses need to implement the following functions:</p><ul>
+<li><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#aebf6261b742ae694c16790726a8c77c5" title="Create an independent copy of this curve. ">copy()</a> to create an independent copy of the curve</li>
 <li><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#af3056926ad0964c2b80f97a192ad8c89" title="Return evaluator(s) of any internal numeric expressions. ">_create_evaluators()</a> to create one or more evaluators for any internally stored numeric expressions. This is part of the evaluator caching mechanism.</li>
 <li><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac216f7b7ba5435436bdb601aebe7b284" title="Evaluate the curve at a particular parameter value. ">__call__()</a> to evaluate the curve at a given parameter value. This returns the position (in x-z-coordinates) of the point on the curve.</li>
 <li><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0bcc7b9887b6e05b97146156b8624643" title="Compute the derivatives of the x and z component functions. ">_diff()</a> returning the derivative of the two component functions.</li>
@@ -839,6 +848,26 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the collocation points of the current curve representation. </p>
+
+</div>
+</div>
+<a id="aebf6261b742ae694c16790726a8c77c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebf6261b742ae694c16790726a8c77c5">&#9670;&nbsp;</a></span>copy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def copy </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an independent copy of this curve. </p>
 
 </div>
 </div>
@@ -1431,6 +1460,66 @@ Private Attributes</h2></td></tr>
 
 <p>Return the coordinate distances of points along the curve. </p>
 <p>For <code>N</code> parameter values given as <code>params</code>, the result will be <code>N-1</code> distances. </p>
+
+</div>
+</div>
+<a id="a0947d643e386c5ab4ac57734fabfec58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0947d643e386c5ab4ac57734fabfec58">&#9670;&nbsp;</a></span>proper_length_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def proper_length_map </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>num</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>evaluators</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generate functions to map between curve parameter and proper length. </p>
+<p>The resulting callables can be used to e.g. plot properties along the curve in terms of the curve's proper length instead of the current (seemingly) arbitrary parameterization.</p>
+<p>The first returned function <code>length_map</code> maps the parameter values to the normalized relative proper length values (i.e. scaled to <code>[0,pi]</code>). This can be used to plot quantities already computed on a grid of parameter values, e.g.: </p><div class="fragment"><div class="line">length_map, inv_map, l0 = c.proper_length_map(full_output=<span class="keyword">True</span>)</div><div class="line">params = np.linspace(0, np.pi, 100, endpoint=<span class="keyword">False</span>)[1:]</div><div class="line">riccis = [c.ricci_scalar(la) <span class="keywordflow">for</span> la <span class="keywordflow">in</span> params]</div><div class="line"><span class="comment"># plotting w.r.t. normalized proper length</span></div><div class="line">plot_data(</div><div class="line">    [length_map(la) <span class="keywordflow">for</span> la <span class="keywordflow">in</span> params], riccis,</div><div class="line">    xlabel=<span class="stringliteral">r&quot;$\bar \lambda$&quot;</span>, ylabel=<span class="stringliteral">r&quot;$\mathcal{R}$&quot;</span>,</div><div class="line">)</div><div class="line"><span class="comment"># plotting w.r.t. actual proper length</span></div><div class="line">plot_data(</div><div class="line">    [length_map(la)*l0 <span class="keywordflow">for</span> la <span class="keywordflow">in</span> params], riccis,</div><div class="line">    xlabel=<span class="stringliteral">r&quot;proper length&quot;</span>, ylabel=<span class="stringliteral">r&quot;$\mathcal{R}$&quot;</span>,</div><div class="line">)</div></div><!-- fragment --><p>The second function converts normalized proper lengths to parameter values, i.e. it can be used to plot curve properties not already computed: </p><div class="fragment"><div class="line">length_map, inv_map = c.proper_length_map()</div><div class="line">plot_1d(</div><div class="line">    f=<span class="keyword">lambda</span> x: c.ricci_scalar(inv_map(x)),</div><div class="line">    domain=(0, np.pi), value_pad=1e-6, points=100,</div><div class="line">    xlabel=<span class="stringliteral">r&quot;$\bar \lambda$&quot;</span>, ylabel=<span class="stringliteral">r&quot;$\mathcal{R}$&quot;</span>,</div><div class="line">)</div></div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>Two callables <code>length_map</code> and <code>inv_map</code>. If <code>full_output==True</code>, also returns the full (i.e. not normalized) proper length.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num</td><td>Number of points to sample the proper length at for building an approximation function. Defaults to the current curve resolution. </td></tr>
+    <tr><td class="paramname">evaluators</td><td>If <code>True</code> (default), return the callables instead of the interpolant objects. </td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the proper length as third return value. Default is <code>False</code>. </td></tr>
+    <tr><td class="paramname">metric</td><td>(Extracted from <code>**kw</code>) The metric to use for computation. If set to <code>None</code>, uses coordinate space arc length instead of actual proper length. Default is to use the current curve's metric. The flat metric is used in case the curve is a pure coordinate curve (e.g. <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x-z-plane. ">parametriccurve.ParametricCurve</a>). </td></tr>
+    <tr><td class="paramname">**kw</td><td>Further arguments are passed to <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0bf941a618b577b673e4d897bca584d7" title="Compute the length of this curve w.r.t. a given metric. ">arc_length_using_metric()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,10 +1,12 @@
 <map id="_ThreeMetric" name="_ThreeMetric">
-<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="138,229,295,256"/>
-<area shape="rect" id="node7" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html" title="Flat 3&#45;metric in Cartesian coordinates. " alt="" coords="320,229,433,256"/>
-<area shape="rect" id="node8" href="$classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html" title="Base class for discrete axisymmetric metrics. " alt="" coords="458,229,565,256"/>
-<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature). " alt="" coords="321,80,432,107"/>
-<area shape="rect" id="node5" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="5,304,137,331"/>
-<area shape="rect" id="node6" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="161,304,333,331"/>
-<area shape="rect" id="node9" href="$classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html" title="Full discrete slice geometry generated from (analytical) functions. " alt="" coords="419,304,543,331"/>
-<area shape="rect" id="node10" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html" title="Axisymmetric Riemannian 3&#45;metric of a slice read from simulation data. " alt="" coords="567,304,645,331"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html" title="Data for a slice of Schwarzschild spacetime in Kerr&#45;Schild coordinates. " alt="" coords="417,5,572,32"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="416,56,573,83"/>
+<area shape="rect" id="node8" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html" title="Flat 3&#45;metric in Cartesian coordinates. " alt="" coords="438,107,551,133"/>
+<area shape="rect" id="node9" href="$classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html" title="TransformedMetric" alt="" coords="429,157,560,184"/>
+<area shape="rect" id="node10" href="$classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html" title="Base class for discrete axisymmetric metrics. " alt="" coords="441,208,548,235"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature). " alt="" coords="111,107,221,133"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="641,44,773,71"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="621,95,793,121"/>
+<area shape="rect" id="node11" href="$classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html" title="Full discrete slice geometry generated from (analytical) functions. " alt="" coords="645,171,769,197"/>
+<area shape="rect" id="node12" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html" title="Axisymmetric Riemannian 3&#45;metric of a slice read from simulation data. " alt="" coords="669,221,746,248"/>
 </map>

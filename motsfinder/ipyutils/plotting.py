@@ -5,6 +5,7 @@ Helper functions for more convenient plotting.
 
 
 from __future__ import print_function
+from itertools import zip_longest
 import os
 import os.path as op
 import copy
@@ -454,8 +455,8 @@ def plot_polar(f, origin=(0, 0), points=500, l='-k', pi_symmetry=False,
 
 def plot_mat(mat, figsize=(5, 4), colorbar=True, cmap=cm.jet, vmin=None,
              vmax=None, absolute=False, log10=False, normalize=False,
-             offset=0, bad_color=None, plot_kw=None, show=True, close=False,
-             **kw):
+             offset=0, bad_color=None, is_img=False, plot_kw=None, show=True,
+             close=False, **kw):
     r"""Visualize a matrix using a colored rectangle.
 
     Parameters not described here are described in plot_data() or plot_1d().
@@ -486,6 +487,9 @@ def plot_mat(mat, figsize=(5, 4), colorbar=True, cmap=cm.jet, vmin=None,
         make the plot more readable.
     @param bad_color
         Color to use for NaNs in the data.
+    @param is_img
+        If `True`, use `imshow()` instead of `matshow()` for plotting. This
+        affects the placement of axes labels. Default is `False`.
     @param plot_kw
         Dictionary of arguments to pass to the `ax.matshow()` function.
     """
@@ -511,7 +515,11 @@ def plot_mat(mat, figsize=(5, 4), colorbar=True, cmap=cm.jet, vmin=None,
             bad_color = [bad_color]
         cmap.set_bad(*bad_color)
     with plot_ctx(figsize=figsize, show=show, close=close, **kw) as ax:
-        img = ax.matshow(mat, cmap=cmap, vmin=vmin, vmax=vmax, **plot_kw)
+        opts = dict(cmap=cmap, vmin=vmin, vmax=vmax, **plot_kw)
+        if is_img:
+            img = ax.imshow(mat, **opts)
+        else:
+            img = ax.matshow(mat, **opts)
         if colorbar:
             opts = colorbar if isinstance(colorbar, dict) else dict()
             ax.figure.colorbar(img, **insert_missing(opts, ax=ax))
@@ -665,7 +673,8 @@ def video_from_folder(*folders, ext='png', filter_cb=None, **kw):
 
 def video_from_images(image_files, fps=5, callback=None, reverse=False,
                       dpi=72, interpolation=None, repeat_first=0,
-                      repeat_last=0, save=None):
+                      repeat_last=0, save=None, repetitions=None, crop=None,
+                      snap_first=False):
     r"""Display a movie from a sequence of images.
 
     This renders the given images into a video to view inside the Jupyter
@@ -697,6 +706,15 @@ def video_from_images(image_files, fps=5, callback=None, reverse=False,
         Default is `0`.
     @param save
         Optional filename for storing the resulting video.
+    @param repetitions
+        How often to repeat individual images. Should be a sequence of
+        integers corresponding to the individual images. Missing elements are
+        taken to be 1.
+    @param crop
+        4-tuple with the amount of cropping (in pixel) in order (left, botton,
+        right, top).
+    @param snap_first
+        If `True`, save a snapshot of the first frame.
     """
     from IPython.display import HTML
     from matplotlib.animation import FuncAnimation
@@ -704,11 +722,27 @@ def video_from_images(image_files, fps=5, callback=None, reverse=False,
         raise ValueError("No images specified.")
     if reverse:
         image_files = list(reversed(image_files))
+    if repetitions is not None:
+        repeated = []
+        for img, rep in zip_longest(image_files, repetitions, fillvalue=1):
+            if img == 1:
+                break
+            repeated.extend([img] * rep)
+        image_files = repeated
     ax, image_ctrl = plot_image(image_files[0], dpi=dpi, show=False,
-                                animated=True, interpolation=interpolation)
+                                animated=True, interpolation=interpolation,
+                                crop=crop)
+    if snap_first and save:
+        fname = op.expanduser(save)
+        if fname.endswith(".mp4"):
+            fname = "%s.png" % fname[:-4]
+        os.makedirs(op.normpath(op.dirname(fname)), exist_ok=True)
+        ax.figure.savefig(fname)
     def update(i):
         idx = clip(i-repeat_first, 0, len(image_files)-1)
         image = plt.imread(image_files[idx])
+        if crop:
+            image = _crop(image, *crop)
         image_ctrl.set_array(image)
         if callback:
             callback(i, ax, image_ctrl)
@@ -726,7 +760,7 @@ def video_from_images(image_files, fps=5, callback=None, reverse=False,
     return HTML(v)
 
 
-def plot_image(image_file, dpi=72, show=True, **kw):
+def plot_image(image_file, dpi=72, show=True, crop=None, **kw):
     r"""Plot a single image file into the notebook.
 
     @param image_file
@@ -738,6 +772,9 @@ def plot_image(image_file, dpi=72, show=True, **kw):
     @param show (boolean, optional)
         Whether to conclude by showing the figure (default). If `False`,
         returns the axis and image objects.
+    @param crop
+        4-tuple with the amount of cropping (in pixel) in order (left, botton,
+        right, top).
     @param **kw
         Extra arguments passed to `ax.imshow()`. May e.g. contain
         interpolation or animation arguments.
@@ -746,6 +783,8 @@ def plot_image(image_file, dpi=72, show=True, **kw):
         image objects.
     """
     image = plt.imread(image_file)
+    if crop:
+        image = _crop(image, *crop)
     h, w, _ = image.shape
     fig = plt.figure(figsize=(float(w)/dpi, float(h)/dpi))
     ax = fig.add_axes([0, 0, 1, 1])
@@ -754,6 +793,14 @@ def plot_image(image_file, dpi=72, show=True, **kw):
     if not show:
         return ax, image_ctrl
     plt.show()
+
+
+def _crop(image, left, bottom, right, top):
+    h, w, _ = image.shape
+    return image[
+        top:h-bottom,
+        left:w-right
+    ]
 
 
 def add_two_colorbars(ax, values1, cmap1, values2, cmap2, fraction1=(0, 1),

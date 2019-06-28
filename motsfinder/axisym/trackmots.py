@@ -68,18 +68,33 @@ import re
 import time
 
 import numpy as np
+from scipy.interpolate import lagrange
 
 from ..utils import timethis, find_file, find_files
-from ..numutils import inf_norm1d
+from ..numutils import inf_norm1d, clip, IntegrationResults
+from ..numutils import try_quad_tolerances
 from ..metric.simulation import SioMetric
-from .curve import BaseCurve, ParametricCurve
+from .curve import BaseCurve, ParametricCurve, BipolarCurve, RefParamCurve
 from .findmots import GeneralMotsConfig, find_mots
 
 
 __all__ = [
     "track_mots",
+    "MOTSTracker",
     "compute_props",
+    "find_slices",
 ]
+
+
+# Valid properties to compute.
+ALL_PROPS = (None, 'none', 'all', 'length_maps', 'constraints', 'ingoing_exp',
+             'avg_ingoing_exp', 'area', 'ricci', 'mean_curv', 'curv2',
+             'stability', 'stability_convergence', 'neck', 'dist_top_bot',
+             'z_dist_top_inner', 'z_dist_bot_inner', 'signature',
+             'point_dists', 'area_parts', 'multipoles')
+
+# Of the above, those not included in 'all'.
+NEED_ACTIVATION_PROPS = ('stability_convergence',)
 
 
 def track_mots(hname, sim_dir, out_base_dir, folder, initial_guess,
@@ -260,10 +275,20 @@ class MOTSTracker():
         ## Number of *slices* to advance in each step (considers only the
         ## actual files, not the slices' iteration numbers).
         self.initial_stride = 1
+        ## Trial counter to start with.\ The trial number is set to 1 by
+        ## default and increased when a step fails and the stride is
+        ## reduced.\ Using an initial value other than one may be useful for
+        ## computing properties for slices without considering previous steps
+        ## where the trial number had been increased.
+        self.initial_try_count = None
         ## Whether to go through slices forward in coordinate time (going back
         ## may be useful if the AH is initially found at a later slice and we
         ## want to check where it appeared).
         self.backwards = False
+        ## Whether to skip the first slice when going in backwards
+        ## direction.\ This makes sense when starting both, a forward and a
+        ## backwards tracker, so that the starting slice is not done twice.
+        self.backwards_skip_first = True
         ## In case of a *property run*, wait that many seconds for results of
         ## a parallel *finding run* to appear before retrying.
         self.retry_after = None
@@ -279,6 +304,12 @@ class MOTSTracker():
         ## will result in integration warnings being produced and possibly
         ## underestimated residual errors.
         self.area_rtol = 1e-6
+        ## Minimum number of stability eigenvalues to compute.\ Default is `30`.
+        self.min_stability_values = 30
+        ## Factors by which to multiply the curve resolution to
+        ## compute convergence of the stability spectrum.\ Default is
+        ## ``(0.2, 0.4, 0.6, 0.8, 0.9, 1.1)``.
+        self.stability_convergence_factors = (0.2, 0.4, 0.6, 0.8, 0.9, 1.1)
         ## Strategy for finding MOTS in each step.\ Controls mainly the
         ## *preset* of .findmots.GeneralMotsConfig.preset() by indicating just
         ## the suffix number of the various ``discrete*`` presets.\ As
@@ -296,6 +327,29 @@ class MOTSTracker():
         ## uses the setting from the preset (if not overridden by specifying
         ## e.g.\ the `num` parameter).
         self.initial_num = None
+        ## If `True`, use the resolution of the previous curve to start the
+        ## search (default).\ If `False` and an `initial_num` is given, that
+        ## resolution is used instead.\ Note that this is independent of any
+        ## dynamic resolution determined by e.g.\ the plateau detection.
+        self.follow_resolution = True
+        ## If `True` (default), use the smoothing factor for the ``'curv2'``
+        ## reparameterization strategy optimized for the previous MOTS.\ If
+        ## `False` and `ref_smoothing` is specified, that value is used
+        ## instead.\ Has no effect if `ref_smoothing` is not specified, as we
+        ## then follow unconditionally.\ Note that this smoothing factor
+        ## optimization is currently only available together with bipolar
+        ## coordinates.
+        self.follow_curv2_smoothing = True
+        ## If `True` (default), use the optimal bipolar scaling determined for
+        ## the previous MOTS.\ If `False` and a `bipolar_kw` is specified and
+        ## contains a ``'scale'`` key, that value is used instead.\ Has no
+        ## effect if ``'scale'`` is not specified, as we then follow
+        ## unconditionally.
+        self.follow_bipolar_scaling = True
+        ## If `True`, move the origin of the bipolar coordinate system to the
+        ## center between the lower end of the top and upper end of the bottom
+        ## MOTS.
+        self.auto_bipolar_move = True
         ## Minimum resolution of the reference curve.
         self.min_ref_num = 5
         ## Factor to multiply the previous curve's resolution with to get the
@@ -317,11 +371,20 @@ class MOTSTracker():
         ## float is compared against the ratio of the smaller individual
         ## MOTS's coordinate width to the neck's coordinate width.\ The second
         ## against the ratio of coordinate distance of the two individual
-        ## MOTSs to the neck's width. If any of these two ratios lies above
+        ## MOTSs to the neck's width.\ If any of these two ratios lies above
         ## the respective threshold, the *neck trick* is performed.\ Note that
         ## an error is raised if either of the two individual MOTSs for this
         ## slice is not found.
         self.neck_trick_thresholds = (10.0, 2.0)
+        ## Kind of interpolation to perform on numerical data on a grid.\ Refer
+        ## to motsfinder.metric.discrete.patch.DataPatch.set_interpolation()
+        ## for more details.
+        self.interpolation = None
+        ## Finite difference order of accuracy for computing numerical
+        ## derivatives.\ This controls the stencil size and is currently only
+        ## used for the Hermite-type interpolations.
+        self.fd_order = None
+        self._last_neck_info = None
         self._files = None
         self._c_ref = None
         self._c_ref_prev = None
@@ -352,14 +415,19 @@ class MOTSTracker():
         if self._metrics is None:
             self._metrics = [None] * len(self.files)
         if self._metrics[i] is None:
-            g = SioMetric(self.files[i])
+            opts = dict()
+            if self.fd_order is not None:
+                opts['fd_order'] = self.fd_order
+            if self.interpolation is not None:
+                opts['interpolation'] = self.interpolation
+            g = SioMetric(self.files[i], **opts)
             g.release_file_handle()
             self._metrics[i] = g
         return self._metrics[i]
 
-    def _p(self, msg):
+    def _p(self, msg, level=1):
         r"""Print the given message in case we should be verbose."""
-        if self.verbosity >= 1:
+        if self.verbosity >= level:
             print(msg)
 
     def _init_tracking(self):
@@ -406,6 +474,8 @@ class MOTSTracker():
         self._init_tracking()
         curves = []
         try_no = 1 if self.initial_stride > 1 else None
+        if self.initial_try_count is not None:
+            try_no = self.initial_try_count
         stride = self.initial_stride
         i = 0
         while True:
@@ -493,24 +563,188 @@ class MOTSTracker():
             raise FileNotFoundError("Curve missing. Previous results expected.")
         self._prepare_metric_for_computation(g, c)
         if not c:
-            cfg.update(c_ref=self.neck_trick(g, self._c_ref))
+            cfg.update(c_ref=self._current_ref_curve(cfg))
             suffix = cfg.suffix
-            c, fname = self._call_find_mots(cfg, pass_nr=1,
-                                            timings=self.timings)
+            c, fname = self._call_find_mots(
+                cfg, pass_nr=1, timings=self.timings,
+                callback=lambda curve: self._optimize_parameterization(curve, cfg)
+            )
             if not c:
                 return None, None
             if self.two_pass:
                 cfg.update(suffix=suffix) # reset suffix if changed by cfg_callback
                 self._c_ref = c
                 c, fname = self._call_find_mots(
-                    cfg, pass_nr=2, c_ref=self._c_ref, timings=self.timings
+                    cfg, pass_nr=2, timings=self.timings,
+                    c_ref=self._current_ref_curve(cfg, allow_neck_trick=False),
                 )
                 if not c:
                     return None, None
-        self._c_ref = c
+        # The following line has the side-effect of removing the 'cfg' key
+        # from self._c_ref.user_data. Hence we make sure to store our precious
+        # curve `c` as reference curve for the next slice *after* the
+        # following line.
         c_past, c_future = self._get_future_past_curves(c, i, stride, try_no)
         self._compute_properties(c, fname, c_future=c_future, c_past=c_past)
+        self._c_ref = c
         return c, fname
+
+    def _current_ref_curve(self, cfg, allow_neck_trick=True):
+        r"""Prepare and return the current reference curve.
+
+        This also updates the given configuration with the bipolar coordinate
+        setup to use (in case these coordinates are activated) and performs
+        the *neck trick*.
+        """
+        g = cfg.metric
+        c_ref = self._c_ref
+        if cfg.bipolar_ref_curve:
+            bipolar_kw = cfg.bipolar_kw or dict()
+            if self.auto_bipolar_move:
+                bipolar_kw['move'] = self._get_bipolar_origin(cfg)
+            if self._do_bipolar_scaling_optimization(cfg):
+                bipolar_kw['scale'] = self._get_bipolar_autoscale(c_ref, cfg)
+            cfg.bipolar_kw = bipolar_kw
+            if self._do_curv2_optimization(cfg):
+                cfg.reparam = self._get_curv2_reparam_settings(c_ref, cfg)
+        if allow_neck_trick:
+            c_ref = self.neck_trick(g, c_ref)
+        return c_ref
+
+    def _reparam_settings(self, cfg):
+        if isinstance(cfg.reparam, (list, tuple)):
+            strategy, opts = cfg.reparam
+        else:
+            strategy = cfg.reparam
+            opts = dict()
+        return strategy, opts
+
+    def _do_bipolar_scaling_optimization(self, cfg):
+        bipolar_kw = cfg.bipolar_kw or dict()
+        return (bipolar_kw.get('scale', None) is None
+                or (not self._is_first_slice(cfg.metric)
+                    and self.follow_bipolar_scaling))
+
+    def _do_curv2_optimization(self, cfg):
+        # We optimize the curv2 smoothing iff we also optimize the bipolar
+        # scaling and smoothing is not fixed. This should be made independent!
+        # need fresh cfg without auto-settings
+        cfg = self._get_cfg(cfg.metric, 1) # we should solve this differently, though
+        reparam, opts = self._reparam_settings(cfg)
+        return (reparam == 'curv2'
+                and (opts.get('smoothing', None) is None
+                     or (not self._is_first_slice(cfg.metric)
+                         and self.follow_curv2_smoothing))
+                and cfg.bipolar_ref_curve)
+
+    def _get_curv2_reparam_settings(self, curve, cfg):
+        reparam_strategy, reparam_opts = self._reparam_settings(cfg)
+        key = 'optimized_curv2_smoothing'
+        if key in curve.user_data:
+            reparam_opts['smoothing'] = curve.user_data[key]
+        return reparam_strategy, reparam_opts
+
+    def _optimize_parameterization(self, curve, cfg):
+        r"""Optimize and update the stored parameterization for the given MOTS.
+
+        The "optimal" settings are stored in the `user_data` of the current
+        curve and may then be used for the search for the next MOTS. The curve
+        data itself (shape and reference curve) is not modified in any way.
+        """
+        if curve is None or not cfg.bipolar_ref_curve:
+            return
+        if self._reparam_settings(cfg)[0] == 'curv2':
+            scale, smoothing = self._determine_optimal_parameters(
+                curve=curve, cfg=cfg,
+                initial_smoothing=self._get_curv2_reparam_settings(
+                    curve, cfg
+                )[1].get('smoothing', 0.05)
+            )
+            curve.user_data['optimized_curv2_smoothing'] = smoothing
+        else:
+            scale = self._determine_optimal_parameters(curve=curve, cfg=cfg)
+        curve.user_data['optimized_bipolar_scale'] = scale
+
+    def _get_bipolar_autoscale(self, curve, cfg):
+        r"""Return previously determined bipolar scale or a rough estimate."""
+        key = 'optimized_bipolar_scale'
+        if key in curve.user_data:
+            return curve.user_data[key]
+        scale, _ = self._get_parameter_guesses(curve, cfg)
+        return scale
+
+    def _get_bipolar_origin(self, cfg):
+        r"""Return the origin for bipolar coordinates.
+
+        If the origin is specified using configuration options (`bipolar_kw`),
+        then this value is returned. Otherwise, we use the center between the
+        top and bottom MOTSs (assuming they have already been found).
+        """
+        g = cfg.metric
+        neck_info = self._get_neck_info(g)
+        if neck_info.has_data:
+            return neck_info.z_center
+        c_ref = self._c_ref
+        if callable(c_ref):
+            return (c_ref(0)[1]+c_ref(np.pi)[1]) / 2.0
+        if isinstance(c_ref, (list, tuple)):
+            return c_ref[-1] # z-offset in case of circle
+        return 0.0
+
+    def _get_parameter_guesses(self, curve, cfg):
+        if not cfg.bipolar_ref_curve:
+            return None, None
+        g = cfg.metric
+        try:
+            scale = curve.ref_curve.scale
+            self._p("Using previous scale=%s" % scale, level=2)
+        except AttributeError:
+            # crude estimate that should be OK but not optimal
+            neck_info = self._get_neck_info(g)
+            if not neck_info.has_data:
+                if callable(curve):
+                    scale = 0.25 * (curve(0)[1]-curve(np.pi)[1])
+                else:
+                    if isinstance(curve, (list, tuple)):
+                        scale = curve[0] / 2.0
+                    else:
+                        scale = curve / 2.0
+            else:
+                scale = abs(neck_info.z_dist)**(2/3.)
+                scale = min(scale, 2/3. * neck_info.smaller_z_extent)
+                scale = max(1e-3*neck_info.z_extent, scale)
+            self._p("Using estimated scale=%s" % scale, level=2)
+        move = self._get_bipolar_origin(cfg)
+        return scale, move
+
+    def _determine_optimal_parameters(self, curve, cfg,
+                                      initial_smoothing=None):
+        r"""Return (close to optimal) scaling for bipolar coordinates."""
+        with timethis("Optimizing ref curve parameterization...",
+                      silent=not self.timings):
+            scale, move = self._get_parameter_guesses(curve, cfg)
+            try:
+                result = optimize_bipolar_scaling(
+                    curve=curve, move=move,
+                    initial_scale=scale,
+                    initial_smoothing=initial_smoothing,
+                    verbose=self.verbosity > 1,
+                )
+            except IndexError as e:
+                # Optimization failed. Keep previous values.
+                self._p("  ERROR: Optimization failed (%s)" % (e,))
+                self._p("         Keeping previous values.")
+                return scale if initial_smoothing is None else scale, initial_smoothing
+        if initial_smoothing is None:
+            scale, smoothing = result, None
+        else:
+            scale, smoothing = result
+        self._p("  estimated optimal scale: %s" % scale)
+        if initial_smoothing is None:
+            return scale
+        self._p("  estimated optimal curv2 reparam smoothing: %s"
+                % smoothing)
+        return scale, smoothing
 
     def _get_future_past_curves(self, c, i, stride, try_no):
         r"""Search for a curve for the next and previous slice.
@@ -534,6 +768,7 @@ class MOTSTracker():
             )[0]
         if not c_past or not c_future:
             return None, None
+        # pylint: disable=no-member
         it_delta1 = c.metric.iteration - c_past.metric.iteration
         it_delta2 = c_future.metric.iteration - c.metric.iteration
         if it_delta1 != it_delta2:
@@ -550,11 +785,15 @@ class MOTSTracker():
         if (c and self._has_prop_to_do('stability')
                 and "stability" not in c.user_data):
             do_load = True
+        if (c and self._has_prop_to_do('stability_convergence')
+                and "stability_convergence" not in c.user_data):
+            do_load = True
         if not c and not self._has_prop_to_do():
             do_load = True
             what = ["metric", "curv"]
         if not c and self._has_prop_to_do('stability'):
             do_load = True
+            what = []
         if do_load:
             with timethis("Loading slice data...", " elapsed: {}",
                           silent=not self.timings, eol=False):
@@ -571,7 +810,8 @@ class MOTSTracker():
                 p = props[0]
                 return p is not None and p != 'none'
             return bool(props)
-        return prop in props or 'all' in props
+        return (prop in props
+                or ('all' in props and prop not in NEED_ACTIVATION_PROPS))
 
     def _compute_properties(self, c, fname, c_future=None, c_past=None):
         r"""Call compute_props() for the given curve.
@@ -582,10 +822,13 @@ class MOTSTracker():
         resave = False
         with timethis("Computing properties...",
                       silent=not (self.timings and self._has_prop_to_do())):
+            stability_factors = self.stability_convergence_factors
             if compute_props(hname=self.hname, c=c, props=self.props,
-                             area_rtol=self.area_rtol, MOTS_map=self.MOTS_map,
-                             verbosity=self.verbosity, fname=fname,
-                             c_future=c_future, c_past=c_past):
+                             area_rtol=self.area_rtol,
+                             min_stability_values=self.min_stability_values,
+                             stability_convergence_factors=stability_factors,
+                             MOTS_map=self.MOTS_map, verbosity=self.verbosity,
+                             fname=fname, c_future=c_future, c_past=c_past):
                 resave = True
         if resave and fname:
             c.save(fname, overwrite=True)
@@ -595,28 +838,27 @@ class MOTSTracker():
         run = self.MOTS_map.get(hname, self._run_name)
         return op.join(self._parent_dir, run, hname)
 
-    def neck_trick(self, g, c):
-        r"""Check and possibly perform the *neck trick*.
+    def _get_neck_info(self, g):
+        if self._last_neck_info and self._last_neck_info.iteration == g.iteration:
+            return self._last_neck_info
+        self._last_neck_info = self._compute_neck_info(g)
+        return self._last_neck_info
 
-        @param g
-            Current slice's metric.
-        @param c
-            Reference curve (or initial guess) to apply the neck trick to.
-            Should be a .curve.expcurve.ExpansionCurve.
-        """
-        if not self.do_neck_trick:
-            return c
+    def _compute_neck_info(self, g):
+        c = self._c_ref
         top_dir = self._aux_MOTS_dir('top')
         bot_dir = self._aux_MOTS_dir('bot')
         threshold1, threshold2 = self.neck_trick_thresholds
+        neck_info = _NeckInfo(threshold1=threshold1, threshold2=threshold2,
+                              iteration=g.iteration)
         if not hasattr(c, 'find_neck'):
             self._p("Not an ExpansionCurve. Neck moving not available.")
-            return c
+            return neck_info
         try:
             x_neck, z_neck = c(c.find_neck('coord')[0])
         except ValueError:
             self._p("Neck not found.")
-            return c
+            return neck_info
         c_top = find_file(
             pattern="%s/top_*_it%010d*.npy" % (top_dir, g.iteration),
             skip_regex=r"_CE", load=True, verbose=self.verbosity > 1
@@ -638,25 +880,110 @@ class MOTSTracker():
                 % (pinching1, threshold1))
         z_top = c_top(np.pi)[1]
         z_bot = c_bot(0.0)[1]
+        z_top_outer = c_top(0.0)[1]
+        z_bot_outer = c_bot(np.pi)[1]
         pinching2 = abs(z_top - z_bot) / (2*x_neck)
         self._p("Individual horizons' distance / neck width: %s (threshold=%s)"
                 % (pinching2, threshold2))
-        if pinching1 < threshold1 and pinching2 < threshold2:
+        neck_info.update(
+            x_top=x_top, z_top=z_top, x_bot=x_bot, z_bot=z_bot, x_neck=x_neck,
+            z_neck=z_neck, z_top_outer=z_top_outer, z_bot_outer=z_bot_outer,
+            pinching1=pinching1, pinching2=pinching2,
+        )
+        return neck_info
+
+    def neck_trick(self, g, c):
+        r"""Check and possibly perform the *neck trick*.
+
+        @param g
+            Current slice's metric.
+        @param c
+            Reference curve (or initial guess) to apply the neck trick to.
+            Should be a .curve.expcurve.ExpansionCurve.
+        """
+        if not self.do_neck_trick:
+            return c
+        neck_info = self._get_neck_info(g)
+        if not neck_info.has_data:
+            return c
+        if not neck_info.do_move_neck:
             self._p("Neck pinching below threshold. Not moving reference curve.")
             return c
         self._p("Neck pinching above threshold. Moving...")
-        z_center = (z_top + z_bot) / 2.0
-        if hasattr(c, 'ref_curve') and hasattr(c.ref_curve, 'z_fun'):
+        z_neck = neck_info.z_neck
+        z_center = neck_info.z_center
+        if hasattr(c, 'ref_curve') and hasattr(c.ref_curve, 'add_z_offset'):
             c = c.copy()
             c.ref_curve = c.ref_curve.copy()
-            c.ref_curve.z_fun.a_n[0] -= z_neck - z_center
-            c.ref_curve.force_evaluator_update()
+            c.ref_curve.add_z_offset(-(z_neck - z_center))
         else:
             # Not a RefParamCurve. Convert to parametric curve.
             c = ParametricCurve.from_curve(c, num=c.num)
-            c.z_fun.a_n[0] -= z_neck - z_center
+            c.add_z_offset(-(z_neck - z_center))
+            self._p("Curve converted to ParametricCurve with resolution %s." % c.num)
         self._p("Neck moved by dz=%s to z=%s" % (z_center - z_neck, z_center))
         return c
+
+    @classmethod
+    def max_constraint_along_curve(cls, curve, points=None, x_padding=1,
+                                   fd_order=None, full_output=False):
+        r"""Compute the maximum violation of the Hamiltonian constraint.
+
+        This computes the constraints on a set of grid points close to the
+        given curve and returns the maximum value of the Hamiltonian
+        constraint.
+
+        @param curve
+            The curve along which to sample the constraint.
+        @param points
+            Number of points to sample at along the curve. If not specified,
+            uses either the curve's *accurate* residual measuring points or
+            (if these are not available) twice the resolution of the curve.
+            May also be a list or tuple of parameter values in the range
+            ``[0,pi]``.
+        @param x_padding
+            How many grid points to stay away from the z-axis. Default is 1.
+        @param fd_order
+            Finite difference convergence order for computing derivatives at
+            grid points. Default is to use the current stencil.
+        @param full_output
+            If `True`, return the evaluated constraints along with the maximum
+            violation.
+        """
+        if points is None and 'accurate_abs_delta' in curve.user_data:
+            params = curve.user_data['accurate_abs_delta']['points']
+        else:
+            if points is None:
+                points = 2 * curve.num
+            if isinstance(points, (list, tuple, np.ndarray)):
+                params = np.asarray(points)
+            else:
+                params = np.linspace(0, np.pi, points+1, endpoint=False)[1:]
+        g = curve.metric
+        gxx = g.component_matrix(0, 0)
+        i0 = gxx.closest_element((0, 0, 0))[0]
+        constraints = dict()
+        full_data = []
+        with g.temp_interpolation(interpolation='none', fd_order=fd_order):
+            for la in params:
+                i, j, k = gxx.closest_element(curve(la, xyz=True))
+                if x_padding:
+                    i = max(i0+x_padding, i)
+                key = (i, j, k)
+                if key in constraints:
+                    ham, mom = constraints[key]
+                else:
+                    pt = gxx.coords(i, j, k)
+                    ham, mom = g.constraints(pt, norm=True)
+                    constraints[key] = [ham, mom]
+                full_data.append([la, ham, mom])
+        data = np.array(list(constraints.values()))
+        constraints = data[:,0]
+        max_ham = np.absolute(constraints).max()
+        if full_output:
+            full_data = np.asarray(full_data)
+            return max_ham, full_data
+        return max_ham
 
     def _get_cfg(self, g, try_no):
         r"""Construct a configuration for the given metric's slice."""
@@ -676,14 +1003,48 @@ class MOTSTracker():
                 )
             else:
                 cfg.update(
-                    num=int(round(self.min_ref_num/self.ref_num_factor)),
+                    num=int(round(
+                        self.min_ref_num / max(self.ref_num_factor, 0.1)
+                    )),
                     ref_num=self.min_ref_num,
                 )
-        if self.initial_num is not None:
+        if self._should_override_resolution(g):
             cfg.update(num=self.initial_num)
         if self.ref_smoothing is not None:
-            cfg.update(reparam=("curv2", dict(smoothing=self.ref_smoothing)))
+            self._change_reparam_settings(
+                cfg, "curv2", smoothing=self.ref_smoothing
+            )
         return cfg
+
+    def _should_override_resolution(self, g):
+        r"""Return whether we should override the curve resolution for this slice."""
+        if self.initial_num is None:
+            return False
+        if self.follow_resolution and not self._is_first_slice(g):
+            return False
+        return True
+
+    def _is_first_slice(self, g):
+        r"""Return whether the given metric belongs to the first slice considered."""
+        return g.iteration == self.get_metric(0).iteration
+
+    def _change_reparam_settings(self, cfg, new_strategy=None, **new_settings):
+        r"""Merge new settings into current `reparam` parameters.
+
+        No check is done to ensure consistent settings, e.g. we don't remove
+        `smoothing` from the arguments even if `new_strategy` is incompatible.
+        Currently, the caller of this class has to provide consistent
+        settings.
+        """
+        opts = dict()
+        reparam = cfg.reparam
+        if isinstance(cfg.reparam, (list, tuple)):
+            reparam, old_opts = cfg.reparam
+            opts.update(old_opts)
+        opts.update(new_settings)
+        if new_strategy is not None:
+            reparam = new_strategy
+        cfg.update(reparam=(reparam, opts))
 
     def _base_cfg(self, **kw):
         r"""Create a base configuration independently of the slice."""
@@ -694,6 +1055,8 @@ class MOTSTracker():
         )
         cfg.update(**self.cfg)
         cfg.update(**kw)
+        # ensure we can edit these settings without changing the original
+        cfg.update(bipolar_kw=(cfg.bipolar_kw or dict()).copy())
         return cfg
 
     def _load_existing_curve(self, cfg, quiet=False, only_ok=False):
@@ -719,6 +1082,7 @@ class MOTSTracker():
             ok_reasons = [
                 'converged', 'plateau', 'insufficient resolution or roundoff',
             ]
+            # pylint: disable=no-member
             reason = c.user_data.get('reason', 'converged') if c else 'missing'
             if reason not in ok_reasons:
                 c = None
@@ -773,8 +1137,9 @@ class MOTSTracker():
         if hasattr(cfg.c_ref, 'user_data') and 'cfg' in cfg.c_ref.user_data:
             # Avoid curves to store all their ancestors' data.
             del cfg.c_ref.user_data['cfg']
+        save_cfg = cfg.copy().update(callback=None, veto_callback=None)
         user_data = dict(
-            cfg=dict(cfg=cfg, two_pass=self.two_pass, pass_nr=pass_nr)
+            cfg=dict(cfg=save_cfg, two_pass=self.two_pass, pass_nr=pass_nr)
         )
         with timethis("Calling find_mots()...", silent=not timings):
             return find_mots(cfg, user_data=user_data, full_output=True)
@@ -800,39 +1165,84 @@ class MOTSTracker():
 
     def get_sim_files(self, disp=True):
         r"""Gather all simulation data files we should consider."""
-        files = glob("%s/**/*.it*.s5" % self.sim_dir, recursive=True)
-        # remove duplicates (caused by symlinks) by constructing a dict
-        files = dict([(op.basename(fn), fn) for fn in files
-                      if re.search(r"\.it\d{10}\.s5", fn)
-                      and not re.search(r"output-\d{4}-active", fn)])
-        files = list(files.items())
-        files.sort(key=lambda f: f[0]) # sort based on base name
-        files = [fn for _, fn in files] # return the relative names
-        if self.backwards:
-            files.reverse()
-        active = False
-        result = []
-        for fn in files:
-            if re.search(r"\.it%010d\.s5" % self.start_slice, fn):
-                active = True
-                if self.backwards:
-                    # Starting a forward and backward search simultaneously
-                    # requires one of them to ignore the start slice.
-                    continue
-            if active:
-                result.append(fn)
-            if (self.end_slice is not None
-                    and re.search(r"\.it%010d\.s5" % self.end_slice, fn)):
-                break
-        if disp and not result:
-            raise ValueError("No simulation data found in: %s" % self.sim_dir)
-        if self.max_slices and len(result) > self.max_slices:
-            result = result[:self.max_slices]
-        return result
+        return find_slices(
+            sim_dir=self.sim_dir,
+            backwards=self.backwards,
+            backwards_skip_first=self.backwards_skip_first,
+            start_slice=self.start_slice,
+            end_slice=self.end_slice,
+            max_slices=self.max_slices,
+            disp=disp,
+        )
 
 
-def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
-                  MOTS_map=None, fname=None, c_past=None, c_future=None):
+def find_slices(sim_dir, backwards=False, start_slice=None, end_slice=None,
+                max_slices=None, backwards_skip_first=True,
+                skip_checkpoints=True, disp=True):
+    r"""Gather all simulation data files.
+
+    @param sim_dir
+        Folder to start searching recursively for simulation data files.
+    @param backwards
+        Whether to reverse the order of the slices found. Default is `False`.
+    @param start_slice
+        First slice to consider. When ``backwards==True``, this should be the
+        *latest* slice in the series. Note that if a start slice is specified
+        in the ``backwards==True`` case, the slice itself is skipped to allow
+        simultaneously starting forward and backwards runs.
+        Default is to find all slices (including the last one in the backwards
+        case).
+    @param end_slice
+        Last slice to consider. Take all (except for `start_slice`) if not
+        given (default).
+    @param max_slices
+        Truncate the number of slices returned after this many if given.
+    @param backwards_skip_first
+        If `True` (default), skip the starting slice when going backwards as
+        described above. If `False`, include the starting slice in all cases.
+    @param skip_checkpoints
+        Whether to ignore checkpoints in the simulation folders. Default is
+        `True`.
+    @param disp
+        Raise a `ValueError` if no slices are found.
+    """
+    files = glob("%s/**/*.it*.s5" % sim_dir, recursive=True)
+    # remove duplicates (caused by symlinks) by constructing a dict
+    files = dict([(op.basename(fn), fn) for fn in files
+                  if re.search(r"\.it\d{10}\.s5", fn)
+                  and not re.search(r"output-\d{4}-active", fn)
+                  and (not skip_checkpoints or not re.search(r"checkpoint\.", fn))])
+    files = list(files.items())
+    files.sort(key=lambda f: f[0]) # sort based on base name
+    files = [fn for _, fn in files] # return the relative names
+    if backwards:
+        files.reverse()
+    active = start_slice is None
+    result = []
+    for fn in files:
+        if (start_slice is not None
+                and re.search(r"\.it%010d\.s5" % start_slice, fn)):
+            active = True
+            if backwards and backwards_skip_first:
+                # Starting a forward and backward search simultaneously
+                # requires one of them to ignore the start slice.
+                continue
+        if active:
+            result.append(fn)
+        if (end_slice is not None
+                and re.search(r"\.it%010d\.s5" % end_slice, fn)):
+            break
+    if disp and not result:
+        raise ValueError("No simulation data found in: %s" % sim_dir)
+    if max_slices and len(result) > max_slices:
+        result = result[:max_slices]
+    return result
+
+
+def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
+                  stability_convergence_factors=(0.2, 0.4, 0.6, 0.8, 0.9, 1.1),
+                  verbosity=True, MOTS_map=None, fname=None, c_past=None,
+                  c_future=None, remove_invalid=True):
     r"""Compute properties and store them in the curve object.
 
     All computed properties will be stored under the property's name in the
@@ -842,6 +1252,29 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
     under ``prop_extras``.
 
     The properties that can be computed here are:
+        * **length_maps**:
+            Mappings from current parameterization to proper-length based
+            parameterizations (see
+            ..curve.basecurve.BaseCurve.proper_length_map()). The value will
+            be a dictionary with elements `length_map`, `inv_map`,
+            `proper_length`, where the latter is the length of the curve in
+            curved space. Note that the two functions will actually be series
+            objects (motsfinder.exprs.series.SeriesExpression), so that
+            ``evaluator()`` needs to be called to get actual callables.
+        * **constraints**:
+            Compute the Hamiltonian (scalar) and momentum (vector) constraints
+            on grid points close to the curve. The stored value will have the
+            structure ``dict(near_curve=dict(std=[x, ham, mom],
+            proper=[x, ham, mom]))``. Here, `x` is the set of parameter values
+            of the curve close to which the values are computed, `ham` are the
+            Hamiltonian constraint values and `mom` the momentum ones. The
+            difference between `std` and `proper` is that for `std`, the
+            parameters are equidistant in curve parameter `lambda`, while for
+            `proper` they are equidistant in the curve's proper length
+            parameterization, though the stored `x` values are in the curve's
+            current parameterization. This way, you can plot in the curve's
+            proper length parameterization by taking the `x` values of `std`
+            and values of `proper`.
         * **ingoing_exp**:
             Expansion of the ingoing null normals. This is computed on a grid
             of points (in curve parameter space) the density of which is
@@ -866,7 +1299,13 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
         * **stability**:
             Compute the spectrum of the stability operator. The number of
             eigenvalues returned depends on the curve's resolution, but at
-            least 30 eigenvalues are computed.
+            least 30 eigenvalues (by default) are computed. See also the
+            `min_stability_values` parameter and the following property.
+        * **stability_convergence**:
+            In addition to computing the stability spectrum above, recompute
+            it at (by default) ``0.2, 0.4, 0.6, 0.8, 0.9, 1.1`` times the
+            resolution used for the ``"stability"`` property. This allows
+            analyzing convergence of the individual eigenvalues.
         * **neck**:
             Find the neck based on various criteria and compute various
             properties at this point, like proper circumference or proper
@@ -891,11 +1330,32 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
             Coordinate distances of the collocation points along the curve.
             May be useful to compare against the spatial coordinate resolution
             of the numerical grid.
+        * **area_parts**:
+            In case ``hname="bot"`` or ``"top"`` and the top and bottom MOTSs
+            intersect, compute separately the area of the non-intersecting
+            part and the part lying inside the other MOTS.
+            For ``hname="inner"``, compute the parts before and after the
+            *neck* separately. In case it self-intersects, find all the
+            intersection points of the MOTS with itself and the top and bottom
+            MOTSs and compute the area of each section, including splitting at
+            the neck.
+            If a result is found (i.e. the property's value is not `None`),
+            the stored value will be a numutils.IntegrationResults object. Its
+            `info` dictionary contains all splitting points. Sorting these
+            gives you all the intervals of which the areas were computed.
+        * **multipoles**:
+            Compute the first 10 multipole moments of the MOTS. The first and
+            second moments are computed numerically even though these have
+            analytically known values of `sqrt(pi)` and `0`, respectively.
+            This allows comparison of the integration results with known
+            values.
 
     Some properties are only computed for certain horizons. The horizon
     specific properties are:
-        * for ``"bot"``: ``dist_top_bot``
-        * for ``"inner"``: ``neck, z_dist_top_inner, z_dist_bot_inner``
+        * for ``"top"``: `area_parts`
+        * for ``"bot"``: `dist_top_bot`, `area_parts`
+        * for ``"inner"``: `neck`, `z_dist_top_inner`, `z_dist_bot_inner`,
+          `area_parts`
 
     The ``signature`` is only computed if at least one of `c_past` or
     `c_future` is supplied.
@@ -912,6 +1372,15 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
         Relative tolerance for the area integral. Setting this too low will
         result in integration warnings being produced and possibly
         underestimated residual errors.
+    @param min_stability_values
+        Minimum number of MOTS-stability eigenvalues to compute. The default
+        is `30`.
+    @param stability_convergence_factors
+        Factors by which to multiply the resolution used for computing the
+        stability spectrum. Each of the resulting lower or higher resolutions
+        is used to compute the same spectrum, so that convergence of the
+        individual eigenvalues can be examined. Defaults to ``(0.2, 0.4, 0.6,
+        0.8, 0.9, 1.1)``.
     @param verbosity
         Whether to print progress information.
     @param MOTS_map
@@ -924,6 +1393,11 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
         Optional MOTSs of the previous and next slices, respectively. These
         are used to compute the signature of the world tube traced out by the
         evolution of the MOTS.
+    @param remove_invalid
+        Whether to check for and remove invalid data prior to recomputing it.
+        This only affects data that is specified to being computed. This may
+        be useful for updating data for which updated methods have been
+        developed and a check for validity can be done. Default is `True`.
     """
     if MOTS_map is None:
         MOTS_map = dict()
@@ -933,21 +1407,34 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
         run_name = op.basename(op.dirname(out_dir))
     if not isinstance(props, (list, tuple)):
         props = [props]
-    all_props = (None, 'none', 'all', 'ingoing_exp', 'avg_ingoing_exp',
-                 'area', 'ricci', 'mean_curv', 'curv2', 'stability', 'neck',
-                 'dist_top_bot', 'z_dist_top_inner', 'z_dist_bot_inner',
-                 'signature', 'point_dists')
     for p in props:
-        if p not in all_props:
+        if p not in ALL_PROPS:
             raise ValueError(
                 "Invalid property to compute: %s. Valid properties are: %s"
-                % (p, ",".join("%s" % pr for pr in all_props))
+                % (p, ",".join("%s" % pr for pr in ALL_PROPS))
             )
     data = c.user_data
     did_something = [False]
-    def do_prop(p, func, args=None, is_extra=False, **kw):
-        if p not in all_props:
+    def do_prop(p, func, args=None, **kw):
+        r"""(Re)compute a given property using a given function.
+
+        @param p
+            Property name to compute. The curve's `user_data` will get
+            keys ``{p}``, ``{p}_args``, and potentially ``{p}_extras``
+            containing the data, defining arguments and any extra data
+            returned.
+        @param func
+            Function to call to produce the result. Will be called as
+            ``func(**args, **kw)``.
+        @param args
+            Argument dictionary uniquely defining the result.
+        @param **kw
+            Extra arguments not influencing the result or reproducible
+            from context (e.g. the curve to operate on).
+        """
+        if p not in ALL_PROPS:
             raise RuntimeError("Unkown property: %s" % p)
+        is_extra = p in NEED_ACTIVATION_PROPS
         do = p in props or ('all' in props and not is_extra)
         if not do:
             return
@@ -955,8 +1442,12 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
             args = dict()
         p_args = '%s_args' % p
         p_extras = '%s_extras' % p
+        if remove_invalid and p in data and p_args in data and data[p_args] == args:
+            if not _data_is_valid(p, data[p], data[p_args], hname):
+                print("Removing invalid '%s' data from curve to trigger "
+                      "recomputation." % p)
+                del data[p]
         if p not in data or p_args not in data or data[p_args] != args:
-            data[p_args] = args
             msg = "Computing property %-21s" % ("'%s'..." % p)
             with timethis(msg, " elapsed: {}", silent=verbosity == 0, eol=False):
                 try:
@@ -972,6 +1463,7 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
                     data.pop(p_extras, None)
                 result = result.result
             data[p] = result
+            data[p_args] = args
             did_something[0] = True
     if hname == 'bot' and out_dir:
         do_prop('dist_top_bot', _dist_top_bot,
@@ -980,11 +1472,27 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
                      other_run=MOTS_map.get('top', run_name),
                      other_hname='top'),
                 c=c, out_dir=out_dir)
+    do_prop('length_maps', _length_maps, dict(num=None), c=c)
+    do_prop('constraints', _constraints, dict(num=None, fd_order=None), c=c)
     do_prop('area', _area, dict(epsrel=area_rtol, limit=100, v=1), c=c)
     do_prop('ingoing_exp', _ingoing_exp, dict(Ns=None, eps=1e-6), c=c)
     do_prop('avg_ingoing_exp', _avg_ingoing_exp,
             dict(epsabs='auto', limit='auto'), c=c)
-    do_prop('stability', _stability, dict(min_num=30), c=c)
+    if c.num >= min_stability_values:
+        # This code ensures that the stability spectrum is not recomputed
+        # unnecessarily (i.e. when the minimum `min_num` has no effect because
+        # the curve has a higher resolution anyway). Since the property is
+        # recomputed on any argument changes, we set it to its previous
+        # default value in these cases so that it matches the previously
+        # stored value and does not trigger recomputation.
+        min_stability_values = 30 # previous default, has no effect here
+    do_prop('stability', _stability, dict(min_num=min_stability_values,
+                                          method='direct'), c=c)
+    do_prop('stability_convergence', _stability_convergence,
+            dict(min_num=min_stability_values,
+                 convergence_factors=stability_convergence_factors,
+                 method='direct'),
+            c=c, verbose=verbosity > 0)
     do_prop('ricci', _ricci, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
     do_prop('mean_curv', _mean_curv, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
     do_prop('curv2', _curv_squared, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
@@ -997,6 +1505,19 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
                          other_run=MOTS_map.get(other_hname, run_name),
                          other_hname=other_hname),
                     c=c, out_dir=out_dir)
+        do_prop('area_parts', _area_parts_inner,
+                dict(epsrel=area_rtol, limit=100, v=1,
+                     top_run=MOTS_map.get('top', run_name),
+                     bot_run=MOTS_map.get('bot', run_name)),
+                c=c, out_dir=out_dir)
+    if hname in ('top', 'bot'):
+        other_hname = 'bot' if hname == 'top' else 'top'
+        do_prop('area_parts', _area_parts_individual,
+                dict(epsrel=area_rtol, limit=100, v=2,
+                     other_run=MOTS_map.get(other_hname, run_name),
+                     other_hname=other_hname),
+                c=c, out_dir=out_dir)
+    do_prop('multipoles', _multipoles, dict(max_n=10), c=c)
     if c_past or c_future:
         do_prop('signature', _signature,
                 dict(N=None, eps=1e-6, has_past=bool(c_past),
@@ -1006,6 +1527,7 @@ def compute_props(hname, c, props, area_rtol=1e-6, verbosity=True,
 
 
 def _area(c, v=None, **kw):
+    # pylint: disable=unused-argument
     r"""Compute the area for the curve.
 
     The parameter `v` is ignored here and can be used to force recomputation
@@ -1021,9 +1543,220 @@ def _area(c, v=None, **kw):
         extras=dict(abserr=abserr, info=info, message=message),
     )
 
-def _stability(c, min_num):
+
+def _area_parts_individual(c, out_dir, other_run, other_hname, v=None, **kw):
+    # pylint: disable=unused-argument
+    r"""Compute the area of different parts of an individual MOTS.
+
+    If the other individual MOTS does not intersect this MOTS, nothing is done
+    and `None` is returned. If it does intersect, computes the area of the
+    exterior and interior parts separately and returns an
+    numutils.IntegrationResults object. The returned object's `info`
+    dictionary contains an `intersection` key with the curve paramters of this
+    (first) and the other (second) curve at which they intersect.
+    """
+    c_other = _get_aux_curve(
+        "%s/../../%s/%s" % (out_dir, other_run, other_hname),
+        hname=other_hname,
+        it=c.metric.iteration,
+        disp=False,
+    )
+    if not c_other:
+        raise AuxResultMissing()
+    z_dist = c.z_distance_using_metric(
+        metric=None, other_curve=c_other, allow_intersection=True,
+    )
+    if z_dist >= 0:
+        return None
+    la1, la2 = c.locate_intersection(c_other, N1=100, N2=100)
+    kw['full_output'] = True
+    return IntegrationResults(
+        c.area(domain=(0, la1), **kw),
+        c.area(domain=(la1, np.pi), **kw),
+        info=dict(intersection=(la1, la2)),
+    )
+
+
+def _area_parts_inner(c, out_dir, top_run, bot_run, v=None, **kw):
+    # pylint: disable=unused-argument
+    r"""Compute areas of different parts of the inner common MOTS.
+
+    Note that a precondition for this function is computation of the 'neck'.
+    If a neck was actually found, computes the area of the upper and lower
+    parts separately. The result is an numutils.IntegrationResults object with
+    the two values and a `info` dictionary containing the used `neck`
+    location.
+
+    If, in addition to a neck, the MOTS self-intersects, then it will also
+    intersect the two individual MOTSs. The four intersection points (two
+    parameters for the self-intersection, plus two for the intersection with
+    the other MOTSs) together with the neck partition the curve into six
+    sections, of which the area is computed separately. The resulting
+    numutils.IntegrationResults object's `info` dictionary contains the
+    location of all detected intersections. For the individual MOTSs, the
+    second parameter in the values refers to the parameter of the individual
+    MOTS at which this intersection happens.
+    """
+    c_top = _get_aux_curve(
+        "%s/../../%s/%s" % (out_dir, top_run, 'top'),
+        hname='top',
+        it=c.metric.iteration,
+        disp=False,
+    )
+    c_bot = _get_aux_curve(
+        "%s/../../%s/%s" % (out_dir, bot_run, 'bot'),
+        hname='bot',
+        it=c.metric.iteration,
+        disp=False,
+    )
+    if not c_top or not c_bot:
+        raise AuxResultMissing()
+    if c_top(0)[1] < c_bot(0)[1]:
+        c_top, c_bot = c_bot, c_top
+    z_dist = c_top.z_distance_using_metric(
+        metric=None, other_curve=c_bot, allow_intersection=True,
+    )
+    self_intersecting = z_dist < 0
+    neck = c.user_data['neck']['circumference']['param']
+    if not neck:
+        return None
+    kw['full_output'] = True
+    if not self_intersecting:
+        A1 = c.area(domain=(0, neck), **kw)
+        A2 = c.area(domain=(neck, np.pi), **kw)
+        return IntegrationResults(
+            A1, A2, info=dict(neck=neck, self_intersection=None)
+        )
+    # A self-intersecting inner common MOTS also crosses both individual
+    # horizons.
+    la_self1, la_self2 = c.locate_self_intersection(neck=neck)
+    # To make the search more robust, we use our knowledge that the inner
+    # common MOTS intersects the individual MOTSs close to the point the
+    # intersect each other.
+    la_top, la_bot = c_top.locate_intersection(c_bot)
+    la_top1, la_top2 = c.locate_intersection(
+        c_top,
+        domain1=(neck, np.pi), strict1=True, N1=50,
+        domain2=(clip(la_top-0.2, 0, np.pi), clip(la_top+0.2, 0, np.pi)),
+        strict2=False, N2=10,
+    )
+    if None in (la_top1, la_top2):
+        # search failed, retry with different settings
+        la_top1, la_top2 = c.locate_intersection(
+            c_top,
+            domain1=(la_self2, np.pi), # start at self-intersection point
+            strict1=True,
+            N1=max(100, min(1000, int(c.num/2))), # use much finer initial grid
+            domain2=(clip(la_top-0.2, 0, np.pi), clip(la_top+0.2, 0, np.pi)),
+            strict2=False, N2=30,
+        )
+    la_bot1, la_bot2 = c.locate_intersection(
+        c_bot,
+        domain1=(0, neck), strict1=True, N1=50,
+        domain2=(clip(la_bot-0.2, 0, np.pi), clip(la_bot+0.2, 0, np.pi)),
+        strict2=False, N2=10,
+    )
+    if None in (la_bot1, la_bot2):
+        # search failed, retry with different settings
+        la_bot1, la_bot2 = c.locate_intersection(
+            c_bot,
+            domain1=(0, la_self1), # start at self-intersection point
+            strict1=True,
+            N1=max(100, min(1000, int(c.num/2))), # use much finer initial grid
+            domain2=(clip(la_bot-0.2, 0, np.pi), clip(la_bot+0.2, 0, np.pi)),
+            strict2=False, N2=30,
+        )
+    params = sorted([0.0, la_bot1, la_self1, neck, la_self2, la_top1, np.pi])
+    return IntegrationResults(
+        *[c.area(domain=(params[i], params[i+1]), **kw)
+          for i in range(len(params)-1)],
+        info=dict(neck=neck,
+                  self_intersection=(la_self1, la_self2),
+                  top_intersection=(la_top1, la_top2),
+                  bot_intersection=(la_bot1, la_bot2)),
+    )
+
+
+def _data_is_valid(prop, value, args, hname):
+    r"""Return whether the current data is valid or should be removed."""
+    if prop == 'area_parts' and hname == 'inner':
+        ap = value
+        if (len(ap) == 6 and (ap.info['self_intersection'][0] <= 0
+                              or ap.info['self_intersection'][1] <= 0)):
+            # MOTS self-intersection found at negative parameter values.
+            return False
+    return True
+
+
+def _multipoles(c, max_n):
+    r"""Compute the first multipoles for the given curve.
+
+    @return numutils.IntegrationResults object containing the results with
+        estimates of their accuracy.
+
+    @param c
+        Curve representing the horizon.
+    @param max_n
+        Highest multipole to compute. It will compute the elements
+        ``0, 1, 2, ..., max_n`` (i.e. ``max_n+1`` elements).
+
+    @b Notes
+
+    The strategy for computation is to first try to compute using the
+    estimated curve's residual expansion as absolute tolerance. If this fails
+    or produces integration warnings, the tolerance is successively increased
+    and computation is retried.
+    """
+    if 'accurate_abs_delta' in c.user_data:
+        residual = c.user_data['accurate_abs_delta']['max']
+    else:
+        pts = np.linspace(0, np.pi, 2*c.num+1, endpoint=False)[1:]
+        residual = np.absolute(c.expansions(pts)).max()
+    return try_quad_tolerances(
+        func=lambda tol: c.multipoles(
+            max_n=max_n, epsabs=tol,
+            limit=max(100, int(round(c.num/2))),
+            full_output=True, disp=True,
+        ),
+        tol_min=residual,
+        tol_max=max(1e-3, 10*residual),
+    )
+
+
+def _stability(c, min_num, method):
     r"""Compute the stability spectrum for the curve."""
-    return c.stability_parameter(num=max(min_num, c.num), full_output=True)
+    if method != 'direct':
+        raise ValueError("Unsupported method: %s" % (method,))
+    result = c.stability_parameter(num=max(min_num, c.num), full_output=True)
+    return _PropResult(
+        result=result,
+        extras=dict(method=method),
+    )
+
+
+def _stability_convergence(c, min_num, convergence_factors, method,
+                           verbose=False):
+    r"""Compute the stability spectrum at different resolutions."""
+    if method != 'direct':
+        raise ValueError("Unsupported method: %s" % (method,))
+    prev_spectra = c.user_data.get('stability_convergence', [])
+    if 'stability' in c.user_data:
+        prev_spectra.append(c.user_data['stability'])
+    main_num = max(min_num, c.num)
+    def _compute(factor):
+        num = int(round(factor * main_num))
+        for principal, spectrum in prev_spectra:
+            if spectrum.shape[0] == num:
+                return principal, spectrum
+        if verbose:
+            print(" x%s(%s)" % (round(factor, 12), num), end='',
+                  flush=True)
+        return c.stability_parameter(num=num, full_output=True)
+    result = [_compute(f) for f in convergence_factors]
+    return _PropResult(
+        result=result,
+        extras=dict(method=method),
+    )
 
 
 def _ricci(c, Ns, eps, xatol):
@@ -1060,6 +1793,40 @@ def _sample_and_extremum(c, func, Ns, eps, xatol):
     return dict(values=fx, x_max=x_max, f_max=f_max)
 
 
+def _length_maps(c, num):
+    r"""Compute the conversion mappings from parameterization to proper length."""
+    length_map, inv_map, proper_length = c.proper_length_map(
+        num=num, evaluators=False, full_output=True
+    )
+    return dict(
+        length_map=length_map, inv_map=inv_map, proper_length=proper_length
+    )
+
+
+def _constraints(c, num, fd_order):
+    r"""Compute the constraints close to the curve."""
+    if num is None:
+        num = max(100, 2*c.num)
+    std_params = np.linspace(0, np.pi, num+1, endpoint=False)[1:]
+    inv_map = c.user_data['length_maps']['inv_map'].evaluator()
+    proper_params = [inv_map(la) for la in std_params]
+    _, std_data = MOTSTracker.max_constraint_along_curve(
+        curve=c, points=std_params, fd_order=fd_order, full_output=True,
+    )
+    _, proper_data = MOTSTracker.max_constraint_along_curve(
+        curve=c, points=proper_params, fd_order=fd_order, full_output=True,
+    )
+    key = "near_curve"
+    if fd_order is not None:
+        key = "%s_order%s" % (key, fd_order)
+    return {
+        key: dict(
+            std=[std_data[:,0], std_data[:,1], std_data[:,2]],
+            proper=[proper_data[:,0], proper_data[:,1], proper_data[:,2]],
+        )
+    }
+
+
 def _ingoing_exp(c, Ns, eps):
     r"""Compute the ingoing expansion along the curve."""
     if Ns is None:
@@ -1074,7 +1841,10 @@ def _avg_ingoing_exp(c, epsabs, limit):
     r"""Compute the average ingoing expansion across the MOTS."""
     area = c.user_data['area']
     if epsabs == 'auto':
-        epsabs = max(1e-6, c.user_data['accurate_abs_delta']['max'])
+        if 'accurate_abs_delta' in c.user_data:
+            epsabs = max(1e-6, c.user_data['accurate_abs_delta']['max'])
+        else:
+            epsabs = 1e-6
     if limit == 'auto':
         limit = max(50, int(c.num/2))
     return c.average_expansion(
@@ -1158,7 +1928,7 @@ def _signature(c, N, eps, c_past, c_future, has_past, has_future):
     )
 
 
-def _get_aux_curve(out_dir, hname, it, disp=True):
+def _get_aux_curve(out_dir, hname, it, disp=True, verbose=False):
     r"""Load an auxiliary curve for the given iteration."""
     files = find_files(
         pattern="%s/%s_*_it%010d*.npy" % (out_dir, hname, it),
@@ -1172,7 +1942,10 @@ def _get_aux_curve(out_dir, hname, it, disp=True):
             )
         return None
     files.sort()
-    return BaseCurve.load(files[-1])
+    fname = files[-1]
+    if verbose:
+        print("Loading curve: %s" % fname)
+    return BaseCurve.load(fname)
 
 
 class _PropResult():
@@ -1187,3 +1960,284 @@ class _PropResult():
 class AuxResultMissing(Exception):
     r"""Raised when a result is missing required for computing a property."""
     pass
+
+
+class _NeckInfo():
+    r"""Collection of data about the *neck* of an inner common MOTS."""
+
+    def __init__(self, threshold1, threshold2, iteration, x_top=None,
+                 z_top=None, x_bot=None, z_bot=None, x_neck=None, z_neck=None,
+                 z_top_outer=None, z_bot_outer=None, pinching1=None,
+                 pinching2=None):
+        self.x_top = x_top
+        self.z_top = z_top
+        self.x_bot = x_bot
+        self.z_bot = z_bot
+        self.z_top_outer = z_top_outer
+        self.z_bot_outer = z_bot_outer
+        self.x_neck = x_neck
+        self.z_neck = z_neck
+        self.pinching1 = pinching1
+        self.pinching2 = pinching2
+        self.threshold1 = threshold1
+        self.threshold2 = threshold2
+        self.iteration = iteration
+
+    def update(self, **kw):
+        r"""Update public instance attributes."""
+        for k, v in kw.items():
+            if hasattr(self, k):
+                super().__setattr__(k, v)
+            else:
+                raise TypeError("Unknown parameter: %s" % (k,))
+
+    @property
+    def has_data(self):
+        r"""Boolean whether we have any data about the neck at all."""
+        return self.pinching1 is not None and self.pinching2 is not None
+
+    @property
+    def do_move_neck(self):
+        r"""Boolean indicating whether neck pinching is above thresholds."""
+        if not self.has_data:
+            return False
+        return (self.pinching1 >= self.threshold1
+                or self.pinching2 >= self.threshold2)
+
+    @property
+    def z_center(self):
+        r"""Center between top end of bottom and bottom end of top MOTS."""
+        return (self.z_top + self.z_bot) / 2.0
+
+    @property
+    def z_dist(self):
+        r"""Distance between top end of bottom and bottom end of top MOTS."""
+        return abs(self.z_top - self.z_bot)
+
+    @property
+    def z_extent(self):
+        r"""Distance between bottom end of bottom and top end of top MOTS."""
+        return abs(self.z_top_outer - self.z_bot_outer)
+
+    @property
+    def smaller_z_extent(self):
+        r"""Smaller distance from `z_center` to the other end of the MOTS."""
+        center = self.z_center
+        values = abs(self.z_top_outer - center), abs(center - self.z_bot_outer)
+        return min(values)
+
+
+def optimize_bipolar_scaling(curve, initial_scale, move, factor=0.75,
+                             threshold_factor=5.0, res_decrease_factor=0.9,
+                             initial_smoothing=None, max_smoothing=0.1,
+                             verbose=True, recursions=1, max_shrinking=0.05):
+    r"""Perform successive tests to try to find optimal bipolar scale parameter.
+
+    This function parameterizes the given MOTS in bipolar coordinates and
+    reparameterizes in the s-t-coordinate-space. Afterwards, the residual
+    expansion between collocation points is measured. By changing the scaling
+    parameter (half-distance of the two foci), the result will generally
+    become better or worse, depending on how well the coordinates are adapted
+    to the curve's shape. A very simple numerical search is used to find a
+    scale that is better than the given `initial_scale`.
+
+    @param curve
+        MOTS to base the measurements on. Should have low residual expansion
+        already.
+    @param initial_scale
+        Scaling to start with.
+    @param move
+        Origin, i.e. center between the foci of the bipolar coordinates.
+    @param factor
+        Factor by which to increase or decrease the scaling each step,
+        respectively. Default is `0.75`, i.e. increase using ``value/0.75``
+        and decrease using ``value*0.75``.
+    @param threshold_factor
+        Factor by which to increase the initial residual expansion. This
+        defines the target resolution used in each reparameterization. The
+        idea is to avoid being in the roundoff plateau, so that values react
+        to how well the scaling is suited to the problem, and not fluctuate a
+        lot. Default is `0.9`.
+    @param res_decrease_factor
+        Factor used for initially finding the resolution with which to work
+        during the search. The initial resolution is reduced successively by
+        this factor until the residual expansion is above
+        ``threshold_factor*residual``. Default is `10`.
+    @param initial_smoothing
+        If given, perform an optimization for the smoothing parameter of the
+        ``'curv2'`` reparameterization strategy, starting from the given
+        value. This is done after the bipolar scaling parameter is optimized.
+    @param max_smoothing
+        Maximum smoothing value to allow. For high smoothing values, the
+        results usually don't change anymore. Under certain circumstances, the
+        search may start to increase this smoothing value indefinitely
+        (effectively amounting to the limit of arc-length parameterization).
+        Default is `0.1`.
+    @param verbose
+        Whether to print status messages. Default is `True`.
+    @param recursions
+        If the result gets worse for the initial steps up and down, put a
+        parabola through the three obtained values. Its minimum is then taken
+        as the initial step for another search. The `recursions` value
+        determines how often this should happen (i.e. it is reduced by one
+        each recursion). If ``recursions==0``, the minimum of the parabola is
+        taken as optimal value.
+    @param max_shrinking
+        Upon recursion (see above), don't move too close to not moving at all
+        (i.e. a `factor` of `1.0`). This parameter ensures that
+        ``(new_factor-1)/(factor-1) >= max_shrinking``.
+    """
+    def set_value_for_scale(value, num):
+        bipolar_curve = BipolarCurve.from_curve(curve, num=num, scale=value,
+                                                move=move)
+        opts = dict(coord_space=True)
+        if initial_smoothing is None:
+            reparam = 'arc_length'
+        else:
+            reparam = 'curv2'
+            opts['smoothing'] = initial_smoothing
+        bipolar_curve.reparameterize(reparam, **opts)
+        return bipolar_curve
+    if verbose:
+        print("Finding bipolar scaling parameter...")
+    scale, num = _optimize_curve_parameter(
+        curve, x0=initial_scale, set_value=set_value_for_scale,
+        factor=factor, threshold_factor=threshold_factor,
+        res_decrease_factor=res_decrease_factor, verbose=verbose,
+        recursions=recursions, full_output=True, max_shrinking=max_shrinking,
+    )
+    if initial_smoothing is None:
+        return scale
+    def set_value_for_smoothing(value, num):
+        bipolar_curve = BipolarCurve.from_curve(curve, num=num, scale=scale,
+                                                move=move)
+        bipolar_curve.reparameterize('curv2', smoothing=value,
+                                     coord_space=True)
+        return bipolar_curve
+    if verbose:
+        print("Finding 'curv2' reparameterization smoothing using scale=%s..."
+              % scale)
+    smoothing = _optimize_curve_parameter(
+        curve, x0=initial_smoothing, set_value=set_value_for_smoothing,
+        factor=factor, num=num, verbose=verbose, recursions=recursions,
+        max_value=max_smoothing, max_shrinking=max_shrinking,
+    )
+    return scale, smoothing
+
+
+def _optimize_curve_parameter(curve, x0, set_value, factor, max_shrinking,
+                              max_value=None, threshold_factor=None,
+                              res_decrease_factor=None, verbose=True,
+                              recursions=1, num=None, full_output=False,
+                              _cache=None):
+    r"""Vary a parameter to minimize the required resolution.
+
+    This varies a parameter and repeatedly checks the residual expansion of
+    the resulting curve to see at which value the residual has its minimal
+    value. This should lead to a lower required resolution when using the
+    found parameter value for reparametrizing the curve.
+    """
+    def _p(msg):
+        if verbose:
+            print(msg)
+    _res_cache = dict() if _cache is None else _cache
+    def _max_residual(num, value):
+        key = (num, value)
+        try:
+            return _res_cache[key]
+        except KeyError:
+            pass
+        modified_curve = set_value(value, num=num)
+        c1 = RefParamCurve.from_curve(modified_curve, num=0,
+                                      metric=curve.metric)
+        space = np.linspace(0, np.pi, 2*num+1, endpoint=False)[1:]
+        residual = np.absolute(c1.expansions(params=space)).max()
+        _res_cache[key] = residual
+        return residual
+    a = x0
+    if num is None:
+        if threshold_factor is None or res_decrease_factor is None:
+            raise TypeError("With `num` not specified, `threshold_factor` "
+                            "and `res_decrease_factor` are mandatory.")
+        err0 = _max_residual(num=curve.num, value=a)
+        _p("residual expansion after conversion: %s" % err0)
+        threshold = threshold_factor * err0
+        num = curve.num
+        while True:
+            num = res_decrease_factor * num
+            if _max_residual(num=int(num), value=a) >= threshold:
+                break
+        num = int(num)
+    _p("performing search with resolution %s" % num)
+    def f(x):
+        value = _max_residual(num=num, value=x)
+        _p("  residual for value=%s is: %.6e" % (x, value))
+        return value
+    def _step(x):
+        x1 = factor * x
+        return min(x1, max_value) if max_value else x1
+    fa = f(a)
+    b = _step(a)
+    fb = f(b)
+    if fb >= fa:
+        factor = 1./factor
+        c = _step(a)
+        fc = f(c)
+        if fc >= fa:
+            # worse or equal in both directions
+            data = sorted(
+                # set() removes any duplicate entries
+                set([(a, fa), (b, fb), (c, fc)]), key=lambda x: x[0]
+            )
+            xs, ys = zip(*data)
+            if len(xs) < 3:
+                if recursions > 0:
+                    smaller_factor = 0.5 * (factor - 1.0) + 1.0
+                    opt = x0 * smaller_factor
+                else:
+                    _p("Ending search at boundary.")
+                    return (a, num) if full_output else a
+            else:
+                opt = lagrange(xs, np.log10(ys)).deriv().roots.real[0]
+            if recursions > 0:
+                _p("Worse or equal in both directions. Recursing...")
+                new_factor = _limit_factor_shrinking(
+                    opt/x0, factor, max_shrinking, verbose=verbose,
+                )
+                opt = _optimize_curve_parameter(
+                    curve=curve, x0=x0, max_shrinking=max_shrinking,
+                    max_value=max_value, set_value=set_value,
+                    factor=new_factor, num=num, verbose=verbose,
+                    recursions=recursions-1,
+                    _cache=_res_cache,
+                )
+            return (opt, num) if full_output else opt
+        a, b = b, c
+        fa, fb = fb, fc
+    while True:
+        c = _step(b)
+        if c == b:
+            _p("Search reached boundary. Ending here.")
+            return (c, num) if full_output else c
+        fc = f(c)
+        if fc > fb:
+            opt = lagrange([a, b, c], np.log10([fa, fb, fc])).deriv().roots.real[0]
+            return (opt, num) if full_output else opt
+        a, b = b, c
+        fa, fb = fb, fc
+
+
+def _limit_factor_shrinking(new_factor, factor, max_shrinking, verbose):
+    r"""Make sure the new factor is not too much closer to 1 than the old one."""
+    if max_shrinking is None:
+        return new_factor
+    # Make sure both factors are on "the same side" of 1.
+    if (new_factor-1) * (factor-1) < 0:
+        factor = 1./factor
+    if (new_factor-1) / (factor-1) < max_shrinking:
+        fixed_factor = max_shrinking * (factor-1) + 1
+        if verbose:
+            print("Factor %s too much closer to 1.0 than the old one %s. "
+                  "Changed to %s." % (new_factor, factor, fixed_factor))
+        new_factor = fixed_factor
+    return new_factor

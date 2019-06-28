@@ -150,8 +150,8 @@ class NDSolver(object):
         Note that currently, boundary conditions are ignored. This means that
         these need to be imposed by the right choice of the basis.
 
-        @return `eigenvals, principle`, where `eigenvals` is a sequence of
-            eigenvalues and `principle` is the principle eigenvalue (the one
+        @return `eigenvals, principal`, where `eigenvals` is a sequence of
+            eigenvalues and `principal` is the principal eigenvalue (the one
             with the smallest real part).
 
         @b Notes
@@ -177,18 +177,23 @@ class NDSolver(object):
             \Phi_{ij} = \phi_j(x_i),
         \f]
         and the \f$x_i\f$ are the collocation points.
-        This is the generalized eigenvalue problem solved here, which is
-        equivalent to the original eigenvalue problem.
+        Note that \f$\Phi_{ij}\f$ is invertible, so that the eigenvalue
+        problem being solved here becomes
+        \f[
+            M_{ij} a_j = \lambda\, a_j,
+        \f]
+        where \f$M = \Phi^{-1} L\f$.
         """
         with self.context():
             L = self.construct_operator_matrix()
-            # `basis_matrix` is the \Phi_{ij} matrix.
-            basis_matrix = self._basis.construct_operator_matrix(
+            Phi = self._basis.construct_operator_matrix(
                 [1.0], as_numpy=True
             )
-            eigenvals = linalg.eigvals(a=L, b=basis_matrix)
-            principle = min(eigenvals, key=lambda v: v.real)
-            return eigenvals, principle
+            Phi_inv = linalg.inv(Phi, overwrite_a=True)
+            L = Phi_inv.dot(L)
+            eigenvals = linalg.eigvals(a=L)
+            principal = min(eigenvals, key=lambda v: v.real)
+            return eigenvals, principal
 
     def _evaluate_equation(self, eq):
         r"""Interpret the given equation argument to get the operator and

@@ -17,8 +17,11 @@ var searchData=
   ['track_5fmots',['track_mots',['../namespacemotsfinder_1_1axisym_1_1trackmots.html#aac0233a9fd75b4d9b90478f0f9df1e9a',1,'motsfinder::axisym::trackmots']]],
   ['transform',['transform',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#ad6ae22e15846493449d62947cd3dcaea',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
   ['transform_5fdomains',['transform_domains',['../namespacemotsfinder_1_1exprs_1_1series.html#a9da7d6d2afe032a920ae05e8242243ca',1,'motsfinder::exprs::series']]],
+  ['transformation_5fpreset',['transformation_preset',['../namespacemotsfinder_1_1metric_1_1analytical_1_1transformed.html#abb3df01ffd52f353539efa739921ae91',1,'motsfinder::metric::analytical::transformed']]],
+  ['transformedmetric',['TransformedMetric',['../classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html',1,'motsfinder::metric::analytical::transformed']]],
   ['traverse_5ftree',['traverse_tree',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a04e0b3d6a2143ff0d72663206a1707bf',1,'motsfinder::exprs::numexpr::NumericExpression']]],
   ['trivialevaluator',['TrivialEvaluator',['../classmotsfinder_1_1exprs_1_1evaluators_1_1TrivialEvaluator.html',1,'motsfinder::exprs::evaluators']]],
   ['trk',['trK',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#ab9a44dd86b864d59d2c5ddca10a3e831',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
+  ['try_5fquad_5ftolerances',['try_quad_tolerances',['../namespacemotsfinder_1_1numutils.html#ae8e1cf75c3f5096d5de83995cfdd60a0',1,'motsfinder::numutils']]],
   ['two_5fpass',['two_pass',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#aa03ea8fa40e1ead5ee6cd74f0f7abf17',1,'motsfinder::axisym::trackmots::MOTSTracker']]]
 ];

@@ -88,9 +88,9 @@ class TestRefparamcurve(DpkTestCase):
         self.assertAlmostEqual(c.area(), 50.26868688267552)
         self.assertAlmostEqual(c.arc_length(), 7.644951949268928)
         self.assertAlmostEqual(c.inner_z_distance(self.__c, where='top'),
-                               3.3182427382084243)
+                               -3.3182427382084243)
         self.assertAlmostEqual(c.inner_z_distance(self.__c, where='bottom'),
-                               2.673169190394275)
+                               -2.673169190394275)
         self.assertAlmostEqual(c.inner_x_distance(self.__c, where='zero'),
                                3.7988046780100144)
         self.assertAlmostEqual(c.inner_x_distance(self.__c, where='max'),

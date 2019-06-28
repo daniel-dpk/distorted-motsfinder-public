@@ -1,7 +1,6 @@
 var classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric =
 [
     [ "__init__", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#ae64f0875afe3067b97ba370b354b9213", null ],
-    [ "__getstate__", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a452fb35a3c468c1f56497580833a223d", null ],
     [ "_get_metric", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#aba638cb002414c057a812002df2b6038", null ],
     [ "_mat_at", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a8efc33ef9e8648f08abe28e225b94885", null ],
     [ "all_field_objects", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#ae1d45477e814e1c6bac56cd0a1801a3b", null ],
@@ -11,22 +10,20 @@ var classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric =
     [ "diff", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a4f0fa5515b7e6623e1bac8676cbfbaac", null ],
     [ "field", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a4714c4e299ab1cb269fcc036cff93f9f", null ],
     [ "grid", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a9d5d5853753e5dc1b5cd3e9d4c676c2e", null ],
-    [ "interpolate", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a54f321485b5f88982ee8014047537cc4", null ],
-    [ "interpolate", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a1c0d7a3ff403b3f066ed658e78ce956e", null ],
     [ "load", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#abaa7ea341ccde12aa7ad22b948b714b6", null ],
     [ "load_data", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#aa92d92775caa3188964a613e7014cd5e", null ],
-    [ "prepare_for_point", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a5b5c4c451156fccbe8f7349e2aef69df", null ],
     [ "release_file_handle", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#af69344e38826be74811e1c8020b89c7d", null ],
     [ "reset_cache", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a9b4f39b173ff2e7e06c0e05f1eae1517", null ],
     [ "save", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a320366e2ab57ae4ef6d339b65a281a2e", null ],
     [ "save_full_data", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#ad125e44ee417c2855e732224bbef0678", null ],
     [ "save_full_data", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a5e23de8df8520e03f605eaa6a8cda629", null ],
+    [ "set_fd_order", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a302caaaadf773a7ffa24d5155968d6a1", null ],
+    [ "set_interpolation", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a3a9587d764d75c9d761ba7f1cd107170", null ],
     [ "shape", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#aa275694c35a93dea204a86b80ac3b5d9", null ],
     [ "snap_to_grid", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a4b9777e56ece3c038064f70e613241ba", null ],
+    [ "temp_interpolation", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a00d861c739f35ca9348ff4ceb1e040cd", null ],
     [ "unload_data", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#aca546ca1aaed3338332094deb0777b2e", null ],
-    [ "_interpolate", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a4b6da0d0ad0e76632744a3ee42284d75", null ],
     [ "_metric_field", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a58b8a3fe94c2f33373307f52d3d23b48", null ],
-    [ "_prev_pt", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#ab570b65316fb491d5547d9efcd399612", null ],
     [ "_save_full_data", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#ad5b6e8a58c32641ec2327d2cd5be1384", null ],
     [ "save_full_data", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a21d37ee94b4089c49f2b5827ed1a44b4", null ]
 ];

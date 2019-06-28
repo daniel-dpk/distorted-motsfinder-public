@@ -102,11 +102,19 @@ class SioMetric(DiscreteMetric):
     and examples.
     """
 
-    def __init__(self, hdf5_file):
+    def __init__(self, hdf5_file, interpolation='hermite5', fd_order=6):
         r"""Create a 3-metric from a simulation data file.
 
         @param hdf5_file
             The filename to load.
+        @param interpolation
+            Kind of interpolation to perform. Refer to
+            ..discrete.patch.DataPatch.set_interpolation() for available
+            options.
+            Default is ``'hermite5'``.
+        @param fd_order
+            Order of accuracy for finite difference differentiation stencils.
+            Default is `6`.
         """
         super(SioMetric, self).__init__()
         p = SioProject(hdf5_file)
@@ -128,6 +136,8 @@ class SioMetric(DiscreteMetric):
             self.field, self._curv, self._lapse, self._shift,
             self._dtlapse, self._dtshift,
         ]
+        self.set_interpolation(interpolation)
+        self.set_fd_order(fd_order)
 
     def _get_metric(self):
         return SioSym2TensorField(self, 'admbase::metric')

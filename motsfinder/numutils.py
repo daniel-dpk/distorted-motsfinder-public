@@ -28,6 +28,9 @@ __all__ = [
     "binomial_coeffs",
     "inf_norm1d",
     "raise_all_warnings",
+    "try_quad_tolerances",
+    "IntegrationResult",
+    "IntegrationResults",
     "NumericalError",
 ]
 
@@ -134,6 +137,189 @@ def inf_norm1d(f1, f2=None, domain=None, Ns=50, xatol=1e-12):
         options=dict(xatol=xatol),
     )
     return res.x, -res.fun
+
+
+def try_quad_tolerances(func, args=(), kwargs=None, tol_min=1e-11,
+                        tol_max=1e-2, tol_steps=None, verbose=False):
+    r"""Try to run a given function with increasing tolerance until integration succeeds.
+
+    @param func
+        Callable performing the integration. This should issue or raise an
+        `IntegrationWarning` for too low tolerances. It is called as
+        ``func(tol, *args, **kwargs)``.
+    @param args
+        Optional additional positional arguments for `func`.
+    @param kwargs
+        Optional additional keyword arguments for `func`.
+    @param tol_min
+        Minimal tolerance to try first. Default is `1e-11`.
+    @param tol_max
+        Maximum tolerance to allow. If `func` fails for this tolerance, no
+        more trials are done and the `IntegrationWarning` warning is raised.
+        Default is `1e-2`.
+    @param tol_steps
+        How many steps to try when going from `tol_min` to `tol_max`. Should
+        be at least two. Default is to go roughly through each order of
+        magnitude.
+    @param verbose
+        If `True`, print the tolerances as they are tried out. Default is
+        `False`.
+    """
+    if tol_min > tol_max:
+        raise ValueError("minimal tolerance greater than maximum tolerance")
+    tol_min = np.log10(tol_min)
+    tol_max = np.log10(tol_max)
+    if tol_steps is None:
+        tol_steps = max(2, int(round(tol_max-tol_min) + 1))
+    tols = np.logspace(tol_min, tol_max, tol_steps)
+    with raise_all_warnings():
+        for tol in tols:
+            if verbose:
+                print("Trying with tol=%s" % tol)
+            try:
+                return func(tol, *args, **(kwargs or dict()))
+            except IntegrationWarning:
+                if verbose:
+                    print("... failed with tol=%s" % tol)
+                if tol == tols[-1]:
+                    raise
+
+
+class IntegrationResults():
+    r"""Represents a sequence of multiple integration results.
+
+    This class presents convenience methods to sum individual results and
+    errors and check whether all results were computed without any warnings.
+
+    @b Examples
+
+    ```
+        #res = ... # obtained via some means
+        res[0].value     # value of first result
+        res.sum()        # sum of all values
+        res.sum(0, 2)    # sum first and third result
+        res.sum(full_output=True).error # access errors, infos and warnings
+        print("\n".join(str(r.error) for r in res)) # print individual errors
+    ```
+    """
+
+    def __init__(self, *results, info=None, sum_makes_sense=True):
+        r"""Create a results object from given results.
+
+        Positional arguments can be either the ``full_output=True`` results of
+        `scipy.integrate.quad()` calls or IntegrationResult objects.
+
+        @param *results
+            Results to collect.
+        @param info
+            Arbitrary info object to be stored with the results.
+        @param sum_makes_sense
+            Whether the sum of all results is a meaningful number. This
+            controls if the total is printed in case of string conversion.
+        """
+        def _to_result(res):
+            if not isinstance(res, IntegrationResult):
+                res = IntegrationResult(*res)
+            return res
+        self._results = [_to_result(r) for r in results]
+        ## Additional info supplied to the constructor.
+        self.info = info
+        ## Whether the sum of all results is a meaningful number.
+        self.sum_makes_sense = sum_makes_sense
+
+    @property
+    def value(self):
+        r"""Total value (sum of all results)."""
+        return self.sum()
+
+    @property
+    def error(self):
+        r"""Total error (sum of all errors)."""
+        return self.sum(full_output=True).error
+
+    def __len__(self):
+        r"""Number of stored results."""
+        return len(self._results)
+
+    def __getitem__(self, key):
+        r"""Access individual results."""
+        return self._results[key]
+
+    def __iter__(self):
+        r"""Iterate through individual results."""
+        return iter(self._results)
+
+    def sum(self, *indices, full_output=False):
+        r"""Combine results (sum values and optionally errors)."""
+        if indices:
+            results = [self._results[i] for i in indices]
+        else:
+            results = self._results
+        result = sum([r.value for r in results])
+        if not full_output:
+            return result
+        err = sum([r.error for r in results])
+        infos = [r.info for r in results]
+        if all([r.is_ok() for r in results]):
+            warning = None
+        else:
+            warning = "\n".join([r.warning for r in results if r.warning])
+        return IntegrationResult(result, err, infos, warning)
+
+    def __repr__(self):
+        result = "\n".join("[%s] %s" % (i, r) for i, r in enumerate(self._results))
+        if self.sum_makes_sense and len(self._results) > 1:
+            total = self.sum(full_output=True)
+            result += "\nTotal: %s +- %s" % (total.value, total.error)
+        if self.info:
+            result += "\nInfo:\n%s" % (self.info,)
+        return result
+
+    def all_ok(self):
+        r"""Return whether none of the results produced a warning."""
+        return all([r.is_ok() for r in self._results])
+
+
+class IntegrationResult():
+    r"""Wrapper of the `full_output` of a `quad()` call."""
+
+    def __init__(self, value, error, info, warning=None, mult=None):
+        r"""Create a result object from the output of `quad()`.
+
+        @param value
+            Main result, i.e. the computed value.
+        @param error
+            The estimate of the error of the value.
+        @param info
+            Integration info object.
+        @param warning
+            Any warnings produced during integration.
+        @param mult
+            Factor by which to multiply the result and error.
+        """
+        if mult is not None:
+            value = mult * value
+            error = mult * error
+        ## Computed value.
+        self.value = value
+        ## Estimated error.
+        self.error = error
+        ## Info object of the integration `quad()` call.
+        self.info = info
+        ## Warnings produced while integrating (`None` in case of no warnings).
+        self.warning = warning
+
+    def is_ok(self):
+        r"""Return whether the result is OK and produced no warning."""
+        return self.warning is None
+
+    def __repr__(self):
+        txt = "%s +- %s" % (self.value, self.error)
+        if self.warning is not None:
+            w = str(self.warning).split("\n")
+            w = "\n       ".join(w)
+            txt += "\nWarning: %s" % w
+        return txt
 
 
 def inverse_2x2_matrix_derivative(A, dA=None, ddA=None, diff=1):

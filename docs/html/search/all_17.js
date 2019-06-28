@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['z_5fdistance',['z_distance',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ad2053028a7c722407c3e0156724d8969',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
-  ['z_5fdistance_5fusing_5fmetric',['z_distance_using_metric',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a1beed94746c44987d8fce97cc3173d24',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
-  ['zero',['zero',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a876993158b491f4626155b468ffb6edc',1,'motsfinder::exprs::numexpr::NumericExpression']]],
-  ['zero_5fop',['zero_op',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a28d2edf83d6357552b6a48fcaf55f8b9',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]]
+  ['y',['Y',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a0867f43e27585e019c13f7f4b7c4ab6b',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
+  ['yidx',['yidx',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1GridPatch.html#a6e8d6939fb0dd7f374c330f9c461947c',1,'motsfinder::metric::discrete::patch::GridPatch']]]
 ];

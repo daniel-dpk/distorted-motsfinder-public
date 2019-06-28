@@ -9,6 +9,8 @@ the residual violations of the constraints of numerical data along a surface
 
 import numpy as np
 
+from ...numutils import NumericalError
+
 
 __all__ = [
     "ConstraintAnalyzer",
@@ -145,7 +147,8 @@ class ConstraintAnalyzer():
         r"""Return the Gauss collocation points in curve parameter space."""
         return self._curve.h.collocation_points(lobatto=False)
 
-    def constraints_on_patch(self, pts_indices):
+    def constraints_on_patch(self, pts_indices=None, as_data_patch=False,
+                             xlim=(None, None), zlim=(None, None)):
         r"""Compute constraint violations on a patch of grid points.
 
         @return Two NumPy matrices `ham` and `mom` for the complete numerical
@@ -157,10 +160,22 @@ class ConstraintAnalyzer():
             \f$\mathcal{H}_b = D^a(K_{ab} - g_{ab} K^c_{\ c})\f$.
 
         @param pts_indices
-            List of grid points to consider.
+            List of grid points to consider. If not given, compute at *each*
+            grid point except a few border points (expensive and inefficient).
+        @param as_data_patch
+            Whether to return the data as plain numpy arrays (`False`,
+            default) or as two .patch.DataPatch objects.
+        @param xlim,zlim
+            Optional coordinate range outside of which not to compute.
         """
+        def _fl(val, default):
+            return val if val is not None else default
+        xmin, xmax = _fl(xlim[0], -np.inf), _fl(xlim[1], np.inf)
+        zmin, zmax = _fl(zlim[0], -np.inf), _fl(zlim[1], np.inf)
         g = self._curve.metric
         g00 = g.component_matrix(0, 0)
+        if pts_indices is None:
+            pts_indices = list(g.grid())
         pts = [g00.coords(*ijk) for ijk in pts_indices]
         ham = np.zeros(shape=g00.shape, dtype=float)
         mom = np.zeros(shape=g00.shape, dtype=float)
@@ -168,10 +183,22 @@ class ConstraintAnalyzer():
         try:
             g.interpolate = False
             for pt, ijk in zip(pts, pts_indices):
+                if not xmin <= pt[0] <= xmax or not zmin <= pt[2] <= zmax:
+                    continue
                 ijk = tuple(ijk)
-                ham[ijk], mom[ijk] = g.constraints(pt, norm=True)
+                try:
+                    ham[ijk], mom[ijk] = g.constraints(pt, norm=True)
+                except NumericalError:
+                    # Point is too close to domain boundary.
+                    pass
         finally:
             g.interpolate = interpolate
+        if as_data_patch:
+            from .patch import DataPatch
+            return (
+                DataPatch.from_patch(g00, ham, symmetry='even'),
+                DataPatch.from_patch(g00, mom, symmetry='even')
+            )
         return ham, mom
 
     def max_constraints_per_chunk(self, radii=(0,), params=None,

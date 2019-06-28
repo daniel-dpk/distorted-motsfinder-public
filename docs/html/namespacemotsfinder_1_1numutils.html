@@ -97,6 +97,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1numutils_1_1__BinomialCoeffs.html">_BinomialCoeffs</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class to simply cache the coefficient lists.  <a href="classmotsfinder_1_1numutils_1_1__BinomialCoeffs.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1numutils_1_1IntegrationResult.html">IntegrationResult</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper of the <code>full_output</code> of a <code>quad()</code> call.  <a href="classmotsfinder_1_1numutils_1_1IntegrationResult.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1numutils_1_1IntegrationResults.html">IntegrationResults</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents a sequence of multiple integration results.  <a href="classmotsfinder_1_1numutils_1_1IntegrationResults.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1numutils_1_1NumericalError.html">NumericalError</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception raised for problems with numerical evaluation.  <a href="classmotsfinder_1_1numutils_1_1NumericalError.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,6 +124,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a4b97c44db7e45216d0cc0b32acfa54a9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a4b97c44db7e45216d0cc0b32acfa54a9">inf_norm1d</a> (f1, f2=None, domain=None, Ns=50, xatol=1e-12)</td></tr>
 <tr class="memdesc:a4b97c44db7e45216d0cc0b32acfa54a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the L^inf norm of f1-f2.  <a href="#a4b97c44db7e45216d0cc0b32acfa54a9">More...</a><br /></td></tr>
 <tr class="separator:a4b97c44db7e45216d0cc0b32acfa54a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8e1cf75c3f5096d5de83995cfdd60a0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#ae8e1cf75c3f5096d5de83995cfdd60a0">try_quad_tolerances</a> (func, args=(), kwargs=None, tol_min=1e-11, tol_max=1e-2, tol_steps=None, verbose=False)</td></tr>
+<tr class="memdesc:ae8e1cf75c3f5096d5de83995cfdd60a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Try to run a given function with increasing tolerance until integration succeeds.  <a href="#ae8e1cf75c3f5096d5de83995cfdd60a0">More...</a><br /></td></tr>
+<tr class="separator:ae8e1cf75c3f5096d5de83995cfdd60a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a24489f5e58131c2fa6ad0ef9d36c732b">inverse_2x2_matrix_derivative</a> (A, dA=None, ddA=None, diff=1)</td></tr>
 <tr class="memdesc:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute derivatives of the inverse of a 2x2 matrix.  <a href="#a24489f5e58131c2fa6ad0ef9d36c732b">More...</a><br /></td></tr>
 <tr class="separator:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -383,6 +392,78 @@ Functions</h2></td></tr>
 
 <p>Context manager for turning numpy and native warnings into exceptions. </p>
 <p>For example: </p><div class="fragment"><div class="line">with raise_all_warnings():</div><div class="line">    np.pi / np.linspace(0, 1, 10)</div></div><!-- fragment --><p> Without the <code><a class="el" href="namespacemotsfinder_1_1numutils.html#a037496c5c59fcf131f27ee81af4d8636" title="Context manager for turning numpy and native warnings into exceptions. ">raise_all_warnings()</a></code> context, the above code would just issue a warning but otherwise run fine. This allows catching the exception to act upon it, e.g. </p><div class="fragment"><div class="line">with raise_all_warnings():</div><div class="line">    <span class="keywordflow">try</span>:</div><div class="line">        np.pi / np.linspace(0, 1, 10)</div><div class="line">    <span class="keywordflow">except</span> FloatingPointError:</div><div class="line">        print(<span class="stringliteral">&quot;Could not compute.&quot;</span>)</div></div><!-- fragment --> 
+</div>
+</div>
+<a id="ae8e1cf75c3f5096d5de83995cfdd60a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8e1cf75c3f5096d5de83995cfdd60a0">&#9670;&nbsp;</a></span>try_quad_tolerances()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.numutils.try_quad_tolerances </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>args</em> = <code>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kwargs</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tol_min</em> = <code>1e-11</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tol_max</em> = <code>1e-2</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tol_steps</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Try to run a given function with increasing tolerance until integration succeeds. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">func</td><td>Callable performing the integration. This should issue or raise an <code>IntegrationWarning</code> for too low tolerances. It is called as <code>func(tol, *args, **kwargs)</code>. </td></tr>
+    <tr><td class="paramname">args</td><td>Optional additional positional arguments for <code>func</code>. </td></tr>
+    <tr><td class="paramname">kwargs</td><td>Optional additional keyword arguments for <code>func</code>. </td></tr>
+    <tr><td class="paramname">tol_min</td><td>Minimal tolerance to try first. Default is <code>1e-11</code>. </td></tr>
+    <tr><td class="paramname">tol_max</td><td>Maximum tolerance to allow. If <code>func</code> fails for this tolerance, no more trials are done and the <code>IntegrationWarning</code> warning is raised. Default is <code>1e-2</code>. </td></tr>
+    <tr><td class="paramname">tol_steps</td><td>How many steps to try when going from <code>tol_min</code> to <code>tol_max</code>. Should be at least two. Default is to go roughly through each order of magnitude. </td></tr>
+    <tr><td class="paramname">verbose</td><td>If <code>True</code>, print the tolerances as they are tried out. Default is <code>False</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 </div><!-- contents -->

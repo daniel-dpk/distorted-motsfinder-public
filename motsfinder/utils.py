@@ -408,6 +408,9 @@ def save_to_file(filename, data, overwrite=False, verbose=True,
         Whether to print when the file was written. Default is `True`.
     @param showname
         Name to print in the confirmation message in case `verbose==True`.
+    @param mkpath
+        If the parent folder(s) of the given filename don't exist, they are
+        created if ``mkpath==True`` (default). Otherwise, an error is raised.
 
     @b Notes
 

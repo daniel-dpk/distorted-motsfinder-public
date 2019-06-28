@@ -13,6 +13,8 @@ from mpmath import mp
 from testutils import DpkTestCase
 from .numexpr import NumericExpression
 from .numexpr import isclose
+from .basics import OffsetExpression, DivisionExpression, SimpleSinExpression
+from .basics import SimpleCoshExpression
 
 
 class _TestExpr1(NumericExpression):
@@ -175,6 +177,36 @@ class TestNumexpr(DpkTestCase):
         self.assertTrue(hasattr(f, 'domainX'))
         self.assertTrue(hasattr(f, 'domainY'))
         self.assertFalse(hasattr(f, 'domainZ'))
+
+
+class TestOffsetExpression(DpkTestCase):
+    def test_offset(self):
+        expr = OffsetExpression(_TestExpr1(), 1.0)
+        e = expr.evaluator()
+        self.assertAlmostEqual(e(0), 1.0)
+        self.assertAlmostEqual(e(1), 2.0)
+        self.assertAlmostEqual(e(2), 5.0)
+        self.assertAlmostEqual(e.diff(0), 0.0)
+        self.assertAlmostEqual(e.diff(1), 2.0)
+        self.assertAlmostEqual(e.diff(2), 4.0)
+        self.assertAlmostEqual(e.diff(1, 2), 2.0)
+
+
+class TestDivisionExpression(DpkTestCase):
+    def test_division(self):
+        expr = DivisionExpression(
+            SimpleSinExpression(),
+            OffsetExpression(SimpleCoshExpression(), 2),
+        )
+        with mp.workdps(30):
+            f = expr.evaluator(use_mp=True)
+            space = mp.linspace(0, mp.pi, 10)
+            for n in range(1, 5):
+                self.assertListAlmostEqual(
+                    [f.diff(x, n) for x in space],
+                    [mp.diff(f, x, n) for x in space],
+                    delta=1e-28,
+                )
 
 
 def run_tests():

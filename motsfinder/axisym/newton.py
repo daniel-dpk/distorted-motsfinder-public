@@ -36,6 +36,7 @@ import numpy as np
 from ..utils import insert_missing, process_pool
 from ..numutils import raise_all_warnings, NumericalError
 from ..ndsolve import ndsolve, CosineBasis
+from .utils import detect_coeff_knee
 
 
 __all__ = [
@@ -192,10 +193,13 @@ class NewtonKantorovich(object):
                  "target_expansion", "accurate_test_res", "auto_resolution",
                  "max_resolution", "linear_regime_threshold", "mat_solver",
                  "__fake_convergent_steps", "max_fake_convergent_steps",
-                 "res_increase_factor", "res_decrease_factor",
+                 "res_increase_factor", "min_res_increase_factor",
+                 "max_res_increase", "res_decrease_factor",
                  "res_decrease_accel", "res_init_factor",
                  "downsampling_tol_factor", "linear_regime_res_factor",
                  "min_res", "detect_plateau", "plateau_tol",
+                 "knee_detection", "knee_increase_factor", "knee_threshold",
+                 "_knee_detected",
                  "liberal_downsampling", "plot_steps", "plot_deltas",
                  "plot_opts", "reference_curves", "disp", "parallel",
                  "_prev_accurate_delta", "_prev_res_accurate_delta",
@@ -276,6 +280,28 @@ class NewtonKantorovich(object):
         ## Factor by which to increase the resolution in case insufficient
         ## resolution is detected (should be > 1.0).
         self.res_increase_factor = 1.5
+        ## If res increase is limited by `max_resolution`, this is the minimal
+        ## factor by which the resolution must effectively increase for
+        ## plateau detection to be reliable. Default is to use
+        ## `res_increase_factor`. Note that this only applies to resolutions
+        ## near the `max_resolution`, where smaller relative resolution
+        ## increases may be sufficient for plateau detection.
+        self.min_res_increase_factor = None
+        ## Maximum resolution increase per step. When the tolerance is reached
+        ## at the collocation points but not between them, the resolution is
+        ## increased by multiplying the current resolution with
+        ## `res_increase_factor`. This increase can be limited using
+        ## `max_res_increase`. Note that plateau detection is *not* turned off
+        ## if this limit is reached even if the `min_res_increase_factor` is
+        ## *not* reached. This may help limiting the resolution increase in
+        ## cases where convergence is worse than exponential. A use-case is
+        ## when using Hermite interpolation of numerical data which may lead
+        ## to an explosion of collocation points if the solver, after having
+        ## reached the actual plateau exponentially, still sees
+        ## sub-exponential convergence occurring from making its complicated
+        ## way between the smooth numerical inaccuracies (i.e. when it tries
+        ## to do sub-grid-point corrections).
+        self.max_res_increase = None
         ## Once converged and with `auto_resolution==True`, this controls in
         ## which steps the resolution is reduced as long as the tolerance is
         ## maintained.
@@ -298,6 +324,23 @@ class NewtonKantorovich(object):
         ## Plateau is detected if new results are not at least `plateau_tol`
         ## times better than previous results.
         self.plateau_tol = 1.5
+        ## Whether to estimate the plateau based on "knee" detection in the
+        ## horizon function's coefficient list.\ Any time convergence occurs
+        ## at the collocation points, this test is performed (before any
+        ## plateau detection) and if a cutoff is suggested, the result is
+        ## defined to have converged.\ In that case, the suggested resolution
+        ## (plus a few extra points) is used for a few more steps until we
+        ## have convergence at these new collocation points.
+        self.knee_detection = False
+        ## How many extra collocation points (as a fraction of the suggested
+        ## cutoff) to add to the suggested cutoff.\ If the resulting
+        ## resolution is larger than the current resolution, knee detection is
+        ## ignored for that round.
+        self.knee_increase_factor = 0.2
+        ## Threshold for the "knee" detection in case ``knee_detection==True``.
+        self.knee_threshold = 0.05
+        ## Whether we're doing the final few steps after the knee was found.
+        self._knee_detected = False
         ## If `True`, ignore `atol` while downsampling and only consider
         ## `downsampling_tol_factor`.
         self.liberal_downsampling = False
@@ -481,6 +524,10 @@ class NewtonKantorovich(object):
         tolerance lies below the roundoff plateau). In case we're allowed to,
         the resolution is then increased and more steps are taken.
         """
+        # Note: We enter this function each time we have converged at the
+        #       collocation points. Any logic that should occur at these
+        #       instants is put here. (This does not mean we should not
+        #       refactor the logic into smaller methods...)
         def _p(msg):
             if self.verbose:
                 print(msg)
@@ -489,10 +536,22 @@ class NewtonKantorovich(object):
         if not self.atol or accurate_delta <= self.atol:
             # We really have converged (or should not check).
             if eq.has_accurate_test():
-                _p("  Accurate error = %g at resolution %s"
-                   % (accurate_delta, curve.num))
+                if self.atol:
+                    _p("  Accurate error = %g <= %g at resolution %s"
+                       % (accurate_delta, self.atol, curve.num))
+                else:
+                    _p("  Accurate error = %g at resolution %s"
+                       % (accurate_delta, curve.num))
+            # Even if a knee was detected, we've now *officially* converged
+            # even between collocation points.
             curve.user_data['converged'] = True
             curve.user_data['reason'] = "converged"
+            return True
+        if self._knee_detected:
+            ## We've now converged at the collocation points after a new
+            ## resolution was set due to a "knee" having been detected in the
+            ## coefficients.
+            _p("  Accurate error %g > %g." % (accurate_delta, self.atol))
             return True
         # Expansion is not low enough. This is a "fake convergent" step.
         self.__fake_convergent_steps += 1
@@ -500,12 +559,29 @@ class NewtonKantorovich(object):
             # We allow some fake steps to account for the case that the
             # violating values need just one or two extra steps to converge.
             return False
+        if self.knee_detection:
+            suggested_res = self._knee_detection(curve)
+            if suggested_res:
+                # Knee detection successful. This means we *have* converged
+                # but still need to do one more round to converge at the
+                # collocation points.
+                _p("  Accurate error still %g > %g."
+                   % (accurate_delta, self.atol))
+                _p("  Sub-exponential convergence of coefficients found. "
+                   "Suggested maximum resolution: %s" % suggested_res)
+                _p("  Continuing to converge at (new) collocation points.")
+                curve.user_data['converged'] = True
+                curve.user_data['reason'] = "knee"
+                self._knee_detected = True
+                self._change_resolution(curve, d, suggested_res)
+                self.detect_plateau = False
+                return False
         if self.detect_plateau:
             prev_res_delta = self._prev_res_accurate_delta
             if prev_res_delta and self.plateau_tol*accurate_delta >= prev_res_delta:
                 # increasing the resolution did not help appreciably
-                _p("  Plateau detected; remaining error = %g at resolution %s"
-                   % (accurate_delta, curve.num))
+                _p("  Plateau detected; remaining error = %g > %g at resolution %s"
+                   % (accurate_delta, self.atol, curve.num))
                 curve.user_data['converged'] = True
                 curve.user_data['reason'] = "plateau"
                 return True
@@ -526,13 +602,30 @@ class NewtonKantorovich(object):
             return True
         # Increase resolution and take more steps.
         self._prev_res_accurate_delta = accurate_delta
-        num = min(int(self.res_increase_factor * curve.num),
-                  self.max_resolution)
+        num = int(self.res_increase_factor * curve.num)
+        if self.max_res_increase:
+            num = min(curve.num+self.max_res_increase, num)
+        if num > self.max_resolution:
+            num = self.max_resolution
+            # can't detect plateau for small resolution changes
+            if (self.detect_plateau
+                    and not self._enough_res_increase(curve.num, num)):
+                self.detect_plateau = False
+                _p("Too little resolution increase. Plateau detection deactivated.")
         _p("  Accurate error still %g > %g... increasing resolution %d -> %d"
            % (accurate_delta, self.atol, curve.num, num))
         self._change_resolution(curve, d, num)
         self.__fake_convergent_steps = 0
         return False
+
+    def _enough_res_increase(self, num1, num2):
+        r"""Check if the increase `num1` -> `num2` is large enough for plateau detection."""
+        min_factor = self.res_increase_factor
+        if self.min_res_increase_factor:
+            min_factor = self.min_res_increase_factor
+        return num2 >= min_factor*num1 or (
+            self.max_res_increase and num2-num1 >= self.max_res_increase
+        )
 
     def _change_resolution(self, curve, d, res):
         r"""Resample the curve and current linear solution.
@@ -543,6 +636,20 @@ class NewtonKantorovich(object):
         curve.resample(res)
         d.resample(res)
 
+    def _knee_detection(self, curve):
+        r"""Check if there is a *knee* in the coefficient list."""
+        try:
+            knee = detect_coeff_knee(curve.h.a_n, threshold=self.knee_threshold)
+        except FloatingPointError:
+            return None
+        if knee is None:
+            return None
+        knee *= int(round(1 + self.knee_increase_factor))
+        knee = max(self.min_res, knee)
+        if knee >= curve.num:
+            return None
+        return knee
+
     def _raise(self, ex_cls, msg):
         r"""Raise an exception depending on the `disp` setting.
 
@@ -550,6 +657,8 @@ class NewtonKantorovich(object):
         """
         if self.disp:
             raise ex_cls(msg)
+        if self.verbose:
+            print("Stopping Newton search: %s" % msg)
 
     def _plot_step(self, curve, step):
         r"""Plot the result of a Newton step together with reference curve."""

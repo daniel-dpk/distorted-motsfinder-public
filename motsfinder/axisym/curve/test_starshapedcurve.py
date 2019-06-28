@@ -19,10 +19,10 @@ class TestStarshapedcurve(DpkTestCase):
         params = np.linspace(0, np.pi, 5)
         v = c.expansions(params)
         np.testing.assert_allclose(v, [0.192] * 5)
-        c.h.a_n[0] = 1 # change radius
+        c.h.set_constant(1.0) # change radius
         v = c.expansions(params)
         np.testing.assert_allclose(v, [0.] * 5, atol=1e-12)
-        c.h.a_n[0] = 90
+        c.h.set_constant(90)
         v = c.expansions(params)
         np.testing.assert_allclose(v, [0.021258779862813194] * 5)
         self.assertAlmostEqual(c.expansion(0.2), 0.02125877986281319)
@@ -33,7 +33,7 @@ class TestStarshapedcurve(DpkTestCase):
         c = StarShapedCurve.create_sphere(radius=4, num=20, metric=metric)
         rs = np.linspace(.5, 20, 5)
         def f(r, hdiff=None):
-            c.h.a_n[0] = r
+            c.h.set_constant(r)
             c.horizon_function_changed()
             return c.expansion(np.pi/5., hdiff=hdiff)
         v = [f(r) for r in rs]

@@ -83,7 +83,8 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1metric_1_1discr
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">motsfinder.metric.discrete.numerical Namespace Reference</div>  </div>
 </div><!--header-->
@@ -109,20 +110,27 @@ Functions</h2></td></tr>
 <tr class="memitem:a62bbd7ba8a3238d76f4648c69f228556"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a62bbd7ba8a3238d76f4648c69f228556">_interp1d</a> (arr, ii, coord, linear, cache=None, base_idx=None)</td></tr>
 <tr class="memdesc:a62bbd7ba8a3238d76f4648c69f228556"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform 1-D interpolation of a sequence of values.  <a href="#a62bbd7ba8a3238d76f4648c69f228556">More...</a><br /></td></tr>
 <tr class="separator:a62bbd7ba8a3238d76f4648c69f228556"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb9ba5e0408c0bdb7fa9b9f1695a141b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#adb9ba5e0408c0bdb7fa9b9f1695a141b">_diff_4th_order_xz</a> (mat, region, dx, dz, diff=1)</td></tr>
-<tr class="memdesc:adb9ba5e0408c0bdb7fa9b9f1695a141b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform 4th order accurate FD differentiation on specified grid points.  <a href="#adb9ba5e0408c0bdb7fa9b9f1695a141b">More...</a><br /></td></tr>
-<tr class="separator:adb9ba5e0408c0bdb7fa9b9f1695a141b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a158505985541f4a9203412f501680cd3"><td class="memItemLeft" align="right" valign="top"><a id="a158505985541f4a9203412f501680cd3"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a158505985541f4a9203412f501680cd3">_diff_4th_order_xz_impl</a> (mat, region, dx, dz, diff=1)</td></tr>
-<tr class="memdesc:a158505985541f4a9203412f501680cd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#adb9ba5e0408c0bdb7fa9b9f1695a141b" title="Perform 4th order accurate FD differentiation on specified grid points. ">_diff_4th_order_xz()</a>. <br /></td></tr>
-<tr class="separator:a158505985541f4a9203412f501680cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d9c2fdff2dd4e11eb2d4dbaf9886c43"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a6d9c2fdff2dd4e11eb2d4dbaf9886c43">eval_sym_axisym_matrix</a> (comp_funcs, lower_orders, point, interp=True, diff=0)</td></tr>
-<tr class="memdesc:a6d9c2fdff2dd4e11eb2d4dbaf9886c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate (derivatives of) a symmetric tensor field at a point.  <a href="#a6d9c2fdff2dd4e11eb2d4dbaf9886c43">More...</a><br /></td></tr>
-<tr class="separator:a6d9c2fdff2dd4e11eb2d4dbaf9886c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6205d9000b82f03de99dbe1a13e6996f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a6205d9000b82f03de99dbe1a13e6996f">fd_xz_derivatives</a> (mat, region, dx, dz, derivs, stencil_size=5)</td></tr>
+<tr class="memdesc:a6205d9000b82f03de99dbe1a13e6996f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform finite difference differentiation on specified grid points.  <a href="#a6205d9000b82f03de99dbe1a13e6996f">More...</a><br /></td></tr>
+<tr class="separator:a6205d9000b82f03de99dbe1a13e6996f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a394a2d9740d46bd55757eeb65ee5f683"><td class="memItemLeft" align="right" valign="top"><a id="a394a2d9740d46bd55757eeb65ee5f683"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a394a2d9740d46bd55757eeb65ee5f683">_fd_xz_derivatives</a> (mat, region, dx, dz, derivs, stencil_size)</td></tr>
+<tr class="memdesc:a394a2d9740d46bd55757eeb65ee5f683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement <a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a6205d9000b82f03de99dbe1a13e6996f" title="Perform finite difference differentiation on specified grid points. ">fd_xz_derivatives()</a>. <br /></td></tr>
+<tr class="separator:a394a2d9740d46bd55757eeb65ee5f683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29ed23d1a6a0ddd1615caaed464b8641"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a29ed23d1a6a0ddd1615caaed464b8641">eval_sym_axisym_matrix</a> (comp_funcs, lower_orders, point, diff=0)</td></tr>
+<tr class="memdesc:a29ed23d1a6a0ddd1615caaed464b8641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate (derivatives of) a symmetric tensor field at a point.  <a href="#a29ed23d1a6a0ddd1615caaed464b8641">More...</a><br /></td></tr>
+<tr class="separator:a29ed23d1a6a0ddd1615caaed464b8641"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab45ab5119a4566a129d7140b7a46809d"><td class="memItemLeft" align="right" valign="top"><a id="ab45ab5119a4566a129d7140b7a46809d"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#ab45ab5119a4566a129d7140b7a46809d">_sym3x3</a> (T)</td></tr>
 <tr class="memdesc:ab45ab5119a4566a129d7140b7a46809d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Symmetrize a 3x3 matrix by replacing the lower-left three components. <br /></td></tr>
 <tr class="separator:ab45ab5119a4566a129d7140b7a46809d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a4f38523f59e06b4fca3b55e93810ee86"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><b>COEFFS_1ST</b></td></tr>
+<tr class="separator:a4f38523f59e06b4fca3b55e93810ee86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bea5cb45acc2446d995cc580ce5e999"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><b>COEFFS_2ND</b></td></tr>
+<tr class="separator:a2bea5cb45acc2446d995cc580ce5e999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Numerical low-level computations and helpers. </p>
@@ -176,74 +184,6 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 
 <p>Similar to np.apply_along_axis(), but call func with the fixed indices. </p>
 <p>In contrast to <code>np.apply_along_axis()</code>, <code>func</code> is called with the tuple <code>ii</code> of indices that are fixed in <code>mat</code> as second positional argument. This provides context for where the function is being evaluated in the matrix which may be used to implement e.g. caching mechanisms. </p>
-
-</div>
-</div>
-<a id="adb9ba5e0408c0bdb7fa9b9f1695a141b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb9ba5e0408c0bdb7fa9b9f1695a141b">&#9670;&nbsp;</a></span>_diff_4th_order_xz()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">def motsfinder.metric.discrete.numerical._diff_4th_order_xz </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>mat</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>region</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>dx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>dz</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>diff</em> = <code>1</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Perform 4th order accurate FD differentiation on specified grid points. </p>
-<p>Given a matrix <code>mat</code> containing values on a grid, this performs first or second order finite difference (FD) differentiation for each grid point in the given <code>region</code> using 5-point stencils.</p>
-<p>Note that only <code>x</code> and <code>z</code> (and possibly mixed) derivatives are computed, even though <code>mat</code> needs to have three axes.</p>
-<dl class="section return"><dt>Returns</dt><dd>For <code>diff=1</code>, two matrices of the shape of the given region, the first containing the x-derivatives and the second the z-derivatives. For <code>diff=2</code>, three matrices containing the <code>xx</code>, <code>zz</code> and <code>xz</code> partial derivatives of the <code>region</code>.</dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mat</td><td>Matrix with the values to use. Must have at least 2 additional points in the first and third axes on the borders of the given <code>region</code>. </td></tr>
-    <tr><td class="paramname">region</td><td>Region of grid points at which to compute the derivatives. Should consist of three iterables of indices, the tensor product of which defines the actual set of indices in the region. </td></tr>
-    <tr><td class="paramname">dx,dz</td><td>Physical distance of grid points in coordinate space along the axes. </td></tr>
-    <tr><td class="paramname">diff</td><td>Derivative order. Should be <code>1</code> or <code>2</code>. Default is <code>1</code>. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -321,8 +261,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 
 </div>
 </div>
-<a id="a6d9c2fdff2dd4e11eb2d4dbaf9886c43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d9c2fdff2dd4e11eb2d4dbaf9886c43">&#9670;&nbsp;</a></span>eval_sym_axisym_matrix()</h2>
+<a id="a29ed23d1a6a0ddd1615caaed464b8641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29ed23d1a6a0ddd1615caaed464b8641">&#9670;&nbsp;</a></span>eval_sym_axisym_matrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,12 +289,6 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>interp</em> = <code>True</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>diff</em> = <code>0</code>&#160;</td>
         </tr>
         <tr>
@@ -374,7 +308,6 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
     <tr><td class="paramname">comp_funcs</td><td>An iterable of the six independent component functions (DataPatch) of the tensor field. </td></tr>
     <tr><td class="paramname">*lower_orders</td><td>Further positional arguments supplying the lower order derivatives. For <code>diff=0</code>, none should be supplied. For <code>diff=1</code>, one argument, <code>T</code> itself, should be given. For <code>diff=2</code>, <code>T</code> and <code>dT</code> should be given in that order. </td></tr>
     <tr><td class="paramname">point</td><td>The point at which to compute. </td></tr>
-    <tr><td class="paramname">interp</td><td>If <code>False</code>, don't interpolate at all and instead snap <code>point</code> to the closest grid point and evaluate there. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">diff</td><td>Derivative order to compute. Default is <code>0</code>.</td></tr>
   </table>
   </dd>
@@ -387,6 +320,73 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 <p><b>References</b> </p>
 <p>[1] Alcubierre, Miguel, et al. "Symmetry without symmetry: Numerical
      simulation of axisymmetric systems using Cartesian grids." International Journal of Modern Physics D 10.03 (2001): 273-289. </p>
+
+</div>
+</div>
+<a id="a6205d9000b82f03de99dbe1a13e6996f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6205d9000b82f03de99dbe1a13e6996f">&#9670;&nbsp;</a></span>fd_xz_derivatives()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.metric.discrete.numerical.fd_xz_derivatives </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>region</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dz</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>derivs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>stencil_size</em> = <code>5</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform finite difference differentiation on specified grid points. </p>
+<p>Given a matrix <code>mat</code> containing values on a grid, this function approximates the first or second derivative for each grid point in the given <code>region</code> using 3-, 5-, 7- or 9-point stencils.</p>
+<p>Note that only <code>x</code> and <code>z</code> (and possibly mixed) derivatives are computed, even though <code>mat</code> needs to have three axes.</p>
+<dl class="section return"><dt>Returns</dt><dd>For element of <code>derivs</code>, a matrix of the shape of <code>region</code>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mat</td><td>Matrix with the values to use. Must have at least <code>(stencil_size-1)/2</code> additional points in the first and third axes on the borders of the given <code>region</code>. </td></tr>
+    <tr><td class="paramname">region</td><td>Region of grid points at which to compute the derivatives. Should consist of three iterables of indices, the tensor product of which defines the actual set of indices in the region. </td></tr>
+    <tr><td class="paramname">dx,dz</td><td>Physical distance of grid points in coordinate space along the axes. </td></tr>
+    <tr><td class="paramname">derivs</td><td>Derivative orders to compute. To compute the x-, z-, and x-z-derivatives, use <code>derivs=([1, 0], [0, 1], [1, 1])</code>. </td></tr>
+    <tr><td class="paramname">stencil_size</td><td>Number of grid points to consider (i.e. the "size" of the stencil). This determines the order of accuracy of the derivative computed. Allowed values currently are 3, 5, 7, 9. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -447,6 +447,35 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
   </dd>
 </dl>
 
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a4f38523f59e06b4fca3b55e93810ee86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f38523f59e06b4fca3b55e93810ee86">&#9670;&nbsp;</a></span>COEFFS_1ST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list COEFFS_1ST</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;=  [</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    np.array([                  -1., 0.,   1.                 ]) /   2., <span class="comment"># order=2</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    np.array([            1.,   -8., 0.,   8.,   -1.          ]) /  12., <span class="comment"># order=4</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    np.array([     -1.,   9.,  -45., 0.,  45.,   -9.,  1.     ]) /  60., <span class="comment"># order=6</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    np.array([3., -32., 168., -672., 0., 672., -168., 32., -3.]) / 840., <span class="comment"># order=8</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;]</div></div><!-- fragment -->
+</div>
+</div>
+<a id="a2bea5cb45acc2446d995cc580ce5e999"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bea5cb45acc2446d995cc580ce5e999">&#9670;&nbsp;</a></span>COEFFS_2ND</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list COEFFS_2ND</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;=  [</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;    np.array([                      1.,     -2.,    1.                   ]),         <span class="comment"># order=2</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;    np.array([              -1.,   16.,    -30.,   16.,    -1.           ]) /   12., <span class="comment"># order=4</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;    np.array([       2.,   -27.,  270.,   -490.,  270.,   -27.,   2.     ]) /  180., <span class="comment"># order=6</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    np.array([-9., 128., -1008., 8064., -14350., 8064., -1008., 128., -9.]) / 5040., <span class="comment"># order=8</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;]</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

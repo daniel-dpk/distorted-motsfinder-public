@@ -12,15 +12,17 @@ refparamcurve.RefParamCurve for examples.
 from abc import abstractmethod
 from contextlib import contextmanager
 from math import fsum
+import sys
 
 import numpy as np
 from scipy import linalg
-from scipy.integrate import quad
-from scipy.optimize import minimize_scalar, bracket
+from scipy.integrate import quad, IntegrationWarning
+from scipy.optimize import minimize_scalar, bracket, brentq, root
 from scipy.special import sph_harm
+from mpmath import mp
 
 from ...utils import insert_missing, isiterable, parallel_compute
-from ...numutils import clip
+from ...numutils import clip, IntegrationResult, IntegrationResults
 from ...metric import FlatThreeMetric, FourMetric
 from ...ndsolve import ndsolve, NDSolver, CosineBasis
 from ...ndsolve import DirichletCondition
@@ -98,6 +100,10 @@ class ExpansionCurve(BaseCurve):
                                             atol=atol, rtol=rtol,
                                             full_output=full_output)
 
+    def proper_length_map(self, num=None, **kw):
+        metric = kw.pop('metric', self.metric)
+        return super().proper_length_map(num=num, metric=metric, **kw)
+
     def z_distance(self, other_curve=None, atol=1e-12, rtol=1e-12, limit=100,
                    allow_intersection=False, full_output=False):
         return self.z_distance_using_metric(
@@ -106,17 +112,19 @@ class ExpansionCurve(BaseCurve):
             full_output=full_output
         )
 
-    def inner_z_distance(self, other_curve, where='top', **kw):
+    def inner_z_distance(self, other_curve, where='top', full_output=False,
+                         **kw):
         r"""Compute the z-distance of two points of this and another curve.
 
         In contrast to z_distance(), this method does *not* compute how close
-        two surfaces approach each other (which would return zero for
-        intersecting surfaces). Instead, it computes one possible measure for
-        how close the two surfaces are from being identical, i.e. it computes
-        the distance of two corresponding points.
+        two surfaces approach each other. Instead, it computes one possible
+        measure for how close the two surfaces are from being identical, i.e.
+        it computes the distance of two corresponding points.
 
         In this function, we take either the top or bottom points of both
-        surfaces on the z-axis and compute their distance.
+        surfaces on the z-axis and compute their distance. The distance will
+        have negative sign if this curve is in the *interior* of the
+        `other_curve`.
 
         @param other_curve
             Curve to which to compute the distance.
@@ -128,6 +136,9 @@ class ExpansionCurve(BaseCurve):
             the two points. By default, takes the current metric stored in
             this curve. Explicitely specify `None` to get the coordinate
             distance.
+        @param full_output
+            If `True`, return the computed result and an estimation of the
+            error. Otherwise (default), just return the result.
         @param **kw
             Further keyword arguments are passed to arc_length_using_metric().
         """
@@ -136,7 +147,14 @@ class ExpansionCurve(BaseCurve):
             raise ValueError('Unknown location: %s' % where)
         t = 0 if where == 'top' else np.pi
         line = ParametricCurve.create_line_segment(self(t), other_curve(t))
-        return line.arc_length_using_metric(metric=metric, **kw)
+        dist, dist_err = line.arc_length_using_metric(metric=metric,
+                                                      full_output=True, **kw)
+        upwards = line(0)[1] < line(np.pi)[1]
+        if (where == 'top' and upwards) or (where == 'bottom' and not upwards):
+            dist *= -1
+        if full_output:
+            return dist, dist_err
+        return dist
 
     def inner_x_distance(self, other_curve, where='zero', **kw):
         r"""Compute the x-distance of two points of this and another curve.
@@ -225,11 +243,6 @@ class ExpansionCurve(BaseCurve):
         self.h.resample(new_num)
         self.force_evaluator_update()
         return self
-
-    @abstractmethod
-    def copy(self):
-        r"""Create an independent copy of this curve."""
-        pass
 
     @abstractmethod
     def _create_calc_obj(self, param):
@@ -495,7 +508,7 @@ class ExpansionCurve(BaseCurve):
             calc = self.get_calc_obj(param)
             return calc.extrinsic_curvature(trace=trace, square=square)
 
-    def area(self, full_output=False, disp=False, **kw):
+    def area(self, full_output=False, disp=False, domain=(0, np.pi), **kw):
         r"""Compute the area of the surface represented by this curve.
 
         Note that no warning will be generated in case the integral does not
@@ -512,6 +525,9 @@ class ExpansionCurve(BaseCurve):
         @param disp
             If `Ture`, raise any warnings generated during integration as an
             `IntegrationError`.
+        @param domain
+            Parameter range to integrate over. Default is the full surface,
+            i.e. ``(0, pi)``.
         @param **kw
             Additional keyword arguments are passed to `scipy.integrate.quad`.
 
@@ -539,8 +555,9 @@ class ExpansionCurve(BaseCurve):
             efficient new algorithm." Physical Review D 57.2 (1998): 863.
         """
         with self.fix_evaluator():
+            a, b = domain
             result = quad(
-                self.get_area_integrand(), a=0, b=np.pi, full_output=True,
+                self.get_area_integrand(), a=a, b=b, full_output=True,
                 **kw
             )
             if len(result) == 4:
@@ -565,9 +582,72 @@ class ExpansionCurve(BaseCurve):
         return det_q
 
     def get_area_integrand(self):
+        r"""Return a callable evaluating the sqrt(det(q)), i.e. the area element."""
         det_q = self.get_det_q_func()
         integrand = lambda t: np.sqrt(det_q(t))
         return integrand
+
+    def euler_char(self, a=0, b=np.pi, full_output=False, disp=False, **kw):
+        r"""Compute the Euler characteristic of the surface.
+
+        This assumes the curve to represent a closed (compact) smooth surface
+        without boundary. As such, we get by the Gauss-Bonnet theorem
+        \f[
+            2\pi\chi(\mathcal{S}) = \frac{1}{2} \int_\mathcal{S} \mathcal{R}\ dA,
+        \f]
+        where \f$\chi\f$ is the Euler characteristic of the surface
+        \f$\mathcal{S}\f$ which is represented by this curve and
+        \f$\mathcal{R}\f$ its Ricci (scalar) curvature.
+
+        In axisymmetry and corresponding coordinates, we can carry out the
+        integral over the angle \f$\phi\f$, which gives \f$2\pi\f$ and end up
+        with
+        \f[
+            \chi(\mathcal{S}) = \frac{1}{2} \int_0^\pi \mathcal{R}(\lambda)\sqrt{q}\ d\lambda,
+        \f]
+        where \f$\sqrt{q}\f$ is the square root of the determinant of the
+        induced metric `q`.
+
+        From the Euler characteristic, you can compute the genus `G` of the
+        surface via \f$G = -\chi/2 + 1\f$.
+
+        @param a,b
+            Curve parameters between which to integrate. Defaults are `0` and
+            `pi`, respectively.
+        @param full_output
+            Whether to return information about the integration in addition to
+            the value. If `True`, return a tuple of ``chi, chi_err, info,
+            warning``. Otherwise (default), return just ``chi``. If
+            ``warning`` is not `None`, the integral did not converge as
+            expected.
+        @param disp
+            Whether to raise an error in case the integral did not converge as
+            expected.
+        @param **kw
+            Further keyword arguments are passed to `scipy.integrate.quad()`.
+            Use these to set e.g. `epsrel` to the desired tolerance.
+        """
+        with self.fix_evaluator():
+            det_q = self.get_det_q_func()
+            integrand = lambda t: np.sqrt(det_q(t)) * 0.5 * self.ricci_scalar(t)
+            result = quad(
+                integrand, a=a, b=b, full_output=True,
+                **kw
+            )
+            if len(result) == 4:
+                res, err, info, warning = result
+                if disp:
+                    raise IntegrationError(warning)
+            else:
+                res, err, info = result
+                warning = None
+            # surface integral is 2*pi times res
+            # chi = integral / 2*pi, so we're fine
+            chi = res
+            chi_err = err
+            if full_output:
+                return chi, chi_err, info, warning
+            return chi
 
     def irreducible_mass(self, area=None):
         r"""Compute the irreducible mass.
@@ -619,7 +699,7 @@ class ExpansionCurve(BaseCurve):
     def stability_parameter(self, num=None, rtol=1e-12, full_output=False):
         r"""Compute the stability parameter.
 
-        The stability parameter is defined in [1] as the principle eigenvalue
+        The stability parameter is defined in [1] as the principal eigenvalue
         of the stability operator. We use the normal vector in the slice and
         use the axisymmetry to greatly simplify the analytical task.
 
@@ -633,15 +713,15 @@ class ExpansionCurve(BaseCurve):
             By default, uses the resolution of the curve representation
             itself.
         @param rtol
-            Tolerance for reality check. The principle eigenvalue is shown in
+            Tolerance for reality check. The principal eigenvalue is shown in
             [1] to be real. If it has a non-zero imaginary part greater than
             ``rtol * |real_part|``, then a `RuntimeError` is raised. Default
             is `1e-12`.
         @param full_output
-            If `True`, return all eigenvalues in addition to the principle
+            If `True`, return all eigenvalues in addition to the principal
             eigenvalue.
 
-        @return The principle eigenvalue as a float (i.e. the real part,
+        @return The principal eigenvalue as a float (i.e. the real part,
             ignoring any spurious imaginary part). If `full_output==True`,
             returns an array of all eigenvalues as second element. Note that
             these will be left as-is, i.e. they will be complex numbers which
@@ -663,7 +743,7 @@ class ExpansionCurve(BaseCurve):
         is the Laplacian on \f$(\sigma, q)\f$, `g` is the 3-metric on the
         slice and `q` the induced 2-metric on the MOTS.
 
-        To find the principle eigenvalue of \f$L_\nu\f$, first note that due
+        To find the principal eigenvalue of \f$L_\nu\f$, first note that due
         to the axisymmetry, \f$\zeta\f$ will be a function of \f$\lambda\f$
         only, i.e. it will not depend on \f$\varphi\f$.
         The eigenvalues themselves are found using
@@ -703,12 +783,12 @@ class ExpansionCurve(BaseCurve):
             eq=eq,
             basis=CosineBasis(domain=(0, np.pi), num=num, lobatto=False),
         )
-        eigenvals, principle = solver.eigenvalues()
-        if abs(principle.imag) > rtol * abs(principle.real):
-            raise RuntimeError("Non-real principle eigenvalue detected.")
+        eigenvals, principal = solver.eigenvalues()
+        if abs(principal.imag) > rtol * abs(principal.real):
+            raise RuntimeError("Non-real principal eigenvalue detected.")
         if full_output:
-            return principle.real, eigenvals
-        return principle.real
+            return principal.real, eigenvals
+        return principal.real
 
     def stability_eigenvalue_equation_timesym(self, pts):
         r"""Eigenvalue equation evaluator for time-symmetric case.
@@ -842,8 +922,9 @@ class ExpansionCurve(BaseCurve):
             op[0] += 0.5 * R_S - Y - s2 + Ds
         return operator_values.T, 0.0
 
-    def multipoles(self, max_n=10, num=None, **kw):
-        r"""Compute the mass multipoles I_n of the horizon.
+    def multipoles(self, max_n=10, num=None, full_output=False, disp=False,
+                   **kw):
+        r"""Compute the multipoles I_n of the horizon.
 
         This is based on the considerations in [1].
 
@@ -857,6 +938,14 @@ class ExpansionCurve(BaseCurve):
         @param get_zeta
             Optional argument. If specified and `True`, don't retuen the
             multipole moments but the solution \f$\zeta\f$.
+        @param full_output
+            Whether to return an numutils.IntegrationResults object containing
+            all values with their errors and any warnings. Default is `False`.
+        @param disp
+            Raise an error in case of an integration warning.
+        @param **kw
+            Additional keyword arguments are supplied to the
+            `scipy.integrate.quad` call.
 
         @return A list of computed moments \f$I_n\f$ for `n=0,1,..,max_n`.
 
@@ -866,8 +955,6 @@ class ExpansionCurve(BaseCurve):
             Classical and Quantum Gravity 21.11 (2004): 2549.
         """
         get_zeta = kw.pop('get_zeta', False)
-        if kw:
-            raise ValueError('Unexpected arguments: %s' % (kw,))
         if num is None:
             num = max(self.num, 100)
         def _cached(fun):
@@ -905,8 +992,16 @@ class ExpansionCurve(BaseCurve):
                 return f
             I_n = []
             for n in range(max_n+1):
-                I_n.append(0.25 * quad(integrand(n), a=0, b=np.pi)[0])
-            return I_n
+                res = IntegrationResult(
+                    *quad(integrand(n), a=0, b=np.pi, full_output=True, **kw),
+                    mult=0.25
+                )
+                if disp and not res.is_ok():
+                    raise IntegrationWarning(res.warning)
+                I_n.append(res)
+            if full_output:
+                return IntegrationResults(*I_n, sum_makes_sense=False)
+            return [res.value for res in I_n]
 
     def circumference(self, param):
         r"""Return the circumference of the surface at the given parameter."""
@@ -923,19 +1018,74 @@ class ExpansionCurve(BaseCurve):
         return x * quad(integrand, a=0, b=1, **kw)[0]
 
     def find_neck(self, algo='coord', xtol=1e-8, **kw):
+        r"""Try to locate a 'neck' of this curve.
+
+        The neck can be defined by various means. One working definition is to
+        take a locally minimal proper circumference of the surface defined by
+        this curve by rotating a point around the z-axis. The two poles lying
+        on the z-axis are excluded, of course.
+
+        This function implements the following algorithm to find the neck:
+        Starting from the north-pole (``param=0``), we first find the point
+        where the quantity (e.g. circumference) has a local *maximum*. From
+        there, we do small steps forward to bracket the first local minimum,
+        which is then located precisely.
+
+        @return A tuple of ``(param, value)``, where ``param`` is the curve
+            parameter of the neck and ``value`` the value of the quantity used
+            to define the neck.
+
+        @param algo
+            The algorithm/definition of the neck. Understood values currently
+            are ``'coord'`` (neck has minimal x-coordinate value),
+            ``'circumference'`` (neck has minimal proper circumference),
+            ``'proper_x_dist'`` (neck has minimal proper distance to z-axis,
+            measured along a straight coordinate line in x-direction).
+            Default is ``'coord'``.
+        @param xtol
+            Tolerance in curve parameter value for the search. Default is
+            `1e-8`.
+        @param **kw
+            Further keyword arguments are used in case of
+            ``algo==proper_x_dist`` and are supplied to the x_distance()
+            method calls.
+        """
         if algo == 'circumference':
             f = self.circumference
         elif algo in ('coord', 'proper_x_dist'):
             f = lambda param: self(param)[0]
         else:
             raise ValueError("Unknown algorithm: %s" % algo)
-        func = lambda param: f(clip(param, 0, np.pi))
+        last_param = [None]
+        def func(param):
+            param = clip(param, 0, np.pi)
+            value = f(param)
+            last_param[0] = param
+            return value
         func_neg = lambda param: -f(clip(param, 0, np.pi))
         with self.fix_evaluator():
             xa, xb, xc = bracket(func_neg, 0.0, 0.1, grow_limit=2)[:3]
             res = minimize_scalar(func_neg, bracket=(xa, xb, xc), options=dict(xtol=1e-1))
             x_max = res.x
-            xa, xb, xc = bracket(func, x_max, x_max+0.1, grow_limit=2)[:3]
+            try:
+                xa, xb, xc = bracket(func, x_max, x_max+0.1, grow_limit=2)[:3]
+                if xb < 0 or xc < 0:
+                    # Something went wrong in bracketing. Do it half-manually now.
+                    # This case occurs if the MOTS is *too little* deformed
+                    # such that the "neck" is not very pronounced.
+                    params = self.collocation_points()
+                    xs = [f(x) for x in params]
+                    max1 = next(params[i] for i, x in enumerate(xs)
+                                if xs[i+1] < x)
+                    max2 = next(params[i] for i, x in reversed(list(enumerate(xs)))
+                                if xs[i-1] < x)
+                    xa, xb, xc = bracket(func, max1, max1+0.1*(max2-max1), grow_limit=2)[:3]
+            except RuntimeError:
+                # This happens in bipolar coordinates in extremely distorted
+                # cases where the "neck" is streched over a large parameter
+                # interval.
+                x0 = last_param[0]
+                xa, xb, xc = bracket(func, x0, x0+0.1, grow_limit=5, maxiter=10000)[:3]
             if algo == 'proper_x_dist':
                 func = lambda param: self.x_distance(param, **kw)
                 xa, xb, xc = bracket(func, xb, xb+1e-2, grow_limit=2)[:3]
@@ -943,6 +1093,261 @@ class ExpansionCurve(BaseCurve):
             else:
                 res = minimize_scalar(func, bracket=(xa, xb, xc), options=dict(xtol=xtol))
             return res.x, res.fun
+
+    def locate_intersection(self, other_curve, xtol=1e-8, domain1=(0, np.pi),
+                            domain2=(0, np.pi), strict1=True, strict2=True,
+                            N1=20, N2=20):
+        r"""Locate one point at which this curve intersects another curve.
+
+        @return Tuple ``(param1, param2)``, where ``param1`` is the parameter
+            value of this curve and ``param2`` the parameter value of the
+            `other_curve` at which the two curves have the same location. If
+            no intersection is found, returns ``(None, None)``.
+
+        @param other_curve
+            Curve to find the intersection with.
+        @param xtol
+            Tolerance in curve parameter values for the search. Default is
+            `1e-8`.
+        @param domain1,domain2
+            Optional interval of the curves to consider. Default is the full
+            curve, i.e. ``(0, pi)`` for both.
+        @param strict1,strict2
+            Whether to only allow solutions in the given domains `domain1`,
+            `domain2`, respectively (default). If either is `False`, the
+            respective domain is used just for the initial coarse check to
+            find a starting point. Setting e.g. ``N1=1`` and ``strict1=False``
+            allows specifying a starting point on this (first) curve.
+        @param N1,N2
+            Number of equally spaced rough samples to check for a good
+            starting point. To avoid running into some local minimal distance
+            (e.g. at the curve ends), this number should be high enough.
+            Alternatively (or additionally), one may specify a smaller
+            domain if there is prior knowledge about the curve shapes.
+        """
+        z_dist = self.z_distance_using_metric(
+            metric=None, other_curve=other_curve, allow_intersection=True,
+        )
+        if z_dist >= 0:
+            return (None, None)
+        c1 = self
+        c2 = other_curve
+        with c1.fix_evaluator(), c2.fix_evaluator():
+            space1 = np.linspace(*domain1, N1, endpoint=False)
+            space1 += (space1[1] - space1[0]) / 2.0
+            space2 = np.linspace(*domain2, N2, endpoint=False)
+            space2 += (space2[1] - space2[0]) / 2.0
+            pts1 = [[c1(la), la] for la in space1]
+            pts2 = [[c2(la), la] for la in space2]
+            dists = [[np.linalg.norm(np.asarray(p1)-p2), l1, l2]
+                     for p1, l1 in pts1 for p2, l2 in pts2]
+            _, la1, la2 = min(dists, key=lambda d: d[0])
+            dyn_domain1 = domain1 if strict1 else (0.0, np.pi)
+            dyn_domain2 = domain2 if strict2 else (0.0, np.pi)
+            def func(x):
+                la1, la2 = x
+                p1 = np.asarray(c1(clip(la1, *dyn_domain1)))
+                p2 = np.asarray(c2(clip(la2, *dyn_domain2)))
+                return p2 - p1
+            sol = root(func, x0=[la1, la2], tol=xtol)
+            if not sol.success:
+                return (None, None)
+            la1, la2 = sol.x
+            if strict1:
+                la1 = clip(la1, *domain1)
+            if strict2:
+                la2 = clip(la2, *domain2)
+            if np.linalg.norm(func((la1, la2))) > np.sqrt(xtol):
+                # points are too far apart to be an intersection
+                return (None, None)
+            return (la1, la2)
+
+    def locate_self_intersection(self, neck=None, xtol=1e-8):
+        r"""Locate a *loop* in the MOTS around its neck.
+
+        @return Two parameter values ``(param1, param2)`` where the curve has
+            the same location in the x-z-plane. If not loop is found, returns
+            ``(None, None)``.
+
+        @param neck
+            Parameter where the neck is located. If not given, finds the neck
+            using default arguments of find_neck().
+        @param xtol
+            Tolerance in curve parameter values for the search. Default is
+            `1e-8`.
+        """
+        try:
+            return self._locate_self_intersection(neck=neck, xtol=xtol)
+        except _IntersectionDetectionError:
+            raise
+            pass
+        return None, None
+
+    def _locate_self_intersection(self, neck, xtol):
+        r"""Implements locate_self_intersection()."""
+        if neck is None:
+            neck = self.find_neck()[0]
+        with self.fix_evaluator():
+            match_cache = dict()
+            def find_matching_param(la1, max_step=None, _recurse=2):
+                try:
+                    return match_cache[la1]
+                except KeyError:
+                    pass
+                if abs(la1-neck) < xtol:
+                    return la1
+                x1 = self(la1)[0]
+                def f(la): # x-coord difference
+                    return self(la)[0] - x1
+                dl = neck - la1
+                if max_step:
+                    dl = min(dl, max_step)
+                a = neck + dl
+                while f(a) > 0:
+                    dl = dl/2.0
+                    a = neck + dl
+                    if abs(dl) < xtol:
+                        return la1
+                step = min(dl/2.0, max_step) if max_step else (dl/2.0)
+                b = a + step
+                while f(b) < 0:
+                    a, b = b, b+step
+                    if b >= np.pi:
+                        if _recurse > 0:
+                            max_step = (max_step/10.0) if max_step else 0.05
+                            return find_matching_param(la1, max_step=max_step,
+                                                       _recurse=_recurse-1)
+                        # Last resort: seems the x-coordinate is not reached
+                        # on this branch at all. Returning pi guarantees a
+                        # large `delta_z` (albeit with a jump that might be
+                        # problematic). In practice, however, this often works.
+                        return np.pi
+                # We now have a <= la2 <= b (la2 == matching param)
+                la2 = brentq(f, a=a, b=b, xtol=xtol)
+                match_cache[la1] = la2
+                return la2
+            def delta_z(la):
+                la2 = find_matching_param(la)
+                return self(la)[1] - self(la2)[1]
+            for step in np.linspace(0.01, np.pi-neck, 100):
+                # Note that `step>0`, but the minimum lies at `a<neck` the way
+                # we have defined `delta_z()`. The minimize call will however
+                # happily turn around...
+                res = minimize_scalar(delta_z, bracket=(neck, neck+step),
+                                      options=dict(xtol=1e-2))
+                a = res.x
+                if delta_z(a) < 0:
+                    break
+            if delta_z(a) >= 0:
+                raise _IntersectionDetectionError("probably no intersection")
+            # We start with `shrink=2.0` to make this fully compatible with
+            # the original strategy (i.e. so that results are reproducible).
+            # In practice, however, this `step` might be larger than the
+            # distance to the domain boundaries, making the following
+            # `brent()` call stop immediately at the wrong point. The cause is
+            # that, first of all we assume here `a>neck`, but our definition
+            # of `delta_z()` leads to a minimum at `a<neck`. Secondly, with
+            # extreme parameterizations (e.g. using bipolar coordinates plus
+            # `curv2` coordinate space reparameterization), the `neck` region
+            # could house the vast majority of affine parameters.
+            step_shrinks = [2.0]
+            step_shrinks.extend(np.linspace(
+                (neck-a)/((1-0.9)*a), max(10.0, (neck-a)/((1-0.1)*a)), 10
+            ))
+            # For the above:
+            #            a + step = x*a,                 where 0<x<1, step<0
+            # <=> (a-neck)/shrink = (x-1)*a
+            # <=>          shrink = (a-neck)/(a*(x-1))
+            #                     = (neck-a)/(a*(1-x))   > 0
+            for shrink in step_shrinks:
+                step = (a-neck)/shrink
+                b = a + step
+                while delta_z(b) < 0:
+                    a, b = b, b+step
+                    if not 0 <= b <= np.pi:
+                        raise _IntersectionDetectionError("curve upside down...")
+                la1 = brentq(delta_z, a=a, b=b, xtol=xtol)
+                if la1 > 0.0:
+                    break
+            la2 = find_matching_param(la1)
+            return la1, la2
+
+    def get_distance_function(self, other_curve, Ns=None, xatol=1e-12,
+                              mp_finish=True, dps=50, minima_to_check=1):
+        r"""Return a callable computing the distance between this and another curve.
+
+        The computed distance is the coordinate distance between a point of
+        this curve to the closest point on another curve.
+
+        The returned callable will take one mandatory argument: the parameter
+        at which to evaluate the current curve. The resulting point is then
+        taken and the given `other_curve` searched for the point closest to
+        that point. The distance to this function is then returned.
+
+        A second optional parameter of the returned function determines
+        whether only the distance (`False`, default) or the distance and the
+        parameter on the other curve is returned (if `True`).
+
+        @param other_curve
+            The curve to which the distance should be computed in the returned
+            function.
+        @param Ns
+            Number of points to take on `other_curve` for finding the initial
+            guess for the minimum search. Default is to take the resolution of
+            `other_curve`.
+        @param xatol
+            In case ``mp_finish==False``, use this tolerance in the SciPy
+            `minimize_scalar()` call. Default is `1e-12`.
+        @param mp_finish
+            If `True` (default), evaluate some terms using arbitrary precision
+            mpmath arithmetics and find the minimum with a robust but slow
+            golden section search. This allows finding minima *much* closer to
+            the actual minimum. In general, with ``mp_finish==False``, we are
+            usually limited by approximately `1e-8`, while with
+            ``mp_finish==True``, we can get to around `1e-15` (e.g. if
+            `other_curve` is this curve).
+        @param dps
+            Decimal places for mpmath computations. Default is `50`.
+        @param minima_to_check
+            Number of local minima to check for a global minimum. Default is
+            `1`, which means we search just around the smallest distance from
+            the initial grid of points. Higher values may help locate the
+            correct minimum especially in cases of self-intersecting curves.
+        """
+        if Ns is None:
+            Ns = other_curve.num
+        params = other_curve.collocation_points(num=Ns)
+        with other_curve.fix_evaluator():
+            pts_other = np.array([other_curve(la) for la in params])
+        fl = mp.mpf if mp_finish else float
+        pi = mp.pi if mp_finish else np.pi
+        def _distance(param, full_output=False):
+            with mp.workdps(dps), other_curve.fix_evaluator():
+                pt = np.asarray(self(param))
+                dists = np.linalg.norm(pts_other - pt, axis=1)
+                indices = _discrete_local_minima(dists, minima_to_check)
+                if mp_finish:
+                    x1, z1 = fl(pt[0]), fl(pt[1])
+                    def _f(la):
+                        pt_other = other_curve(float(la))
+                        x2, z2 = fl(pt_other[0]), fl(pt_other[1])
+                        return float(mp.sqrt((x2-x1)**2 + (z2-z1)**2))
+                else:
+                    def _f(la):
+                        return np.linalg.norm(pt-other_curve(la))
+                results = [
+                    _search_local_minimum(
+                        _f, use_mp=mp_finish,
+                        a=fl(params[idx-1]) if idx > 0 else fl(0),
+                        b=fl(params[idx+1]) if idx+1 < Ns else pi,
+                        xatol=xatol, full_output=True,
+                    )
+                    for idx in indices
+                ]
+                results.sort(key=lambda res: res[0])
+                return results[0] if full_output else results[0][0]
+        _distance.domain = 0, np.pi
+        return _distance
 
     def plot_expansion(self, c=0, points=500, name=r"\gamma", figsize=(5, 3),
                        verbose=True, ingoing=False, **kw):
@@ -1013,6 +1418,89 @@ class SignatureQuantities():
             return 1
         # normal is null => 3-surface is null
         return 0
+
+
+def _golden_section_search(f, a, b, tol, use_mp=False):
+    r"""Trivial golden section search for locating a local minimum.
+
+    The function `f` should have a local minimum between `a` and `b`.
+    """
+    if tol <= 0.0:
+        raise ValueError("Tolerance must be > 0.")
+    fl = mp.mpf if use_mp else float
+    sqrt = mp.sqrt if use_mp else np.sqrt
+    golden = (1 + sqrt(5)) / 2
+    a = fl(a)
+    b = fl(b)
+    c = b - (b - a) / golden
+    d = a + (b - a) / golden
+    while abs(c-d) > tol:
+        if f(c) < f(d):
+            b = d
+        else:
+            a = c
+        c = b - (b - a) / golden
+        d = a + (b - a) / golden
+    return (b + a) / 2
+
+
+def _discrete_local_minima(values, max_count=1):
+    r"""Find the indices of N non-consecutive smallest values.
+
+    @b Examples
+
+    ```
+        f = lambda x: np.cos(10*x) * np.exp(-x/2) + x/3
+        dists = list(map(f, np.linspace(0, np.pi, 100)))
+        indices = _discrete_local_minima(dists, 3)
+        print("Minima at indices: %s" % (indices,))
+        ax = plot_data(dists, l='.', show=False)
+        ax.plot(indices, [dists[i] for i in indices], 'or')
+    ```
+    """
+    if max_count <= 0:
+        raise ValueError("Cannot find less than one local minimum.")
+    indices = sorted([i for i in range(len(values))], key=lambda i: values[i])
+    islands = []
+    for i in indices:
+        new = True
+        for island in islands:
+            if i+1 in island or i-1 in island:
+                new = False
+                island.append(i)
+        if new:
+            islands.append([i])
+        if len(islands) >= max_count:
+            break
+    return [island[0] for island in islands]
+
+
+def _search_local_minimum(func, a, b, use_mp=False, full_output=False,
+                          xatol=1e-12):
+    r"""Search for a local minimum of `func` between `a` and `b`."""
+    if use_mp:
+        x0 = _golden_section_search(
+            f=func, a=a, b=b, use_mp=True,
+            tol=sys.float_info.epsilon
+        )
+        return (func(x0), x0) if full_output else func(x0)
+    res = minimize_scalar(
+        func, bounds=[a, b], method='bounded',
+        options=dict(xatol=xatol),
+    )
+    if not res.success:
+        raise DistanceSearchError(res.message)
+    return (res.fun, res.x) if full_output else res.fun
+
+
+class DistanceSearchError(Exception):
+    r"""Raised when the closest distance between curves could not be found."""
+    pass
+
+
+class _IntersectionDetectionError(Exception):
+    r"""Raised when self-intersection cannot be located."""
+    pass
 
 
 class IntegrationError(Exception):

@@ -54,8 +54,10 @@ configuration:
 This example uses simulation data to find the initial MOTSs in:
 ```
     it = 0 # initial iteration of the simulation
-    g = SioMetric(find_file("simulation_run/**/*it%010d.s5" % it),
+    g = SioMetric(
+        find_file("simulation_run/**/*it%010d.s5" % it,
                   recursive=True, verbose=True)
+    )
     h = InitHelper(metric=g, out_base="some/output/folder",
                    suffix="it%010d" % it)
 
@@ -130,7 +132,7 @@ class InitHelper():
         punctures.
         """
         guessed_radius = (m1+m2)/2. + d/3.
-        return self._find(hname, c_ref=guessed_radius, **kw)
+        return self._find(hname, **insert_missing(kw, c_ref=guessed_radius))
 
     def find_individual(self, hname, m, z, **kw):
         r"""Find one of the two individual MOTSs.
@@ -155,7 +157,10 @@ class InitHelper():
                 "Otherwise, make sure the BHs are distributed at roughly "
                 "equal distances from the origin."
             )
-        return self._find(hname, c_ref=(guessed_radius, z), **kw)
+        return self._find(
+            hname,
+            **insert_missing(kw, c_ref=(guessed_radius, z))
+        )
 
     def find_inner(self, c_AH, start_ex=-0.01, max_step=0.05, min_step=0.005,
                    jump_mult=1, jump_offset=(), num=60, hname='inner',
@@ -337,7 +342,7 @@ class InitHelper():
                 opts.update(back_kw or dict())
 
     def find_individuals(self, m1, m2, d, kw_top=None, kw_bot=None,
-                         unload=True, plot=False, plot_opts=None):
+                         unload=True, plot=False, plot_opts=None, **kw):
         r"""Find the two individual MOTSs.
 
         This calls find_individual() once for the top and once for the bottom
@@ -361,12 +366,15 @@ class InitHelper():
             Whether to plot the found MOTSs. Default is `False`.
         @param plot_opts
             Options supplied to the plotting command.
+        @param **kw
+            Common options for both ``find_individual()`` calls. These are
+            overridden by the individual `kw_...` arguments.
         """
         with self._unload_after(unload=unload):
             c_top = self.find_individual('top', m=m1, z=d/2., unload=False,
-                                         **(kw_top or dict()))
+                                         **merge_dicts(kw, kw_top or dict()))
             c_bot = self.find_individual('bot', m=m2, z=-d/2., unload=False,
-                                         **(kw_bot or dict()))
+                                         **merge_dicts(kw, kw_bot or dict()))
         if plot:
             title = "MOTSs"
             if hasattr(self.metric, 'time'):
@@ -462,14 +470,14 @@ class InitHelper():
         except AttributeError:
             pass
 
-    def _find(self, hname, suffix='', unload=True, **kw):
+    def _find(self, hname, suffix='', unload=True, preset='discrete1', **kw):
         r"""Construct the configuration and call find_mots()."""
         with self._unload_after(unload=unload):
             out_folder = None
             if self.out_base:
                 out_folder = "%s/init" % self.out_base
             cfg = GeneralMotsConfig.preset(
-                "discrete1", metric=self.metric, hname=hname,
+                preset, metric=self.metric, hname=hname,
                 reparam=False, linear_regime_threshold=0.1,
                 save_failed_curve=False, simple_name=True,
                 out_folder=out_folder,

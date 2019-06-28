@@ -15,13 +15,33 @@ from scipy.interpolate import lagrange
 from ...numutils import NumericalError, nan_mat
 
 
-__all__ = []
+__all__ = [
+    "fd_xz_derivatives",
+]
 
 
 # It is customary to denote indices of tensors without spaces, e.g.:
 #   T_{ijk}  =>  T[i,j,k]
 # We disable the respective pylint warning for this file.
 # pylint: disable=bad-whitespace
+
+
+# 1-D finite difference coefficients for first derivatives
+COEFFS_1ST = [
+    np.array([                  -1., 0.,   1.                 ]) /   2., # order=2
+    np.array([            1.,   -8., 0.,   8.,   -1.          ]) /  12., # order=4
+    np.array([     -1.,   9.,  -45., 0.,  45.,   -9.,  1.     ]) /  60., # order=6
+    np.array([3., -32., 168., -672., 0., 672., -168., 32., -3.]) / 840., # order=8
+]
+
+
+# 1-D finite difference coefficients for second derivatives
+COEFFS_2ND = [
+    np.array([                      1.,     -2.,    1.                   ]),         # order=2
+    np.array([              -1.,   16.,    -30.,   16.,    -1.           ]) /   12., # order=4
+    np.array([       2.,   -27.,  270.,   -490.,  270.,   -27.,   2.     ]) /  180., # order=6
+    np.array([-9., 128., -1008., 8064., -14350., 8064., -1008., 128., -9.]) / 5040., # order=8
+]
 
 
 class GridDataError(Exception):
@@ -140,80 +160,96 @@ def _interp1d(arr, ii, coord, linear, cache=None, base_idx=None):
         return poly(coord)
 
 
-def _diff_4th_order_xz(mat, region, dx, dz, diff=1):
-    r"""Perform 4th order accurate FD differentiation on specified grid points.
+def fd_xz_derivatives(mat, region, dx, dz, derivs, stencil_size=5):
+    r"""Perform finite difference differentiation on specified grid points.
 
-    Given a matrix `mat` containing values on a grid, this performs first or
-    second order finite difference (FD) differentiation for each grid point in
-    the given `region` using 5-point stencils.
+    Given a matrix `mat` containing values on a grid, this function
+    approximates the first or second derivative for each grid point in the
+    given `region` using 3-, 5-, 7- or 9-point stencils.
 
     Note that only `x` and `z` (and possibly mixed) derivatives are computed,
     even though `mat` needs to have three axes.
 
-    @return For ``diff=1``, two matrices of the shape of the given region, the
-        first containing the x-derivatives and the second the z-derivatives.
-        For ``diff=2``, three matrices containing the `xx`, `zz` and `xz`
-        partial derivatives of the `region`.
+    @return For element of `derivs`, a matrix of the shape of `region`.
 
     @param mat
-        Matrix with the values to use. Must have at least 2 additional points
-        in the first and third axes on the borders of the given `region`.
+        Matrix with the values to use. Must have at least
+        ``(stencil_size-1)/2`` additional points in the first and third axes
+        on the borders of the given `region`.
     @param region
         Region of grid points at which to compute the derivatives. Should
         consist of three iterables of indices, the tensor product of which
         defines the actual set of indices in the region.
     @param dx,dz
         Physical distance of grid points in coordinate space along the axes.
-    @param diff
-        Derivative order. Should be `1` or `2`. Default is `1`.
+    @param derivs
+        Derivative orders to compute. To compute the x-, z-, and
+        x-z-derivatives, use ``derivs=([1, 0], [0, 1], [1, 1])``.
+    @param stencil_size
+        Number of grid points to consider (i.e. the "size" of the stencil).
+        This determines the order of accuracy of the derivative computed.
+        Allowed values currently are 3, 5, 7, 9.
     """
     try:
-        return _diff_4th_order_xz_impl(mat, region, dx, dz, diff)
+        return _fd_xz_derivatives(mat, region, dx, dz, derivs, stencil_size)
     except (ValueError, IndexError) as e:
         raise NumericalError("%s" % e)
 
-def _diff_4th_order_xz_impl(mat, region, dx, dz, diff=1):
-    r"""Implements _diff_4th_order_xz()."""
-    n = 2
+
+def _fd_xz_derivatives(mat, region, dx, dz, derivs, stencil_size):
+    r"""Implement fd_xz_derivatives()."""
+    n = int((stencil_size-1)/2)
+    if n != (stencil_size-1)/2 or n > len(COEFFS_1ST):
+        raise ValueError("Unsupported stencil size: %s" % stencil_size)
     shape = [len(r) for r in region]
-    coeffs1 = np.array([1, -8, 0, 8, -1], dtype=float) / 12.
-    im, jm, km = [r[0] for r in region]
-    if im-n < 0:
-        raise GridDataError("Auto-extending data to x<0 "
-                            "not yet implemented.")
-    if diff == 1:
-        partial_x = np.zeros(shape)
-        partial_z = np.zeros(shape)
+    coeffs1 = COEFFS_1ST[n - 1]
+    coeffs2 = COEFFS_2ND[n - 1]
+    i0, j0, k0 = [r[0] for r in region]
+    results = []
+    for nx, nz in derivs:
+        result = np.zeros(shape)
         for i, j, k in itertools.product(*region):
-            partial_x[i-im, j-jm, k-km] = 1/dx * (
-                mat[i-n:i+n+1, j, k].dot(coeffs1)
-            )
-            partial_z[i-im, j-jm, k-km] = 1/dz * (
-                mat[i, j, k-n:k+n+1].dot(coeffs1)
-            )
-        return partial_x, partial_z
-    coeffs2 = np.array([-1, 16, -30, 16, -1], dtype=float) / 12.
-    if diff == 2:
-        partial_xx = np.zeros(shape)
-        partial_zz = np.zeros(shape)
-        partial_xz = np.zeros(shape)
-        for i, j, k in itertools.product(*region):
-            submat = mat[i-n:i+n+1, j, k-n:k+n+1]
-            partial_xx[i-im, j-jm, k-km] = 1/dx**2 * (
-                submat[:,n].dot(coeffs2)
-            )
-            partial_zz[i-im, j-jm, k-km] = 1/dz**2 * (
-                submat[n,:].dot(coeffs2)
-            )
-            partial_xz[i-im, j-jm, k-km] = 1/(dx*dz) * (
-                submat.dot(coeffs1).dot(coeffs1)
-            )
-        return partial_xx, partial_zz, partial_xz
-    raise NotImplementedError
+            if nx == 1 and nz == 0:
+                result[i-i0, j-j0, k-k0] = 1/dx * (
+                    mat[i-n:i+n+1, j, k].dot(coeffs1)
+                )
+            elif nx == 0 and nz == 1:
+                result[i-i0, j-j0, k-k0] = 1/dz * (
+                    mat[i, j, k-n:k+n+1].dot(coeffs1)
+                )
+            elif nx == 1 and nz == 1:
+                result[i-i0, j-j0, k-k0] = 1/(dx*dz) * (
+                    mat[i-n:i+n+1, j, k-n:k+n+1].dot(coeffs1).dot(coeffs1)
+                )
+            elif nx == 2 and nz == 0:
+                result[i-i0, j-j0, k-k0] = 1/dx**2 * (
+                    mat[i-n:i+n+1, j, k].dot(coeffs2)
+                )
+            elif nx == 0 and nz == 2:
+                result[i-i0, j-j0, k-k0] = 1/dz**2 * (
+                    mat[i, j, k-n:k+n+1].dot(coeffs2)
+                )
+            elif nx == 2 and nz == 1:
+                result[i-i0, j-j0, k-k0] = 1/(dx*dx*dz) * (
+                    mat[i-n:i+n+1, j, k-n:k+n+1].dot(coeffs1).dot(coeffs2)
+                )
+            elif nx == 1 and nz == 2:
+                result[i-i0, j-j0, k-k0] = 1/(dx*dz*dz) * (
+                    mat[i-n:i+n+1, j, k-n:k+n+1].dot(coeffs2).dot(coeffs1)
+                )
+            elif nx == 2 and nz == 2:
+                result[i-i0, j-j0, k-k0] = 1/(dx*dz)**2 * (
+                    mat[i-n:i+n+1, j, k-n:k+n+1].dot(coeffs2).dot(coeffs2)
+                )
+            else:
+                raise NotImplementedError(
+                    "Derivative order not implemented: %s, %s" % (nx, nz)
+                )
+        results.append(result)
+    return results
 
 
-def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, interp=True,
-                           diff=0):
+def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, diff=0):
     r"""Evaluate (derivatives of) a symmetric tensor field at a point.
 
     This takes the six independent component functions of the `xx`, `xy`,
@@ -243,9 +279,6 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, interp=True,
         that order.
     @param point
         The point at which to compute.
-    @param interp
-        If `False`, don't interpolate at all and instead snap `point` to the
-        closest grid point and evaluate there. Default is `True`.
     @param diff
         Derivative order to compute. Default is `0`.
 
@@ -297,7 +330,7 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, interp=True,
     """
     if diff == 0:
         T00, T01, T02, T11, T12, T22 = [
-            Tij.interpolate(point, interp=interp) for Tij in comp_funcs
+            Tij.interpolate(point) for Tij in comp_funcs
         ]
         return np.array([[T00, T01, T02],
                          [T01, T11, T12],
@@ -309,7 +342,7 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, interp=True,
             (T00x, T00z), (T01x, T01z), (T02x, T02z),
             (T11x, T11z), (T12x, T12z), (T22x, T22z)
         ) = [
-            Tij.diff(point, diff=1, interp=interp)
+            Tij.diff(point, diff=1)
             for Tij in comp_funcs
         ]
         Tx = np.array([[T00x, T01x, T02x],
@@ -335,7 +368,7 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, interp=True,
             (T12xx, T12zz, T12xz),
             (T22xx, T22zz, T22xz),
         ) = [
-            Tij.diff(point, diff=2, interp=interp)
+            Tij.diff(point, diff=2)
             for Tij in comp_funcs
         ]
         Txx = np.array([[T00xx, T01xx, T02xx],

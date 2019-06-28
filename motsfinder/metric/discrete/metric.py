@@ -11,6 +11,7 @@ of this abstract class, serving at the same time as examples:
 """
 
 from abc import ABCMeta, abstractmethod
+from contextlib import contextmanager
 
 from six import add_metaclass
 import numpy as np
@@ -54,10 +55,6 @@ class DiscreteMetric(_ThreeMetric):
     def __init__(self):
         r"""This base constructor initializes the properties."""
         super(DiscreteMetric, self).__init__()
-        ## Whether Lagrange interpolation should be done.
-        self._interpolate = True
-        ## The point (as 3-tuple) for which the cached values are valid.
-        self._prev_pt = None
         ## The metric discrete field object.
         self._metric_field = None
         ## Whether all matrices should be saved.
@@ -85,12 +82,6 @@ class DiscreteMetric(_ThreeMetric):
         """
         pass
 
-    def __getstate__(self):
-        r"""Return a picklable state object representing the whole metric."""
-        state = self.__dict__.copy()
-        state['_prev_pt'] = None
-        return state
-
     @property
     def field(self):
         r"""Field attribute containing the actual field object.
@@ -105,19 +96,34 @@ class DiscreteMetric(_ThreeMetric):
             self._metric_field = self._get_metric()
         return self._metric_field
 
-    @property
-    def interpolate(self):
-        r"""Read/write property indicating whether interpolation should be performed.
+    def set_interpolation(self, interpolation):
+        r"""Set the interpolation for all fields/components.
 
-        This is `True` by default. If set to `False`, each evaluation will
-        first find the closest grid point to evaluate at and then compute
-        all requested values at that grid point without need of interpolation.
+        Refer to .patch.DataPatch.set_interpolation() for details.
         """
-        return self._interpolate
-    @interpolate.setter
-    def interpolate(self, value):
-        self.reset_cache()
-        self._interpolate = value
+        for field in self.all_field_objects():
+            if field:
+                field.set_interpolation(interpolation)
+
+    def set_fd_order(self, fd_order):
+        r"""Set the finite difference derivative order of accuracy."""
+        for field in self.all_field_objects():
+            if field:
+                field.set_fd_order(fd_order)
+
+    @contextmanager
+    def temp_interpolation(self, interpolation, fd_order=None):
+        prev_interp = self.field.components[0].get_interpolation()
+        prev_fd_order = self.field.components[0].fd_order
+        try:
+            self.set_interpolation(interpolation)
+            if fd_order is not None:
+                self.set_fd_order(fd_order)
+            yield
+        finally:
+            self.set_interpolation(prev_interp)
+            if fd_order is not None:
+                self.set_fd_order(prev_fd_order)
 
     @property
     def save_full_data(self):
@@ -183,8 +189,7 @@ class DiscreteMetric(_ThreeMetric):
         spatial resolutions (grid densities).
 
         Note that this function is not optimized in any way and thus will
-        perform poorly when evaluated on a large number of points (especially
-        when ``interpolate=True`` and interpolation is performed).
+        perform poorly when evaluated on a large number of points.
 
         @return A 2-tuple ``(scal_constr, vec_constr)``, where `scal_constr`
             is a float representing the Hamiltonian constraint
@@ -203,7 +208,6 @@ class DiscreteMetric(_ThreeMetric):
             If `True`, compute the `g`-norm of the momentum constraint instead
             of the covector. Default is `False`.
         """
-        point = self.prepare_for_point(point)
         g_inv = self.diff(point, inverse=True, diff=0)
         curv = self.get_curv() # pylint: disable=assignment-from-none
         K = curv(point)
@@ -225,25 +229,6 @@ class DiscreteMetric(_ThreeMetric):
         if norm:
             vec_constr = np.sqrt(g_inv.dot(vec_constr).dot(vec_constr))
         return scal_constr, vec_constr
-
-    def prepare_for_point(self, point):
-        r"""Prepare object for evaluation at given point (called internally).
-
-        This is called internally e.g. by diff(); users of this class usually
-        don't have to call this directly. Its responsibility is to check
-        whether the internal cache has to be updated. In case the
-        `interpolate` property is set to `False`, the point will be snapped to
-        the nearest grid point and returned. Otherwise, the point is returned
-        unchanged.
-        """
-        if not self._interpolate:
-            point = self.snap_to_grid(point)
-        x, y, z = point
-        if (x, y, z) == self._prev_pt:
-            return point
-        self._prev_pt = (x, y, z)
-        self.reset_cache()
-        return point
 
     def load_data(self, *which):
         r"""Load/generate the full numerical data.

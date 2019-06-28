@@ -154,6 +154,12 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a2a8554f9bf9e62e8ea1636d5b8fe9432"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a2a8554f9bf9e62e8ea1636d5b8fe9432">res_increase_factor</a></td></tr>
 <tr class="memdesc:a2a8554f9bf9e62e8ea1636d5b8fe9432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factor by which to increase the resolution in case insufficient resolution is detected (should be &gt; 1.0).  <a href="#a2a8554f9bf9e62e8ea1636d5b8fe9432">More...</a><br /></td></tr>
 <tr class="separator:a2a8554f9bf9e62e8ea1636d5b8fe9432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac51d458be8c95b896b3f08ba03ce80cf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#ac51d458be8c95b896b3f08ba03ce80cf">min_res_increase_factor</a></td></tr>
+<tr class="memdesc:ac51d458be8c95b896b3f08ba03ce80cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">If res increase is limited by <code>max_resolution</code>, this is the minimal factor by which the resolution must effectively increase for plateau detection to be reliable.  <a href="#ac51d458be8c95b896b3f08ba03ce80cf">More...</a><br /></td></tr>
+<tr class="separator:ac51d458be8c95b896b3f08ba03ce80cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaadba7c177001fe217d0c675caabdec5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aaadba7c177001fe217d0c675caabdec5">max_res_increase</a></td></tr>
+<tr class="memdesc:aaadba7c177001fe217d0c675caabdec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum resolution increase per step.  <a href="#aaadba7c177001fe217d0c675caabdec5">More...</a><br /></td></tr>
+<tr class="separator:aaadba7c177001fe217d0c675caabdec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf04768a60d8ed848631d375af2804e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aaf04768a60d8ed848631d375af2804e4">res_decrease_factor</a></td></tr>
 <tr class="memdesc:aaf04768a60d8ed848631d375af2804e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Once converged and with <code>auto_resolution==True</code>, this controls in which steps the resolution is reduced as long as the tolerance is maintained.  <a href="#aaf04768a60d8ed848631d375af2804e4">More...</a><br /></td></tr>
 <tr class="separator:aaf04768a60d8ed848631d375af2804e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,6 +184,15 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6a92f506c0da628ce6c766d69de6cdd7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a6a92f506c0da628ce6c766d69de6cdd7">plateau_tol</a></td></tr>
 <tr class="memdesc:a6a92f506c0da628ce6c766d69de6cdd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plateau is detected if new results are not at least <code>plateau_tol</code> times better than previous results.  <a href="#a6a92f506c0da628ce6c766d69de6cdd7">More...</a><br /></td></tr>
 <tr class="separator:a6a92f506c0da628ce6c766d69de6cdd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f4a3cc40fda5c199027b5390be2976e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a3f4a3cc40fda5c199027b5390be2976e">knee_detection</a></td></tr>
+<tr class="memdesc:a3f4a3cc40fda5c199027b5390be2976e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to estimate the plateau based on "knee" detection in the horizon function's coefficient list. Any time convergence occurs at the collocation points, this test is performed (before any plateau detection) and if a cutoff is suggested, the result is defined to have converged. In that case, the suggested resolution (plus a few extra points) is used for a few more steps until we have convergence at these new collocation points.  <a href="#a3f4a3cc40fda5c199027b5390be2976e">More...</a><br /></td></tr>
+<tr class="separator:a3f4a3cc40fda5c199027b5390be2976e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a749cef9ebb50b3ab6ef5951b7367ba6d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a749cef9ebb50b3ab6ef5951b7367ba6d">knee_increase_factor</a></td></tr>
+<tr class="memdesc:a749cef9ebb50b3ab6ef5951b7367ba6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many extra collocation points (as a fraction of the suggested cutoff) to add to the suggested cutoff. If the resulting resolution is larger than the current resolution, knee detection is ignored for that round.  <a href="#a749cef9ebb50b3ab6ef5951b7367ba6d">More...</a><br /></td></tr>
+<tr class="separator:a749cef9ebb50b3ab6ef5951b7367ba6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99d38cf071972c0bca622c2db7f42928"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a99d38cf071972c0bca622c2db7f42928">knee_threshold</a></td></tr>
+<tr class="memdesc:a99d38cf071972c0bca622c2db7f42928"><td class="mdescLeft">&#160;</td><td class="mdescRight">Threshold for the "knee" detection in case <code>knee_detection==True</code>.  <a href="#a99d38cf071972c0bca622c2db7f42928">More...</a><br /></td></tr>
+<tr class="separator:a99d38cf071972c0bca622c2db7f42928"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fcf82717e03aea2932a571c763114d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a3fcf82717e03aea2932a571c763114d0">liberal_downsampling</a></td></tr>
 <tr class="memdesc:a3fcf82717e03aea2932a571c763114d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>True</code>, ignore <code>atol</code> while downsampling and only consider <code>downsampling_tol_factor</code>.  <a href="#a3fcf82717e03aea2932a571c763114d0">More...</a><br /></td></tr>
 <tr class="separator:a3fcf82717e03aea2932a571c763114d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -215,9 +230,17 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="memitem:af913b22445531da17229c590f1620d9c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#af913b22445531da17229c590f1620d9c">_accurate_convergence_test</a> (self, eq, curve, d)</td></tr>
 <tr class="memdesc:af913b22445531da17229c590f1620d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check for convergence and detect insufficient resolution.  <a href="#af913b22445531da17229c590f1620d9c">More...</a><br /></td></tr>
 <tr class="separator:af913b22445531da17229c590f1620d9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f0c28e5d4dc0398fb7aaf6eb5b3d7ce"><td class="memItemLeft" align="right" valign="top"><a id="a7f0c28e5d4dc0398fb7aaf6eb5b3d7ce"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a7f0c28e5d4dc0398fb7aaf6eb5b3d7ce">_enough_res_increase</a> (self, num1, num2)</td></tr>
+<tr class="memdesc:a7f0c28e5d4dc0398fb7aaf6eb5b3d7ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the increase <code>num1</code> -&gt; <code>num2</code> is large enough for plateau detection. <br /></td></tr>
+<tr class="separator:a7f0c28e5d4dc0398fb7aaf6eb5b3d7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a869721f72cfc1d26276760c8a3b18d2d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a869721f72cfc1d26276760c8a3b18d2d">_change_resolution</a> (self, curve, d, res)</td></tr>
 <tr class="memdesc:a869721f72cfc1d26276760c8a3b18d2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resample the curve and current linear solution.  <a href="#a869721f72cfc1d26276760c8a3b18d2d">More...</a><br /></td></tr>
 <tr class="separator:a869721f72cfc1d26276760c8a3b18d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e55add5d531ba5cf5725dcbc8c06abe"><td class="memItemLeft" align="right" valign="top"><a id="a1e55add5d531ba5cf5725dcbc8c06abe"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a1e55add5d531ba5cf5725dcbc8c06abe">_knee_detection</a> (self, curve)</td></tr>
+<tr class="memdesc:a1e55add5d531ba5cf5725dcbc8c06abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if there is a <em>knee</em> in the coefficient list. <br /></td></tr>
+<tr class="separator:a1e55add5d531ba5cf5725dcbc8c06abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67a3bd9f5776233b6522765967f7ef85"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a67a3bd9f5776233b6522765967f7ef85">_raise</a> (self, ex_cls, msg)</td></tr>
 <tr class="memdesc:a67a3bd9f5776233b6522765967f7ef85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raise an exception depending on the <code>disp</code> setting.  <a href="#a67a3bd9f5776233b6522765967f7ef85">More...</a><br /></td></tr>
 <tr class="separator:a67a3bd9f5776233b6522765967f7ef85"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,6 +258,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a8584e83e91eeb387991bb808946beb96"><td class="memItemLeft" align="right" valign="top"><a id="a8584e83e91eeb387991bb808946beb96"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>__fake_convergent_steps</b></td></tr>
 <tr class="separator:a8584e83e91eeb387991bb808946beb96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18a37c38de4c9fcc2384ae6dc8a5ee72"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a18a37c38de4c9fcc2384ae6dc8a5ee72">_knee_detected</a></td></tr>
+<tr class="memdesc:a18a37c38de4c9fcc2384ae6dc8a5ee72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether we're doing the final few steps after the knee was found.  <a href="#a18a37c38de4c9fcc2384ae6dc8a5ee72">More...</a><br /></td></tr>
+<tr class="separator:a18a37c38de4c9fcc2384ae6dc8a5ee72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38eb8c8fa2cc24e3b076e070eff59e68"><td class="memItemLeft" align="right" valign="top"><a id="a38eb8c8fa2cc24e3b076e070eff59e68"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>_prev_accurate_delta</b></td></tr>
 <tr class="separator:a38eb8c8fa2cc24e3b076e070eff59e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -623,7 +649,32 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  (<span class="stringliteral">&quot;max_steps&quot;</span>, <span class="stringliteral">&quot;step_mult&quot;</span>, <span class="stringliteral">&quot;atol&quot;</span>, <span class="stringliteral">&quot;rtol&quot;</span>, <span class="stringliteral">&quot;verbose&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;target_expansion&quot;</span>, <span class="stringliteral">&quot;accurate_test_res&quot;</span>, <span class="stringliteral">&quot;auto_resolution&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;max_resolution&quot;</span>, <span class="stringliteral">&quot;linear_regime_threshold&quot;</span>, <span class="stringliteral">&quot;mat_solver&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;__fake_convergent_steps&quot;</span>, <span class="stringliteral">&quot;max_fake_convergent_steps&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;res_increase_factor&quot;</span>, <span class="stringliteral">&quot;res_decrease_factor&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;res_decrease_accel&quot;</span>, <span class="stringliteral">&quot;res_init_factor&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;downsampling_tol_factor&quot;</span>, <span class="stringliteral">&quot;linear_regime_res_factor&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;min_res&quot;</span>, <span class="stringliteral">&quot;detect_plateau&quot;</span>, <span class="stringliteral">&quot;plateau_tol&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;liberal_downsampling&quot;</span>, <span class="stringliteral">&quot;plot_steps&quot;</span>, <span class="stringliteral">&quot;plot_deltas&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;plot_opts&quot;</span>, <span class="stringliteral">&quot;reference_curves&quot;</span>, <span class="stringliteral">&quot;disp&quot;</span>, <span class="stringliteral">&quot;parallel&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;_prev_accurate_delta&quot;</span>, <span class="stringliteral">&quot;_prev_res_accurate_delta&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;user_data&quot;</span>)</div></div><!-- fragment -->
+<b>Initial value:</b><div class="fragment"><div class="line">=  (<span class="stringliteral">&quot;max_steps&quot;</span>, <span class="stringliteral">&quot;step_mult&quot;</span>, <span class="stringliteral">&quot;atol&quot;</span>, <span class="stringliteral">&quot;rtol&quot;</span>, <span class="stringliteral">&quot;verbose&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;target_expansion&quot;</span>, <span class="stringliteral">&quot;accurate_test_res&quot;</span>, <span class="stringliteral">&quot;auto_resolution&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;max_resolution&quot;</span>, <span class="stringliteral">&quot;linear_regime_threshold&quot;</span>, <span class="stringliteral">&quot;mat_solver&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;__fake_convergent_steps&quot;</span>, <span class="stringliteral">&quot;max_fake_convergent_steps&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;res_increase_factor&quot;</span>, <span class="stringliteral">&quot;min_res_increase_factor&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;max_res_increase&quot;</span>, <span class="stringliteral">&quot;res_decrease_factor&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;res_decrease_accel&quot;</span>, <span class="stringliteral">&quot;res_init_factor&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;downsampling_tol_factor&quot;</span>, <span class="stringliteral">&quot;linear_regime_res_factor&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;min_res&quot;</span>, <span class="stringliteral">&quot;detect_plateau&quot;</span>, <span class="stringliteral">&quot;plateau_tol&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;knee_detection&quot;</span>, <span class="stringliteral">&quot;knee_increase_factor&quot;</span>, <span class="stringliteral">&quot;knee_threshold&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;_knee_detected&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;liberal_downsampling&quot;</span>, <span class="stringliteral">&quot;plot_steps&quot;</span>, <span class="stringliteral">&quot;plot_deltas&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;plot_opts&quot;</span>, <span class="stringliteral">&quot;reference_curves&quot;</span>, <span class="stringliteral">&quot;disp&quot;</span>, <span class="stringliteral">&quot;parallel&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;_prev_accurate_delta&quot;</span>, <span class="stringliteral">&quot;_prev_res_accurate_delta&quot;</span>,</div><div class="line">                 <span class="stringliteral">&quot;user_data&quot;</span>)</div></div><!-- fragment -->
+</div>
+</div>
+<a id="a18a37c38de4c9fcc2384ae6dc8a5ee72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18a37c38de4c9fcc2384ae6dc8a5ee72">&#9670;&nbsp;</a></span>_knee_detected</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_knee_detected</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether we're doing the final few steps after the knee was found. </p>
+<p>We've now converged at the collocation points after a new resolution was set due to a "knee" having been detected in the coefficients.</p>
+
 </div>
 </div>
 <a id="a178f91455f173e038d00529bdee4a1bf"></a>
@@ -726,6 +777,54 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a3f4a3cc40fda5c199027b5390be2976e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f4a3cc40fda5c199027b5390be2976e">&#9670;&nbsp;</a></span>knee_detection</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">knee_detection</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether to estimate the plateau based on "knee" detection in the horizon function's coefficient list. Any time convergence occurs at the collocation points, this test is performed (before any plateau detection) and if a cutoff is suggested, the result is defined to have converged. In that case, the suggested resolution (plus a few extra points) is used for a few more steps until we have convergence at these new collocation points. </p>
+
+</div>
+</div>
+<a id="a749cef9ebb50b3ab6ef5951b7367ba6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a749cef9ebb50b3ab6ef5951b7367ba6d">&#9670;&nbsp;</a></span>knee_increase_factor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">knee_increase_factor</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>How many extra collocation points (as a fraction of the suggested cutoff) to add to the suggested cutoff. If the resulting resolution is larger than the current resolution, knee detection is ignored for that round. </p>
+
+</div>
+</div>
+<a id="a99d38cf071972c0bca622c2db7f42928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99d38cf071972c0bca622c2db7f42928">&#9670;&nbsp;</a></span>knee_threshold</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">knee_threshold</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Threshold for the "knee" detection in case <code>knee_detection==True</code>. </p>
+
+</div>
+</div>
 <a id="a3fcf82717e03aea2932a571c763114d0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3fcf82717e03aea2932a571c763114d0">&#9670;&nbsp;</a></span>liberal_downsampling</h2>
 
@@ -808,6 +907,23 @@ Static Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aaadba7c177001fe217d0c675caabdec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaadba7c177001fe217d0c675caabdec5">&#9670;&nbsp;</a></span>max_res_increase</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">max_res_increase</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Maximum resolution increase per step. </p>
+<p>When the tolerance is reached at the collocation points but not between them, the resolution is increased by multiplying the current resolution with <code>res_increase_factor</code>. This increase can be limited using <code>max_res_increase</code>. Note that plateau detection is <em>not</em> turned off if this limit is reached even if the <code>min_res_increase_factor</code> is <em>not</em> reached. This may help limiting the resolution increase in cases where convergence is worse than exponential. A use-case is when using Hermite interpolation of numerical data which may lead to an explosion of collocation points if the solver, after having reached the actual plateau exponentially, still sees sub-exponential convergence occurring from making its complicated way between the smooth numerical inaccuracies (i.e. when it tries to do sub-grid-point corrections). </p>
+
+</div>
+</div>
 <a id="af41797ed4792deeeeee2e3aadce1c48b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af41797ed4792deeeeee2e3aadce1c48b">&#9670;&nbsp;</a></span>max_resolution</h2>
 
@@ -854,6 +970,23 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Minimum resolution when decreasing the resolution. </p>
+
+</div>
+</div>
+<a id="ac51d458be8c95b896b3f08ba03ce80cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac51d458be8c95b896b3f08ba03ce80cf">&#9670;&nbsp;</a></span>min_res_increase_factor</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">min_res_increase_factor</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If res increase is limited by <code>max_resolution</code>, this is the minimal factor by which the resolution must effectively increase for plateau detection to be reliable. </p>
+<p>Default is to use <code>res_increase_factor</code>. Note that this only applies to resolutions near the <code>max_resolution</code>, where smaller relative resolution increases may be sufficient for plateau detection. </p>
 
 </div>
 </div>

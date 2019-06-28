@@ -340,6 +340,25 @@ class CosineSeries(_TrigSeries):
         with self.context(use_mp, dps) as ctx:
             self.a_n = [ctx.mpf(value)] + [ctx.zero] * (num-1)
 
+    def add_constant(self, value):
+        r"""Add a constant value to the function."""
+        if len(self.a_n) == 0:
+            self.a_n = [0.0]
+        self.a_n[0] += value
+
+    def set_constant(self, value):
+        r"""Set the first coefficient to a given value."""
+        if len(self.a_n) == 0:
+            self.a_n = [0.0]
+        else:
+            self.a_n[0] = value
+
+    def get_constant(self, value):
+        r"""Get the first coefficient."""
+        if len(self.a_n) == 0:
+            return 0.0
+        return self.a_n[0]
+
     @classmethod
     def create_collocation_points(cls, num, lobatto=True, use_mp=False,
                                   dps=None):

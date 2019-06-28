@@ -25,11 +25,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html#a27640ba584edeb17b903cd6b0a4ff2ab",
-"classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#a8a6287602630db6aeffcb6cf5787a216",
-"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a271d068cb1029687509eaf23b3c7799f",
-"classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a8bd583808a8e110ac9c55f01f210fb6b",
-"namespacemotsfinder_1_1metric_1_1discrete_1_1discretize.html"
+"classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html#a56ba5441991ba928333e024d28a0c5d4",
+"classmotsfinder_1_1axisym_1_1trackmots_1_1__NeckInfo.html#a0945d17993c9ead38affd7c8bf9d723e",
+"classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html#ac141894fffae2776291095dae12216b9",
+"classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#abaa7ea341ccde12aa7ad22b948b714b6",
+"classmotsfinder_1_1ndsolve_1_1bcs_1_1RobinCondition.html#a4ecd6bdf94830ea45d2db59a60350a8a",
+"namespacemotsfinder_1_1ndsolve_1_1bases.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

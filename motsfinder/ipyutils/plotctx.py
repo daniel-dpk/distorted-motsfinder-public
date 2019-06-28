@@ -10,6 +10,7 @@ import subprocess
 import os
 import os.path as op
 
+import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
@@ -24,6 +25,7 @@ __all__ = [
     "simple_plot_ctx",
     "plot_ctx",
     "plot_ctx_3d",
+    "pi_ticks",
 ]
 
 
@@ -75,7 +77,8 @@ def _equal_lengths(axes, ax):
 @contextmanager
 def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
                     fontsize=None, save=None, ax=None, show=True, close=False,
-                    cfg_callback=None, dpi=None, save_opts=None):
+                    cfg_callback=None, dpi=None, save_opts=None,
+                    subplot_kw=None):
     r"""Simple context for creating an setting up a figure and axis/axes.
 
     The given `ax` axis object can be a callable, in which case it is used to
@@ -89,6 +92,9 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
     rc_opts = dict()
     if usetex is not None:
         rc_opts['text.usetex'] = usetex
+        if usetex:
+            rc_opts['font.family'] = 'DejaVu Serif', 'serif'
+            rc_opts['font.serif'] = ['Computer Modern']
     if fontsize is not None:
         rc_opts['font.size'] = fontsize
     with matplotlib_rc(rc_opts):
@@ -97,9 +103,10 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
                 figsize=figsize, **(dict(dpi=dpi) if dpi else dict())
             )
             if projection is not None:
-                ax = fig.add_subplot(111, projection=projection)
+                ax = fig.add_subplot(111, projection=projection,
+                                     **(subplot_kw or dict()))
             else:
-                ax = fig.add_subplot(111)
+                ax = fig.add_subplot(111, **(subplot_kw or dict()))
         else:
             if callable(ax):
                 ax = ax()
@@ -124,10 +131,11 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
 def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
              ylog=False, xlim=(None, None), ylim=(None, None), pad=0, ypad=0,
              yscilimits=(-3, 3), xscilimits=None, xtick_spacing=None,
+             pi_xticks=None, pi_yticks=None,
              ytick_spacing=None, title=None, xlabel=None, ylabel=None,
              tight=True, tight_layout=True, usetex=None, fontsize=None,
              save=None, ax=None, show=True, close=False, cfg_callback=None,
-             equal_lengths=False, dpi=None, save_opts=None):
+             equal_lengths=False, dpi=None, save_opts=None, subplot_kw=None):
     r"""Context manager for preparing a figure and applying configuration.
 
     This is a convenience function with which it is possible to easily create
@@ -150,7 +158,7 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
     with simple_plot_ctx(figsize=figsize, projection=projection,
                          usetex=usetex, fontsize=fontsize, save=save, ax=ax,
                          show=show, close=close, cfg_callback=_cb, dpi=dpi,
-                         save_opts=save_opts) as ax:
+                         save_opts=save_opts, subplot_kw=subplot_kw) as ax:
         yield ax
         ax.grid(grid)
         if tight is not None:
@@ -172,11 +180,15 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
                 ax.xaxis.set_major_locator(plticker.LogLocator(xtick_spacing))
             else:
                 ax.xaxis.set_major_locator(plticker.MultipleLocator(xtick_spacing))
+        elif pi_xticks:
+            pi_ticks(ax, **(dict() if pi_xticks is True else pi_xticks))
         if ytick_spacing is not None:
             if ylog:
                 ax.yaxis.set_major_locator(plticker.LogLocator(ytick_spacing))
             else:
                 ax.yaxis.set_major_locator(plticker.MultipleLocator(ytick_spacing))
+        elif pi_yticks:
+            pi_ticks(ax, axis='y', **(dict() if pi_yticks is True else pi_yticks))
         if title is not None:
             opts = dict()
             if isinstance(title, (list, tuple)):
@@ -251,3 +263,40 @@ def _interpret_pad(pad, lower, upper, cur_lower, cur_upper):
         for p in pad
     ]
     return lower - pad[0], upper + pad[1]
+
+
+def pi_ticks(ax, axis='x', major=2, minor=1):
+    r"""Show ticks in multiples of pi.
+
+    @param ax
+        The axis object to modify.
+    @param axis
+        String representing the axis to change. Default: ``"x"``
+    @param major
+        How many sub-intervals of `[0,pi]` to create. Default is `2`, i.e. a
+        label will appear every ``pi/2``.
+    @param minor
+        Steps between the major steps. Set to `1` for no steps and `2` for one
+        additional marker. Default is `1`.
+    """
+    a = getattr(ax, "%saxis" % axis)
+    pi = np.pi
+    denom = major
+    a.set_major_locator(plticker.MultipleLocator(pi / major))
+    if minor > 1:
+        a.set_minor_locator(plticker.MultipleLocator(pi / (major * minor)))
+    def _gcd(a, b):
+        return _gcd(b, a % b) if b else a
+    def _formatter(x, pos):
+        num = int(round(denom*x/pi))
+        if num == 0:
+            return "$0$"
+        common = _gcd(num, denom)
+        num, den = int(num/common), int(denom/common)
+        den = "" if den == 1 else "/%s" % den
+        if num == 1:
+            num = ""
+        elif num == -1:
+            num = "-"
+        return r"$%s\pi%s$" % (num, den)
+    a.set_major_formatter(plt.FuncFormatter(_formatter))

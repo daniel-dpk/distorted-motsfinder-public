@@ -133,7 +133,12 @@ def plot_2d(f, domain=None, rel_range=((0, 1), (0, 1)), points=30, lw=.4,
             f = lambda x: f_no_offset(x) + zoffset
         if zlog:
             f_linear = f
-            f = lambda x: np.log10(f_linear(x))
+            def _f(x):
+                fx = f_linear(x)
+                if fx > 0:
+                    return np.log10(fx)
+                return np.nan
+            f = _f
         X, Y, Z = prepare_grid(lambda x, y: float(f([x, y])), x_space, y_space)
         ax.plot_surface(
             X, Y, Z,

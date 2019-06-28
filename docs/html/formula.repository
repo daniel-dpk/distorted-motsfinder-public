@@ -403,3 +403,19 @@
 \form#402:\[ {}^{(3)}\nabla_i \beta_j = h_{jk} {}^{(3)}\nabla_i \beta^k = h_{jk} \big( \partial_i \beta^k + {}^{(3)}\Gamma^k_{il} \beta^l \big) \]
 \form#403:\[ \partial_i {}^{(3)}\nabla_j \beta_k = (\partial_i h_{kl}) {}^{(3)}\nabla_j \beta^l +h_{kl} \big[ \beta^l_{,ij} +(\partial_i {}^{(3)}\Gamma^l_{jm}) \beta^m +{}^{(3)}\Gamma^l_{jm} \beta^m_{,i} \big]. \]
 \form#404:$k_{AB}k^{AB}$
+\form#405:\[ 2\pi\chi(\mathcal{S}) = \frac{1}{2} \int_\mathcal{S} \mathcal{R}\ dA, \]
+\form#406:$\chi$
+\form#407:$\mathcal{S}$
+\form#408:$\mathcal{R}$
+\form#409:$\phi$
+\form#410:$2\pi$
+\form#411:\[ \chi(\mathcal{S}) = \frac{1}{2} \int_0^\pi \mathcal{R}(\lambda)\sqrt{q}\ d\lambda, \]
+\form#412:$\sqrt{q}$
+\form#413:$G = -\chi/2 + 1$
+\form#414:$s(\lambda), t(\lambda)$
+\form#415:\[ x(s, t) = a \frac{\sin s}{\cosh t - \cos s}, \qquad z(s, t) = a \frac{\sinh t}{\cosh t - \cos s}. \]
+\form#416:$ f(x) = g(x) + c $
+\form#417:\[ x(s, t) = a \frac{\sin s}{\cosh t - \cos s}, \qquad z(s, t) = a \frac{\sinh t}{\cosh t - \cos s} + c. \]
+\form#418:$\Phi_{ij}$
+\form#419:\[ M_{ij} a_j = \lambda\, a_j, \]
+\form#420:$M = \Phi^{-1} L$

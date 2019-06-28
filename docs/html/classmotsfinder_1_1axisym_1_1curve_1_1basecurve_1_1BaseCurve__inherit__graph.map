@@ -1,6 +1,8 @@
 <map id="BaseCurve" name="BaseCurve">
-<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion. " alt="" coords="76,155,195,181"/>
-<area shape="rect" id="node6" href="$classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x&#45;z&#45;plane. " alt="" coords="219,155,339,181"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html" title="Represent a curve as offset function relative to another curve. " alt="" coords="5,229,121,256"/>
-<area shape="rect" id="node5" href="$classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html" title="Represent as angle&#45;dependent distance from some origin. " alt="" coords="146,229,271,256"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html" title="Base class for parametric curves in the x&#45;z&#45;plane. " alt="" coords="108,155,259,181"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion. " alt="" coords="283,155,401,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html" title="Parametric curve in bipolar coordinates. " alt="" coords="5,229,103,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x&#45;z&#45;plane. " alt="" coords="127,229,247,256"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html" title="Represent a curve as offset function relative to another curve. " alt="" coords="280,229,396,256"/>
+<area shape="rect" id="node8" href="$classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html" title="Represent as angle&#45;dependent distance from some origin. " alt="" coords="421,229,546,256"/>
 </map>

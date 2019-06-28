@@ -5,5 +5,6 @@ var searchData=
   ['accurate_5ftest_5fres',['accurate_test_res',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a178f91455f173e038d00529bdee4a1bf',1,'motsfinder.axisym.newton.NewtonKantorovich.accurate_test_res()'],['../classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html#a178f91455f173e038d00529bdee4a1bf',1,'motsfinder.axisym.newton._LinearExpansionEquation.accurate_test_res()']]],
   ['area_5frtol',['area_rtol',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a237926ae6695d3416c4b18542de74e30',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
   ['atol',['atol',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a0c5f3dcf809a17b895fe12fc91272349',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
+  ['auto_5fbipolar_5fmove',['auto_bipolar_move',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a16fa9806e9ed1764b21166ffbf9ae94b',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
   ['auto_5fresolution',['auto_resolution',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aca2c2178c61736eb318a5649080d87e7',1,'motsfinder::axisym::newton::NewtonKantorovich']]]
 ];

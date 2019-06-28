@@ -23,6 +23,7 @@ from abc import ABCMeta, abstractmethod
 from six import add_metaclass
 from scipy.linalg import norm
 from scipy.integrate import quad
+from scipy.interpolate import PchipInterpolator
 from scipy.optimize import minimize_scalar, brute, brentq
 import numpy as np
 
@@ -30,6 +31,7 @@ from ...utils import save_to_file, load_from_file
 from ...numutils import inf_norm1d, clip
 from ...pickle_helpers import prepare_dict, restore_dict
 from ...utils import insert_missing, update_dict, isiterable
+from ...exprs.cheby import Cheby
 
 
 __all__ = [
@@ -67,6 +69,7 @@ class BaseCurve(object):
     @endcode
 
     Subclasses need to implement the following functions:
+        * copy() to create an independent copy of the curve
         * _create_evaluators() to create one or more evaluators for any
           internally stored numeric expressions. This is part of the evaluator
           caching mechanism.
@@ -217,6 +220,11 @@ class BaseCurve(object):
         if xyz:
             return np.array([x, 0.0, z])
         return np.array([x, z])
+
+    @abstractmethod
+    def copy(self):
+        r"""Create an independent copy of this curve."""
+        pass
 
     @abstractmethod
     def _create_evaluators(self):
@@ -418,6 +426,98 @@ class BaseCurve(object):
             if full_output:
                 return val, err
             return val
+
+    def proper_length_map(self, num=None, evaluators=True, full_output=False,
+                          **kw):
+        r"""Generate functions to map between curve parameter and proper length.
+
+        The resulting callables can be used to e.g. plot properties along the
+        curve in terms of the curve's proper length instead of the current
+        (seemingly) arbitrary parameterization.
+
+        The first returned function `length_map` maps the parameter values to
+        the normalized relative proper length values (i.e. scaled to
+        `[0,pi]`). This can be used to plot quantities already computed on a
+        grid of parameter values, e.g.:
+        @code
+            length_map, inv_map, l0 = c.proper_length_map(full_output=True)
+            params = np.linspace(0, np.pi, 100, endpoint=False)[1:]
+            riccis = [c.ricci_scalar(la) for la in params]
+            # plotting w.r.t. normalized proper length
+            plot_data(
+                [length_map(la) for la in params], riccis,
+                xlabel=r"$\bar \lambda$", ylabel=r"$\mathcal{R}$",
+            )
+            # plotting w.r.t. actual proper length
+            plot_data(
+                [length_map(la)*l0 for la in params], riccis,
+                xlabel=r"proper length", ylabel=r"$\mathcal{R}$",
+            )
+        @endcode
+
+        The second function converts normalized proper lengths to parameter
+        values, i.e. it can be used to plot curve properties not already
+        computed:
+        @code
+            length_map, inv_map = c.proper_length_map()
+            plot_1d(
+                f=lambda x: c.ricci_scalar(inv_map(x)),
+                domain=(0, np.pi), value_pad=1e-6, points=100,
+                xlabel=r"$\bar \lambda$", ylabel=r"$\mathcal{R}$",
+            )
+        @endcode
+
+        @return Two callables `length_map` and `inv_map`. If
+            ``full_output==True``, also returns the full (i.e. not normalized)
+            proper length.
+
+        @param num
+            Number of points to sample the proper length at for building an
+            approximation function. Defaults to the current curve resolution.
+        @param evaluators
+            If `True` (default), return the callables instead of the
+            interpolant objects.
+        @param full_output
+            If `True`, return the proper length as third return value. Default
+            is `False`.
+        @param metric
+            (Extracted from ``**kw``) The metric to use for computation. If
+            set to `None`, uses coordinate space arc length instead of actual
+            proper length. Default is to use the current curve's metric. The
+            flat metric is used in case the curve is a pure coordinate curve
+            (e.g. parametriccurve.ParametricCurve).
+        @param **kw
+            Further arguments are passed to arc_length_using_metric().
+        """
+        # Child classes having a metric should use:
+        #   metric = kw.pop('metric', self.metric)
+        #   return super().proper_length_map(num=num, metric=metric, **kw)
+        metric = kw.pop('metric', None)
+        if num is None:
+            num = self.num
+        xs = Cheby([], domain=(0, np.pi)).collocation_points(num=num, lobatto=True)
+        xs = np.asarray(list(reversed(xs)))
+        intervals = list(zip(xs, xs[1:]))
+        ys = [0.] + [self.arc_length_using_metric(metric=metric, a=a, b=b, **kw)
+                     for a, b in intervals]
+        for i in range(1, len(ys)):
+            ys[i] += ys[i-1]
+        proper_length = ys[-1]
+        ys = np.pi * np.asarray(ys) / proper_length
+        length_map = Cheby([], domain=(0, np.pi))
+        length_map.set_coefficients(
+            list(reversed(ys)), # Chebyshev points are reversed
+            physical_space=True, lobatto=True
+        )
+        interp = PchipInterpolator(ys, xs) # guarantees monotonicity of interpolant
+        inv_map = Cheby.from_function(interp, num=num, domain=(0, np.pi))
+        if evaluators:
+            result = length_map.evaluator(), inv_map.evaluator()
+        else:
+            result = length_map, inv_map
+        if full_output:
+            return result + (proper_length,)
+        return result
 
     def z_distance(self, other_curve=None, atol=1e-12, rtol=1e-12, limit=100,
                    allow_intersection=False, full_output=False):

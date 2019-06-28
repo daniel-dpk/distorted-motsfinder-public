@@ -1,0 +1,329 @@
+
+# TODO: Make horizon finder work?
+# TODO: Add puncture tracker?
+
+### Variable settings
+
+# __file__ = /gpfs/eschnetter/simulations/brill-lindquist-dgtile-setup5-xmax10-order6-res60/output-0000/brill-lindquist-dgtile.rpar
+# __name__ = __main__
+# dtfac = 4
+# epsdiss = 0.1
+# mol_intermediate_steps = 8
+# mol_num_scratch_levels = 8
+# mol_ode_method = "RK65"
+# nioprocs = 1
+# order = 6
+# out_every = 60
+# out_every_fine = 2
+# par_P_minus = 0.0
+# par_P_plus = 0.0
+# par_b = 0.65
+# par_m_minus = 0.8
+# par_m_plus = 0.5
+# res = 60
+# setup = 5
+# tmax = 7.0
+# xmax = 10.0
+
+
+
+### Thorns
+
+ActiveThorns = "
+    ADMBase
+    Boundary
+    Carpet
+    CarpetIOASCII
+    CarpetIOBasic
+    CarpetIOScalar
+    CarpetLib
+    CarpetReduce
+    CarpetSimulationIO
+    CartGrid3D
+    CoordBase
+    CoordGauge
+    Coordinates
+    Formaline
+    IOUtil
+    InitBase
+    ML_Axisymm
+    ML_BSSN_SD6a
+    MoL
+    NaNChecker
+    StaticConformal
+    Steer
+    SymBase
+    SystemTopology
+    TerminationTrigger
+    Time
+    TimerReport
+    TwoPunctures
+"
+
+
+
+### Parameters
+
+Steer::time     [0] = 1.25
+Steer::parameter[0] = "CarpetSimulationIO::out_every"
+Steer::value    [0] = "2"
+
+Steer::time     [1] = 1.75
+Steer::parameter[1] = "CarpetSimulationIO::out_every"
+Steer::value    [1] = "60"
+
+Steer::time     [2] = 5.25
+Steer::parameter[2] = "CarpetSimulationIO::out_every"
+Steer::value    [2] = "2"
+
+Steer::time     [3] = 5.75
+Steer::parameter[3] = "CarpetSimulationIO::out_every"
+Steer::value    [3] = "60"
+
+
+
+### Domain
+
+CartGrid3D::type = "multipatch"
+Coordinates::coordinate_system = "Cartesian plane"
+
+# The grid is not staggered any more.
+Coordinates::patch_xmin =    0.0
+Coordinates::patch_ymin =    0.0
+Coordinates::patch_zmin = -10.0
+Coordinates::patch_xmax = +10.0 - 1.0/60
+Coordinates::patch_ymax =    0.0
+Coordinates::patch_zmax = +10.0 - 1.0/60
+
+Coordinates::ncells_x = 10.0*60 - 1
+Coordinates::ncells_y = 1       # technically, this should be 0
+Coordinates::ncells_z = 2*10.0*60 - 1
+
+Coordinates::patch_boundary_size = 6/2
+Coordinates::outer_boundary_size = 6/2
+
+Coordinates::stagger_patch_boundaries = no
+Coordinates::stagger_outer_boundaries = no
+
+Coordinates::shiftout_outer_boundaries = 1
+Coordinates::additional_symmetry_size = 0
+
+ML_Axisymm::staggered = no
+
+Coordinates::register_symmetry = no
+
+Coordinates::store_jacobian = no
+Coordinates::store_inverse_jacobian = no
+Coordinates::store_jacobian_derivative = no
+Coordinates::store_volume_form = no
+
+Carpet::domain_from_multipatch = yes
+Carpet::ghost_size_x = 6/2
+Carpet::ghost_size_y = 0
+Carpet::ghost_size_z = 6/2
+Carpet::granularity = 6
+Carpet::granularity_boundary = 6/2
+Carpet::no_split_direction = 1
+
+Carpet::poison_new_timelevels = no   # does not work with persistent RHS
+
+ML_BSSN_SD6a::tile_size_i = 6
+ML_BSSN_SD6a::tile_size_j = 1
+ML_BSSN_SD6a::tile_size_k = 6
+
+# MoL::ODE_Method = "Euler"
+# MoL::MoL_Intermediate_Steps = 1
+# MoL::MoL_Num_Scratch_Levels = 0
+MoL::ODE_Method = "RK65"
+MoL::MoL_Intermediate_Steps = 8
+MoL::MoL_Num_Scratch_Levels = 8
+MethodOfLines::skip_initial_copy = yes
+MethodOfLines::init_RHS_zero = no
+
+Time::timestep_method = "given"
+Time::timestep = 1.0/60/4
+
+cactus::terminate = "time"
+cactus::cctk_final_time = 7.0
+
+
+
+### Physics
+
+ADMBase::initial_data = "twopunctures"
+ADMBase::initial_lapse = "twopunctures-averaged"
+ADMBase::initial_shift = "zero"
+ADMBase::initial_dtlapse = "zero"
+ADMBase::initial_dtshift = "zero"
+
+TwoPunctures::verbose = yes
+TwoPunctures::par_b = 0.65
+TwoPunctures::par_m_plus = 0.5
+TwoPunctures::par_m_minus = 0.8
+TwoPunctures::par_P_plus[0] = 0.0
+TwoPunctures::par_P_minus[0] = 0.0
+TwoPunctures::npoints_A = 60
+TwoPunctures::npoints_B = 60
+TwoPunctures::npoints_phi = 4
+TwoPunctures::Newton_tol = 1.0e-15
+TwoPunctures::Newton_maxit = 10
+TwoPunctures::TP_Tiny = 1.0e-2
+TwoPunctures::grid_setup_method = "evaluation"
+TwoPunctures::swap_xz = yes
+
+ADMBase::evolution_method = "ML_BSSN_SD6a"
+ADMBase::lapse_evolution_method = "ML_BSSN_SD6a"
+ADMBase::shift_evolution_method = "ML_BSSN_SD6a"
+ADMBase::dtlapse_evolution_method = "ML_BSSN_SD6a"
+ADMBase::dtshift_evolution_method = "ML_BSSN_SD6a"
+
+ML_BSSN_SD6a::conformalMethod = 1    # W
+ML_BSSN_SD6a::harmonicN = 1          # 1+log
+ML_BSSN_SD6a::harmonicF = 2.0        # 1+log
+ML_BSSN_SD6a::ShiftGammaCoeff = 0.75
+ML_BSSN_SD6a::BetaDriver = 1.0
+ML_BSSN_SD6a::advectLapse = 1
+ML_BSSN_SD6a::advectShift = 1
+
+ML_BSSN_SD6a::epsDiss = 0.1
+
+ML_BSSN_SD6a::initial_boundary_condition = "Minkowski"
+ML_BSSN_SD6a::rhs_boundary_condition = "zero"
+
+
+
+### Output
+
+NaNChecker::check_every = 60
+NaNChecker::action_if_found = "terminate"
+NaNChecker::check_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtshift
+    ML_BSSN_SD6a::ML_log_confac
+    ML_BSSN_SD6a::ML_metric
+    ML_BSSN_SD6a::ML_Gamma
+    ML_BSSN_SD6a::ML_trace_curv
+    ML_BSSN_SD6a::ML_curv
+    ML_BSSN_SD6a::ML_lapse
+    ML_BSSN_SD6a::ML_shift
+    ML_BSSN_SD6a::ML_dtshift
+"
+
+IO::out_dir = $parfile
+
+IOBasic::outInfo_every = 1
+IOBasic::outInfo_vars = "
+    ADMBase::alp
+    ML_BSSN_SD6a::H
+"
+
+IOScalar::one_file_per_group = yes
+IOScalar::all_reductions_in_one_file = yes
+IOScalar::outScalar_every = 60
+IOScalar::outScalar_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtshift
+    # ML_BSSN_SD6a::ML_log_confac
+    # ML_BSSN_SD6a::ML_metric
+    # ML_BSSN_SD6a::ML_Gamma
+    # ML_BSSN_SD6a::ML_trace_curv
+    # ML_BSSN_SD6a::ML_curv
+    # ML_BSSN_SD6a::ML_lapse
+    # ML_BSSN_SD6a::ML_shift
+    # ML_BSSN_SD6a::ML_dtshift
+    ML_BSSN_SD6a::ML_Ham
+    ML_BSSN_SD6a::ML_mom
+"
+
+IOASCII::one_file_per_group = yes
+IOASCII::compact_format = yes
+IOASCII::output_ghost_points = no
+
+IOASCII::out1D_every = 60
+IOASCII::out1D_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtshift
+    ML_BSSN_SD6a::ML_log_confac
+    ML_BSSN_SD6a::ML_metric
+    ML_BSSN_SD6a::ML_Gamma
+    ML_BSSN_SD6a::ML_trace_curv
+    ML_BSSN_SD6a::ML_curv
+    ML_BSSN_SD6a::ML_lapse
+    ML_BSSN_SD6a::ML_shift
+    ML_BSSN_SD6a::ML_dtshift
+    ML_BSSN_SD6a::ML_log_confacrhs
+    ML_BSSN_SD6a::ML_metricrhs
+    ML_BSSN_SD6a::ML_Gammarhs
+    ML_BSSN_SD6a::ML_trace_curvrhs
+    ML_BSSN_SD6a::ML_curvrhs
+    ML_BSSN_SD6a::ML_lapserhs
+    ML_BSSN_SD6a::ML_shiftrhs
+    ML_BSSN_SD6a::ML_dtshiftrhs
+    ML_BSSN_SD6a::ML_Ham
+    ML_BSSN_SD6a::ML_mom
+"
+
+# IOASCII::out3D_every = 1
+# IOASCII::out3D_vars = "
+#     ADMBase::metric
+#     ADMBase::curv
+#     ADMBase::lapse
+#     ADMBase::shift
+#     ADMBase::dtshift
+#     ML_BSSN_SD6a::ML_log_confac
+#     ML_BSSN_SD6a::ML_metric
+#     ML_BSSN_SD6a::ML_Gamma
+#     ML_BSSN_SD6a::ML_trace_curv
+#     ML_BSSN_SD6a::ML_curv
+#     ML_BSSN_SD6a::ML_lapse
+#     ML_BSSN_SD6a::ML_shift
+#     ML_BSSN_SD6a::ML_dtshift
+#     ML_BSSN_SD6a::ML_Ham
+#     ML_BSSN_SD6a::ML_mom
+# "
+
+CarpetSimulationIO::async_output = yes
+CarpetSimulationIO::max_nioprocs = 1
+CarpetSimulationIO::output_ghost_zones = no
+CarpetSimulationIO::output_symmetry_zones = no
+CarpetSimulationIO::output_asdf = no
+CarpetSimulationIO::output_hdf5 = yes
+CarpetSimulationIO::out_every = 60
+CarpetSimulationIO::out_vars = "
+    ADMBase::metric
+    ADMBase::curv
+    ADMBase::lapse
+    ADMBase::shift
+    ADMBase::dtshift
+    ML_BSSN_SD6a::ML_Ham
+    ML_BSSN_SD6a::ML_mom
+"
+
+CarpetSimulationIO::checkpoint = yes
+IO::checkpoint_every = 1024
+IO::checkpoint_ID = no
+IO::checkpoint_on_terminate = yes
+IO::checkpoint_dir = $parfile
+
+IO::recover = "autoprobe"
+IO::recover_dir = $parfile
+
+TerminationTrigger::max_walltime = 24.0
+TerminationTrigger::on_remaining_walltime = 60   # minutes
+TerminationTrigger::output_remtime_every_minutes = 60
+TerminationTrigger::termination_from_file = yes
+TerminationTrigger::termination_file = "TERMINATE"
+TerminationTrigger::create_termination_file = yes
+
+TimerReport::out_every = 60
+TimerReport::out_filename = "TimerReport"
+TimerReport::n_top_timers = 100

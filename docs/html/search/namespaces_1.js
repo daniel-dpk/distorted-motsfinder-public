@@ -4,9 +4,11 @@ var searchData=
   ['axisym',['axisym',['../namespacemotsfinder_1_1axisym.html',1,'motsfinder']]],
   ['base',['base',['../namespacemotsfinder_1_1metric_1_1base.html',1,'motsfinder.metric.base'],['../namespacemotsfinder_1_1ndsolve_1_1bases_1_1base.html',1,'motsfinder.ndsolve.bases.base']]],
   ['basecurve',['basecurve',['../namespacemotsfinder_1_1axisym_1_1curve_1_1basecurve.html',1,'motsfinder::axisym::curve']]],
+  ['baseparamcurve',['baseparamcurve',['../namespacemotsfinder_1_1axisym_1_1curve_1_1baseparamcurve.html',1,'motsfinder::axisym::curve']]],
   ['bases',['bases',['../namespacemotsfinder_1_1ndsolve_1_1bases.html',1,'motsfinder::ndsolve']]],
   ['basics',['basics',['../namespacemotsfinder_1_1exprs_1_1basics.html',1,'motsfinder::exprs']]],
   ['bcs',['bcs',['../namespacemotsfinder_1_1ndsolve_1_1bcs.html',1,'motsfinder::ndsolve']]],
+  ['bipolarcurve',['bipolarcurve',['../namespacemotsfinder_1_1axisym_1_1curve_1_1bipolarcurve.html',1,'motsfinder::axisym::curve']]],
   ['cheby',['cheby',['../namespacemotsfinder_1_1exprs_1_1cheby.html',1,'motsfinder.exprs.cheby'],['../namespacemotsfinder_1_1ndsolve_1_1bases_1_1cheby.html',1,'motsfinder.ndsolve.bases.cheby']]],
   ['common',['common',['../namespacemotsfinder_1_1exprs_1_1common.html',1,'motsfinder.exprs.common'],['../namespacemotsfinder_1_1ndsolve_1_1common.html',1,'motsfinder.ndsolve.common']]],
   ['curve',['curve',['../namespacemotsfinder_1_1axisym_1_1curve.html',1,'motsfinder::axisym']]],
@@ -37,6 +39,7 @@ var searchData=
   ['printing',['printing',['../namespacemotsfinder_1_1ipyutils_1_1printing.html',1,'motsfinder::ipyutils']]],
   ['refparamcurve',['refparamcurve',['../namespacemotsfinder_1_1axisym_1_1curve_1_1refparamcurve.html',1,'motsfinder::axisym::curve']]],
   ['reloading',['reloading',['../namespacemotsfinder_1_1ipyutils_1_1reloading.html',1,'motsfinder::ipyutils']]],
+  ['schwarzschildks',['schwarzschildks',['../namespacemotsfinder_1_1metric_1_1analytical_1_1schwarzschildks.html',1,'motsfinder::metric::analytical']]],
   ['series',['series',['../namespacemotsfinder_1_1exprs_1_1series.html',1,'motsfinder::exprs']]],
   ['simple',['simple',['../namespacemotsfinder_1_1metric_1_1analytical_1_1simple.html',1,'motsfinder::metric::analytical']]],
   ['simulation',['simulation',['../namespacemotsfinder_1_1metric_1_1simulation.html',1,'motsfinder::metric']]],
@@ -46,6 +49,7 @@ var searchData=
   ['starshapedcurve',['starshapedcurve',['../namespacemotsfinder_1_1axisym_1_1curve_1_1starshapedcurve.html',1,'motsfinder::axisym::curve']]],
   ['tensors',['tensors',['../namespacemotsfinder_1_1metric_1_1discrete_1_1tensors.html',1,'motsfinder::metric::discrete']]],
   ['trackmots',['trackmots',['../namespacemotsfinder_1_1axisym_1_1trackmots.html',1,'motsfinder::axisym']]],
+  ['transformed',['transformed',['../namespacemotsfinder_1_1metric_1_1analytical_1_1transformed.html',1,'motsfinder::metric::analytical']]],
   ['trig',['trig',['../namespacemotsfinder_1_1exprs_1_1trig.html',1,'motsfinder.exprs.trig'],['../namespacemotsfinder_1_1ndsolve_1_1bases_1_1trig.html',1,'motsfinder.ndsolve.bases.trig']]],
-  ['utils',['utils',['../namespacemotsfinder_1_1metric_1_1discrete_1_1utils.html',1,'motsfinder.metric.discrete.utils'],['../namespacemotsfinder_1_1utils.html',1,'motsfinder.utils']]]
+  ['utils',['utils',['../namespacemotsfinder_1_1axisym_1_1utils.html',1,'motsfinder.axisym.utils'],['../namespacemotsfinder_1_1metric_1_1discrete_1_1utils.html',1,'motsfinder.metric.discrete.utils'],['../namespacemotsfinder_1_1utils.html',1,'motsfinder.utils']]]
 ];

@@ -38,5 +38,6 @@ represent.
 
 from .basecurve import BaseCurve
 from .parametriccurve import ParametricCurve
+from .bipolarcurve import BipolarCurve
 from .refparamcurve import RefParamCurve
 from .starshapedcurve import StarShapedCurve

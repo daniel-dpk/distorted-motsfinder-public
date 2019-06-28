@@ -12,7 +12,7 @@ from mpmath import mp
 
 from ..numutils import binomial_coeffs
 from .numexpr import NumericExpression, SimpleExpression
-from .evaluators import EvaluatorBase, EvaluatorFactory
+from .evaluators import EvaluatorBase, EvaluatorFactory, TrivialEvaluator
 
 
 __all__ = [
@@ -21,13 +21,17 @@ __all__ = [
     "ScaleExpression",
     "ProductExpression",
     "ProductExpression2D",
+    "DivisionExpression",
     "DivisionExpression2D",
+    "OffsetExpression",
     "SumExpression",
     "BlendExpression2D",
     "EmbedExpression2D",
     "SimpleSinExpression",
     "SimpleCosExpression",
     "SinSquaredExpression",
+    "SimpleSinhExpression",
+    "SimpleCoshExpression",
 ]
 
 
@@ -328,6 +332,67 @@ class _ProductExpression2DEval(EvaluatorBase):
         raise NotImplementedError
 
 
+class DivisionExpression(NumericExpression):
+    r"""Divide one 1D expression by another.
+
+    Represents an expression of the form `f(x) = g(x)/h(x)`.
+    """
+
+    def __init__(self, expr1, expr2, name='divide'):
+        r"""Init function.
+
+        @param expr1 Numerator expression.
+        @param expr2 Denominator expression.
+        """
+        super().__init__(e1=expr1, e2=expr2, domain=expr1.domain, name=name)
+
+    def _expr_str(self):
+        return "e1 / e2, where e1 = %s, e2 = %s" % (self.e1.str(), self.e2.str())
+
+    def _evaluator(self, use_mp):
+        f_ev = self.e1.evaluator(use_mp)
+        g_ev = self.e2.evaluator(use_mp)
+        def d0func(x):
+            return f_ev(x) / g_ev(x)
+        def d1func(x):
+            g = g_ev(x)
+            return f_ev.diff(x, 1) / g - f_ev(x)*g_ev.diff(x, 1) / g**2
+        def d2func(x):
+            f = f_ev(x)
+            g = g_ev(x)
+            df = f_ev.diff(x, 1)
+            ddf = f_ev.diff(x, 2)
+            dg = g_ev.diff(x, 1)
+            ddg = g_ev.diff(x, 2)
+            return ddf/g - (2*df*dg + f*ddg)/g**2 + 2*f*dg**2/g**3
+        def d3func(x):
+            f = f_ev(x)
+            g = g_ev(x)
+            df, ddf, d3f = [f_ev.diff(x, n) for n in range(1, 4)]
+            dg, ddg, d3g = [g_ev.diff(x, n) for n in range(1, 4)]
+            return (
+                d3f/g - (3*(ddf*dg+df*ddg) + f*d3g)/g**2
+                + 6 * (f*dg*ddg + df*dg**2) / g**3
+                - 6 * f * dg**3 / g**4
+            )
+        def d4func(x):
+            f = [f_ev.diff(x, n) for n in range(5)]
+            g = [g_ev.diff(x, n) for n in range(5)]
+            return (
+                - 24*f[1]*g[1]**3 / g[0]**4
+                + f[4] / g[0]
+                + 6*f[0]*g[2]**2 / g[0]**3
+                + 24*f[0]*g[1]**4 / g[0]**5
+                + g[1]**2 * (12*f[2]/g[0]**3 - 36*f[0]*g[2]/g[0]**4)
+                + (-6*f[2]*g[2] - 4*f[1]*g[3] - 4*f[3]*g[1] - f[0]*g[4]) / g[0]**2
+                + (24*f[1]*g[2]*g[1] + 8*f[0]*g[1]*g[3]) / g[0]**3
+            )
+        return TrivialEvaluator(
+            expr=self, f=[d0func, d1func, d2func, d3func, d4func],
+            sub_evaluators=[f_ev, g_ev]
+        )
+
+
 class DivisionExpression2D(NumericExpression):
     r"""Divide one expression by another.
 
@@ -513,6 +578,45 @@ class _DivisionExpression2DEval(EvaluatorBase):
         raise NotImplementedError
 
 
+class OffsetExpression(NumericExpression):
+    r"""Sum of an expression and a constant.
+
+    Represents an expression of the form \f$ f(x) = g(x) + c \f$.
+
+    The value `c` can be set/retrieved using the property `c`.
+    """
+    def __init__(self, expr, c, name='offset'):
+        r"""Init function.
+
+        @param expr Expression to add to.
+        @param c    Constant to add.
+        @param name Name of the expression (e.g. for print_tree()).
+        """
+        super().__init__(e=expr, domain=expr.domain, verbosity=expr.verbosity,
+                         name=name)
+        self.c = c
+
+    def _expr_str(self):
+        op = "+" if self.c >= 0 else "-"
+        return "f(x) %s %r, where f(x)=%s" % (op, abs(self.c), self.e.str())
+
+    @property
+    def nice_name(self):
+        op = "+" if self.c >= 0 else "-"
+        return "%s (e %s %r)" % (self.name, op, abs(self.c))
+
+    def _evaluator(self, use_mp):
+        e = self.e.evaluator(use_mp)
+        if self.c == 0:
+            return e
+        c = self.c
+        def factory(n):
+            if n > 0:
+                return lambda x: e.diff(x, n)
+            return lambda x: e.diff(x, n) + c
+        return EvaluatorFactory(self, factory, [e])
+
+
 class SumExpression(NumericExpression):
     r"""Sum of two expressions is an optional coefficient for the second term.
 
@@ -687,6 +791,38 @@ class SinSquaredExpression(SimpleExpression):
                       lambda x: math.sin(2*x),
                       lambda x: 2*math.cos(2*x)],
             desc="sin^2(x)",
+            domain=domain,
+            name=name
+        )
+
+
+class SimpleSinhExpression(SimpleExpression):
+    r"""Hyperbolic sine (sinh) expression with arbitrary derivatives."""
+    def __init__(self, domain=None, name='sinh'):
+        def mp_factory(n):
+            return (mp.sinh, mp.cosh)[n % 2]
+        def fp_factory(n):
+            return (math.sinh, math.cosh)[n % 2]
+        super().__init__(
+            mp_terms=mp_factory,
+            fp_terms=fp_factory,
+            desc="sinh(x)",
+            domain=domain,
+            name=name
+        )
+
+
+class SimpleCoshExpression(SimpleExpression):
+    r"""Hyperbolic cosine (cosh) expression with arbitrary derivatives."""
+    def __init__(self, domain=None, name='cosh'):
+        def mp_factory(n):
+            return (mp.cosh, mp.sinh)[n % 2]
+        def fp_factory(n):
+            return (math.cosh, math.sinh)[n % 2]
+        super().__init__(
+            mp_terms=mp_factory,
+            fp_terms=fp_factory,
+            desc="cosh(x)",
             domain=domain,
             name=name
         )

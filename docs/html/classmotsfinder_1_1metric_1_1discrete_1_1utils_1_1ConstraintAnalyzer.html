@@ -105,9 +105,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7faa1213c4779bda9956ee53a67fdc93"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a7faa1213c4779bda9956ee53a67fdc93">points_close_to_curve</a> (self, radius=0, indices=False, params=None, pts_indices=None)</td></tr>
 <tr class="memdesc:a7faa1213c4779bda9956ee53a67fdc93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the grid points in a neighborhood of the curve.  <a href="#a7faa1213c4779bda9956ee53a67fdc93">More...</a><br /></td></tr>
 <tr class="separator:a7faa1213c4779bda9956ee53a67fdc93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9b5ff9041bbb7bde5a6eb113515472f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#aa9b5ff9041bbb7bde5a6eb113515472f">constraints_on_patch</a> (self, pts_indices)</td></tr>
-<tr class="memdesc:aa9b5ff9041bbb7bde5a6eb113515472f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute constraint violations on a patch of grid points.  <a href="#aa9b5ff9041bbb7bde5a6eb113515472f">More...</a><br /></td></tr>
-<tr class="separator:aa9b5ff9041bbb7bde5a6eb113515472f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a736d96bba813a143c8a4b3159b8b90"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a2a736d96bba813a143c8a4b3159b8b90">constraints_on_patch</a> (self, pts_indices=None, as_data_patch=False, xlim=(None, None), zlim=(None, None))</td></tr>
+<tr class="memdesc:a2a736d96bba813a143c8a4b3159b8b90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute constraint violations on a patch of grid points.  <a href="#a2a736d96bba813a143c8a4b3159b8b90">More...</a><br /></td></tr>
+<tr class="separator:a2a736d96bba813a143c8a4b3159b8b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c859f73c6b21c61345343b6f8e4e9f8"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a7c859f73c6b21c61345343b6f8e4e9f8">max_constraints_per_chunk</a> (self, radii=(0,), params=None, full_output=False)</td></tr>
 <tr class="memdesc:a7c859f73c6b21c61345343b6f8e4e9f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the maximum constraint violation along the curve.  <a href="#a7c859f73c6b21c61345343b6f8e4e9f8">More...</a><br /></td></tr>
 <tr class="separator:a7c859f73c6b21c61345343b6f8e4e9f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -280,8 +280,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aa9b5ff9041bbb7bde5a6eb113515472f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9b5ff9041bbb7bde5a6eb113515472f">&#9670;&nbsp;</a></span>constraints_on_patch()</h2>
+<a id="a2a736d96bba813a143c8a4b3159b8b90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a736d96bba813a143c8a4b3159b8b90">&#9670;&nbsp;</a></span>constraints_on_patch()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,7 +296,25 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>pts_indices</em>&#160;</td>
+          <td class="paramname"><em>pts_indices</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>as_data_patch</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>xlim</em> = <code>(None,&#160;None)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>zlim</em> = <code>(None,&#160;None)</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -310,7 +328,9 @@ Private Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Two NumPy matrices <code>ham</code> and <code>mom</code> for the complete numerical domain, containing for each grid point in <code>pts_indices</code> the residual constraints. The remaining elements will be exact zeros. <code>ham</code> will contain the quantity <img class="formulaInl" alt="$K_{ab}K^{ab} - (K^c_{\ c})^2 - R$" src="form_346.png"/> and <code>mom</code> the quantity <img class="formulaInl" alt="$\sqrt{\mathcal{H}_a\mathcal{H}^a}$" src="form_382.png"/>, where <img class="formulaInl" alt="$\mathcal{H}_b = D^a(K_{ab} - g_{ab} K^c_{\ c})$" src="form_383.png"/>.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pts_indices</td><td>List of grid points to consider. </td></tr>
+    <tr><td class="paramname">pts_indices</td><td>List of grid points to consider. If not given, compute at <em>each</em> grid point except a few border points (expensive and inefficient). </td></tr>
+    <tr><td class="paramname">as_data_patch</td><td>Whether to return the data as plain numpy arrays (<code>False</code>, default) or as two .<a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html" title="Represents a patch of field (component) data in axisymmetry. ">patch.DataPatch</a> objects. </td></tr>
+    <tr><td class="paramname">xlim,zlim</td><td>Optional coordinate range outside of which not to compute. </td></tr>
   </table>
   </dd>
 </dl>

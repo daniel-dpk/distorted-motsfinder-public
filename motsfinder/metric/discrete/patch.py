@@ -35,7 +35,7 @@ from scipy import linalg
 
 from ...utils import lrange
 from ...numutils import NumericalError
-from .numerical import GridDataError, interpolate, _diff_4th_order_xz
+from .numerical import GridDataError, interpolate, fd_xz_derivatives
 
 
 __all__ = []
@@ -111,6 +111,8 @@ class GridPatch():
         self.origin = np.asarray(origin)
         ## 3x3 array with rows (fixed first index) indicating the three delta vectors.
         self.deltas = np.asarray(deltas)
+        ## Step lengths of the three delta vectors.
+        self.delta_norms = [linalg.norm(dx) for dx in self.deltas]
         ## Inverse delta vectors (used to find grid point from coordinates).
         self.inv_deltas = linalg.inv(deltas)
         ## Bounding box of this patch.
@@ -138,6 +140,21 @@ class GridPatch():
     def dz(self):
         r"""Translation (in coordinate space) between grid points on third axis."""
         return self.deltas[2]
+
+    @property
+    def dx_norm(self):
+        r"""Length (Euclidean norm) of `dx`."""
+        return self.delta_norms[0]
+
+    @property
+    def dy_norm(self):
+        r"""Length (Euclidean norm) of `dy`."""
+        return self.delta_norms[1]
+
+    @property
+    def dz_norm(self):
+        r"""Length (Euclidean norm) of `dz`."""
+        return self.delta_norms[2]
 
     @property
     def shape(self):
@@ -192,10 +209,12 @@ class GridPatch():
         grid_indices = itertools.product(range(ghost, nx-ghost),
                                          yra,
                                          range(ghost, nz-ghost))
-        if not full_output:
-            return grid_indices
-        for i, j, k in grid_indices:
-            yield (i, j, k), self.coords(i, j, k)
+        if full_output:
+            for i, j, k in grid_indices:
+                yield (i, j, k), self.coords(i, j, k)
+        else:
+            for ijk in grid_indices:
+                yield ijk
 
     def closest_element(self, point, floating=False):
         r"""Compute the grid point indices closest to given physical coordinates.
@@ -216,6 +235,14 @@ class GridPatch():
         if not floating:
             return tuple(int(round(i)) for i in indices)
         return indices
+
+    def cell_corner(self, point):
+        r"""Return the grid point indices of the corner of the cell a point lies in.
+
+        A "cell" is a 2x2 square patch of four points.
+        """
+        indices = self.inv_deltas.dot(np.asarray(point) - self.origin)
+        return tuple(map(int, indices))
 
     def snap_to_grid(self, point):
         r"""Return the coordinates of the closest grid point to a given point."""
@@ -238,16 +265,12 @@ class DataPatch(GridPatch):
     To get the correct behavior at the z-axis (i.e. for `x=0`), we need to
     know the symmetry of the represented data under rotations by pi. The
     reason is that in order to interpolate derivatives close to the z-axis, we
-    compute the derivatives on a small sub-patch around the closest grid point
-    and then interpolate these derivative values. However, in order to
-    evaluate the derivatives at each of the points of the sub-patch, we need
-    sub-patches around these (usually 2 in each direction for a 5-point
-    stencil/4th order accurate derivative). Hence, for a 4th order
-    differentiation, we need a 9x9 patch around the grid point closest to the
-    given point.
+    need the values at grid points around the interesting point (how many
+    depends on the desired order of accuracy).
     """
 
-    def __init__(self, origin, deltas, box, mat, symmetry, caching=True):
+    def __init__(self, origin, deltas, box, mat, symmetry,
+                 interpolation='hermite5', fd_order=6, caching=True):
         r"""Create a new data patch object.
 
         @param origin
@@ -265,6 +288,12 @@ class DataPatch(GridPatch):
             Either ``'even'`` or ``'odd'``. For ``'even'``, the component or
             scalar field data is assumed to satisfy \f$f(x,0,z) = f(-x,0,z)\f$
             while for ``'odd'`` we assume \f$f(x,0,z) = -f(-x,0,z)\f$.
+        @param interpolation
+            Kind of interpolation to do. Default is ``'hermite5'``. Possible
+            values are those documented for set_interpolation().
+        @param fd_order
+            Order of the finite difference differentiation. Default is `6`,
+            i.e. using a 7-point stencil.
         @param caching
             Whether to cache interpolating Lagrange polynomials.
         """
@@ -276,6 +305,11 @@ class DataPatch(GridPatch):
         ## Symmetry setting for auto-extending to negative x values.
         self.symmetry = symmetry
         self._lagrange_cache = [] if caching else None
+        self._hermite_cell_matrices = dict()
+        self._hermite_interpolant = dict()
+        self._interpolation = None
+        self._fd_order = fd_order
+        self.set_interpolation(interpolation)
 
     @classmethod
     def from_patch(cls, patch, mat, symmetry, **kw):
@@ -293,16 +327,24 @@ class DataPatch(GridPatch):
         r"""Return a picklable state object."""
         state = self.__dict__.copy()
         state['_lagrange_cache'] = []
+        state['_hermite_cell_matrices'] = dict()
+        state['_hermite_interpolant'] = dict()
         return state
 
     def __setstate__(self, state):
         r"""Restore this object from the given unpickled state."""
-        self.__dict__.update(state)
         # compatibility with data from previous versions
-        self._lagrange_cache = self.__dict__.get('_lagrange_cache', [])
+        self._lagrange_cache = []
+        self._hermite_cell_matrices = dict()
+        self._hermite_interpolant = dict()
+        self._hermite_order = 5
+        self._interpolation = 'lagrange' # previously the only option
+        self._fd_order = 4 # previous default
+        # Restore state. This overrides the above if contained in the data.
+        self.__dict__.update(state)
 
     def set_caching(self, caching=True):
-        r"""Specify whether to cache the interpolating Lagrange polynomials."""
+        r"""Specify whether to cache the interpolating polynomials."""
         if caching and not self.caching:
             self._lagrange_cache = []
         if not caching:
@@ -312,6 +354,228 @@ class DataPatch(GridPatch):
     def caching(self):
         r"""Whether caching of interpolating Lagrange polynomials is enabled."""
         return isinstance(self._lagrange_cache, list)
+
+    @property
+    def fd_order(self):
+        r"""Set the order of finite difference differentiation."""
+        return self._fd_order
+    @fd_order.setter
+    def fd_order(self, order):
+        r"""Current order of finite difference differentiation."""
+        self._fd_order = order
+
+    def set_interpolation(self, interpolation):
+        r"""Change the kind of interpolation to do between grid points.
+
+        Supported interpolations are:
+            * ``'none'``: no interpolation (use closest grid point)
+            * ``'linear'``: linear interpolation between grid points
+            * ``'lagrange'``: 5-point Lagrange interpolation
+            * ``'hermite3'``: cubic Hermite interpolation (using first
+              derivatives)
+            * ``'hermite5'``: quintic Hermite interpolation (using also second
+              derivatives)
+        """
+        if interpolation is None:
+            interpolation = 'none'
+        interpolation = interpolation.lower()
+        if interpolation == 'none':
+            self._interpolation = None
+        elif interpolation == 'hermite3':
+            self._interpolation = 'hermite'
+            self._hermite_order = 3
+        elif interpolation == 'hermite5':
+            self._interpolation = 'hermite'
+            self._hermite_order = 5
+        elif interpolation in ('lagrange', 'linear'):
+            self._interpolation = interpolation
+        else:
+            raise ValueError("Unknown interpolation: %s" % interpolation)
+
+    def get_interpolation(self):
+        r"""Return the currently set interpolation."""
+        interp = self._interpolation
+        if interp == "hermite":
+            interp = "hermite%s" % self._hermite_order
+        return interp
+
+    def _hermite_cell_matrix(self, order=3):
+        r"""Compute the matrix used to solve for coefficients for Hermite interolation.
+
+        @param order
+            Order of the Hermite interpolating polynomial. Default is `3`,
+            i.e. cubic Hermite interpolation, which uses the values and first
+            partial derivatives at the grid points. The returned matrix will
+            be a 16x16 matrix. The other implemented option is `5`, which also
+            uses the second derivatives and hence produces a 36x36 matrix.
+        """
+        try:
+            return self._hermite_cell_matrices[order]
+        except KeyError:
+            pass
+        M = self._compute_hermite_cell_matrix(order=order)
+        self._hermite_cell_matrices[order] = M
+        return M
+
+    def _compute_hermite_cell_matrix(self, order):
+        r"""Compute the matrix for _hermite_cell_matrix()."""
+        xs = [0, 1]
+        zs = [0, 1]
+        orders = list(range(order+1))
+        M = [[xi**ii * zi**jj for ii in orders for jj in orders]
+             for xi in xs for zi in zs]
+        # \partial_x
+        M.extend([[ii * xi**(ii-1) * zi**jj if ii else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        # \partial_z
+        M.extend([[jj * xi**ii * zi**(jj-1) if jj else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        # \partial_x \partial_z
+        M.extend([[ii * jj * xi**(ii-1) * zi**(jj-1) if ii and jj else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        if order == 3:
+            return np.asarray(M)
+        # \partial_x^2
+        M.extend([[ii * (ii-1) * xi**(ii-2) * zi**jj if ii > 1 else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        # \partial_z^2
+        M.extend([[jj * (jj-1) * xi**ii * zi**(jj-2) if jj > 1 else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        # \partial_x^2 \partial_z
+        M.extend([[ii * (ii-1) * jj * xi**(ii-2) * zi**(jj-1) if ii > 1 and jj > 0 else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        # \partial_x \partial_z^2
+        M.extend([[ii * jj * (jj-1) * xi**(ii-1) * zi**(jj-2) if ii > 0 and jj > 1 else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        # \partial_x^2 \partial_z^2
+        M.extend([[ii * (ii-1) * jj * (jj-1) * xi**(ii-2) * zi**(jj-2) if ii > 1 and jj > 1 else 0.
+                   for ii in orders for jj in orders]
+                  for xi in xs for zi in zs])
+        if order == 5:
+            return np.asarray(M)
+        raise NotImplementedError("Interpolation order not implemented: %s" %
+                                  order)
+
+    def _hermite_cell(self, i, j, stencil_size=5, order=3):
+        r"""Construct a Hermite interpolant for one grid cell.
+
+        This creates a 2-D interpolant for the grid data cell with corner
+        points ``i, i+1, j, j+1``. The returned callable has two parameters:
+        the point at which to interpolate (should be the physical coordinates
+        lying inside the cell) and optionally the derivative order `nu`, given
+        by ``nu=(nu_x, nu_z)``, where `nu_x` is the derivative order in
+        x-direction and `nu_z` in z-direciton.
+
+        @param i,j
+            Lower left corner of the cell to build the interpolant for.
+        @param stencil_size
+            Size of the derivative stencil for approximating the derivatives
+            at the grid points. Default is `5`, leading to 4th order accurate
+            derivatives. Implemented options are `3, 5, 7, 9`.
+        @param order
+            Order of the interpolating polynomial. Currently supported values
+            are `3, 5`, with `3` being the default.
+        """
+        n = int((stencil_size-1)/2)
+        mat = self.get_region(
+            (i-n, i+n+2), (self.yidx, self.yidx+1),
+            (j-n, j+n+2),
+        )
+        if order == 3:
+            nu = [(1, 0), (0, 1), (1, 1)]
+        elif order == 5:
+            nu = [(1, 0), (0, 1), (1, 1), (2, 0), (0, 2), (2, 1), (1, 2), (2, 2)]
+        else:
+            raise ValueError("Unsupported order: %s" % order)
+        derivs = fd_xz_derivatives(
+            mat,
+            region=([n, n+1], [0], [n, n+1]),
+            dx=1, dz=1, stencil_size=stencil_size, derivs=nu,
+        )
+        y = [mat[n+nn, 0, n+mm] for nn in (0, 1) for mm in (0, 1)]
+        for (nx, nz), der in zip(nu, derivs):
+            y.extend(der.flatten().tolist())
+        y = np.asarray(y)
+        M = self._hermite_cell_matrix(order=order)
+        c = linalg.solve(M, y)
+        c = c.reshape((order+1, order+1))
+        x0 = self.coords(abs(i), j)
+        orders = list(range(order+1))
+        if i < 0:
+            x0[0] *= -1
+        dx = self.dx_norm
+        dz = self.dz_norm
+        def interp(point, nu=None):
+            x, _, z = np.asarray(point) - x0
+            x /= dx
+            z /= dz
+            if nu is None or max(nu) == 0:
+                return np.sum(c[i,j]*x**i*z**j for i in orders for j in orders)
+            nx, nz = nu
+            return np.sum(
+                np.prod(range(i-nx+1, i+1)) / dx**nx
+                * np.prod(range(j-nz+1, j+1)) / dz**nz
+                * c[i,j]*x**(i-nx)*z**(j-nz)
+                for i in range(nx, order+1) for j in range(nz, order+1)
+            )
+        return interp
+
+    def hermite_2d(self, stencil_size=5, order=3):
+        r"""Return a Hermite interpolant for the full data patch.
+
+        Cells are set up on-demand and cached by default, so that this method
+        is very light-weight. Whether caching is done or not can be controlled
+        using set_caching().
+
+        Also, the interpolants themselves are cached, so calling this method
+        repeatedly is (almost) as efficient as keeping the interpolant for
+        multiple evaluations.
+
+        @param stencil_size
+            Size of the derivative stencil for approximating the derivatives
+            at the grid points. Default is `5`, leading to 4th order accurate
+            derivatives. Implemented options are `3, 5, 7, 9`.
+        @param order
+            Order of the interpolating polynomial. Currently supported values
+            are `3, 5`, with `3` being the default.
+        """
+        try:
+            return self._hermite_interpolant[(stencil_size, order)]
+        except KeyError:
+            interp = self._hermite_2d(stencil_size, order)
+            self._hermite_interpolant[(stencil_size, order)] = interp
+            return interp
+
+    def _hermite_2d(self, stencil_size, order):
+        r"""Implement creating an interpolant for hermite_2d()."""
+        if self.caching:
+            cache = dict()
+            def interp(point, nu=None):
+                i, _, j = self.cell_corner(point)
+                key = (i, j)
+                try:
+                    cell_interp = cache[key]
+                except KeyError:
+                    cell_interp = self._hermite_cell(
+                        i, j, stencil_size=stencil_size, order=order
+                    )
+                    cache[key] = cell_interp
+                return cell_interp(point, nu)
+        else:
+            def interp(point, nu=None):
+                i, _, j = self.cell_corner(point)
+                cell_interp = self._hermite_cell(
+                    i, j, stencil_size=stencil_size, order=order
+                )
+                return cell_interp(point, nu)
+        return interp
 
     def get_region(self, xra, yra, zra):
         r"""Create a matrix containing the data of a sub-patch.
@@ -354,44 +618,41 @@ class DataPatch(GridPatch):
             mat[:change_sign_idx] *= -1
         return mat
 
-    def interpolate(self, point, npts=5, linear=False, interp=True):
+    def interpolate(self, point):
         r"""Interpolate the data at a point within the patch.
 
-        We use Lagrange interpolation of a patch around the given point to
-        compute an approximation of the data at the given point.
+        The kind of interpolation can be set using set_interpolation() and
+        using the `fd_order` property.
 
         @param point
             (Physical) coordinates of the point at which to interpolate.
-        @param npts
-            Number of points per axis to use for interpolation. The default is
-            `5` and thus uses two points on each side of the grid point
-            closest to `point`. Note that this must be an odd number.
-        @param linear
-            If `True`, ignore `npts` and perform linear interpolation. Default
-            is `False`.
-        @param interp
-            Whether to interpolate at all. If `False`, the data at the closest
-            grid point is returned. Default is `True`.
         """
-        real_ijk = self.closest_element(point, floating=True)
-        i, j, k = [int(round(i)) for i in real_ijk]
-        if not interp:
-            return self.at(i, j, k)
-        if linear:
-            npts = 3
-        if npts % 2 == 0:
-            raise ValueError("Need an odd number of points (`npts=%s`)" % npts)
-        n = int((npts-1)/2)
-        if abs(point[1]) < 1e-12:
-            # we lie in the xz-plane
-            yra = (self.yidx, self.yidx+1)
-            real_ijk += [n-i, 0., n-k]
-        else:
-            yra = (j-n, j+n+1)
-            real_ijk += [n-i, n-j, n-k]
-        mat = self.get_region((i-n, i+n+1), yra, (k-n, k+n+1))
-        return interpolate(mat, real_ijk, linear=linear,
-                           cache=self._get_cache(diff=0), base_idx=(i,j,k))
+        if self._interpolation == 'hermite':
+            return self.hermite_2d(self.fd_order+1, self._hermite_order)(point)
+        if self._interpolation is None:
+            return self.at(*self.closest_element(point))
+        linear = self._interpolation == 'linear'
+        npts = self.fd_order + 1
+        if linear or self._interpolation == 'lagrange':
+            real_ijk = self.closest_element(point, floating=True)
+            i, j, k = [int(round(i)) for i in real_ijk]
+            if linear:
+                npts = 3
+            if npts % 2 == 0:
+                raise ValueError("Need an odd number of points (`npts=%s`)" % npts)
+            n = int((npts-1)/2)
+            if abs(point[1]) < 1e-12:
+                # we lie in the xz-plane
+                yra = (self.yidx, self.yidx+1)
+                real_ijk += [n-i, 0., n-k]
+            else:
+                yra = (j-n, j+n+1)
+                real_ijk += [n-i, n-j, n-k]
+            mat = self.get_region((i-n, i+n+1), yra, (k-n, k+n+1))
+            return interpolate(mat, real_ijk, linear=linear,
+                               cache=self._get_cache(diff=0), base_idx=(i,j,k))
+        raise NotImplementedError("Interpolation method not implemented: %s" %
+                                  self._interpolation)
 
     def _get_cache(self, diff=0, sub_idx=0):
         r"""Return a dict to use as cache for a given derivative order.
@@ -432,14 +693,29 @@ class DataPatch(GridPatch):
         """
         if diff == 0:
             return self.mat[i, j, k]
-        dx, _, dz = [linalg.norm(dx) for dx in self.deltas]
-        partial_derivs = _diff_4th_order_xz(
-            self.mat, diff=diff, dx=dx, dz=dz,
-            region=([i], [j], [k]),
+        if j != self.yidx:
+            raise ValueError("Evaluation must be in xz-plane.")
+        dx = self.dx_norm
+        dz = self.dz_norm
+        n = int((self.fd_order)/2)
+        mat = self.get_region((i-n, i+n+1), (self.yidx, self.yidx+1),
+                              (k-n, k+n+1))
+        if diff == 1:
+            derivs = [(1, 0), (0, 1)]
+        elif diff == 2:
+            derivs = [(2, 0), (0, 2), (1, 1)]
+        else:
+            raise ValueError("Unsupported derivative order: %s" % (diff,))
+        partial_derivs = fd_xz_derivatives(
+            mat,
+            region=([n], [0], [n]),
+            dx=dx, dz=dz,
+            stencil_size=self.fd_order+1,
+            derivs=derivs,
         )
         return [v[0,0,0] for v in partial_derivs]
 
-    def diff(self, point, diff=1, interp=True):
+    def diff(self, point, diff=1):
         r"""Compute derivatives and interpolate at a given point.
 
         @return For ``diff=1`` a list with two elements ``[f_x, f_z]``, where
@@ -453,28 +729,49 @@ class DataPatch(GridPatch):
             (Physical) coordinates of the point at which to interpolate.
         @param diff
             Derivative order. Can be `0`, `1` or `2`. Default is `1`.
-        @param interp
-            Whether to interpolate at all or evaluate at the closest grid
-            point. Default is `True` (i.e. do interpolation).
         """
         if diff == 0:
-            return self.interpolate(point, interp=interp)
-        real_ijk = self.closest_element(point, floating=True)
-        i, j, k = [int(round(i)) for i in real_ijk]
-        if not interp:
-            return self.at(i, j, k, diff=diff)
-        n = 2
-        real_ijk += [n-i, 0., n-k]
-        dx, _, dz = [linalg.norm(dx) for dx in self.deltas]
-        partial_derivs = _diff_4th_order_xz(
-            self.get_region((i-2*n, i+2*n+1), (self.yidx, self.yidx+1),
-                            (k-2*n, k+2*n+1)),
-            diff=diff, dx=dx, dz=dz,
-            region=(range(n, 2*(n+1)+1), [self.yidx], range(n, 2*(n+1)+1)),
-        )
-        return [
-            interpolate(
-                p, real_ijk, cache=self._get_cache(diff, slot), base_idx=(i,j,k)
+            return self.interpolate(point)
+        if self._interpolation == 'hermite':
+            interp = self.hermite_2d(self.fd_order+1, self._hermite_order)
+            if diff == 1:
+                return [interp(point, nu=(1, 0)), interp(point, nu=(0, 1))]
+            if diff == 2:
+                return [interp(point, nu=(2, 0)),
+                        interp(point, nu=(0, 2)),
+                        interp(point, nu=(1, 1))]
+            raise NotImplementedError("Unsupported derivative order: %s" %
+                                      diff)
+        linear = self._interpolation == 'linear'
+        interp = self._interpolation is not None
+        if not interp or linear or self._interpolation == 'lagrange':
+            real_ijk = self.closest_element(point, floating=True)
+            i, j, k = [int(round(i)) for i in real_ijk]
+            if not interp:
+                return self.at(i, j, k, diff=diff)
+            n = int((self.fd_order)/2)
+            real_ijk += [n-i, 0., n-k]
+            dx = self.dx_norm
+            dz = self.dz_norm
+            if diff == 1:
+                derivs = [(1, 0), (0, 1)]
+            elif diff == 2:
+                derivs = [(2, 0), (0, 2), (1, 1)]
+            else:
+                raise ValueError("Unsupported derivative order: %s" % (diff,))
+            partial_derivs = fd_xz_derivatives(
+                mat=self.get_region((i-2*n, i+2*n+1),
+                                    (self.yidx, self.yidx+1),
+                                    (k-2*n, k+2*n+1)),
+                region=(range(n, 2*(n+1)+1), [self.yidx], range(n, 2*(n+1)+1)),
+                dx=dx, dz=dz,
+                stencil_size=self.fd_order+1,
+                derivs=derivs,
             )
-            for slot, p in enumerate(partial_derivs)
-        ]
+            return [
+                interpolate(p, real_ijk, linear=linear,
+                            cache=self._get_cache(diff, slot), base_idx=(i,j,k))
+                for slot, p in enumerate(partial_derivs)
+            ]
+        raise NotImplementedError("Interpolation method not implemented: %s" %
+                                  self._interpolation)

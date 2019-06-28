@@ -358,7 +358,7 @@ Private Attributes</h2></td></tr>
 
 <p>Compute the eigenvalues of the operator. </p>
 <p>Note that currently, boundary conditions are ignored. This means that these need to be imposed by the right choice of the basis.</p>
-<dl class="section return"><dt>Returns</dt><dd><code>eigenvals, principle</code>, where <code>eigenvals</code> is a sequence of eigenvalues and <code>principle</code> is the principle eigenvalue (the one with the smallest real part).</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><code>eigenvals, principal</code>, where <code>eigenvals</code> is a sequence of eigenvalues and <code>principal</code> is the principal eigenvalue (the one with the smallest real part).</dd></dl>
 <p><b>Notes</b> </p>
 <p>To use this pseudospectral code for easy eigenvalue computation, consider the eigenvalue problem </p><p class="formulaDsp">
 <img class="formulaDsp" alt="\[ \mathcal{L} u = \lambda u. \]" src="form_293.png"/>
@@ -372,7 +372,10 @@ Private Attributes</h2></td></tr>
 <p> where </p><p class="formulaDsp">
 <img class="formulaDsp" alt="\[ L_{ij} := (\mathcal{L}\phi_j)(x_i), \qquad \Phi_{ij} = \phi_j(x_i), \]" src="form_297.png"/>
 </p>
-<p> and the <img class="formulaInl" alt="$x_i$" src="form_287.png"/> are the collocation points. This is the generalized eigenvalue problem solved here, which is equivalent to the original eigenvalue problem. </p>
+<p> and the <img class="formulaInl" alt="$x_i$" src="form_287.png"/> are the collocation points. Note that <img class="formulaInl" alt="$\Phi_{ij}$" src="form_418.png"/> is invertible, so that the eigenvalue problem being solved here becomes </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ M_{ij} a_j = \lambda\, a_j, \]" src="form_419.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$M = \Phi^{-1} L$" src="form_420.png"/>. </p>
 
 </div>
 </div>

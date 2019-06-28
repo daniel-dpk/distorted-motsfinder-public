@@ -112,6 +112,15 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>evaluate_trig_mat</b> 
 <tr class="memitem:a6bd8632a764ca000a86cc1d75c9842bb"><td class="memItemLeft" align="right" valign="top"><a id="a6bd8632a764ca000a86cc1d75c9842bb"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>create_frequencies</b> (self, num)</td></tr>
 <tr class="separator:a6bd8632a764ca000a86cc1d75c9842bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c1b442061cd5fe0ffd770ac6c49dc34"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a5c1b442061cd5fe0ffd770ac6c49dc34">add_constant</a> (self, value)</td></tr>
+<tr class="memdesc:a5c1b442061cd5fe0ffd770ac6c49dc34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a constant value to the function.  <a href="#a5c1b442061cd5fe0ffd770ac6c49dc34">More...</a><br /></td></tr>
+<tr class="separator:a5c1b442061cd5fe0ffd770ac6c49dc34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4123a0702485bf6cf4dd893ff350b0d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#ab4123a0702485bf6cf4dd893ff350b0d">set_constant</a> (self, value)</td></tr>
+<tr class="memdesc:ab4123a0702485bf6cf4dd893ff350b0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the first coefficient to a given value.  <a href="#ab4123a0702485bf6cf4dd893ff350b0d">More...</a><br /></td></tr>
+<tr class="separator:ab4123a0702485bf6cf4dd893ff350b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a159e912af5b81a626c1f2efca817fef5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a159e912af5b81a626c1f2efca817fef5">get_constant</a> (self, value)</td></tr>
+<tr class="memdesc:a159e912af5b81a626c1f2efca817fef5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the first coefficient.  <a href="#a159e912af5b81a626c1f2efca817fef5">More...</a><br /></td></tr>
+<tr class="separator:a159e912af5b81a626c1f2efca817fef5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34372421e9dfe832c5e4c93f36e6e72d"><td class="memItemLeft" align="right" valign="top"><a id="a34372421e9dfe832c5e4c93f36e6e72d"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>create_collocation_points</b> (cls, num, lobatto=True, use_mp=False, dps=None)</td></tr>
 <tr class="separator:a34372421e9dfe832c5e4c93f36e6e72d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -281,7 +290,98 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_approximate_constant<
 <div class="textblock"><p>Truncated cosine series to represent a function. </p>
 <p>This series is suitable to approximate functions symmetric about both ends of their domain. As such, the represented function will be guaranteed to have a vanishing first derivative at both domain boundaries.</p>
 <p>For examples, see the module docstring. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5c1b442061cd5fe0ffd770ac6c49dc34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c1b442061cd5fe0ffd770ac6c49dc34">&#9670;&nbsp;</a></span>add_constant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def add_constant </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a constant value to the function. </p>
+
+</div>
+</div>
+<a id="a159e912af5b81a626c1f2efca817fef5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a159e912af5b81a626c1f2efca817fef5">&#9670;&nbsp;</a></span>get_constant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def get_constant </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the first coefficient. </p>
+
+</div>
+</div>
+<a id="ab4123a0702485bf6cf4dd893ff350b0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4123a0702485bf6cf4dd893ff350b0d">&#9670;&nbsp;</a></span>set_constant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def set_constant </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the first coefficient to a given value. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>motsfinder/exprs/trig.py</li>
 </ul>
 </div><!-- contents -->

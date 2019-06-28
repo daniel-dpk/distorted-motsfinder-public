@@ -40,7 +40,8 @@ from ..utils import insert_missing, timethis
 from ..numutils import raise_all_warnings
 from ..metric import BrillLindquistMetric
 from ..exprs.numexpr import save_to_file
-from .curve import StarShapedCurve, RefParamCurve, ParametricCurve, BaseCurve
+from .curve import StarShapedCurve, RefParamCurve, BaseCurve
+from .curve import ParametricCurve, BipolarCurve
 from .newton import newton_kantorovich, NoConvergence
 
 
@@ -113,10 +114,14 @@ def find_mots(cfg, user_data=None, full_output=False, **kw):
             user_data=user_data or dict(),
             **newton_args
         )
-    except NoConvergence:
+    except NoConvergence as e:
         if not cfg.save_failed_curve:
             raise
+        if cfg.newton_args.get('verbose', False):
+            print("Did not converge: %s" % (e,))
         curve = None
+    if cfg.callback:
+        cfg.callback(curve)
     if fname and not cfg.veto(curve, cfg):
         if curve:
             curve.save(fname, verbose=cfg.save_verbose,
@@ -153,6 +158,7 @@ def prepare_ref_curve(cfg):
     curve.parametriccurve.ParametricCurve and optionally reparameterized using
     the stored settings.
     """
+    verbose = cfg.newton_args.get('verbose', False)
     metric = cfg.get_metric()
     if isinstance(cfg.c_ref, numbers.Number):
         return StarShapedCurve.create_sphere(
@@ -167,28 +173,40 @@ def prepare_ref_curve(cfg):
     reparam = cfg.reparam
     with_metric = metric if cfg.reparam_with_metric else None
     if ref_num and reparam:
-        c_ref = ParametricCurve.from_curve(cfg.c_ref, num=cfg.c_ref.num)
+        if cfg.bipolar_ref_curve:
+            bipolar_kw = cfg.bipolar_kw or dict()
+            c_ref = BipolarCurve.from_curve(
+                cfg.c_ref, num=cfg.c_ref.num, **bipolar_kw,
+            )
+            if verbose:
+                print("Using bipolar coordinates with settings: %s" % bipolar_kw)
+        else:
+            c_ref = ParametricCurve.from_curve(cfg.c_ref, num=cfg.c_ref.num)
+        strategy = "arc_length"
+        opts = dict()
+        if isinstance(reparam, (list, tuple)):
+            strategy, opts = reparam
+            if isinstance(strategy, numbers.Number): # backwards compatibility
+                alpha, beta = strategy, opts
+                strategy = "experimental"
+                opts = dict(alpha=alpha, beta=beta)
+        if isinstance(reparam, str):
+            strategy = reparam
+        if isinstance(cfg.reparam_with_metric, numbers.Number):
+            blend = cfg.reparam_with_metric
+            if blend and blend != 1.0 and 'blend' not in opts:
+                opts['blend'] = blend
+        opts = insert_missing(opts, num=ref_num)
+        if verbose:
+            metric_info = "curved space" if with_metric else "flat space"
+            print("Reparameterization strategy: %s (%s)" % (strategy, metric_info))
+            print("Reparameterization options:  %s" % opts)
         with raise_all_warnings(),\
                 timethis("Reparameterizing reference curve...",
-                         " done after {}", eol=False,
-                         silent=not cfg.newton_args.get('verbose', False)):
-            strategy = "arc_length"
-            opts = dict()
-            if isinstance(reparam, (list, tuple)):
-                strategy, opts = reparam
-                if isinstance(strategy, numbers.Number): # backwards compatibility
-                    alpha, beta = strategy, opts
-                    strategy = "experimental"
-                    opts = dict(alpha=alpha, beta=beta)
-            if isinstance(reparam, str):
-                strategy = reparam
-            if isinstance(cfg.reparam_with_metric, numbers.Number):
-                blend = cfg.reparam_with_metric
-                if blend and blend != 1.0 and 'blend' not in opts:
-                    opts['blend'] = blend
+                         " done after {}", eol=False, silent=not verbose):
             c_ref.reparameterize(
                 strategy=strategy,
-                **insert_missing(opts, num=ref_num, metric=with_metric)
+                **insert_missing(opts, metric=with_metric)
             )
     else:
         if ref_num is None:
@@ -280,11 +298,25 @@ class MotsFindingConfig():
         @param reparam_with_metric
             Whether to reparameterize in curved (`True`) or flat (`False`) space.
             Default is `True`.
+        @param bipolar_ref_curve
+            Parameterize the reference curve in bipolar coordinates using a
+            .curve.bipolarcurve.BipolarCurve. Default is `False`, i.e. to
+            parameterize in cartesian coordinates using a
+            .curve.parametriccurve.ParametricCurve.
+        @param bipolar_kw
+            Optional configuration options for the bipolar reference curve
+            parameterization (i.e. constructor arguments `scale` and `move`).
         @param accurate_test_res
             Resolution for performing the accurate convergence tests. The default
             ``'auto'`` will use `1.9` times the resolution of the (unprepared)
             reference shape but at least `500`.
             Default is ``'auto'``.
+        @param callback
+            Optional function called after finding the MOTS but before storing
+            it. This may be used to save additional information about the MOTS
+            in the curve object before it is saved to disk. It is called as
+            ``callback(curve)``, where `curve` may be `None` if no curve was
+            found.
         @param veto_callback
             Optional callback to veto saving a result to file. It is called as
             ``veto_callback(curve, cfg)``. If this function returns `False`,
@@ -332,7 +364,10 @@ class MotsFindingConfig():
         self.offset_coeffs = ()
         self.reparam = True
         self.reparam_with_metric = True
+        self.bipolar_ref_curve = False
+        self.bipolar_kw = None
         self.accurate_test_res = 'auto'
+        self.callback = None
         self.veto_callback = None
         self.prefix = ''
         self.suffix = ''
@@ -534,24 +569,71 @@ class GeneralMotsConfig(MotsFindingConfig):
                 relatively fast results with no control over accuracy.
                 Probably rarely used in practice.
             * **discrete2**:
-                Best option if the roundoff plateau is not known. Accuracy is
-                optimized by increasing the resolution until the roundoff
-                plateau is detected. Results are downsampled as long as the
-                residual error does not increase significantly, even if this
-                residual error lies above the absolute tolerance.
+                Best option if the roundoff plateau is not known and the curve
+                is roughly round (see `discrete3` for highly distorted MOTSs).
+                Accuracy is optimized by increasing the resolution until the
+                roundoff plateau is detected. Results are downsampled as long
+                as the residual error does not increase significantly, even if
+                this residual error lies above the absolute tolerance.
             * **discrete3**:
                 Best option if the accuracy that can be obtained (i.e. where
-                the plateau lies) is known at call time. For best results, set
-                the `atol` tolerance slightly above this plateau level. The
-                maximum resolution is set to 12000 and a found curve is
-                downsampled more aggressively as long as `atol` is not
-                surpassed by the error. However, no downsampling is allowed if
-                the `atol` setting would be violated. Hence, setting `atol`
-                too low will push the resolution up to the maximum of 12000
-                within just a few steps.
+                the plateau lies) is known at call time. As with `discrete2`,
+                this is for mostly round curves. The analogue for distorted
+                MOTSs is `discrete5`. For best results, set the `atol`
+                tolerance slightly above this plateau level. The maximum
+                resolution is set to 12000 and a found curve is downsampled
+                more aggressively as long as `atol` is not surpassed by the
+                error. However, no downsampling is allowed if the `atol`
+                setting would be violated. Hence, setting `atol` too low will
+                push the resolution up to the maximum of 12000 within just a
+                few steps.
+            * **discrete4**:
+                As `discrete2`, but using bipolar coordinates to parameterize
+                the reference curve. Depending on the scaling of the
+                coordinate system, a much higher density of collocation points
+                is obtained in the very distorted "neck" region.
+            * **discrete5**:
+                This is to `discrete3` what `discrete4` is to `discrete2`
+                (i.e. bipolar coordinates for the reference curve in case the
+                plateau is known and `atol` can be specified).
+            * **discrete6**:
+                As `discrete4`, but with dynamically optimized ``'curv2'``
+                reparameterization in s-z-coordinate space.
+            * **discrete7**:
+                As `discrete5`, but with dynamically optimized ``'curv2'``
+                reparameterization in s-z-coordinate space.
+            * **discrete8**:
+                As `discrete2`, but better suited for Hermite interpolation.
+                This preset allows a maximum single-step resolution increase
+                of 100 while demanding at least a factor of 2 lower residual
+                error. This means that plateau detection is triggered slightly
+                easier (which we need for Hermite interpolation, as there the
+                hard plateau we get for Lagrange interpolation does not appear
+                and instead a very slow sub-exponential convergence up to
+                floating point errors is observed). Furthermore, plateau
+                detection is supported by *knee detection* in the coefficient
+                list of the horizon function. This should prevent the worst
+                cases of overfitting.
+            * **discrete9**:
+                A combination of `discrete3` (i.e. for known plateau) with the
+                easier palteau detection of `discrete8`.
+            * **discrete10**:
+                A combination of `discrete6` with the easier palteau detection
+                of `discrete8`. Here, the maximum single-step resolution
+                increase is set to 400.
+            * **discrete11**:
+                A combination of `discrete7` (i.e. for known plateau) with the
+                easier palteau detection of `discrete8`. Here, the maximum
+                single-step resolution increase is set to 800.
 
-        In practice, ``"discrete2"`` has turned out to be a well rounded
-        configuration in all but the very extreme cases.
+        In practice, for Lagrange interpolation, ``"discrete2"`` has turned
+        out to be a well rounded configuration in all but the very extreme
+        cases. Analogously, ``"discrete6"`` or ``'discrete7'`` (for known
+        plateau) may be good choices for the inner common MOTS.
+
+        For Hermite interpolation, ``"discrete8"`` should be preferred for the
+        general case and ``"discrete10"`` or ``"discrete11"`` (for known
+        plateau) for the distorted inner common MOTS.
 
         @param preset
             One of the above preset names.
@@ -569,6 +651,11 @@ class GeneralMotsConfig(MotsFindingConfig):
             Further options not explained there are documented as public class
             attributes of .newton.NewtonKantorovich.
         """
+        def _hermite_settings(**kw):
+            return insert_missing(
+                kw, max_res_increase=100, plateau_tol=2.0,
+                knee_detection=True,
+            )
         if preset == "discrete1":
             cfg = cls(
                 ref_num=5, num=30, atol=1e-8,
@@ -583,6 +670,7 @@ class GeneralMotsConfig(MotsFindingConfig):
                 fake_steps=0, detect_plateau=True, plateau_tol=1.5,
                 min_res=30,
                 res_increase_factor=1.4,
+                min_res_increase_factor=1.333, # allow 6000 -> 8000
                 res_init_factor=1,
                 linear_regime_res_factor=1,
                 res_decrease_factor=0.75, res_decrease_accel=0.9,
@@ -597,10 +685,54 @@ class GeneralMotsConfig(MotsFindingConfig):
             cfg = cls.preset(
                 "discrete2", hname,
                 max_resolution=12000,
+                min_res_increase_factor=None,
                 res_increase_factor=1.2,
                 res_decrease_factor=0.9,
                 downsampling_tol_factor=2.0,
                 liberal_downsampling=False,
+            )
+        elif preset == "discrete4":
+            cfg = cls.preset(
+                "discrete2", hname,
+                reparam=("arc_length", dict(coord_space=True)),
+                reparam_with_metric=False,
+                bipolar_ref_curve=True,
+            )
+        elif preset == "discrete5":
+            cfg = cls.preset(
+                "discrete4", hname,
+                max_resolution=12000,
+                min_res_increase_factor=None,
+                res_increase_factor=1.2,
+                res_decrease_factor=0.9,
+                downsampling_tol_factor=2.0,
+                liberal_downsampling=False,
+            )
+        elif preset == "discrete6":
+            cfg = cls.preset(
+                "discrete4", hname,
+                reparam=("curv2", dict(coord_space=True)),
+            )
+        elif preset == "discrete7":
+            cfg = cls.preset(
+                "discrete5", hname,
+                reparam=("curv2", dict(coord_space=True)),
+            )
+        elif preset == "discrete8":
+            cfg = cls.preset(
+                "discrete2", hname, **_hermite_settings()
+            )
+        elif preset == "discrete9":
+            cfg = cls.preset(
+                "discrete3", hname, **_hermite_settings()
+            )
+        elif preset == "discrete10":
+            cfg = cls.preset(
+                "discrete6", hname, **_hermite_settings(max_res_increase=400)
+            )
+        elif preset == "discrete11":
+            cfg = cls.preset(
+                "discrete7", hname, **_hermite_settings(max_res_increase=800)
             )
         else:
             raise ValueError("Unknown preset: %s" % preset)
