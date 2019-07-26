@@ -89,12 +89,13 @@ __all__ = [
 # Valid properties to compute.
 ALL_PROPS = (None, 'none', 'all', 'length_maps', 'constraints', 'ingoing_exp',
              'avg_ingoing_exp', 'area', 'ricci', 'mean_curv', 'curv2',
-             'stability', 'stability_convergence', 'neck', 'dist_top_bot',
+             'stability', 'stability_null', 'stability_convergence',
+             'stability_convergence_null', 'neck', 'dist_top_bot',
              'z_dist_top_inner', 'z_dist_bot_inner', 'signature',
              'point_dists', 'area_parts', 'multipoles')
 
 # Of the above, those not included in 'all'.
-NEED_ACTIVATION_PROPS = ('stability_convergence',)
+NEED_ACTIVATION_PROPS = ('stability_convergence', 'stability_convergence_null')
 
 
 def track_mots(hname, sim_dir, out_base_dir, folder, initial_guess,
@@ -1240,6 +1241,7 @@ def find_slices(sim_dir, backwards=False, start_slice=None, end_slice=None,
 
 
 def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
+                  m_terminate_index=30,
                   stability_convergence_factors=(0.2, 0.4, 0.6, 0.8, 0.9, 1.1),
                   verbosity=True, MOTS_map=None, fname=None, c_past=None,
                   c_future=None, remove_invalid=True):
@@ -1296,16 +1298,28 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
         * **curv2**:
             Similar to ``mean_curv``, but compute the "square"
             \f$k_{AB}k^{AB}\f$ of the MOTS's extrinsic curvature.
-        * **stability**:
+        * **stability**, **stability_null**:
             Compute the spectrum of the stability operator. The number of
             eigenvalues returned depends on the curve's resolution, but at
             least 30 eigenvalues (by default) are computed. See also the
             `min_stability_values` parameter and the following property.
-        * **stability_convergence**:
+            The stored value is a tuple ``principal, spectrum0``,
+            where `principal` is the principal eigenvalue and
+            `spectrum0` is the spectrum of the ``m=0`` angular mode.
+            The full computed spectrum including higher modes is
+            stored in the ``stability_extras`` dictionary under the
+            ``spectrum`` key. Use `m_terminate_index` to control how
+            many angular modes to consider.
+            The ***_null*** variant of this property computes the spectrum
+            w.r.t. the past outward null normal \f$-k^\mu\f$ instead of the
+            outward normal in the spatial slice.
+        * **stability_convergence**, **stability_convergence_null**:
             In addition to computing the stability spectrum above, recompute
             it at (by default) ``0.2, 0.4, 0.6, 0.8, 0.9, 1.1`` times the
             resolution used for the ``"stability"`` property. This allows
             analyzing convergence of the individual eigenvalues.
+            As above, the ***_null*** variant is for the past outward null
+            normal \f$-k^\mu\f$.
         * **neck**:
             Find the neck based on various criteria and compute various
             properties at this point, like proper circumference or proper
@@ -1375,6 +1389,10 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
     @param min_stability_values
         Minimum number of MOTS-stability eigenvalues to compute. The default
         is `30`.
+    @param m_terminate_index
+        Index of the eigenvalue of the `m=0` mode to use to as stopping
+        criterion for the angular mode. Default is `30`.
+        See .curve.expcurve.ExpansionCurve.stability_parameter() for details.
     @param stability_convergence_factors
         Factors by which to multiply the resolution used for computing the
         stability spectrum. Each of the resulting lower or higher resolutions
@@ -1486,13 +1504,24 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
         # default value in these cases so that it matches the previously
         # stored value and does not trigger recomputation.
         min_stability_values = 30 # previous default, has no effect here
-    do_prop('stability', _stability, dict(min_num=min_stability_values,
-                                          method='direct'), c=c)
+    do_prop('stability', _stability,
+            dict(min_num=min_stability_values, method='direct',
+                 m_terminate_index=m_terminate_index, v=2),
+            slice_normal=True, c=c)
+    do_prop('stability_null', _stability,
+            dict(min_num=min_stability_values, method='direct',
+                 m_terminate_index=m_terminate_index, v=2),
+            slice_normal=False, c=c)
     do_prop('stability_convergence', _stability_convergence,
             dict(min_num=min_stability_values,
                  convergence_factors=stability_convergence_factors,
-                 method='direct'),
-            c=c, verbose=verbosity > 0)
+                 method='direct', v=2),
+            slice_normal=True, c=c, verbose=verbosity > 0)
+    do_prop('stability_convergence_null', _stability_convergence,
+            dict(min_num=min_stability_values,
+                 convergence_factors=stability_convergence_factors,
+                 method='direct', v=2),
+            slice_normal=False, c=c, verbose=verbosity > 0)
     do_prop('ricci', _ricci, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
     do_prop('mean_curv', _mean_curv, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
     do_prop('curv2', _curv_squared, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
@@ -1723,27 +1752,58 @@ def _multipoles(c, max_n):
     )
 
 
-def _stability(c, min_num, method):
-    r"""Compute the stability spectrum for the curve."""
+def _stability(c, min_num, method, m_terminate_index, slice_normal, v=None):
+    # pylint: disable=unused-argument
+    r"""Compute the stability spectrum for the curve.
+
+    The parameter `v` is ignored here and can be used to force recomputation
+    of this property in case the code has changed.
+    """
     if method != 'direct':
         raise ValueError("Unsupported method: %s" % (method,))
-    result = c.stability_parameter(num=max(min_num, c.num), full_output=True)
+    num = max(min_num, c.num)
+    principal, spectrum = c.stability_parameter(
+        num=num, m_terminate_index=m_terminate_index,
+        slice_normal=slice_normal, full_output=True
+    )
     return _PropResult(
-        result=result,
-        extras=dict(method=method),
+        result=(principal, spectrum.get(l='all', m=0)),
+        extras=dict(method=method, spectrum=spectrum),
     )
 
 
 def _stability_convergence(c, min_num, convergence_factors, method,
-                           verbose=False):
-    r"""Compute the stability spectrum at different resolutions."""
+                           slice_normal, verbose=False, v=None):
+    # pylint: disable=unused-argument
+    r"""Compute the stability spectrum at different resolutions.
+
+    The parameter `v` can be used to force recomputation of this property in
+    case the code has changed. Note that results from the ``"stability"``
+    property are reused only if the `v` parameters match.
+    """
     if method != 'direct':
         raise ValueError("Unsupported method: %s" % (method,))
-    prev_spectra = c.user_data.get('stability_convergence', [])
-    if 'stability' in c.user_data:
-        prev_spectra.append(c.user_data['stability'])
+    # Collect previously computed results (but only if computed with the
+    # correct method and version).
+    if slice_normal:
+        prop = 'stability_convergence'
+        prop_main = 'stability'
+    else:
+        prop = 'stability_convergence_null'
+        prop_main = 'stability_null'
+    def _get_method(key):
+        if c.user_data.get("%s_args" % key, {}).get("v", None) != v:
+            # Computed with different version of the code. Don't reuse.
+            return None
+        return c.user_data.get("%s_extras" % key, dict(method=None))['method']
+    prev_spectra = c.user_data.get(prop, [])
+    if _get_method(prop) != method:
+        prev_spectra = []
+    if prop_main in c.user_data and _get_method(prop_main) == method:
+        prev_spectra.append(c.user_data[prop_main])
     main_num = max(min_num, c.num)
     def _compute(factor):
+        r"""Compute the stability spectrum for `factor*main_num`."""
         num = int(round(factor * main_num))
         for principal, spectrum in prev_spectra:
             if spectrum.shape[0] == num:
@@ -1751,7 +1811,10 @@ def _stability_convergence(c, min_num, convergence_factors, method,
         if verbose:
             print(" x%s(%s)" % (round(factor, 12), num), end='',
                   flush=True)
-        return c.stability_parameter(num=num, full_output=True)
+        principal, spectrum = c.stability_parameter(
+            num=num, m_max=0, slice_normal=slice_normal, full_output=True
+        )
+        return principal, spectrum.get(l='all', m=0)
     result = [_compute(f) for f in convergence_factors]
     return _PropResult(
         result=result,

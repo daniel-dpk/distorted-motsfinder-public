@@ -1,5 +1,5 @@
 <map id="DiscreteVectorField" name="DiscreteVectorField">
-<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__VectorField.html" title="Axisymmetric discrete vector field created from a vector&#45;valued function. " alt="" coords="5,155,100,181"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html" title="Represents an axisymmetric vector field with three spatial components. " alt="" coords="125,155,231,181"/>
-<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html" title="General field base class for scalars, vectors, or higher tensors. " alt="" coords="62,5,169,32"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__VectorField.html" title="_VectorField" alt="" coords="27,155,121,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html" title="Represents an axisymmetric vector field with three spatial components. " alt="" coords="146,155,253,181"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html" title="General field base class for scalars, vectors, or higher tensors. " alt="" coords="21,5,127,32"/>
 </map>

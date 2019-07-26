@@ -14,7 +14,7 @@ from six import add_metaclass
 import numpy as np
 from mpmath import mp, fp
 
-from ...utils import lmap
+from ...utils import lmap, isiterable
 from ...exprs.series import transform_domains
 
 
@@ -174,13 +174,14 @@ class _SpectralBasis(object):
         """
         return min(enumerate(self.pts_internal), key=lambda p: abs(p[1]-point))
 
-    def zero_op(self, as_numpy):
+    def zero_op(self, as_numpy, real=True):
         r"""Return a zero matrix with dimensions compatible with current resolution.
 
         It will either be a numpy or mpmath matrix, depending on `as_numpy`.
         """
         if as_numpy:
-            return np.zeros(shape=(self._num, self._num), dtype=np.float64)
+            return np.zeros(shape=(self._num, self._num),
+                            dtype=float if real else complex)
         return self.ctx.zeros(self._num, self._num)
 
     def sample_operator_func(self, func):
@@ -236,15 +237,19 @@ class _SpectralBasis(object):
                 and requiring much memory.
         """
         if callable(op):
-            # TODO: Don't assume we just want floating point precision here.
-            sampled_op = op(np.array(self.pts))
+            sampled_op = op(np.array(self.pts) if as_numpy else self.pts)
         elif callable(op[0]):
             sampled_op = self.sample_operator_funcs(op)
         else:
             sampled_op = op
-        L = self.zero_op(as_numpy)
+        real = self._is_op_real(sampled_op)
+        L = self.zero_op(as_numpy, real=real)
         rows = cols = self._num
-        zeros = mp.zeros(1, cols) if self._use_mp else np.zeros(cols)
+        if self._use_mp:
+            fl = mp.mpf if real else mp.mpc
+        else:
+            fl = float if real else complex
+        zeros = mp.zeros(1, cols) if self._use_mp else np.zeros(cols, dtype=fl)
         for row_idx in range(rows):
             row = zeros.copy()
             for n in range(len(sampled_op)):
@@ -253,7 +258,7 @@ class _SpectralBasis(object):
                 except TypeError:
                     op_coeff = sampled_op[n]
                 if not self._use_mp:
-                    op_coeff = float(op_coeff)
+                    op_coeff = fl(op_coeff)
                 if op_coeff != 0:
                     op_row = self._compute_deriv_mat_row(n, row_idx)
                     if op_coeff is None:
@@ -266,10 +271,19 @@ class _SpectralBasis(object):
                         continue
                     row += op_coeff * op_row
             if as_numpy:
-                L[row_idx,:] = lmap(float, row)
+                L[row_idx,:] = lmap(fl, row)
             else:
                 L[row_idx,:] = row
         return L
+
+    def _is_op_real(self, op):
+        for coeff_values in op:
+            if not isiterable(coeff_values):
+                coeff_values = [coeff_values]
+            for val in coeff_values:
+                if isinstance(val, (np.complex, mp.mpc)):
+                    return False
+        return True
 
     def _compute_deriv_mat_row(self, n, row_idx):
         r"""Return just one row of the derivative matrix of a certain order.

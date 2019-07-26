@@ -150,7 +150,8 @@ class TestRefparamcurve(DpkTestCase):
     @slowtest
     def test_loaded_MOTS_stability(self):
         c = BaseCurve.load('testdata/BL_inner_d0_65_ratio4.npy')
-        s, vals = c.stability_parameter(full_output=True)
+        s, spectrum = c.stability_parameter(m_max=0, full_output=True)
+        vals = spectrum.get(l='all', m=0)
         self.assertAlmostEqual(s, -0.700531266359229)
         self.assertAlmostEqual(sorted(vals.real)[0], -0.700531266359229)
         self.assertAlmostEqual(sorted(vals.real)[1], 0.4060364507055123)

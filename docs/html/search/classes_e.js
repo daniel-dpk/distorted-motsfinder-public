@@ -1,27 +1,5 @@
 var searchData=
 [
-  ['scaleexpression',['ScaleExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1ScaleExpression.html',1,'motsfinder::exprs::basics']]],
-  ['schwarzschildksslice',['SchwarzschildKSSlice',['../classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html',1,'motsfinder::metric::analytical::schwarzschildks']]],
-  ['schwarzschildksslicecurv',['SchwarzschildKSSliceCurv',['../classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceCurv.html',1,'motsfinder::metric::analytical::schwarzschildks']]],
-  ['schwarzschildksslicelapse',['SchwarzschildKSSliceLapse',['../classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceLapse.html',1,'motsfinder::metric::analytical::schwarzschildks']]],
-  ['schwarzschildkssliceshift',['SchwarzschildKSSliceShift',['../classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceShift.html',1,'motsfinder::metric::analytical::schwarzschildks']]],
-  ['schwarzschildslicemetric',['SchwarzschildSliceMetric',['../classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1SchwarzschildSliceMetric.html',1,'motsfinder::metric::analytical::simple']]],
-  ['seriesexpression',['SeriesExpression',['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html',1,'motsfinder::exprs::series']]],
-  ['signaturequantities',['SignatureQuantities',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html',1,'motsfinder::axisym::curve::expcurve']]],
-  ['simplecosexpression',['SimpleCosExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1SimpleCosExpression.html',1,'motsfinder::exprs::basics']]],
-  ['simplecoshexpression',['SimpleCoshExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1SimpleCoshExpression.html',1,'motsfinder::exprs::basics']]],
-  ['simpleexpression',['SimpleExpression',['../classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html',1,'motsfinder::exprs::numexpr']]],
-  ['simplesinexpression',['SimpleSinExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1SimpleSinExpression.html',1,'motsfinder::exprs::basics']]],
-  ['simplesinhexpression',['SimpleSinhExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1SimpleSinhExpression.html',1,'motsfinder::exprs::basics']]],
-  ['sinebasis',['SineBasis',['../classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html',1,'motsfinder::ndsolve::bases::trig']]],
-  ['sineseries',['SineSeries',['../classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html',1,'motsfinder::exprs::trig']]],
-  ['sinsquaredexpression',['SinSquaredExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1SinSquaredExpression.html',1,'motsfinder::exprs::basics']]],
-  ['siometric',['SioMetric',['../classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html',1,'motsfinder::metric::simulation::siometric']]],
-  ['sioproject',['SioProject',['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html',1,'motsfinder::metric::simulation::sioproject']]],
-  ['sioscalarfield',['SioScalarField',['../classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html',1,'motsfinder::metric::simulation::siometric']]],
-  ['siosym2tensorfield',['SioSym2TensorField',['../classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioSym2TensorField.html',1,'motsfinder::metric::simulation::siometric']]],
-  ['siovectorfield',['SioVectorField',['../classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html',1,'motsfinder::metric::simulation::siometric']]],
-  ['starshapedcurve',['StarShapedCurve',['../classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html',1,'motsfinder::axisym::curve::starshapedcurve']]],
-  ['steplimitexceeded',['StepLimitExceeded',['../classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html',1,'motsfinder::axisym::newton']]],
-  ['sumexpression',['SumExpression',['../classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html',1,'motsfinder::exprs::basics']]]
+  ['refparamcurve',['RefParamCurve',['../classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html',1,'motsfinder::axisym::curve::refparamcurve']]],
+  ['robincondition',['RobinCondition',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1RobinCondition.html',1,'motsfinder::ndsolve::bcs']]]
 ];

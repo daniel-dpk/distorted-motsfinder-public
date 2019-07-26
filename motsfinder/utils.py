@@ -307,6 +307,36 @@ def print_indented(prefix, obj):
 
 
 @contextmanager
+def printoptions(*args, **kwargs):
+    r"""Temporarily change the numpy print options.
+
+    This context can be used to temporarily change the print options for
+    numpy. After leaving the context, the previous settings are restored.
+
+    All arguments are passed to `numpy.set_printoptions()`, which currently
+    accepts the following parameters:
+
+        precision, threshold, edgeitems, linewidth, suppress, nanstr, infstr,
+        formatter
+
+    @b Examples
+
+    \code
+        import numpy as np
+        from motsfinder.utils import printoptions
+        with printoptions(precision=3, suppress=True, linewidth=120):
+            print np.random.rand(7,7)
+    \endcode
+    """
+    prev_options = np.get_printoptions()
+    try:
+        np.set_printoptions(*args, **kwargs)
+        yield
+    finally:
+        np.set_printoptions(**prev_options)
+
+
+@contextmanager
 def timethis(start_msg=None, end_msg="Elapsed time: {}", silent=False, eol=True):
     r"""Context manager for timing code execution.
 
@@ -429,11 +459,16 @@ def save_to_file(filename, data, overwrite=False, verbose=True,
         print("%s saved to: %s" % (showname, filename))
 
 
-def load_from_file(filename):
+def load_from_file(filename, allow_pickle=True, **kw):
     r"""Load an object from disk.
 
     If the object had been stored using save_to_file(), the result should be a
     perfect copy of the object.
+
+    @param allow_pickle
+        Passed to `numpy.load()` to allow loading objects stored in the file.
+    @param **kw
+        Further keyword arguments are passed to `numpy.load()`.
 
     @b Notes
 
@@ -442,7 +477,7 @@ def load_from_file(filename):
     the data is not a single-element list, it is returned as is.
     """
     filename = op.expanduser(filename)
-    result = np.load(filename)
+    result = np.load(filename, allow_pickle=allow_pickle, **kw)
     if result.shape == (1,):
         return result[0]
     # Not a single value. Return as is.

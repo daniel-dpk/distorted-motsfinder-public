@@ -31,6 +31,8 @@ var searchData=
   ['irreducible_5fmass',['irreducible_mass',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aea5c33ef11a8f6531a62f65777be3a34',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['is_5fok',['is_ok',['../classmotsfinder_1_1numutils_1_1IntegrationResult.html#a0c152820b714a7f9c83aee46aaf17966',1,'motsfinder::numutils::IntegrationResult']]],
   ['is_5forthogonal',['is_orthogonal',['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a9949fe482a240f9233e2359d1ad942d4',1,'motsfinder::exprs::series::SeriesExpression']]],
+  ['is_5freal',['is_real',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#a2e15284628fe5f863339403859d8703f',1,'motsfinder::axisym::curve::stabcalc::StabilitySpectrum']]],
+  ['is_5fvalue_5freal',['is_value_real',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#af917356908a714c7c9fd1f717c3732ce',1,'motsfinder::axisym::curve::stabcalc::StabilitySpectrum']]],
   ['is_5fzero_5fexpression',['is_zero_expression',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a756aa1907645afb1e755555fc838e870',1,'motsfinder::exprs::numexpr::NumericExpression']]],
   ['is_5fzero_5ffunction',['is_zero_function',['../classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html#a7824e84372bb45b21b994d5b1848c998',1,'motsfinder.exprs.evaluators._Evaluator.is_zero_function()'],['../namespacemotsfinder_1_1exprs_1_1common.html#aa3cfcec1801aa4c311f171523632fc15',1,'motsfinder.exprs.common.is_zero_function()']]],
   ['isclose',['isclose',['../namespacemotsfinder_1_1exprs_1_1numexpr.html#a431e93084ddbcd4a9f8be44c7cdf02e3',1,'motsfinder::exprs::numexpr']]],

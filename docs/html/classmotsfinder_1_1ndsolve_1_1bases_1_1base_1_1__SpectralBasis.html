@@ -141,9 +141,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, <a
 <tr class="memitem:a380d5390ef502955cc3004264c739049"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a380d5390ef502955cc3004264c739049">get_closest_collocation_point</a> (self, point)</td></tr>
 <tr class="memdesc:a380d5390ef502955cc3004264c739049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the collocation point closest to the given point.  <a href="#a380d5390ef502955cc3004264c739049">More...</a><br /></td></tr>
 <tr class="separator:a380d5390ef502955cc3004264c739049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28d2edf83d6357552b6a48fcaf55f8b9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a28d2edf83d6357552b6a48fcaf55f8b9">zero_op</a> (self, as_numpy)</td></tr>
-<tr class="memdesc:a28d2edf83d6357552b6a48fcaf55f8b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a zero matrix with dimensions compatible with current resolution.  <a href="#a28d2edf83d6357552b6a48fcaf55f8b9">More...</a><br /></td></tr>
-<tr class="separator:a28d2edf83d6357552b6a48fcaf55f8b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ca7e7f568c0f6156fd53c575842f3b9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a4ca7e7f568c0f6156fd53c575842f3b9">zero_op</a> (self, as_numpy, real=True)</td></tr>
+<tr class="memdesc:a4ca7e7f568c0f6156fd53c575842f3b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a zero matrix with dimensions compatible with current resolution.  <a href="#a4ca7e7f568c0f6156fd53c575842f3b9">More...</a><br /></td></tr>
+<tr class="separator:a4ca7e7f568c0f6156fd53c575842f3b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37359d9431d685a9f223eb8fb1ac2877"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a37359d9431d685a9f223eb8fb1ac2877">sample_operator_func</a> (self, func)</td></tr>
 <tr class="memdesc:a37359d9431d685a9f223eb8fb1ac2877"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sample the given function at all collocation points.  <a href="#a37359d9431d685a9f223eb8fb1ac2877">More...</a><br /></td></tr>
 <tr class="separator:a37359d9431d685a9f223eb8fb1ac2877"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -172,6 +172,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="memitem:a9de67832c883046ff2fb0b60e3e7897b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a9de67832c883046ff2fb0b60e3e7897b">_compute_deriv_mat</a> (self, n)</td></tr>
 <tr class="memdesc:a9de67832c883046ff2fb0b60e3e7897b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the n'th derivative of all basis functions at all collocation points.  <a href="#a9de67832c883046ff2fb0b60e3e7897b">More...</a><br /></td></tr>
 <tr class="separator:a9de67832c883046ff2fb0b60e3e7897b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac791189199ccf9c0d7fbc80bcd35eadf"><td class="memItemLeft" align="right" valign="top"><a id="ac791189199ccf9c0d7fbc80bcd35eadf"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_is_op_real</b> (self, op)</td></tr>
+<tr class="separator:ac791189199ccf9c0d7fbc80bcd35eadf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa08c21f450120a5bce42d0deebe17d75"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#aa08c21f450120a5bce42d0deebe17d75">_compute_deriv_mat_row</a> (self, n, row_idx)</td></tr>
 <tr class="memdesc:aa08c21f450120a5bce42d0deebe17d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return just one row of the derivative matrix of a certain order.  <a href="#aa08c21f450120a5bce42d0deebe17d75">More...</a><br /></td></tr>
 <tr class="separator:aa08c21f450120a5bce42d0deebe17d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -717,8 +720,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a28d2edf83d6357552b6a48fcaf55f8b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28d2edf83d6357552b6a48fcaf55f8b9">&#9670;&nbsp;</a></span>zero_op()</h2>
+<a id="a4ca7e7f568c0f6156fd53c575842f3b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ca7e7f568c0f6156fd53c575842f3b9">&#9670;&nbsp;</a></span>zero_op()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -733,7 +736,13 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>as_numpy</em>&#160;</td>
+          <td class="paramname"><em>as_numpy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>real</em> = <code>True</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

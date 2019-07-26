@@ -113,6 +113,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a280cc9d8aeddcb741338cfc65fe9cf52"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a280cc9d8aeddcb741338cfc65fe9cf52">eigenvalues</a> (self)</td></tr>
 <tr class="memdesc:a280cc9d8aeddcb741338cfc65fe9cf52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the eigenvalues of the operator.  <a href="#a280cc9d8aeddcb741338cfc65fe9cf52">More...</a><br /></td></tr>
 <tr class="separator:a280cc9d8aeddcb741338cfc65fe9cf52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a127ff4e42399eea79f1aff3e5d7e3cb6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a127ff4e42399eea79f1aff3e5d7e3cb6">eigenfunctions</a> (self)</td></tr>
+<tr class="memdesc:a127ff4e42399eea79f1aff3e5d7e3cb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the eigenvalues and eigenfunctions of the operator.  <a href="#a127ff4e42399eea79f1aff3e5d7e3cb6">More...</a><br /></td></tr>
+<tr class="separator:a127ff4e42399eea79f1aff3e5d7e3cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa000ae68bd4fb40ab94cef4b5ed7593b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#aa000ae68bd4fb40ab94cef4b5ed7593b">solve</a> (self)</td></tr>
 <tr class="memdesc:aa000ae68bd4fb40ab94cef4b5ed7593b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve the differential equation and return the solution.  <a href="#aa000ae68bd4fb40ab94cef4b5ed7593b">More...</a><br /></td></tr>
 <tr class="separator:aa000ae68bd4fb40ab94cef4b5ed7593b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,6 +128,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:ad3a4e93477b944975bce0ce81954abb8"><td class="memItemLeft" align="right" valign="top"><a id="ad3a4e93477b944975bce0ce81954abb8"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#ad3a4e93477b944975bce0ce81954abb8">_prepare_eigenvalue_problem</a> (self)</td></tr>
+<tr class="memdesc:ad3a4e93477b944975bce0ce81954abb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct the matrix representing the discretized eigenvalue problem. <br /></td></tr>
+<tr class="separator:ad3a4e93477b944975bce0ce81954abb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18eb5c5c82399e1ffa4d7786e7258936"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a18eb5c5c82399e1ffa4d7786e7258936">_evaluate_equation</a> (self, eq)</td></tr>
 <tr class="memdesc:a18eb5c5c82399e1ffa4d7786e7258936"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpret the given equation argument to get the operator and inhomogeneity.  <a href="#a18eb5c5c82399e1ffa4d7786e7258936">More...</a><br /></td></tr>
 <tr class="separator:a18eb5c5c82399e1ffa4d7786e7258936"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -337,6 +344,28 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the mpmath decimal places to the configured value. </p>
+
+</div>
+</div>
+<a id="a127ff4e42399eea79f1aff3e5d7e3cb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a127ff4e42399eea79f1aff3e5d7e3cb6">&#9670;&nbsp;</a></span>eigenfunctions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def eigenfunctions </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the eigenvalues and eigenfunctions of the operator. </p>
+<p>As for <a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a280cc9d8aeddcb741338cfc65fe9cf52" title="Compute the eigenvalues of the operator. ">eigenvalues()</a>, boundary conditions need to be imposed by a suitable choice of basis functions. See <a class="el" href="classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a280cc9d8aeddcb741338cfc65fe9cf52" title="Compute the eigenvalues of the operator. ">eigenvalues()</a> for more detailed notes.</p>
+<dl class="section return"><dt>Returns</dt><dd>List of eigenfunction expression objects <code>f</code> ordered by real part of the respective eigenvalue. The objects will have properties <code>f.eigenfunction_number</code> (position in the sequence of eigenfunctions) and <code>f.eigenvalue</code> (the eigenvalue corresponding to the eigenfunction). </dd></dl>
 
 </div>
 </div>

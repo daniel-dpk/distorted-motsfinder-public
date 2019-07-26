@@ -1,7 +1,10 @@
 var searchData=
 [
   ['g',['g',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a73c18c59a39b18382081ec00bb456d43',1,'motsfinder.axisym.curve.expcalc.ExpansionCalc.g()'],['../classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html#a6c575c91bbbe7d74c94924e617829010',1,'motsfinder.metric.analytical.transformed.TransformedMetric.g()']]],
+  ['g3_5finv',['g3_inv',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#acf3b30f1a3211e08f1d13ed5157939fb',1,'motsfinder::axisym::curve::stabcalc::StabilityCalc']]],
+  ['g4',['g4',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a84e5690d0544c0a6c8278f7917c68972',1,'motsfinder.axisym.curve.stabcalc.StabilityCalc.g4(self)'],['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#afd452470878861c74705973f7b5d00a2',1,'motsfinder.axisym.curve.stabcalc.StabilityCalc.G4(self)']]],
   ['generalmotsconfig',['GeneralMotsConfig',['../classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html',1,'motsfinder::axisym::findmots']]],
+  ['get',['get',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#a0b90bd617b852e1742e2968e08e4c3ce',1,'motsfinder::axisym::curve::stabcalc::StabilitySpectrum']]],
   ['get_5farea_5fintegrand',['get_area_integrand',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#afea218e8051c9c6b433fc008c252d9b1',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['get_5fback_5ftransforms',['get_back_transforms',['../classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html#ac09d7f6a3ff1898f0b0d73fc7e57a7d5',1,'motsfinder::axisym::curve::bipolarcurve::BipolarCurve']]],
   ['get_5fcalc_5fobj',['get_calc_obj',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a466e295d1bb8750fa1df2b746a0524a4',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
@@ -17,6 +20,7 @@ var searchData=
   ['get_5fdof',['get_dof',['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a768a721241b51e44d1b1266702ed4936',1,'motsfinder::exprs::series::SeriesExpression']]],
   ['get_5fdtlapse',['get_dtlapse',['../classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#afe347cde38df25038965e0131a26a9cf',1,'motsfinder::metric::base::_ThreeMetric']]],
   ['get_5fdtshift',['get_dtshift',['../classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html#a426373bb5a8c9b2e4422997f142b0be1',1,'motsfinder::metric::base::_ThreeMetric']]],
+  ['get_5feigenfunction',['get_eigenfunction',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#a5991584b5554e1c1ced9fa2adcf1f529',1,'motsfinder::axisym::curve::stabcalc::StabilitySpectrum']]],
   ['get_5ffname',['get_fname',['../classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#af5d98de652807c95852760c2988eaf6f',1,'motsfinder::axisym::findmots::MotsFindingConfig']]],
   ['get_5fgit_5fcommit',['get_git_commit',['../namespacemotsfinder_1_1utils.html#a173e954db0978fdccd52b777cdaeb31d',1,'motsfinder::utils']]],
   ['get_5finterpolation',['get_interpolation',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a97081393cf1e8039ddea59cc84bfaccd',1,'motsfinder::metric::discrete::patch::DataPatch']]],

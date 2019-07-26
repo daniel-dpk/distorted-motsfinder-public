@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['eigenfunctions',['eigenfunctions',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a127ff4e42399eea79f1aff3e5d7e3cb6',1,'motsfinder::ndsolve::solver::NDSolver']]],
   ['eigenvalues',['eigenvalues',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a280cc9d8aeddcb741338cfc65fe9cf52',1,'motsfinder::ndsolve::solver::NDSolver']]],
   ['empty_5fmat',['empty_mat',['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html#a0fde62964a27d4bebb856c21ad6f23d9',1,'motsfinder::metric::discrete::discretize::DiscretizedMetric']]],
   ['ends_5fblock',['ends_block',['../classfix__doxypypy_1_1DoxyCommentBlock.html#aefb8e5a58c23215db27cb2491c8a3162',1,'fix_doxypypy::DoxyCommentBlock']]],

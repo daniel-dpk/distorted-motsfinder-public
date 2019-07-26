@@ -11,23 +11,23 @@ refparamcurve.RefParamCurve for examples.
 
 from abc import abstractmethod
 from contextlib import contextmanager
-from math import fsum
 import sys
 
 import numpy as np
 from scipy import linalg
 from scipy.integrate import quad, IntegrationWarning
 from scipy.optimize import minimize_scalar, bracket, brentq, root
-from scipy.special import sph_harm
+from scipy.special import sph_harm # pylint: disable=no-name-in-module
 from mpmath import mp
 
 from ...utils import insert_missing, isiterable, parallel_compute
 from ...numutils import clip, IntegrationResult, IntegrationResults
 from ...metric import FlatThreeMetric, FourMetric
-from ...ndsolve import ndsolve, NDSolver, CosineBasis
+from ...ndsolve import ndsolve, NDSolver, CosineBasis, ChebyBasis
 from ...ndsolve import DirichletCondition
 from .basecurve import BaseCurve
 from .parametriccurve import ParametricCurve
+from .stabcalc import StabilityCalc, StabilitySpectrum
 
 
 __all__ = []
@@ -696,12 +696,15 @@ class ExpansionCurve(BaseCurve):
             area = self.area()
         return np.sqrt(area/(4*np.pi))
 
-    def stability_parameter(self, num=None, rtol=1e-12, full_output=False):
+    def stability_parameter(self, num=None, m_max=None, m_terminate_index=30,
+                            rtol=1e-12, compute_eigenfunctions=False,
+                            slice_normal=True, transform_torsion=False,
+                            full_output=False):
         r"""Compute the stability parameter.
 
         The stability parameter is defined in [1] as the principal eigenvalue
         of the stability operator. We use the normal vector in the slice and
-        use the axisymmetry to greatly simplify the analytical task.
+        use the axisymmetry to simplify the analytical task.
 
         According to Proposition 5.1 in [1], the MOTS represented by this
         curve is stably outermost iff the stability parameter is greater or
@@ -712,58 +715,114 @@ class ExpansionCurve(BaseCurve):
             Pseudospectral resolution of the discretization of the operator.
             By default, uses the resolution of the curve representation
             itself.
+        @param m_max
+            Maximum angular mode to consider. Default is to use `num-1`.
+        @param m_terminate_index
+            Index of the eigenvalue of the `m=0` mode to use to as stopping
+            criterion for the angular mode. If the real part of the thus
+            specified `m=0` eigenvalue is less or equal to the (real part of
+            the) smallest eigenvalue of the current `m`, then no higher `m`
+            modes are considered. This effectively gives the number of `m=0`
+            eigenvalues of which we want to determine the multiplicity.
+            Default is `30`. Set explicitly to `None` to not stop based on
+            this criterion.
         @param rtol
             Tolerance for reality check. The principal eigenvalue is shown in
             [1] to be real. If it has a non-zero imaginary part greater than
             ``rtol * |real_part|``, then a `RuntimeError` is raised. Default
             is `1e-12`.
+        @param compute_eigenfunctions
+            Whether to compute the eigenfunction for each eigenvalue. Default
+            is `False`. The eigenfunctions will be accessible from the
+            StabilitySpectrum object via the ``spectrum.get_eigenfunction()``
+            method. Note that the method for computing the eigenvalues is a
+            different one in this case and hence the numerical values (and
+            even the accuracy) may differ from the case
+            ``compute_eigenfunctions=False``.
+        @param slice_normal
+            Whether to consider the stability operator w.r.t. the outward
+            normal in the spatial slice (default). If `False`, consider the
+            operator w.r.t. the past-pointing outward null normal
+            \f$-k^\mu\f$.
+        @param transform_torsion
+            Apply a transformation to the lightlike null vectors `k` and `l`
+            such that the rotation 1-form \f$s_A\f$ (torsion of `l`) becomes
+            divergence free. Default is `False`.
         @param full_output
             If `True`, return all eigenvalues in addition to the principal
             eigenvalue.
 
         @return The principal eigenvalue as a float (i.e. the real part,
             ignoring any spurious imaginary part). If `full_output==True`,
-            returns an array of all eigenvalues as second element. Note that
-            these will be left as-is, i.e. they will be complex numbers which
-            should have vanishing imaginary part.
+            returns a StabilitySpectrum object as second element containing
+            all found eigenvalues.
 
         @b Notes
 
-        If the MOTS \f$\sigma\f$ is contained in a time-symmetric slice
+        If the MOTS \f$\mathcal{S}\f$ is contained in a time-symmetric slice
         \f$\Sigma\f$ of spacetime, and we compute the stability w.r.t. the
-        outward pointing normal \f$\nu\f$ of \f$\sigma\f$ in \f$\Sigma\f$,
-        then the stability operator simplifies greatly to
+        outward pointing normal \f$\nu\f$ of \f$\mathcal{S}\f$ in
+        \f$\Sigma\f$, then the stability operator simplifies greatly to
         \f[
-            L_\nu \zeta = -\Delta_\sigma \zeta
-                - (R_{ij}\nu^i\nu^j + k_{AB}k^{AB}) \zeta,
+            L_\nu \zeta = -\Delta_\mathcal{S} \zeta
+                - (R_{ij}\nu^i\nu^j + \mathcal{K}_{AB}\mathcal{K}^{AB}) \zeta,
         \f]
         where \f$R_{ij}\f$ is the Ricci tensor of \f$(\Sigma, g)\f$,
-        \f$k_{AB}\f$ is the extrinsic curvature of \f$\sigma\f$,
-        \f$\Delta_\sigma = q^{AB}\,{}^{(2)}\nabla_A\,{}^{(2)}\nabla_B\f$
-        is the Laplacian on \f$(\sigma, q)\f$, `g` is the 3-metric on the
+        \f$\mathcal{K}_{AB}\f$ is the extrinsic curvature of
+        \f$\mathcal{S}\f$, \f$\Delta_\mathcal{S} = q^{AB}\,D_A\,D_B\f$
+        is the Laplacian on \f$(\mathcal{S}, q)\f$, `g` is the 3-metric on the
         slice and `q` the induced 2-metric on the MOTS.
 
+        Without time symmetry, the full operator (in vacuum) reads
+        \f[
+            L_\nu \zeta = -\Delta_\mathcal{S} \zeta + 2 s^A D_A \zeta
+                + \big(
+                    \frac{1}{2} \mathcal{R} - s_A s^A + D_A s^A
+                    - \frac{1}{2} q^{AC} q^{BD} K^\mu_{AB} K^\nu_{CD} \ell_\mu \ell_\nu
+                \big).
+        \f]
+        Here, \f$\mathcal{R}\f$ is the Ricci scalar of \f$\mathcal{S}\f$,
+        \f$s_A = -\frac{1}{2} k_\mu \nabla_A \ell^\mu\f$ and
+        \f$K^\mu_{AB}\ell_\mu = -\nabla_A \ell_B\f$. Note that \f$\nabla\f$
+        refers to the covariant derivative compatible with the spacetime
+        4-metric and \f$k^\mu\f$ and \f$\ell^\mu\f$ are the future pointing
+        ingoing and outgoing null normals to \f$\mathcal{S}\f$, respectively.
+
         To find the principal eigenvalue of \f$L_\nu\f$, first note that due
-        to the axisymmetry, \f$\zeta\f$ will be a function of \f$\lambda\f$
-        only, i.e. it will not depend on \f$\varphi\f$.
+        to the axisymmetry, the \f$\varphi\f$-dependence of \f$\zeta\f$ can be
+        expressed as
+        \f[
+            \zeta(\lambda, \varphi) = \sum_{m=-\infty}^\infty \zeta_m(\lambda) e^{im\varphi}.
+        \f]
+        Since the \f$e^{im\varphi}\f$ are linearly independent, the spectrum
+        will consist of the union of spectra of the \f$\zeta_m\f$. When taking
+        the union, we label the eigenvalues by their `m`-mode to be able to
+        count their multiplicity.
+
+        The effect of applying \f$L\f$ to \f$\zeta_m e^{im\varphi}\f$ can in
+        axisymmetry be reduced to a 1D problem of acting on just \f$\zeta_m\f$
+        via (no summation here, \f$m\f$ is the angular mode, not an index)
+        \f[
+            L^m \zeta_m = (L + 2 i m s^\varphi + m^2 q^{\varphi\varphi}) \zeta_m.
+        \f]
+
         The eigenvalues themselves are found using
         motsfinder.ndsolve.solver.NDSolver.eigenvalues(), which means we just
         need to provide the coefficient functions defining the one-dimensional
-        operator \f$L_\nu\f$ acting on \f$\zeta\f$. The only part not already
-        derived and computed in other methods is the Laplacian term, which
-        reads
+        operator \f$L^m\f$ acting on \f$\zeta_m\f$. The Laplacian acting on
+        \f$\zeta_m\f$ reads
         \f{eqnarray*}{
-            \Delta_\sigma \zeta
-                &=& \frac{1}{\sqrt{q}} \partial_A (\sqrt{q} q^{AB} \partial_B \zeta)
+            \Delta_\sigma \zeta_m
+                &=& \frac{1}{\sqrt{q}} \partial_A (\sqrt{q} q^{AB} \partial_B \zeta_m)
                 = \left(
                     \frac{1}{2} q^{AB} q^{C\lambda} \partial_C q_{AB}
                     + \partial_A q^{A\lambda}
-                \right) \zeta' + q^{\lambda\lambda} \zeta''
+                \right) \zeta_m' + q^{\lambda\lambda} \zeta_m''
                 \\
                 &=& \left(
                     \frac{1}{2} q^{AB} q^{C\lambda} - q^{AC} q^{B\lambda}
-                \right) (\partial_C q_{AB}) \zeta'
-                + q^{\lambda\lambda} \zeta''.
+                \right) (\partial_C q_{AB}) \zeta_m'
+                + q^{\lambda\lambda} \zeta_m''.
         \f}
 
         @b References
@@ -772,155 +831,122 @@ class ExpansionCurve(BaseCurve):
             marginally outer trapped surfaces and existence of marginally
             outer trapped tubes." arXiv preprint arXiv:0704.2889 (2007).
         """
+        if compute_eigenfunctions:
+            zeta = self.multipoles(num=num, get_zeta=True)
+        else:
+            zeta = None
         if num is None:
             num = self.num
+        m_max = min(num-1 if m_max is None else m_max, num-1)
+        if m_terminate_index is not None:
+            m_terminate_index = min(num-1, m_terminate_index)
+        spectrum = StabilitySpectrum(rtol=rtol, zeta=zeta)
         with self.fix_evaluator():
             if self.extr_curvature is None:
-                eq = self.stability_eigenvalue_equation_timesym
+                func = self._stability_eigenvalue_equation_timesym
             else:
-                eq = self.stability_eigenvalue_equation_general
-        solver = NDSolver(
-            eq=eq,
-            basis=CosineBasis(domain=(0, np.pi), num=num, lobatto=False),
-        )
-        eigenvals, principal = solver.eigenvalues()
-        if abs(principal.imag) > rtol * abs(principal.real):
+                func = self._stability_eigenvalue_equation_general
+            cache = dict()
+            def _eig(m):
+                solver = NDSolver(
+                    eq=lambda pts: self._cached_stability_op(
+                        func, pts, m=m, cache=cache,
+                        slice_normal=slice_normal,
+                        transform_torsion=transform_torsion,
+                    ),
+                    basis=ChebyBasis(domain=(0, np.pi), num=num, lobatto=False),
+                )
+                eigenfunctions = ()
+                if compute_eigenfunctions:
+                    eigenfunctions = solver.eigenfunctions()
+                    eigenvals = [f.eigenvalue for f in eigenfunctions]
+                else:
+                    eigenvals, _ = solver.eigenvalues()
+                return eigenvals, eigenfunctions
+            for m in range(m_max+1):
+                spectrum.add(m, *_eig(m))
+                if not full_output: # we only want the principal eigenvalue
+                    break
+                if m > 0:
+                    eigenvals = spectrum.get(l='all', m=m)
+                    if all(spectrum.is_value_real(v) for v in eigenvals):
+                        eigenfunctions = ()
+                        if compute_eigenfunctions:
+                            eigenfunctions = [
+                                spectrum.get_eigenfunction(
+                                    l=l, m=m, evaluator=False
+                                )
+                                for l in range(m, m+num)
+                            ]
+                        spectrum.add(-m, eigenvals, eigenfunctions)
+                    else:
+                        spectrum.add(-m, *_eig(-m))
+                if (m_terminate_index is not None
+                        and spectrum.get(l=m, m=m) > spectrum.get(l=m_terminate_index, m=0)):
+                    break
+        if not spectrum.is_real(l=0, m=0):
             raise RuntimeError("Non-real principal eigenvalue detected.")
         if full_output:
-            return principal.real, eigenvals
-        return principal.real
+            return spectrum.principal.real, spectrum
+        return spectrum.principal.real
 
-    def stability_eigenvalue_equation_timesym(self, pts):
-        r"""Eigenvalue equation evaluator for time-symmetric case.
+    def _cached_stability_op(self, func, pts, m, cache=None, **kw):
+        if cache and 'pts' in cache:
+            op_id = cache['op_id']
+            op_partial1 = cache['op_partial1']
+            op_partial2 = cache['op_partial2']
+            q_inv11 = cache['q_inv11']
+            s_phi = cache['s^phi']
+        else:
+            (op_id, op_partial1, op_partial2), q_inv11, s_phi = func(pts, **kw)
+            if cache is not None:
+                cache['pts'] = pts
+                cache['op_id'] = op_id
+                cache['op_partial1'] = op_partial1
+                cache['op_partial2'] = op_partial2
+                cache['q_inv11'] = q_inv11
+                cache['s^phi'] = s_phi
+        op_id = [v + qi * m**2 for v, qi in zip(op_id, q_inv11)]
+        if m != 0 and any(s_phi):
+            op_id = [v + 2j * m * s_ph for v, s_ph in zip(op_id, s_phi)]
+        return [op_id, op_partial1, op_partial2], 0.0
 
-        This function is suitable to be passed as `eq` parameter to
-        motsfinder.ndsolve.solver.NDSolver.
-        """
+    def _stability_eigenvalue_equation_timesym(self, pts, slice_normal,
+                                               transform_torsion):
+        r"""Eigenvalue equation evaluator for time-symmetric case."""
+        if not slice_normal:
+            raise NotImplementedError(
+                "Time-symmetric case only implemented for slice normal"
+            )
         # Values for 3 derivative orders (0,1,2) per point.
         operator_values = np.zeros((len(pts), 3))
-        for pt, op in zip(pts, operator_values):
-            calc = self.get_calc_obj(pt)
-            dq = calc.induced_metric(diff=1)
-            q_inv = calc.induced_metric(inverse=True)
-            # Laplacian:
-            op[1] += -(
-                0.5 * np.einsum('kl,i,ikl', q_inv, q_inv[:,0], dq)
-                - np.einsum('ik,l,ikl', q_inv, q_inv[0,:], dq)
+        q_inv11 = []
+        for param, op in zip(pts, operator_values):
+            stab_calc = StabilityCalc(
+                curve=self, param=param, transform_torsion=transform_torsion
             )
-            op[2] += -q_inv[0,0]
-            # Remaining terms:
-            k2 = calc.extrinsic_curvature(square=True)
-            nu_cov = calc.covariant_normal(diff=0)
-            nu = calc.g.inv.dot(nu_cov)
-            Ric = self.metric.ricci_tensor(calc.point)
-            Rnn = Ric.dot(nu).dot(nu)
-            op[0] += -Rnn - k2
-        return operator_values.T, 0.0
+            op += stab_calc.compute_op_timesym()
+            q_inv11.append(stab_calc.q_inv[1,1])
+        s_phi = [0.] * len(pts)
+        return operator_values.T, q_inv11, s_phi
 
-    def stability_eigenvalue_equation_general(self, pts):
-        r"""Eigenvalue equation evaluator for the general case.
-
-        This function is suitable to be passed as `eq` parameter to
-        motsfinder.ndsolve.solver.NDSolver.
-        """
+    def _stability_eigenvalue_equation_general(self, pts, slice_normal,
+                                               transform_torsion):
+        r"""Eigenvalue equation evaluator for the general case."""
         metric4 = FourMetric(self.metric)
         # Values for 3 derivative orders (0,1,2) per point.
         operator_values = np.zeros((len(pts), 3))
-        for pt, op in zip(pts, operator_values):
-            calc = self.get_calc_obj(pt)
-            point = calc.point
-            g3_inv = calc.g.inv
-            dg3_inv = self.metric.diff(point, diff=1, inverse=True)
-            g4 = metric4.at(point).mat
-            n = metric4.normal(point)
-            dn = metric4.normal(point, diff=1) # shape=(4,4), a,b -> del_a n^b
-            nu3_cov = calc.covariant_normal(diff=0)
-            nu3 = g3_inv.dot(nu3_cov)
-            nu = np.zeros((4,))
-            nu[1:] = nu3
-            dnu3_cov = calc.covariant_normal(diff=1)
-            dnu3 = (
-                np.einsum('ijk,k->ij', dg3_inv, nu3_cov)
-                + np.einsum('jk,ik->ij', g3_inv, dnu3_cov)
+        q_inv11 = []
+        s_phi = []
+        for param, op in zip(pts, operator_values):
+            stab_calc = StabilityCalc(
+                curve=self, param=param, metric4=metric4,
+                transform_torsion=transform_torsion
             )
-            dnu = np.zeros((4, 4)) # a,b -> del_a nu^b (normal of MOTS)
-            dnu[0,1:] = np.nan # don't know time derivatives of MOTS's normal
-            dnu[1:,1:] = dnu3
-            k = n - nu # ingoing future-pointing null normal (shape=4) k^a
-            l = n + nu # outgoing future-pointing null normal (shape=4) l^a
-            k_cov = g4.dot(k) # k_a
-            l_cov = g4.dot(l) # l_a
-            dux3 = calc.diff_xyz_wrt_laph(diff=1) # shape=(2,3), A,i -> del_A x^i
-            dl = dn + dnu # shape=(4,4), a,b -> del_a l^b
-            G4 = metric4.christoffel(point)
-            # shape=(4,4), a,b -> nabla_a l^b  (NaN for a=0)
-            cov_a_l = dl + np.einsum('min,n', G4, l)
-            cov_A_l = np.einsum('Ai,im->Am', dux3, cov_a_l[1:]) # nabla_A l^mu
-            s_A = -0.5 * np.einsum('m,Am->A', k_cov, cov_A_l) # torsion of l^mu
-            q_inv = calc.induced_metric(inverse=True) # q^AB
-            dg4 = metric4.diff(point, diff=1) # shape=(4,4,4), c,a,b -> del_c g_ab
-            dl_cov = (
-                np.einsum('ija,a->ij', dg4, l)
-                + np.einsum('ja,ia->ij', g4, dl)
-            )
-            K_AB_l = -( # shape=(2,2), A,B -> K^mu_AB l_mu
-                np.einsum('Ai,Bj,ij->AB', dux3, dux3, dl_cov[1:,1:])
-                - np.einsum('Ai,Bj,aij,a->AB', dux3, dux3, G4[:,1:,1:], l_cov)
-            )
-            dq = calc.induced_metric(diff=1) # shape=(2,2,2), C,A,B -> del_C q_AB
-            # TODO: remove duplication
-            # Laplacian:
-            op[1] += -(
-                0.5 * np.einsum('AB,C,CAB', q_inv, q_inv[:,0], dq)
-                - np.einsum('CA,B,CAB', q_inv, q_inv[0,:], dq)
-            )
-            op[2] += -q_inv[0,0]
-            # 2nd term: 2 s^A D_A zeta = 2 s^lambda partial_lambda zeta
-            s_A_up = q_inv.dot(s_A) # s^A (contravariant torsion)
-            op[1] += 2 * s_A_up[0]
-            # Terms with no differentiation: (1/2 R_S - Y - s^2 + Ds) zeta
-            R_S = calc.ricci_scalar()
-            Y = 0.5 * np.einsum('AB,AC,BD,CD', K_AB_l, q_inv, q_inv, K_AB_l)
-            s2 = s_A_up.dot(s_A) # s^A s_A
-            # Now the most involved one: Ds = 2nabla_A s^A  (2nabla: cov.der. on MOTS)
-            G2 = calc.christoffel() # A,B,C -> Gamma^A_BC (Christoffel on MOTS)
-            ddn = metric4.normal(point, diff=2) # shape=(4,4,4), a,b,c -> del_a del_b n^c
-            ddg3_inv = np.asarray(self.metric.diff(point, diff=2, inverse=True))
-            ddnu3_cov = calc.covariant_normal(diff=2) # shape=(3,3,3), i,j,k -> del_i del_j nu_k
-            ddnu3 = (
-                np.einsum('ijkl,l->ijk', ddg3_inv, nu3_cov)
-                + np.einsum('ikl,jl->ijk', dg3_inv, dnu3_cov)
-                + np.einsum('jkl,il->ijk', dg3_inv, dnu3_cov)
-                + np.einsum('kl,ijl->ijk', g3_inv, ddnu3_cov)
-            )
-            ddnu = np.zeros((4, 4, 4)) # a,b,c -> del_a del_b nu^c
-            ddnu[1:,1:,1:] = ddnu3
-            ddnu[0,:,1:] = ddnu[:,0,1:] = np.nan
-            ddl = ddn + ddnu # shape=(4,4,4), a,b,c -> del_a del_b l^c
-            ddux3 = calc.diff_xyz_wrt_laph(diff=2) # shape=(2,2,3), A,B,i -> del_A del_B x^i
-            dG4 = metric4.christoffel_deriv(point)
-            # du_cov_i_l = del_A nabla_i l^a
-            #   = del_A x^j (del_i del_j l^a + del_j G^a_ib l^b + G^a_ib del_j l^b)
-            #   -> shape=(2,3,4)
-            du_cov_i_l = (
-                np.einsum('Aj,ija->Aia', dux3, ddl[1:,1:,:])
-                + np.einsum('Aj,jaib,b->Aia', dux3, dG4[1:,:,1:,:], l)
-                + np.einsum('Aj,aib,jb->Aia', dux3, G4[:,1:,:], dl[1:,:])
-            )
-            dk = dn - dnu # shape=(4,4), a,b -> del_a k^b
-            duk_cov = ( # shape=(2,4), A,a -> del_A k_a
-                np.einsum('Ai,iab,b->Aa', dux3, dg4[1:,:,:], k)
-                + np.einsum('ab,Ai,ib->Aa', g4, dux3, dk[1:,:])
-            )
-            ds_cov = -0.5 * ( # shape=(2,2), A,B -> del_A s_B
-                np.einsum('Aa,Ba->AB', duk_cov, cov_A_l)
-                + np.einsum('a,ABi,ia->AB', k_cov, ddux3, cov_a_l[1:,:])
-                + np.einsum('a,Bi,Aia->AB', k_cov, dux3, du_cov_i_l)
-            )
-            Ds = (np.einsum('AB,AB', q_inv, ds_cov)
-                  - np.einsum('AB,CAB,C', q_inv, G2, s_A))
-            op[0] += 0.5 * R_S - Y - s2 + Ds
-        return operator_values.T, 0.0
+            op += stab_calc.compute_op_general(slice_normal=slice_normal)
+            q_inv11.append(stab_calc.q_inv[1,1])
+            s_phi.append(stab_calc.torsion_vector[1])
+        return operator_values.T, q_inv11, s_phi
 
     def multipoles(self, max_n=10, num=None, full_output=False, disp=False,
                    **kw):
@@ -936,7 +962,7 @@ class ExpansionCurve(BaseCurve):
             coordinate \f$\zeta\f$. Default is to use the current curve's
             resolution, but at least 100.
         @param get_zeta
-            Optional argument. If specified and `True`, don't retuen the
+            Optional argument. If specified and `True`, don't return the
             multipole moments but the solution \f$\zeta\f$.
         @param full_output
             Whether to return an numutils.IntegrationResults object containing

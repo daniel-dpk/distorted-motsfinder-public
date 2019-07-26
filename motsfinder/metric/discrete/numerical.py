@@ -170,7 +170,7 @@ def fd_xz_derivatives(mat, region, dx, dz, derivs, stencil_size=5):
     Note that only `x` and `z` (and possibly mixed) derivatives are computed,
     even though `mat` needs to have three axes.
 
-    @return For element of `derivs`, a matrix of the shape of `region`.
+    @return For each element of `derivs`, a matrix of the shape of `region`.
 
     @param mat
         Matrix with the values to use. Must have at least
@@ -335,7 +335,6 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, diff=0):
         return np.array([[T00, T01, T02],
                          [T01, T11, T12],
                          [T02, T12, T22]])
-    x = point[0]
     if diff == 1:
         T, = lower_orders
         (
@@ -351,12 +350,7 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, diff=0):
         Tz = np.array([[T00z, T01z, T02z],
                        [T01z, T11z, T12z],
                        [T02z, T12z, T22z]])
-        if x == 0:
-            Ty = nan_mat((3, 3))
-        else:
-            Ty = np.array([[-2*T[0,1]/x,       (T[0,0]-T[1,1])/x, -T[1,2]/x],
-                           [(T[0,0]-T[1,1])/x, 2*T[0,1]/x,        T[0,2]/x],
-                           [-T[1,2]/x,         T[0,2]/x,          0.]])
+        Ty = _get_Ty(point, T)
         return np.asarray([Tx, Ty, Tz])
     if diff == 2:
         T, dT = lower_orders
@@ -380,37 +374,118 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, diff=0):
         Txz = np.array([[T00xz, T01xz, T02xz],
                         [T01xz, T11xz, T12xz],
                         [T02xz, T12xz, T22xz]])
-        if x == 0:
-            Txy = nan_mat((3, 3))
-            Tyy = nan_mat((3, 3))
-            Tyz = nan_mat((3, 3))
-        else:
-            Txy = 1/x * np.array([
-                [2 * (T[0,1]/x - dT[0,0,1]),
-                 dT[0,0,0] - dT[0,1,1] + (T[1,1]-T[0,0])/x,
-                 T[1,2]/x - dT[0,1,2]],
-                [0, 2 * (dT[0,0,1] - T[0,1]/x), dT[0,0,2] - T[0,2]/x],
-                [0, 0, 0]
-            ])
-            _sym3x3(Txy)
-            Tyy = 1/x * np.array([
-                [dT[0,0,0] - 2 * (T[0,0]-T[1,1])/x,
-                 dT[0,0,1] - 4 * T[0,1]/x,
-                 dT[0,0,2] - T[0,2]/x],
-                [0, 2 * (T[0,0] - T[1,1])/x + dT[0,1,1], dT[0,1,2]-T[1,2]/x],
-                [0, 0, dT[0,2,2]]
-            ])
-            _sym3x3(Tyy)
-            Tyz = 1/x * np.array([
-                [-2*dT[2,0,1], dT[2,0,0]-dT[2,1,1], -dT[2,1,2]],
-                [0,            2*dT[2,0,1],         dT[2,0,2]],
-                [0,            0,                   0]
-            ])
-            _sym3x3(Tyz)
+        Txy, Tyy, Tyz = _get_Txy_Tyy_Tyz(point, T, dT)
         return np.asarray([[Txx, Txy, Txz],
                            [Txy, Tyy, Tyz],
                            [Txz, Tyz, Tzz]])
     raise ValueError("Unknown `diff` value: %s" % diff)
+
+
+def _get_fy():
+    r"""Compute the y-derivative of scalar f in x-z-plane assuming axisymmetry."""
+    return 0.
+
+
+def _get_fxy_fyy_fyz(point, df):
+    r"""Compute the 2nd (y-)derivatives of scalar f in x-z-plane assuming axisymmetry."""
+    x = point[0]
+    fx = df[0]
+    fxy = fyz = 0.
+    if x == 0:
+        fyy = np.nan
+    else:
+        fyy = fx/x
+    return fxy, fyy, fyz
+
+
+def _get_Vy(point, V):
+    r"""Compute the y-derivative of vector V in x-z-plane assuming axisymmetry."""
+    x = point[0]
+    if x == 0:
+        Vy = nan_mat((3,))
+    else:
+        Vy = 1/x * np.array([-V[1], V[0], 0.])
+    return Vy
+
+
+def _get_Vxy_Vyy_Vyz(point, V, dV):
+    r"""Compute the 2nd (y-)derivatives of vector V in x-z-plane assuming axisymmetry."""
+    x = point[0]
+    # pylint: disable=unsubscriptable-object
+    if x == 0:
+        Vxy = nan_mat((3,))
+        Vyy = nan_mat((3,))
+        Vyz = nan_mat((3,))
+    else:
+        # note: dV[i,j] == partial_i V^j == V^j_{,i}
+        Vxy = 1/x * np.array([V[1]/x - dV[0,1],
+                              -V[0]/x + dV[0,0],
+                              0.])
+        Vyy = 1/x * np.array([-V[0]/x + dV[0,0],
+                              -V[1]/x + dV[0,1],
+                              dV[0,2]])
+        Vyz = 1/x * np.array([-dV[2,1],
+                              dV[2,0],
+                              0.])
+    return Vxy, Vyy, Vyz
+
+
+def _get_Ty(point, T):
+    r"""Compute the y-derivative of matrix T in x-z-plane assuming axisymmetry.
+
+    Here, `T = (T_ij)` is a matrix-valued function (covariant tensor field).
+
+    See docstring of eval_sym_axisym_matrix() for the implemented formulas.
+    """
+    x = point[0]
+    T = np.asarray(T)
+    if x == 0:
+        return nan_mat(T.shape)
+    return np.array([[-2*T[0,1]/x,       (T[0,0]-T[1,1])/x, -T[1,2]/x],
+                     [(T[0,0]-T[1,1])/x, 2*T[0,1]/x,        T[0,2]/x],
+                     [-T[1,2]/x,         T[0,2]/x,          0.]])
+
+
+def _get_Txy_Tyy_Tyz(point, T, dT):
+    r"""Compute the 2nd (y-)derivatives of matrix T in x-z-plane assuming axisymmetry.
+
+    Here, `T = (T_ij)` is a matrix-valued function (covariant tensor field).
+    The derivatives are those involving the y-direction, i.e. `x,y`, `y,y`,
+    `y,z`, in that order.
+
+    See docstring of eval_sym_axisym_matrix() for the implemented formulas.
+    """
+    x = point[0]
+    T = np.asarray(T)
+    dT = np.asarray(dT)
+    if x == 0:
+        Txy = nan_mat((3, 3))
+        Tyy = nan_mat((3, 3))
+        Tyz = nan_mat((3, 3))
+    else:
+        Txy = 1/x * np.array([
+            [2 * (T[0,1]/x - dT[0,0,1]),
+             dT[0,0,0] - dT[0,1,1] + (T[1,1]-T[0,0])/x,
+             T[1,2]/x - dT[0,1,2]],
+            [0, 2 * (dT[0,0,1] - T[0,1]/x), dT[0,0,2] - T[0,2]/x],
+            [0, 0, 0]
+        ])
+        _sym3x3(Txy)
+        Tyy = 1/x * np.array([
+            [dT[0,0,0] - 2 * (T[0,0]-T[1,1])/x,
+             dT[0,0,1] - 4 * T[0,1]/x,
+             dT[0,0,2] - T[0,2]/x],
+            [0, 2 * (T[0,0] - T[1,1])/x + dT[0,1,1], dT[0,1,2]-T[1,2]/x],
+            [0, 0, dT[0,2,2]]
+        ])
+        _sym3x3(Tyy)
+        Tyz = 1/x * np.array([
+            [-2*dT[2,0,1], dT[2,0,0]-dT[2,1,1], -dT[2,1,2]],
+            [0,            2*dT[2,0,1],         dT[2,0,2]],
+            [0,            0,                   0]
+        ])
+        _sym3x3(Tyz)
+    return Txy, Tyy, Tyz
 
 
 def _sym3x3(T):

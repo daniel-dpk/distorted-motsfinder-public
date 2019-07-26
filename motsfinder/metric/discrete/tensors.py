@@ -25,7 +25,8 @@ from six import add_metaclass
 import numpy as np
 
 from ...numutils import nan_mat
-from .numerical import eval_sym_axisym_matrix
+from .numerical import eval_sym_axisym_matrix, _get_fy, _get_fxy_fyy_fyz
+from .numerical import _get_Vy, _get_Vxy_Vyy_Vyz
 
 
 __all__ = []
@@ -251,17 +252,10 @@ class DiscreteScalarField(_DiscreteField):
             return field.interpolate(point)
         if diff == 1:
             fx, fz = field.diff(point, diff=1)
-            return np.array([fx, 0., fz])
-        x = point[0]
-        # pylint: disable=unsubscriptable-object
-        fx = self(point=point, diff=1)[0]
+            return np.array([fx, _get_fy(), fz])
         if diff == 2:
             fxx, fzz, fxz = field.diff(point, diff=2)
-            fxy = fyz = 0.
-            if x == 0:
-                fyy = np.nan
-            else:
-                fyy = fx/x
+            fxy, fyy, fyz = _get_fxy_fyy_fyz(point, df=self(point, diff=1))
             return np.asarray([[fxx, fxy, fxz],
                                [fxy, fyy, fyz],
                                [fxz, fyz, fzz]])
@@ -282,7 +276,6 @@ class DiscreteVectorField(_DiscreteField):
                 Ti.interpolate(point) for Ti in self.components
             ])
             return T
-        x = point[0]
         T = self(point=point, diff=0)
         if diff == 1:
             (T0x, T0z), (T1x, T1z), (T2x, T2z) = [
@@ -291,10 +284,7 @@ class DiscreteVectorField(_DiscreteField):
             ]
             Tx = np.array([T0x, T1x, T2x])
             Tz = np.array([T0z, T1z, T2z])
-            if x == 0:
-                Ty = nan_mat((3,))
-            else:
-                Ty = 1/x * np.array([-T[1], T[0], 0.])
+            Ty = _get_Vy(point, T)
             return np.asarray([Tx, Ty, Tz])
         dT = self(point=point, diff=1)
         if diff == 2:
@@ -309,22 +299,7 @@ class DiscreteVectorField(_DiscreteField):
             Txx = np.array([T0xx, T1xx, T2xx])
             Tzz = np.array([T0zz, T1zz, T2zz])
             Txz = np.array([T0xz, T1xz, T2xz])
-            # pylint: disable=unsubscriptable-object
-            if x == 0:
-                Txy = nan_mat((3,))
-                Tyy = nan_mat((3,))
-                Tyz = nan_mat((3,))
-            else:
-                # note: dT[i,j] == partial_i T^j == T^j_{,i}
-                Txy = 1/x * np.array([T[1]/x - dT[0,1],
-                                      -T[0]/x + dT[0,0],
-                                      0.])
-                Tyy = 1/x * np.array([-T[0]/x + dT[0,0],
-                                      -T[1]/x + dT[0,1],
-                                      dT[0,2]])
-                Tyz = 1/x * np.array([-dT[2,1],
-                                      dT[2,0],
-                                      0.])
+            Txy, Tyy, Tyz = _get_Vxy_Vyy_Vyz(point, T, dT)
             return np.asarray([[Txx, Txy, Txz],
                                [Txy, Tyy, Tyz],
                                [Txz, Tyz, Tzz]])

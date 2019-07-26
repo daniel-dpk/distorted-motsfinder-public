@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['z_5fcenter',['z_center',['../classmotsfinder_1_1axisym_1_1trackmots_1_1__NeckInfo.html#a7fe5a1d98b02c10a895857e2a4e078fd',1,'motsfinder::axisym::trackmots::_NeckInfo']]],
-  ['z_5fdist',['z_dist',['../classmotsfinder_1_1axisym_1_1trackmots_1_1__NeckInfo.html#a9419ddc9d623da4c71491f167e00cb76',1,'motsfinder::axisym::trackmots::_NeckInfo']]],
-  ['z_5fdistance',['z_distance',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ad2053028a7c722407c3e0156724d8969',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
-  ['z_5fdistance_5fusing_5fmetric',['z_distance_using_metric',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a1beed94746c44987d8fce97cc3173d24',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
-  ['z_5fextent',['z_extent',['../classmotsfinder_1_1axisym_1_1trackmots_1_1__NeckInfo.html#a711eccd5f21927f92af1ebe7ccdee5a7',1,'motsfinder::axisym::trackmots::_NeckInfo']]],
-  ['z_5ffun',['z_fun',['../classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#aea54796785921e0f296176506bc486be',1,'motsfinder.axisym.curve.parametriccurve.ParametricCurve.z_fun(self)'],['../classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#a2dea961d673b30135a16d267d8ad269b',1,'motsfinder.axisym.curve.parametriccurve.ParametricCurve.z_fun(self, func)']]],
-  ['zero_5fop',['zero_op',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a28d2edf83d6357552b6a48fcaf55f8b9',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]]
+  ['v1',['v1',['../classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression2D.html#a4203aa695256732128583c7b4f8dd33b',1,'motsfinder.exprs.basics.ProductExpression2D.v1()'],['../classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a4203aa695256732128583c7b4f8dd33b',1,'motsfinder.exprs.basics.DivisionExpression2D.v1()']]],
+  ['v2',['v2',['../classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression2D.html#a4ca360a54842728812ad38f21bfae65e',1,'motsfinder.exprs.basics.ProductExpression2D.v2()'],['../classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a4ca360a54842728812ad38f21bfae65e',1,'motsfinder.exprs.basics.DivisionExpression2D.v2()']]],
+  ['value',['value',['../classmotsfinder_1_1numutils_1_1IntegrationResults.html#a50195cb9bdd51876945eb2dd6fac4cac',1,'motsfinder.numutils.IntegrationResults.value()'],['../classmotsfinder_1_1pickle__helpers_1_1__MpPi.html#a50195cb9bdd51876945eb2dd6fac4cac',1,'motsfinder.pickle_helpers._MpPi.value()']]],
+  ['verbosity',['verbosity',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#ac1639314afbfca8e4c60d1d70137ae97',1,'motsfinder::exprs::numexpr::NumericExpression']]],
+  ['verify_5fconfiguration',['verify_configuration',['../classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a1f8e296688804e5db9ddcc513dc792aa',1,'motsfinder::axisym::findmots::MotsFindingConfig']]],
+  ['veto',['veto',['../classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aae8656d7ff183b7913bcc540b31a7221',1,'motsfinder::axisym::findmots::MotsFindingConfig']]],
+  ['video_5ffrom_5ffolder',['video_from_folder',['../namespacemotsfinder_1_1ipyutils_1_1plotting.html#a604a979def01433fe1a0f7f4c7101e93',1,'motsfinder::ipyutils::plotting']]],
+  ['video_5ffrom_5fimages',['video_from_images',['../namespacemotsfinder_1_1ipyutils_1_1plotting.html#ac727c84dad5a5c3eb1cfe48967b1fa50',1,'motsfinder::ipyutils::plotting']]]
 ];

@@ -4,8 +4,42 @@ The source code is documented using `docstrings` which are translated to html
 help using [Doxygen](http://www.stack.nl/~dimitri/doxygen/) with the help of
 [doxypypy](https://pypi.org/project/doxypypy/).
 
-To (re-)generate the complete docs, execute `'doxygen Doxyfile'` in the root
-of this project. See the [README.md](README.md) for prerequisites.
+
+## Building the documentation
+
+The prerequisites for building the documentation are:
+
+* Doxygen
+* dot (e.g. via graphviz)
+* LaTeX (e.g. via texlive)
+* doxypypy (e.g. via `pip install doxypypy` in your virtual environment)
+
+To (re-)generate the complete docs, execute the following in the root of this
+project:
+
+```
+doxygen Doxyfile
+```
+
+A `virtualenv` environment can be used for the `doxypypy` call by copying
+`./config.cfg` to the untracked `config.mine.cfg`, where you can configure
+which python binary should be used for the unit tests and the Doxygen
+filtering.
+
+For example:
+
+```.sh
+$ cd ~/src/distorted-motsfinder-public
+$ cp config.cfg config.mine.cfg
+```
+
+Then edit the file `config.mine.cfg` with your preferred text editor and in
+e.g. the ``[linux]`` section, change the ``python: ...`` line to something
+like:
+
+```
+python: LC_ALL=en_US.UTF-8 ~/py3env/bin/python3
+```
 
 > **NOTE**
 >
@@ -16,10 +50,6 @@ of this project. See the [README.md](README.md) for prerequisites.
 >     * It is not able to correctly identify properties and instead displays
 >       them as functions.
 
-> **IMPORTANT**
->
-> If a class method is not documented, check if the parent class one is
-> instead.
 
 ## Top-Level Helper Scripts
 
@@ -33,7 +63,6 @@ Executable helper scripts:
 call_python.py      # Run a Python script from a virtual environment
 cythonize_all.py    # Compile all Cython (.pyx) files in sub folders
 cythonize_helper.py # Call `cythonize_all` in a virtual environment
-py_filter           # Shellscript to run *.py files through doxypypy
 tests.py            # Run all test_*.py unittest scripts in sub folders
 teststarter.py      # Run `tests` in a virtual environment
 testutils.py        # Tweaked `unittest.TestCase` class with more features
@@ -80,45 +109,40 @@ slow, apply the testutils.slowtest decorator.
 ## The Actual Source
 
 The source of the project is located in the `./motsfinder` directory. A short
-breakdown of the main files is as follows (`.py` suffix suppressed):
+breakdown of the most important files is as follows (`.py` suffix suppressed):
 
 ```bash
 axisym/           # Axisymmetric MOTS finder with and without star-shaped assumption
     curve/        # Curves in the x-z-plane representing axisymmetric surfaces in 3D
-        basecurve       # Base class for general curves in the x-z-plane
-        expcalc         # Cache/computation class storing interim results of calculations
         expcurve        # Base class for curves that can calculate their expansion
         parametriccurve # General parametric curve in the x-z-plane
         refparamcurve   # Surfaces in local coordinates relative to a reference shape
         starshapedcurve # Surfaces in star-shaped parameterization relative to some origin
     findmots            # Convenience function(s) to coordinate finding MOTSs
+    initialguess  # Helpers for determining MOTSs without data from previous steps
     newton        # Implementation of a Newton-Kantorovich method to find MOTSs
+    trackmots     # Track a single MOTS through slices of a simulation
 
 exprs/            # Expression system for composing functions and efficiently evaluating them and their derivatives
-    basics        # Collection of basic NumericExpression subclasses
     cheby         # Expression representing a truncated Chebyshev polynomial series
-    common        # Utils used by multiple modules in motsfinder.exprs
-    cosine        # Expression representing a truncated cosine series
-    evaluators    # Base classes for simple or custom evaluators of NumericExpression sub classes
-    numexpr       # Base of the NumericExpression system
-    series        # Base class for general truncated series expressions
+    trig	      # Expression representing a truncated sine or cosine series
 
 ipyutils/         # Utility functions for interactive IPython/Jupyter sessions
-    plotctx       # Contexts for convenient plot setup/management
     plotting      # Helper functions for more convenient plotting
     plotting3d    # Functions for plotting in 3D, e.g. 2-dimensional surfaces via plot_2d()
-    printing      # Printing helpers for IPython/Jupyter notebooks
     reloading     # Helpers for reloading changed sources at runtime
 
-metric            # Metric and metric tensors
+metric/           # Metric and metric tensors
+    analytical	  # Analytically implemented metrics
+    discrete      # Metrics interpolated from data on a grid
+    fourmetric    # Spacetime metric constructed from 3-metric and lapse, shift
+    simulation    # Axisymmetric metrics read from simulation data using SimulationIO
 
 ndsolve/          # Pseudospectral differential equation solver
     bases/        # Bases that can be used in the pseudospectral solver
-        base      # Base class(es) for spectral bases
         cheby     # Chebyshev polynomial basis for the pseudospectral solver
         cosine    # Fourier cosine basis for the pseudospectral solver
     bcs           # Classes for imposing boundary conditions
-    common        # Utils used by multiple modules in motsfinder.ndsolve
     solver        # The actual solver ndsolve() and the class NDSolver
 
 numutils          # Miscellaneous numerical utilities and helpers
@@ -132,15 +156,15 @@ Consider the problem of finding the apparent horizon (AH) for a
 Brill-Lindquist metric. We will use the star-shaped assumption in this
 example.
 
-First, we create the metric object using
-motsfinder.metric.BrillLindquistMetric from `./metric.py`:
+First, we create the metric object using BrillLindquistMetric from
+`./metric/analytical/simple.py`:
 
 ```.py
 metric = BrillLindquistMetric(m1=1, m2=1, d=1.4, axis='z')
 ```
 
-Next, create the initial guess curve, which we take as a sphere of radius 2
-(in coordinate space). We already specify the resolution of the spectral
+Next, create the initial guess curve which we take as a sphere of radius 2 (in
+coordinate space). We already specify the resolution of the spectral
 representation of the curve and store the metric of the space this curve lives
 in. Internally, a cosine series is created with 100 basis functions and
 coefficients `[2.0, 0.0, 0.0, ..., 0.0]`.
@@ -181,8 +205,7 @@ To plot the coefficients of the final horizon and verify exponential
 convergence, use:
 
 ```.py
-plot_data(range(c_AH.h.N), c_AH.h.a_n, l='.k', absolute=True, ylog=True,
-          xlabel='$n$', ylabel='$|a_n|$')
+c_AH.plot_coeffs()
 ```
 
 We see that every other coefficient is (essentially) zero, reflecting the
@@ -192,6 +215,5 @@ coefficients exponentially converge to zero.
 We can also check the vanishing of the expansion along the AH:
 
 ```.py
-plot_1d(c_AH.expansion, points=np.linspace(0, np.pi, 200, endpoint=False)[1:],
-        xlabel=r"$\lambda$", ylabel="|expansion|", absolute=True, ylog=True)
+c_AH.plot_expansion(points=200)
 ```

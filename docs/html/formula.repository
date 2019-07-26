@@ -419,3 +419,42 @@
 \form#418:$\Phi_{ij}$
 \form#419:\[ M_{ij} a_j = \lambda\, a_j, \]
 \form#420:$M = \Phi^{-1} L$
+\form#421:\[ \zeta(\lambda, \varphi) = \sum_{m=-\infty}^\infty \zeta_m(\lambda) e^{im\varphi}. \]
+\form#422:$e^{im\varphi}$
+\form#423:$\zeta_m$
+\form#424:\[ L^m \zeta_m = (L + q^{\varphi}q^{\varphi} m^2) \zeta_m. \]
+\form#425:$L^m$
+\form#426:\begin{eqnarray*} \Delta_\sigma \zeta_m &=& \frac{1}{\sqrt{q}} \partial_A (\sqrt{q} q^{AB} \partial_B \zeta_m) = \left( \frac{1}{2} q^{AB} q^{C\lambda} \partial_C q_{AB} + \partial_A q^{A\lambda} \right) \zeta_m' + q^{\lambda\lambda} \zeta_m'' \\ &=& \left( \frac{1}{2} q^{AB} q^{C\lambda} - q^{AC} q^{B\lambda} \right) (\partial_C q_{AB}) \zeta_m' + q^{\lambda\lambda} \zeta_m''. \end{eqnarray*}
+\form#427:\[ L^m = L + q^{\varphi\varphi} m^2. \]
+\form#428:\[ {L^m} = L + q^{\varphi\varphi} m^2. \]
+\form#429:\[ L^m = L + m^2 q^{\varphi\varphi} - i m q^{\lambda\lambda}. \]
+\form#430:$(\partial_A) := (\partial_\lambda, \partial_\phi)$
+\form#431:$(\partial_A) := (\partial_\lambda, \partial_\varphi)$
+\form#432:\[ L^m = L + i m s^\varphi + m^2 q^{\varphi\varphi}. \]
+\form#433:\[ L^m = L + 2 i m s^\varphi + m^2 q^{\varphi\varphi}. \]
+\form#434:\[ L_\nu \zeta = -\Delta_\mathcal{S} \zeta - (R_{ij}\nu^i\nu^j + \mathcal{K}_{AB}\mathcal{K}^{AB}) \zeta, \]
+\form#435:$\mathcal{K}_{AB}$
+\form#436:$\Delta_\mathcal{S} = q^{AB}\,D_A\,D_B$
+\form#437:$(\mathcal{S}, q)$
+\form#438:\[ L_\nu \zeta = -\Delta_\mathcal{S} \zeta + 2 s^A D_A \zeta + \big( \frac{1}{2} \mathcal{R} - s_A s^A + D_A s^A - \frac{1}{2} q^{AC} q^{BD} K^\mu_{AB} K^\nu_{CD} \ell_\mu \ell_\nu \big). \]
+\form#439:$s_A = -\frac{1}{2} k_\mu \nabla_A \ell^\mu$
+\form#440:$K^\mu_{AB}\ell_\mu = -\nabla_A \ell_B$
+\form#441:$k^\mu$
+\form#442:$\ell^\mu$
+\form#443:$L$
+\form#444:$\zeta_m e^{im\varphi}$
+\form#445:\[ L^m \zeta_m = (L + 2 i m s^\varphi + m^2 q^{\varphi\varphi}) \zeta_m. \]
+\form#446:$m$
+\form#447:$-k^\mu$
+\form#448:$s_A$
+\form#449:$s = s_\varphi d\varphi$
+\form#450:$s_\lambda = 0$
+\form#451:$s_A \equiv 0$
+\form#452:$k_\mu \ell^\mu = -2$
+\form#453:$D_A s^A = 0$
+\form#454:$\partial_\lambda^0, \partial_\lambda^1, \partial_\lambda^2$
+\form#455:$L_\nu = -\Delta_\mathcal{S}$
+\form#456:\[ L_\nu = -\Delta_\mathcal{S} + \ldots \]
+\form#457:$f(x) = x$
+\form#458:$r$
+\form#459:$\ell_{\mu}$

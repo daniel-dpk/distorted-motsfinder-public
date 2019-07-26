@@ -9,7 +9,7 @@ Schwarzschild spacetime in Kerr-Schild form.
 import numpy as np
 from scipy import linalg
 
-from ..base import _ThreeMetric
+from ..base import _ThreeMetric, trivial_dtlapse, trivial_dtshift
 
 
 __all__ = [
@@ -102,8 +102,14 @@ class SchwarzschildKSSlice(_ThreeMetric):
     def get_lapse(self):
         return SchwarzschildKSSliceLapse(self)
 
+    def get_dtlapse(self):
+        return trivial_dtlapse
+
     def get_shift(self):
         return SchwarzschildKSSliceShift(self)
+
+    def get_dtshift(self):
+        return trivial_dtshift
 
 
 class SchwarzschildKSSliceLapse():
@@ -112,11 +118,25 @@ class SchwarzschildKSSliceLapse():
         self._g = metric
 
     def __call__(self, point, diff=0):
-        if diff != 0:
-            raise NotImplementedError
+        ra = range(3)
         M = self._g.M
         r = linalg.norm(point)
-        return 1.0 / np.sqrt(1 + 2*M/r)
+        if diff == 0:
+            return 1.0 / np.sqrt(1 + 2*M/r)
+        x = point
+        if diff == 1:
+            return np.asarray([M * x[i] / (r**3 * (2*M/r + 1)**(3./2))
+                               for i in ra])
+        if diff == 2:
+            def _partial(i, j):
+                dij = i == j
+                return (
+                    3*M**2*x[i]*x[j] / (r**6*(2*M/r + 1)**(5./2))
+                    + dij * M / (r**3 * (2*M/r + 1)**(3./2))
+                    - 3*M*x[i]*x[j] / (r**5 * (2*M/r + 1)**(3./2))
+                )
+            return np.asarray([[_partial(i, j) for j in ra] for i in ra])
+        raise NotImplementedError("Higher derivatives of lapse.")
 
 
 class SchwarzschildKSSliceShift():
@@ -125,15 +145,42 @@ class SchwarzschildKSSliceShift():
         self._g = metric
 
     def __call__(self, point, diff=0):
-        if diff != 0:
-            raise NotImplementedError
+        ra = range(3)
         x = point
         M = self._g.M
         r = linalg.norm(point)
-        betal = np.asarray([2*M/r**2 * x[i] for i in range(3)])
+        betal = np.asarray([2*M/r**2 * x[i] for i in ra])
         g_inv = self._g.diff(point, inverse=True, diff=0)
         beta = np.einsum('ij,j->i', g_inv, betal)
-        return beta
+        if diff == 0:
+            return beta
+        if diff == 1:
+            def _partial(i, j):
+                dij = i == j
+                return 2*M/(r**3 * (2*M+r)**2) * (
+                    r**2 * (2*M + r) * dij - 2 * (M+r) * x[i]*x[j]
+                )
+            return np.asarray([[_partial(i, j) for j in ra] for i in ra])
+        if diff == 2:
+            def _partial(i, j, k):
+                dij = i == j
+                dik = i == k
+                djk = j == k
+                return (
+                    -4*M*(3*M+2*r)/(r**5*(2*M+r)**2) * x[i] * (
+                        r**2 * djk - x[j]*x[k] - r*x[j]*x[k]/(2*M+r)
+                    )
+                    + 2*M/(r**3*(2*M+r)) * (
+                        2*x[i] * djk - x[k] * dij - x[j] * dik
+                        - 1/(r*(2*M+r)) * (
+                            r**2*(dij*x[k] + dik*x[j]) + x[i]*x[j]*x[k]
+                            - r * x[i]*x[j]*x[k] / (2*M + r)
+                        )
+                    )
+                )
+            return np.asarray([[[_partial(i, j, k) for j in ra] for i in ra]
+                               for k in ra])
+        raise NotImplementedError("Higher derivatives of shift.")
 
 
 class SchwarzschildKSSliceCurv():

@@ -19,7 +19,8 @@ from __future__ import print_function
 import numpy as np
 from scipy import linalg
 
-from .base import _GeneralMetric
+from .base import _GeneralMetric, trivial_lapse, trivial_shift
+from .base import trivial_dtlapse, trivial_dtshift
 
 
 __all__ = [
@@ -157,14 +158,24 @@ class FourMetric(_GeneralMetric):
         self._dtlapse = three_metric.get_dtlapse()
         self._dtshift = three_metric.get_dtshift()
         self._curv = three_metric.get_curv()
+        if not self._curv and self._curv is not 0:
+            print("WARNING: Extrinsic curvature not given. Using zero.")
+        msg = ("\n"
+               "         If this is correct, consider modifying your metric\n"
+               "         class to make this choice explicit. See the\n"
+               "         documentation of _ThreeMetric for more details.")
         if self._lapse is None:
-            self._lapse = _default_lapse
+            print("WARNING: No lapse given. Using constant 1." + msg)
+            self._lapse = trivial_lapse
         if self._shift is None:
-            self._shift = _default_shift
+            print("WARNING: No shift given. Using zero." + msg)
+            self._shift = trivial_shift
         if self._dtlapse is None:
-            self._dtlapse = _default_dtlapse
+            print("WARNING: No dtlapse given. Using zero." + msg)
+            self._dtlapse = trivial_dtlapse
         if self._dtshift is None:
-            self._dtshift = _default_dtshift
+            print("WARNING: No dtshift given. Using zero." + msg)
+            self._dtshift = trivial_dtshift
 
     @property
     def lapse(self):
@@ -384,31 +395,10 @@ class FourMetric(_GeneralMetric):
             ddn[1:,1:,0] = - d2xlapse/lapse**2 + 2 * np.outer(dxlapse, dxlapse)/lapse**3
             ddn[1:,1:,1:] = (
                 np.einsum('ij,m', d2xlapse, shift) / lapse**2
-                - np.einsum('i,j,m', dxlapse, dxlapse, shift) / lapse**3
+                - 2 * np.einsum('i,j,m', dxlapse, dxlapse, shift) / lapse**3
                 + np.einsum('i,jm', dxlapse, dxshift) / lapse**2
                 + np.einsum('j,im', dxlapse, dxshift) / lapse**2
                 - d2xshift / lapse
             )
             return ddn
         raise NotImplementedError
-
-
-def _default_lapse(point, diff=0):
-    r"""Default lapse function set to constant 1.0."""
-    if diff:
-        return np.zeros(shape=[3] * diff)
-    return 1.0
-
-def _default_dtlapse(point, diff=0):
-    r"""Default lapse time derivative set to constant 0.0."""
-    if diff:
-        return np.zeros(shape=[3] * diff)
-    return 0.0
-
-def _default_shift(point, diff=0):
-    r"""Default shift vector field set to constant zero."""
-    return np.zeros(shape=[3] * (diff + 1))
-
-def _default_dtshift(point, diff=0):
-    r"""Default shift time derivative set to constant zero vector."""
-    return np.zeros(shape=[3] * (diff + 1))

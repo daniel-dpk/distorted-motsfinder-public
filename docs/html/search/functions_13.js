@@ -1,11 +1,24 @@
 var searchData=
 [
-  ['v1',['v1',['../classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression2D.html#a4203aa695256732128583c7b4f8dd33b',1,'motsfinder.exprs.basics.ProductExpression2D.v1()'],['../classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a4203aa695256732128583c7b4f8dd33b',1,'motsfinder.exprs.basics.DivisionExpression2D.v1()']]],
-  ['v2',['v2',['../classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression2D.html#a4ca360a54842728812ad38f21bfae65e',1,'motsfinder.exprs.basics.ProductExpression2D.v2()'],['../classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a4ca360a54842728812ad38f21bfae65e',1,'motsfinder.exprs.basics.DivisionExpression2D.v2()']]],
-  ['value',['value',['../classmotsfinder_1_1numutils_1_1IntegrationResults.html#a50195cb9bdd51876945eb2dd6fac4cac',1,'motsfinder.numutils.IntegrationResults.value()'],['../classmotsfinder_1_1pickle__helpers_1_1__MpPi.html#a50195cb9bdd51876945eb2dd6fac4cac',1,'motsfinder.pickle_helpers._MpPi.value()']]],
-  ['verbosity',['verbosity',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#ac1639314afbfca8e4c60d1d70137ae97',1,'motsfinder::exprs::numexpr::NumericExpression']]],
-  ['verify_5fconfiguration',['verify_configuration',['../classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a1f8e296688804e5db9ddcc513dc792aa',1,'motsfinder::axisym::findmots::MotsFindingConfig']]],
-  ['veto',['veto',['../classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aae8656d7ff183b7913bcc540b31a7221',1,'motsfinder::axisym::findmots::MotsFindingConfig']]],
-  ['video_5ffrom_5ffolder',['video_from_folder',['../namespacemotsfinder_1_1ipyutils_1_1plotting.html#a604a979def01433fe1a0f7f4c7101e93',1,'motsfinder::ipyutils::plotting']]],
-  ['video_5ffrom_5fimages',['video_from_images',['../namespacemotsfinder_1_1ipyutils_1_1plotting.html#ac727c84dad5a5c3eb1cfe48967b1fa50',1,'motsfinder::ipyutils::plotting']]]
+  ['tangent',['tangent',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac4f6d98c9d65d438f6883a7b11628cac',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
+  ['tderiv',['Tderiv',['../classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html#acbf1e17e2b09de99828a87a3d315662c',1,'motsfinder::ndsolve::bases::cheby::ChebyBasis']]],
+  ['temp_5fmetric',['temp_metric',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a474b5d328f851a167e5a83cb99f7ed25',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
+  ['time',['time',['../classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html#aca1d48cdeb1d2c6c5e2fecc59db4de31',1,'motsfinder.metric.simulation.siometric.SioMetric.time()'],['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#aca1d48cdeb1d2c6c5e2fecc59db4de31',1,'motsfinder.metric.simulation.sioproject.SioProject.time()']]],
+  ['timethis',['timethis',['../namespacemotsfinder_1_1utils.html#a7e1ecd78475186dbd34f827d8e1fa28f',1,'motsfinder::utils']]],
+  ['torsion_5f1form',['torsion_1form',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a45f55c67b2087e4296fe97d37531ffa5',1,'motsfinder::axisym::curve::stabcalc::StabilityCalc']]],
+  ['torsion_5fvector',['torsion_vector',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a5dadfaf35eaf74033c1440a3c842f3d6',1,'motsfinder::axisym::curve::stabcalc::StabilityCalc']]],
+  ['total_5fbbox',['total_bbox',['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a5185adb6442e9d72e06d1d39406c98f4',1,'motsfinder::metric::simulation::sioproject::SioProject']]],
+  ['total_5fshape',['total_shape',['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#aacb60fdd2b67fb3d5e705af3d9f2f712',1,'motsfinder::metric::simulation::sioproject::SioProject']]],
+  ['trace',['trace',['../classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#af164f2e1ccab2d4d4870da7a761735cd',1,'motsfinder::metric::base::MetricTensor']]],
+  ['track',['track',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#ab50ed149167a30e290d4cdf70d0b90fd',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['track_5fmots',['track_mots',['../namespacemotsfinder_1_1axisym_1_1trackmots.html#aac0233a9fd75b4d9b90478f0f9df1e9a',1,'motsfinder::axisym::trackmots']]],
+  ['transform',['transform',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#ad6ae22e15846493449d62947cd3dcaea',1,'motsfinder::ndsolve::bases::base::_SpectralBasis']]],
+  ['transform_5fdomains',['transform_domains',['../namespacemotsfinder_1_1exprs_1_1series.html#a9da7d6d2afe032a920ae05e8242243ca',1,'motsfinder::exprs::series']]],
+  ['transformation_5fpreset',['transformation_preset',['../namespacemotsfinder_1_1metric_1_1analytical_1_1transformed.html#abb3df01ffd52f353539efa739921ae91',1,'motsfinder::metric::analytical::transformed']]],
+  ['traverse_5ftree',['traverse_tree',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a04e0b3d6a2143ff0d72663206a1707bf',1,'motsfinder::exprs::numexpr::NumericExpression']]],
+  ['trivial_5fdtlapse',['trivial_dtlapse',['../namespacemotsfinder_1_1metric_1_1base.html#a6c6cf61045b87b862c78e04c22113f62',1,'motsfinder::metric::base']]],
+  ['trivial_5fdtshift',['trivial_dtshift',['../namespacemotsfinder_1_1metric_1_1base.html#a82f3bb1df9eb0942c73b1a56c0f5c962',1,'motsfinder::metric::base']]],
+  ['trivial_5flapse',['trivial_lapse',['../namespacemotsfinder_1_1metric_1_1base.html#ab08cdd53977ff7d8d034a51bd63efb93',1,'motsfinder::metric::base']]],
+  ['trivial_5fshift',['trivial_shift',['../namespacemotsfinder_1_1metric_1_1base.html#a8de5cc219e76f50bd9ada276fdd49e27',1,'motsfinder::metric::base']]],
+  ['try_5fquad_5ftolerances',['try_quad_tolerances',['../namespacemotsfinder_1_1numutils.html#ae8e1cf75c3f5096d5de83995cfdd60a0',1,'motsfinder::numutils']]]
 ];

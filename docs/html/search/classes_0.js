@@ -1,6 +1,7 @@
 var searchData=
 [
   ['_5fbinomialcoeffs',['_BinomialCoeffs',['../classmotsfinder_1_1numutils_1_1__BinomialCoeffs.html',1,'motsfinder::numutils']]],
+  ['_5fcallablemetric',['_CallableMetric',['../classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__CallableMetric.html',1,'motsfinder::metric::discrete::fdderivs']]],
   ['_5fchebyeval',['_ChebyEval',['../classmotsfinder_1_1exprs_1_1cheby_1_1__ChebyEval.html',1,'motsfinder::exprs::cheby']]],
   ['_5fconformallyflatmetric',['_ConformallyFlatMetric',['../classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html',1,'motsfinder::metric::analytical::simple']]],
   ['_5fcosineserieseval',['_CosineSeriesEval',['../classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html',1,'motsfinder::exprs::trig']]],
@@ -8,6 +9,7 @@ var searchData=
   ['_5fdiscretefield',['_DiscreteField',['../classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html',1,'motsfinder::metric::discrete::tensors']]],
   ['_5fdivisionexpression2deval',['_DivisionExpression2DEval',['../classmotsfinder_1_1exprs_1_1basics_1_1__DivisionExpression2DEval.html',1,'motsfinder::exprs::basics']]],
   ['_5fevaluator',['_Evaluator',['../classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html',1,'motsfinder::exprs::evaluators']]],
+  ['_5ffdfield',['_FDField',['../classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__FDField.html',1,'motsfinder::metric::discrete::fdderivs']]],
   ['_5ffuncvariation',['_FuncVariation',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1__FuncVariation.html',1,'motsfinder::axisym::curve::expcalc']]],
   ['_5ffuncwrap',['_FuncWrap',['../classmotsfinder_1_1utils_1_1__FuncWrap.html',1,'motsfinder::utils']]],
   ['_5fgeneralmetric',['_GeneralMetric',['../classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html',1,'motsfinder::metric::base']]],
@@ -21,15 +23,15 @@ var searchData=
   ['_5fpropresult',['_PropResult',['../classmotsfinder_1_1axisym_1_1trackmots_1_1__PropResult.html',1,'motsfinder::axisym::trackmots']]],
   ['_5frefparamexpansioncalc',['_RefParamExpansionCalc',['../classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1__RefParamExpansionCalc.html',1,'motsfinder::axisym::curve::refparamcurve']]],
   ['_5frunner',['_Runner',['../classmotsfinder_1_1utils_1_1__Runner.html',1,'motsfinder::utils']]],
-  ['_5fscalarfield',['_ScalarField',['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html',1,'motsfinder::metric::discrete::discretize']]],
+  ['_5fscalarfield',['_ScalarField',['../classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__ScalarField.html',1,'_ScalarField'],['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html',1,'_ScalarField'],['../classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__ScalarField.html',1,'_ScalarField']]],
   ['_5fshiftwrapper',['_ShiftWrapper',['../classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1__ShiftWrapper.html',1,'motsfinder::metric::analytical::transformed']]],
   ['_5fsineserieseval',['_SineSeriesEval',['../classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html',1,'motsfinder::exprs::trig']]],
   ['_5fspectralbasis',['_SpectralBasis',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html',1,'motsfinder::ndsolve::bases::base']]],
   ['_5fspectralseriesbasis',['_SpectralSeriesBasis',['../classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html',1,'motsfinder::ndsolve::bases::base']]],
   ['_5fstarshapedexpansioncalc',['_StarShapedExpansionCalc',['../classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1__StarShapedExpansionCalc.html',1,'motsfinder::axisym::curve::starshapedcurve']]],
-  ['_5fsym2tensorfield',['_Sym2TensorField',['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__Sym2TensorField.html',1,'motsfinder::metric::discrete::discretize']]],
+  ['_5fsym2tensorfield',['_Sym2TensorField',['../classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__Sym2TensorField.html',1,'_Sym2TensorField'],['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__Sym2TensorField.html',1,'_Sym2TensorField'],['../classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__Sym2TensorField.html',1,'_Sym2TensorField']]],
   ['_5fthreemetric',['_ThreeMetric',['../classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html',1,'motsfinder::metric::base']]],
   ['_5ftrigeval',['_TrigEval',['../classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html',1,'motsfinder::exprs::trig']]],
   ['_5ftrigseries',['_TrigSeries',['../classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html',1,'motsfinder::exprs::trig']]],
-  ['_5fvectorfield',['_VectorField',['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__VectorField.html',1,'motsfinder::metric::discrete::discretize']]]
+  ['_5fvectorfield',['_VectorField',['../classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__VectorField.html',1,'_VectorField'],['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__VectorField.html',1,'_VectorField'],['../classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__VectorField.html',1,'_VectorField']]]
 ];

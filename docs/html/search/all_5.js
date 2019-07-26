@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['eigenfunctions',['eigenfunctions',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a127ff4e42399eea79f1aff3e5d7e3cb6',1,'motsfinder::ndsolve::solver::NDSolver']]],
   ['eigenvalues',['eigenvalues',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#a280cc9d8aeddcb741338cfc65fe9cf52',1,'motsfinder::ndsolve::solver::NDSolver']]],
   ['embedexpression2d',['EmbedExpression2D',['../classmotsfinder_1_1exprs_1_1basics_1_1EmbedExpression2D.html',1,'motsfinder::exprs::basics']]],
   ['empty_5fmat',['empty_mat',['../classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html#a0fde62964a27d4bebb856c21ad6f23d9',1,'motsfinder::metric::discrete::discretize::DiscretizedMetric']]],
@@ -23,5 +24,7 @@ var searchData=
   ['expansions',['expansions',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a242dab961b882fae1ab7023a7dbeb44a',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['expressionwarning',['ExpressionWarning',['../classmotsfinder_1_1exprs_1_1numexpr_1_1ExpressionWarning.html',1,'motsfinder::exprs::numexpr']]],
   ['extrinsic_5fcurvature',['extrinsic_curvature',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#a7c04c1956267c5fed4f27ebab4e73178',1,'motsfinder::axisym::curve::expcalc::ExpansionCalc']]],
-  ['extrinsic_5fsurface_5fcurvature',['extrinsic_surface_curvature',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a49ef465ecbfd8d1a0f5413bda0a8f325',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]]
+  ['extrinsic_5fsurface_5fcurvature',['extrinsic_surface_curvature',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a49ef465ecbfd8d1a0f5413bda0a8f325',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
+  ['example_3a_20motss_20in_20brill_2dlindquist_20initial_20data',['Example: MOTSs in Brill-Lindquist initial data',['../md_docs_input_examples_bl.html',1,'']]],
+  ['example_3a_20using_20the_20finder_20with_20a_20numerical_20metric',['Example: Using the finder with a numerical metric',['../md_docs_input_examples_num_metric.html',1,'']]]
 ];

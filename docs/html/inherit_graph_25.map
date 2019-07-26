@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html" title="SignatureQuantities" alt="" coords="5,5,141,32"/>
+<area shape="rect" id="node1" href="$classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html" title="Abstract configuration base class for find_mots(). " alt="" coords="5,31,136,57"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html" title="Configuration for finding MOTSs in Brill&#45;Lindquist metrics. " alt="" coords="184,5,319,32"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html" title="General purpose MOTS finding configuration settings. " alt="" coords="184,56,319,83"/>
 </map>

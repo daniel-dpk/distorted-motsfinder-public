@@ -1,6 +1,62 @@
 code {
     background-color: rgba(220, 220, 220, 0.3);
+    color: #333333;
+    padding: 2px 6px 2px 6px;
 }
 table.memname tr {
     float: left;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 1.5em;
+}
+
+a.el:hover {
+	text-decoration: none;
+	color: #879FD0;
+}
+
+pre.fragment, div.fragment {
+    border: none;
+    padding: 1em;
+    margin-left: 2em;
+    background-color: #F7F8FC;
+    color: #333333;
+}
+
+blockquote {
+    border-left: 4px solid #9CAFD4;
+    margin: 1em 24px 1em 2em;
+    background-color: #FFFFFF;
+}
+
+div.headertitle, div.contents {
+	padding-left: 2em;
+	margin-left: 0;
+}
+
+.navpath ul, .sm-dox, .ui-resizable-e, .memtitle, .memproto {
+    background-image: none;
+    background-color: #E3E8F3;
+}
+
+.sm-dox a, .sm-dox a:focus, .sm-dox a:active, .sm-dox a:hover, .sm-dox a.highlighted {
+    background-image: none;
+    border-right: 1px solid #9CAFD4;
+}
+
+.sm-dox a:hover {
+    background-color: #3F5B92;
+}
+
+.fragment span.comment {
+    color: #888888;
+}
+
+.fragment div.line {
+    line-height: 1.4;
+}
+
+.classindex div.ah {
+    background-image: none;
 }

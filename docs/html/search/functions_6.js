@@ -1,7 +1,7 @@
 var searchData=
 [
   ['failurehook',['failureHook',['../classtestutils_1_1DpkTestCase.html#a551b714bbafcab2404060250cdaf4558',1,'testutils::DpkTestCase']]],
-  ['fd_5forder',['fd_order',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a63d9012e39b544f4aa78419a12e40aa8',1,'motsfinder.metric.discrete.patch.DataPatch.fd_order(self)'],['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#ac85821907f1a7d04d6a24634588f39d0',1,'motsfinder.metric.discrete.patch.DataPatch.fd_order(self, order)']]],
+  ['fd_5forder',['fd_order',['../classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1FDDerivMetric.html#a63d9012e39b544f4aa78419a12e40aa8',1,'motsfinder.metric.discrete.fdderivs.FDDerivMetric.fd_order()'],['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a63d9012e39b544f4aa78419a12e40aa8',1,'motsfinder.metric.discrete.patch.DataPatch.fd_order(self)'],['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#ac85821907f1a7d04d6a24634588f39d0',1,'motsfinder.metric.discrete.patch.DataPatch.fd_order(self, order)']]],
   ['fd_5fxz_5fderivatives',['fd_xz_derivatives',['../namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a6205d9000b82f03de99dbe1a13e6996f',1,'motsfinder::metric::discrete::numerical']]],
   ['field',['field',['../classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#a4714c4e299ab1cb269fcc036cff93f9f',1,'motsfinder::metric::discrete::metric::DiscreteMetric']]],
   ['field_5fblocks',['field_blocks',['../classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html#a30033946dbaa560115bd76fa929ccadc',1,'motsfinder::metric::simulation::sioproject::SioProject']]],
@@ -31,5 +31,6 @@ var searchData=
   ['from_5fpatch',['from_patch',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a82fad8bfb063f29b7290e8601a14a0a5',1,'motsfinder::metric::discrete::patch::DataPatch']]],
   ['from_5fpreset',['from_preset',['../classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html#ad37b4c940909c2b3c17e5648023cd1de',1,'motsfinder::metric::analytical::transformed::TransformedMetric']]],
   ['from_5fstar_5fshaped',['from_star_shaped',['../classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html#af329347d4d93d2b387bdf30215da3ffb',1,'motsfinder::axisym::curve::refparamcurve::RefParamCurve']]],
+  ['func_5fxz_5fderivatives',['func_xz_derivatives',['../namespacemotsfinder_1_1metric_1_1discrete_1_1fdderivs.html#a6913819d7e0159b72a49ebccaa0f0f14',1,'motsfinder::metric::discrete::fdderivs']]],
   ['function',['function',['../classmotsfinder_1_1exprs_1_1evaluators_1_1TrivialEvaluator.html#aa5f890b20bf2990e41dee0313f028a79',1,'motsfinder.exprs.evaluators.TrivialEvaluator.function()'],['../classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorBase.html#aa5f890b20bf2990e41dee0313f028a79',1,'motsfinder.exprs.evaluators.EvaluatorBase.function()'],['../classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorFactory.html#aa5f890b20bf2990e41dee0313f028a79',1,'motsfinder.exprs.evaluators.EvaluatorFactory.function()']]]
 ];

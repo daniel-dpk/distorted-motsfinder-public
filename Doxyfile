@@ -793,7 +793,11 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
+# NOTE: Order matters!
 INPUT                  = ./motsfinder/
+INPUT                 += docs_input/examples_init.md
+INPUT                 += docs_input/examples_bl.md
+INPUT                 += docs_input/examples_num_metric.md
 INPUT                 += README_SRC.md
 INPUT                 += README.md
 INPUT                 += testutils.py
@@ -967,7 +971,8 @@ INPUT_FILTER           =
 # need to set EXTENSION_MAPPING for the extension otherwise the files are not
 # properly processed by doxygen.
 
-FILTER_PATTERNS        = *.py=./py_filter
+FILTER_PATTERNS        = *.py=./scripts/py_filter
+FILTER_PATTERNS       += *.md=./scripts/md_filter.py
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
 # INPUT_FILTER) will also be used to filter the input files that are used for

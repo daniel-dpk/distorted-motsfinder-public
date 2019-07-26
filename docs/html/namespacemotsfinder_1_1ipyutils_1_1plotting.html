@@ -93,9 +93,9 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1ipyutils_1_1plo
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a06b8d2e08b8c35450afc9d388b33a46a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a">plot_1d</a> (f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5, label=None, legendargs=None, rel_range=(0, 1), domain=None, value_pad=0, difference=False, offset=0, absolute=False, mark_points=None, zero_line=False, xlog=False, plot_kw=None, show=True, close=False, kw)</td></tr>
-<tr class="memdesc:a06b8d2e08b8c35450afc9d388b33a46a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plot one or two 1D functions and optionally save the plot to disk.  <a href="#a06b8d2e08b8c35450afc9d388b33a46a">More...</a><br /></td></tr>
-<tr class="separator:a06b8d2e08b8c35450afc9d388b33a46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba72cd2b967b19f482ac64ff5186e697"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#aba72cd2b967b19f482ac64ff5186e697">plot_1d</a> (f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5, label=None, legendargs=None, rel_range=(0, 1), domain=None, value_pad=0, difference=False, offset=0, absolute=False, mark_points=None, zero_line=False, transform_x=None, xlog=False, plot_kw=None, show=True, close=False, kw)</td></tr>
+<tr class="memdesc:aba72cd2b967b19f482ac64ff5186e697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plot one or two 1D functions and optionally save the plot to disk.  <a href="#aba72cd2b967b19f482ac64ff5186e697">More...</a><br /></td></tr>
+<tr class="separator:aba72cd2b967b19f482ac64ff5186e697"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a571164537dcce6fa37b4a47fc4f31b93"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a571164537dcce6fa37b4a47fc4f31b93">plot_data</a> (x, y=None, l='.-k', color=None, lw=1.5, absolute=False, zero_line=False, label=None, legendargs=None, plot_kw=None, copy_x=False, copy_y=False, show=True, close=False, kw)</td></tr>
 <tr class="memdesc:a571164537dcce6fa37b4a47fc4f31b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plot the data given as x- and y-values and optionally save the plot to disk.  <a href="#a571164537dcce6fa37b4a47fc4f31b93">More...</a><br /></td></tr>
 <tr class="separator:a571164537dcce6fa37b4a47fc4f31b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,8 +220,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
 <p><b>Examples</b> </p><div class="fragment"><div class="line">ax = plot_1d(<span class="keyword">lambda</span> x: x**2, show=<span class="keyword">False</span>, figsize=(3, 4))</div><div class="line">add_two_colorbars(</div><div class="line">    ax,</div><div class="line">    values1=[1*0.01, 7*0.01], cmap1=cm.coolwarm, fraction1=(1, 0.5),</div><div class="line">    values2=[-1*0.01, -7*0.01], cmap2=cm.coolwarm, fraction2=(0.5, 0),</div><div class="line">    label1=dict(label=<span class="stringliteral">&quot;positive CE values&quot;</span>, labelpad=15),</div><div class="line">    label2=dict(label=<span class="stringliteral">&quot;negative CE values&quot;</span>, labelpad=6),</div><div class="line">    gap=8,</div><div class="line">)</div></div><!-- fragment --> 
 </div>
 </div>
-<a id="a06b8d2e08b8c35450afc9d388b33a46a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06b8d2e08b8c35450afc9d388b33a46a">&#9670;&nbsp;</a></span>plot_1d()</h2>
+<a id="aba72cd2b967b19f482ac64ff5186e697"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba72cd2b967b19f482ac64ff5186e697">&#9670;&nbsp;</a></span>plot_1d()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,6 +326,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>transform_x</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>xlog</em> = <code>False</code>, </td>
         </tr>
         <tr>
@@ -378,6 +384,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
     <tr><td class="paramname">difference</td><td>(boolean, optional) If <code>True</code>, instead of plotting <code>f</code> and <code>f2</code>, plot their difference. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">offset</td><td>(float, optional) Offset the function and the range by this value (default <code>0</code>). This will only change the values on the axis. It is useful for cases where logarithmic scaling of the x-axis is desired but the function's domain starts at some other finite value. </td></tr>
     <tr><td class="paramname">absolute</td><td>(boolean, optional) Whether to plot the absolute value of the function results. Default is <code>False</code>. </td></tr>
+    <tr><td class="paramname">transform_x</td><td>Optional callable to transform the x-axis values. Useful in case the inverse transform is not easily accessible. The function will be called once for each x-value and should return the transformed value. </td></tr>
     <tr><td class="paramname">xlog</td><td>(boolean, optional) Whether to plot the x-axis logarithmically. </td></tr>
     <tr><td class="paramname">ylog</td><td>(boolean, optional) Whether to plot the y-axis logarithmically. </td></tr>
     <tr><td class="paramname">xlim</td><td>(2-tuple, optional) Custom limit for the x-axis range. </td></tr>
@@ -487,7 +494,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
 
 <p>Plot a given parametric curve. </p>
 <p>The <code>curve</code> should return <code>x,y</code> pairs of values when evaluated at a given parameter value.</p>
-<p>Parameters not described here are described in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a571164537dcce6fa37b4a47fc4f31b93" title="Plot the data given as x- and y-values and optionally save the plot to disk. ">plot_data()</a> or <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
+<p>Parameters not described here are described in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a571164537dcce6fa37b4a47fc4f31b93" title="Plot the data given as x- and y-values and optionally save the plot to disk. ">plot_data()</a> or <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#aba72cd2b967b19f482ac64ff5186e697" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">curve</td><td>(callable or NumericExpression) Parameterized curve to plot. </td></tr>
@@ -608,7 +615,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
 
 <p>Plot the data given as x- and y-values and optionally save the plot to disk. </p>
 <p>This is a convenience function to quickly plot the given pairs of x- and y-values.</p>
-<p>Parameters not documented here have the same meaning as in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
+<p>Parameters not documented here have the same meaning as in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#aba72cd2b967b19f482ac64ff5186e697" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
 <p>The <code>plot_kw</code> parameter is added to the <code>Axis.plot</code> call.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -794,7 +801,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
 </div><div class="memdoc">
 
 <p>Visualize a matrix using a colored rectangle. </p>
-<p>Parameters not described here are described in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a571164537dcce6fa37b4a47fc4f31b93" title="Plot the data given as x- and y-values and optionally save the plot to disk. ">plot_data()</a> or <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
+<p>Parameters not described here are described in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a571164537dcce6fa37b4a47fc4f31b93" title="Plot the data given as x- and y-values and optionally save the plot to disk. ">plot_data()</a> or <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#aba72cd2b967b19f482ac64ff5186e697" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">colorbar</td><td>Whether to show a bar next to the plot indicating the numerical values the colors represent. Default is <code>True</code>. </td></tr>
@@ -848,8 +855,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
 
 <p>Plot multiple 1d or 2d functions in a grid. </p>
 <p>All the positional arguments are interpreted as functions to plot. These arguments may optionally be tuples/lists with two elements. The first must be the function to plot, the second can either be a string (title of the plot) or a <code>dict</code> with options passed to the individual plot commands.</p>
-<p>These individual plot options may optionally contain a special key <code>plotter</code>, which will be used as the plotting function instead of <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a> (for 1d plots) or plot_2d() (for 2d plots).</p>
-<p>If 1D plots should be done (which is the default), the <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a> function is called for each plot, whereas for 3D plots (if <code>surfaces==True</code>), plot_2d() is used.</p>
+<p>These individual plot options may optionally contain a special key <code>plotter</code>, which will be used as the plotting function instead of <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#aba72cd2b967b19f482ac64ff5186e697" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a> (for 1d plots) or plot_2d() (for 2d plots).</p>
+<p>If 1D plots should be done (which is the default), the <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#aba72cd2b967b19f482ac64ff5186e697" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a> function is called for each plot, whereas for 3D plots (if <code>surfaces==True</code>), plot_2d() is used.</p>
 <p>All parameters not listed below are merged with the individual options of each plot (if any) and passed to the plot command.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -942,7 +949,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_crop</b> (image, left
 
 <p>Plot a function parameterized by an angle. </p>
 <p>Contrary to the usual convention, the angle parameter is taken to be the angle w.r.t. the <code>y</code>-axis. Options are similar to <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a16fa755ca0ddd610652b5792eeab0126" title="Plot a given parametric curve. ">plot_curve()</a>.</p>
-<p>Parameters not described here are described in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a571164537dcce6fa37b4a47fc4f31b93" title="Plot the data given as x- and y-values and optionally save the plot to disk. ">plot_data()</a> or <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a06b8d2e08b8c35450afc9d388b33a46a" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
+<p>Parameters not described here are described in <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a571164537dcce6fa37b4a47fc4f31b93" title="Plot the data given as x- and y-values and optionally save the plot to disk. ">plot_data()</a> or <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#aba72cd2b967b19f482ac64ff5186e697" title="Plot one or two 1D functions and optionally save the plot to disk. ">plot_1d()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">origin</td><td>Move the origin of the coordinate system to the desired location. Default is <code>(0, 0)</code>. </td></tr>

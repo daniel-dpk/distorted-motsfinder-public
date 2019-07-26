@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['h',['H',['../classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html#a033d85f85d98b74d1fbe41a8b1db76ad',1,'motsfinder::metric::analytical::schwarzschildks::SchwarzschildKSSlice']]],
+  ['h',['H',['../classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html#a033d85f85d98b74d1fbe41a8b1db76ad',1,'motsfinder.metric.analytical.kerrks.KerrKSSlice.H()'],['../classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html#a033d85f85d98b74d1fbe41a8b1db76ad',1,'motsfinder.metric.analytical.schwarzschildks.SchwarzschildKSSlice.H()']]],
   ['h_5fdiff',['h_diff',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#abadd30d50ea29610265ab20b4b27b5a5',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]],
   ['has_5faccurate_5ftest',['has_accurate_test',['../classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html#a5b07ff6cfcece9b0033d0b40b9344355',1,'motsfinder::axisym::newton::_LinearExpansionEquation']]],
   ['has_5fdata',['has_data',['../classmotsfinder_1_1axisym_1_1trackmots_1_1__NeckInfo.html#a10581fe7cbdcbc50d0131f73ba68225b',1,'motsfinder::axisym::trackmots::_NeckInfo']]],

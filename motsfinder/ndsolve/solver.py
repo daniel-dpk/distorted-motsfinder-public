@@ -140,8 +140,7 @@ class NDSolver(object):
         r"""Return the matrix resulting from applying the operator to the basis."""
         with self.context():
             return self._basis.construct_operator_matrix(
-                self._op,
-                as_numpy=not self._mat_solver.startswith('mp')
+                self._op, as_numpy=not self._mat_solver.startswith('mp')
             )
 
     def eigenvalues(self):
@@ -185,15 +184,47 @@ class NDSolver(object):
         where \f$M = \Phi^{-1} L\f$.
         """
         with self.context():
+            L = self._prepare_eigenvalue_problem()
+            eigenvals = linalg.eigvals(a=L)
+            principal = min(eigenvals, key=lambda v: v.real)
+            return eigenvals, principal
+
+    def eigenfunctions(self):
+        r"""Return the eigenvalues and eigenfunctions of the operator.
+
+        As for eigenvalues(), boundary conditions need to be imposed by a
+        suitable choice of basis functions. See eigenvalues() for more
+        detailed notes.
+
+        @return List of eigenfunction expression objects `f` ordered by real
+            part of the respective eigenvalue. The objects will have
+            properties ``f.eigenfunction_number`` (position in the sequence of
+            eigenfunctions) and ``f.eigenvalue`` (the eigenvalue corresponding
+            to the eigenfunction).
+        """
+        with self.context():
+            L = self._prepare_eigenvalue_problem()
+            w, vr = linalg.eig(a=L)
+            results = [(w[i], vr[:,i]) for i in range(len(w))]
+            results.sort(key=lambda x: x[0].real)
+            def _mk_func(i, w, vec):
+                func = self._basis.solution_function(vec)
+                func.name = "f%d" % i
+                func.eigenfunction_number = i
+                func.eigenvalue = w
+                return func
+            return [_mk_func(i, w, vec) for i, (w, vec) in enumerate(results)]
+
+    def _prepare_eigenvalue_problem(self):
+        r"""Construct the matrix representing the discretized eigenvalue problem."""
+        with self.context():
             L = self.construct_operator_matrix()
             Phi = self._basis.construct_operator_matrix(
                 [1.0], as_numpy=True
             )
             Phi_inv = linalg.inv(Phi, overwrite_a=True)
             L = Phi_inv.dot(L)
-            eigenvals = linalg.eigvals(a=L)
-            principal = min(eigenvals, key=lambda v: v.real)
-            return eigenvals, principal
+            return L
 
     def _evaluate_equation(self, eq):
         r"""Interpret the given equation argument to get the operator and

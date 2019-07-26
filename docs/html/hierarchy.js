@@ -1,20 +1,29 @@
 var hierarchy =
 [
     [ "_BinomialCoeffs", "classmotsfinder_1_1numutils_1_1__BinomialCoeffs.html", null ],
+    [ "_CallableMetric", "classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__CallableMetric.html", null ],
     [ "_CurvWrapper", "classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1__CurvWrapper.html", null ],
     [ "_DiscreteField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html", [
       [ "DiscreteScalarField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1DiscreteScalarField.html", [
+        [ "_ScalarField", "classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__ScalarField.html", null ],
         [ "_ScalarField", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__ScalarField.html", null ],
         [ "SioScalarField", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioScalarField.html", null ]
       ] ],
       [ "DiscreteSym2TensorField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1DiscreteSym2TensorField.html", [
+        [ "_Sym2TensorField", "classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__Sym2TensorField.html", null ],
         [ "_Sym2TensorField", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__Sym2TensorField.html", null ],
         [ "SioSym2TensorField", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioSym2TensorField.html", null ]
       ] ],
       [ "DiscreteVectorField", "classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1DiscreteVectorField.html", [
+        [ "_VectorField", "classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__VectorField.html", null ],
         [ "_VectorField", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1__VectorField.html", null ],
         [ "SioVectorField", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioVectorField.html", null ]
       ] ]
+    ] ],
+    [ "_FDField", "classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__FDField.html", [
+      [ "_ScalarField", "classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__ScalarField.html", null ],
+      [ "_Sym2TensorField", "classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__Sym2TensorField.html", null ],
+      [ "_VectorField", "classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__VectorField.html", null ]
     ] ],
     [ "_FuncWrap", "classmotsfinder_1_1utils_1_1__FuncWrap.html", null ],
     [ "_LapseWrapper", "classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1__LapseWrapper.html", null ],
@@ -44,6 +53,9 @@ var hierarchy =
     [ "InitHelper", "classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html", null ],
     [ "IntegrationResult", "classmotsfinder_1_1numutils_1_1IntegrationResult.html", null ],
     [ "IntegrationResults", "classmotsfinder_1_1numutils_1_1IntegrationResults.html", null ],
+    [ "KerrKSSliceCurv", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSliceCurv.html", null ],
+    [ "KerrKSSliceLapse", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSliceLapse.html", null ],
+    [ "KerrKSSliceShift", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSliceShift.html", null ],
     [ "metaclass", null, [
       [ "BaseParametricCurve", "classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html", [
         [ "BipolarCurve", "classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html", null ],
@@ -113,6 +125,7 @@ var hierarchy =
       ] ],
       [ "_GeneralMetric", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html", [
         [ "_ThreeMetric", "classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html", [
+          [ "KerrKSSlice", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html", null ],
           [ "SchwarzschildKSSlice", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html", null ],
           [ "_ConformallyFlatMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html", [
             [ "BrillLindquistMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html", null ],
@@ -120,7 +133,9 @@ var hierarchy =
           ] ],
           [ "FlatThreeMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html", null ],
           [ "TransformedMetric", "classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html", null ],
+          [ "FDDerivMetric", "classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1FDDerivMetric.html", null ],
           [ "DiscreteMetric", "classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html", [
+            [ "NumericalMetric", "classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1NumericalMetric.html", null ],
             [ "DiscretizedMetric", "classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html", null ],
             [ "SioMetric", "classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html", null ]
           ] ]
@@ -144,11 +159,14 @@ var hierarchy =
       [ "_MpPi", "classmotsfinder_1_1pickle__helpers_1_1__MpPi.html", null ],
       [ "TestSettings", "classtestutils_1_1TestSettings.html", null ]
     ] ],
+    [ "Parser", "classmd__filter_1_1Parser.html", null ],
     [ "SchwarzschildKSSliceCurv", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceCurv.html", null ],
     [ "SchwarzschildKSSliceLapse", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceLapse.html", null ],
     [ "SchwarzschildKSSliceShift", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceShift.html", null ],
     [ "SignatureQuantities", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html", null ],
     [ "SioProject", "classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html", null ],
+    [ "StabilityCalc", "classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html", null ],
+    [ "StabilitySpectrum", "classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html", null ],
     [ "TestCase", null, [
       [ "DpkTestCase", "classtestutils_1_1DpkTestCase.html", null ]
     ] ],

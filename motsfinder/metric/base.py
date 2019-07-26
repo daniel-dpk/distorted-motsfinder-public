@@ -231,34 +231,114 @@ class _GeneralMetric(object):
 class _ThreeMetric(_GeneralMetric):
     r"""Base class for 3-metrics on a spatial slice of spacetime.
 
-    The methods child classes have to implement are:
+    The methods that child classes have to implement are:
         * _mat_at() computing the metric tensor (matrix) at a given point
         * diff() computing derivatives of the metric at a given point
+
+    Furthermore, child classes may implement the methods for returning the
+    lapse function and shift vector field (along with methods returning their
+    respective time derivatives). This will enable construction of a 4-metric
+    that can be evaluated at points of the spatial slice.
+
+    If a 4-metric should be constructed but it does not matter which
+    particular choice of lapse and shift is made, you can implement the
+    methods trivially by returning one of the `trivial_*` function objects as
+    documented in the respective `get_*` method.
     """
     # pylint: disable=abstract-method
 
     def get_curv(self):
         r"""Return the extrinsic curvature belonging to this 3-metric.
 
-        The default implementation assumes a time-symmetric slice, i.e.
-        vanishing extrinsic curvature. Implementations of non-time-symmetric
-        slices should provide a callable with signature
-        ``curv(point, diff=n)``, where ``n`` is the derivative order.
+        By default, we assume a time-symmetric slice, i.e. vanishing extrinsic
+        curvature. Implementations of non-time-symmetric slices should provide
+        a callable with signature ``curv(point, diff=n)``, where ``n`` is the
+        derivative order.
         """
         return None
 
     def get_lapse(self):
-        r"""Return the lapse function on the slice."""
+        r"""Return the lapse function on the slice.
+
+        This will be used e.g. when constructing a 4-metric from this
+        3-metric. This function should return the `trivial_lapse` function
+        object if the trivial lapse function (constant 1) should be used.
+        For example:
+
+        ```
+            def get_lapse(self):
+                return trivial_lapse
+        ```
+        """
         return None
 
     def get_shift(self):
-        r"""Return the shift vector field on the slice."""
+        r"""Return the shift vector field on the slice.
+
+        This will be used e.g. when constructing a 4-metric from this
+        3-metric. This function should return the `trivial_shift` function
+        object if the trivial shift vector (zero) should be used.
+        For example:
+
+        ```
+            def get_shift(self):
+                return trivial_shift
+        ```
+        """
         return None
 
     def get_dtlapse(self):
-        r"""Return the time derivative of lapse."""
+        r"""Return the time derivative of lapse.
+
+        This will be used e.g. when constructing a 4-metric from this
+        3-metric. This function should return the `trivial_dtlapse` function
+        object if the trivial lapse function's time derivative (zero) should
+        be used.
+        """
         return None
 
     def get_dtshift(self):
-        r"""Return the time derivative of shift."""
+        r"""Return the time derivative of shift.
+
+        This will be used e.g. when constructing a 4-metric from this
+        3-metric. This function should return the `trivial_dtshift` function
+        object if the trivial shift vector's time derivative (zero) should be
+        used.
+        """
         return None
+
+
+def trivial_lapse(point, diff=0):
+    r"""Trivial lapse function set to constant 1.0.
+
+    To use it, return this in your get_lapse() implementation.
+    """
+    if diff:
+        return np.zeros(shape=[3] * diff)
+    return 1.0
+
+
+def trivial_dtlapse(point, diff=0):
+    r"""Trivial lapse time derivative set to constant 0.0.
+
+    To use it, return this in your get_dtlapse() implementation.
+    """
+    if diff:
+        return np.zeros(shape=[3] * diff)
+    return 0.0
+
+
+def trivial_shift(point, diff=0):
+    r"""Trivial shift vector field set to constant zero.
+
+    To use it, return this in your get_shift() implementation.
+    """
+    return np.zeros(shape=[3] * (diff + 1))
+
+
+def trivial_dtshift(point, diff=0):
+    r"""Trivial shift time derivative set to constant zero vector.
+
+    To use it, return this in your get_dtshift() implementation.
+    """
+    return np.zeros(shape=[3] * (diff + 1))

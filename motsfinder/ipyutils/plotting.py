@@ -40,8 +40,8 @@ __all__ = [
 def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
             label=None, legendargs=None, rel_range=(0, 1), domain=None,
             value_pad=0, difference=False, offset=0, absolute=False,
-            mark_points=None, zero_line=False, xlog=False, plot_kw=None,
-            show=True, close=False, **kw):
+            mark_points=None, zero_line=False, transform_x=None, xlog=False,
+            plot_kw=None, show=True, close=False, **kw):
     r"""Plot one or two 1D functions and optionally save the plot to disk.
 
     By default, this function will simply plot the given callable `f` (which
@@ -96,6 +96,10 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
     @param absolute (boolean, optional)
         Whether to plot the absolute value of the function results. Default is
         `False`.
+    @param transform_x
+        Optional callable to transform the x-axis values. Useful in case the
+        inverse transform is not easily accessible. The function will be
+        called once for each x-value and should return the transformed value.
     @param xlog (boolean, optional)
         Whether to plot the x-axis logarithmically.
     @param ylog (boolean, optional)
@@ -250,6 +254,11 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         if f2 is not None:
             f2.prepare_evaluation_at(space)
     except AttributeError: pass
+    xs = space
+    if transform_x:
+        if not callable(transform_x):
+            transform_x = transform_x.evaluator()
+        xs = [transform_x(x) for x in space]
     if difference:
         other_fun = f2
         f2 = None
@@ -258,20 +267,20 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         fun = f
     with plot_ctx(show=show, close=close, xlog=xlog, **kw) as ax:
         if zero_line:
-            ax.plot(space, [0] * len(space), '-k' if zero_line is True else zero_line)
+            ax.plot(xs, [0] * len(space), '-k' if zero_line is True else zero_line)
         f1 = (lambda x: abs(fun(x))) if absolute else fun
-        line, = ax.plot(space, [f1(x-offset) for x in space], l1, label=label1, **kw1)
+        line, = ax.plot(xs, [f1(x-offset) for x in space], l1, label=label1, **kw1)
         if f2 is not None:
             _f2 = f2
             f2 = (lambda x: abs(_f2(x))) if absolute else _f2
-            ax.plot(space, [f2(x-offset) for x in space], l2, label=label2, **kw2)
+            ax.plot(xs, [f2(x-offset) for x in space], l2, label=label2, **kw2)
         if mark_points is not None:
             marker_opts = dict()
             if mark_points is True:
-                mark_points = space
+                mark_points = xs
             if mark_points[0] is True:
                 _, ls = mark_points
-                pts = space
+                pts = xs
             elif isiterable(mark_points[0]):
                 try:
                     pts, ls = mark_points
@@ -281,7 +290,7 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
                 pts, ls = mark_points, 'o'
             if 'color' not in marker_opts and not any(c in ls for c in 'bgrcmykw'):
                 marker_opts['color'] = line.get_color()
-            pts = [p for p in pts if space[0] <= p <= space[-1]]
+            pts = [p for p in pts if xs[0] <= p <= xs[-1]]
             ax.plot(pts, [f1(x-offset) for x in pts], ls, **marker_opts)
         if label is not None:
             ax.legend(**insert_missing(legendargs, labelspacing=0))
@@ -584,6 +593,7 @@ def plot_multi(*args, tight_layout=False, **kwargs):
     if maxw is not None:
         width = min(width, maxw*min(cols, n))
     figsize = kwargs.get('figsize', (width, width/12.0 * float(height)/n))
+    dpi = kwargs.get('dpi', 70)
     if cols < n:
         for i in range(0, n, cols):
             sub_list = args[i:i+cols]
@@ -602,10 +612,14 @@ def plot_multi(*args, tight_layout=False, **kwargs):
     kwargs.pop('maxwidth', None)
     kwargs.pop('figsize', None)
     if surfaces:
-        axes = plt.subplots(ncols=n, figsize=figsize, squeeze=False,
-                            subplot_kw={'projection':'3d'})[1].flatten()
+        axes = plt.subplots(
+            ncols=n, figsize=figsize, dpi=dpi, squeeze=False,
+            subplot_kw={'projection':'3d'}
+        )[1].flatten()
     else:
-        axes = plt.subplots(ncols=n, figsize=figsize, squeeze=False)[1].flatten()
+        axes = plt.subplots(
+            ncols=n, figsize=figsize, dpi=dpi, squeeze=False
+        )[1].flatten()
     for i, ax in enumerate(axes):
         try:
             f, opts = args[i]

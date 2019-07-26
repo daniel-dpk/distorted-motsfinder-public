@@ -116,9 +116,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a5dacd50e58eb901a813f4f5b241bd416"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a5dacd50e58eb901a813f4f5b241bd416">find_slices</a> (sim_dir, backwards=False, start_slice=None, end_slice=None, max_slices=None, backwards_skip_first=True, skip_checkpoints=True, disp=True)</td></tr>
 <tr class="memdesc:a5dacd50e58eb901a813f4f5b241bd416"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gather all simulation data files.  <a href="#a5dacd50e58eb901a813f4f5b241bd416">More...</a><br /></td></tr>
 <tr class="separator:a5dacd50e58eb901a813f4f5b241bd416"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad538145cdc6063a1036167af90d48cbe"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ad538145cdc6063a1036167af90d48cbe">compute_props</a> (hname, c, props, area_rtol=1e-6, min_stability_values=30, stability_convergence_factors=(0.2, 0.4, 0.6, 0.8, 0.9, 1.1), verbosity=True, MOTS_map=None, fname=None, c_past=None, c_future=None, remove_invalid=True)</td></tr>
-<tr class="memdesc:ad538145cdc6063a1036167af90d48cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute properties and store them in the curve object.  <a href="#ad538145cdc6063a1036167af90d48cbe">More...</a><br /></td></tr>
-<tr class="separator:ad538145cdc6063a1036167af90d48cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a903d7f777ef6c0c60cc01eec5506547b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a903d7f777ef6c0c60cc01eec5506547b">compute_props</a> (hname, c, props, area_rtol=1e-6, min_stability_values=30, m_terminate_index=30, stability_convergence_factors=(0.2, 0.4, 0.6, 0.8, 0.9, 1.1), verbosity=True, MOTS_map=None, fname=None, c_past=None, c_future=None, remove_invalid=True)</td></tr>
+<tr class="memdesc:a903d7f777ef6c0c60cc01eec5506547b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute properties and store them in the curve object.  <a href="#a903d7f777ef6c0c60cc01eec5506547b">More...</a><br /></td></tr>
+<tr class="separator:a903d7f777ef6c0c60cc01eec5506547b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a77a21db5fdaf991e42b1f98c7980b6e6">_area</a> (c, v=None, kw)</td></tr>
 <tr class="memdesc:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the area for the curve.  <a href="#a77a21db5fdaf991e42b1f98c7980b6e6">More...</a><br /></td></tr>
 <tr class="separator:a77a21db5fdaf991e42b1f98c7980b6e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,14 +135,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 <tr class="memitem:a74dc8acdd8391930c6bf6bf0bf463738"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a74dc8acdd8391930c6bf6bf0bf463738">_multipoles</a> (c, max_n)</td></tr>
 <tr class="memdesc:a74dc8acdd8391930c6bf6bf0bf463738"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the first multipoles for the given curve.  <a href="#a74dc8acdd8391930c6bf6bf0bf463738">More...</a><br /></td></tr>
 <tr class="separator:a74dc8acdd8391930c6bf6bf0bf463738"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08c52f72f0bc745bb3d87120a67d593b"><td class="memItemLeft" align="right" valign="top"><a id="a08c52f72f0bc745bb3d87120a67d593b"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#a08c52f72f0bc745bb3d87120a67d593b">_stability</a> (c, min_num, method)</td></tr>
-<tr class="memdesc:a08c52f72f0bc745bb3d87120a67d593b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability spectrum for the curve. <br /></td></tr>
-<tr class="separator:a08c52f72f0bc745bb3d87120a67d593b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7cb84f2475a1c633c81931e54fa0fad"><td class="memItemLeft" align="right" valign="top"><a id="ad7cb84f2475a1c633c81931e54fa0fad"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ad7cb84f2475a1c633c81931e54fa0fad">_stability_convergence</a> (c, min_num, convergence_factors, method, verbose=False)</td></tr>
-<tr class="memdesc:ad7cb84f2475a1c633c81931e54fa0fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability spectrum at different resolutions. <br /></td></tr>
-<tr class="separator:ad7cb84f2475a1c633c81931e54fa0fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf0c726df052363f026f10ad34a48905"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#aaf0c726df052363f026f10ad34a48905">_stability</a> (c, min_num, method, m_terminate_index, slice_normal, v=None)</td></tr>
+<tr class="memdesc:aaf0c726df052363f026f10ad34a48905"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability spectrum for the curve.  <a href="#aaf0c726df052363f026f10ad34a48905">More...</a><br /></td></tr>
+<tr class="separator:aaf0c726df052363f026f10ad34a48905"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1689c2326a1a01c252932aca2fba9af"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ac1689c2326a1a01c252932aca2fba9af">_stability_convergence</a> (c, min_num, convergence_factors, method, slice_normal, verbose=False, v=None)</td></tr>
+<tr class="memdesc:ac1689c2326a1a01c252932aca2fba9af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability spectrum at different resolutions.  <a href="#ac1689c2326a1a01c252932aca2fba9af">More...</a><br /></td></tr>
+<tr class="separator:ac1689c2326a1a01c252932aca2fba9af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad75204ddca479824b4e1fbff97e4371e"><td class="memItemLeft" align="right" valign="top"><a id="ad75204ddca479824b4e1fbff97e4371e"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots.html#ad75204ddca479824b4e1fbff97e4371e">_ricci</a> (c, Ns, eps, xatol)</td></tr>
 <tr class="memdesc:ad75204ddca479824b4e1fbff97e4371e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the Ricci scalar and its maximum along the curve. <br /></td></tr>
@@ -215,7 +213,7 @@ Variables</h2></td></tr>
 <tr class="memitem:ad57ec603e95646f3d911043d416b5739"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><b>ALL_PROPS</b></td></tr>
 <tr class="separator:ad57ec603e95646f3d911043d416b5739"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89a223ca8475801a004b8ea0e2f49e38"><td class="memItemLeft" align="right" valign="top"><a id="a89a223ca8475801a004b8ea0e2f49e38"></a>
-tuple&#160;</td><td class="memItemRight" valign="bottom"><b>NEED_ACTIVATION_PROPS</b> = ('stability_convergence',)</td></tr>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>NEED_ACTIVATION_PROPS</b> = ('stability_convergence', 'stability_convergence_null')</td></tr>
 <tr class="separator:a89a223ca8475801a004b8ea0e2f49e38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -550,8 +548,140 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>NEED_ACTIVATION_PROP
 
 </div>
 </div>
-<a id="ad538145cdc6063a1036167af90d48cbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad538145cdc6063a1036167af90d48cbe">&#9670;&nbsp;</a></span>compute_props()</h2>
+<a id="aaf0c726df052363f026f10ad34a48905"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf0c726df052363f026f10ad34a48905">&#9670;&nbsp;</a></span>_stability()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.axisym.trackmots._stability </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>min_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>method</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>m_terminate_index</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>slice_normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>v</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the stability spectrum for the curve. </p>
+<p>The parameter <code>v</code> is ignored here and can be used to force recomputation of this property in case the code has changed. </p>
+
+</div>
+</div>
+<a id="ac1689c2326a1a01c252932aca2fba9af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1689c2326a1a01c252932aca2fba9af">&#9670;&nbsp;</a></span>_stability_convergence()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.axisym.trackmots._stability_convergence </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>min_num</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>convergence_factors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>method</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>slice_normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>v</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compute the stability spectrum at different resolutions. </p>
+<p>The parameter <code>v</code> can be used to force recomputation of this property in case the code has changed. Note that results from the <code>"stability"</code> property are reused only if the <code>v</code> parameters match. </p>
+
+</div>
+</div>
+<a id="a903d7f777ef6c0c60cc01eec5506547b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a903d7f777ef6c0c60cc01eec5506547b">&#9670;&nbsp;</a></span>compute_props()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -585,6 +715,12 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>NEED_ACTIVATION_PROP
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>min_stability_values</em> = <code>30</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>m_terminate_index</em> = <code>30</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -647,8 +783,8 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>NEED_ACTIVATION_PROP
 <li><b>ricci</b>: Ricci scalar computed on a grid of points with density dependent on the curve resolution. Additionally, the maximum absolute value of the Ricci scalar along the curve is found and stored. Inspect the actual data (dictionary) for details.</li>
 <li><b>mean_curv</b>: Similar to <code>ricci</code>, but compute the trace of the extrinsic curvature of the MOTS in the slice instead.</li>
 <li><b>curv2</b>: Similar to <code>mean_curv</code>, but compute the "square" <img class="formulaInl" alt="$k_{AB}k^{AB}$" src="form_404.png"/> of the MOTS's extrinsic curvature.</li>
-<li><b>stability</b>: Compute the spectrum of the stability operator. The number of eigenvalues returned depends on the curve's resolution, but at least 30 eigenvalues (by default) are computed. See also the <code>min_stability_values</code> parameter and the following property.</li>
-<li><b>stability_convergence</b>: In addition to computing the stability spectrum above, recompute it at (by default) <code>0.2, 0.4, 0.6, 0.8, 0.9, 1.1</code> times the resolution used for the <code>"stability"</code> property. This allows analyzing convergence of the individual eigenvalues.</li>
+<li><b>stability</b>, <b>stability_null</b>: Compute the spectrum of the stability operator. The number of eigenvalues returned depends on the curve's resolution, but at least 30 eigenvalues (by default) are computed. See also the <code>min_stability_values</code> parameter and the following property. The stored value is a tuple <code>principal, spectrum0</code>, where <code>principal</code> is the principal eigenvalue and <code>spectrum0</code> is the spectrum of the <code>m=0</code> angular mode. The full computed spectrum including higher modes is stored in the <code>stability_extras</code> dictionary under the <code>spectrum</code> key. Use <code>m_terminate_index</code> to control how many angular modes to consider. The <em><b>_null</b></em> variant of this property computes the spectrum w.r.t. the past outward null normal <img class="formulaInl" alt="$-k^\mu$" src="form_447.png"/> instead of the outward normal in the spatial slice.</li>
+<li><b>stability_convergence</b>, <b>stability_convergence_null</b>: In addition to computing the stability spectrum above, recompute it at (by default) <code>0.2, 0.4, 0.6, 0.8, 0.9, 1.1</code> times the resolution used for the <code>"stability"</code> property. This allows analyzing convergence of the individual eigenvalues. As above, the <em><b>_null</b></em> variant is for the past outward null normal <img class="formulaInl" alt="$-k^\mu$" src="form_447.png"/>.</li>
 <li><b>neck</b>: Find the neck based on various criteria and compute various properties at this point, like proper circumference or proper distance to the z-axis. Only computed for a MOTS with <code>hname="inner"</code>.</li>
 <li><b>dist_top_bot</b>: Proper distance (along the z-axis) of the two individual MOTSs. Only computed for a MOTS with <code>hname="bot"</code>.</li>
 <li><b>z_dist_top_inner</b>: Proper distance of the highest point on the z-axis of the inner common MOTS and the top individual MOTS. Only compute for a MOTS with <code>hname="inner"</code>.</li>
@@ -671,6 +807,7 @@ tuple&#160;</td><td class="memItemRight" valign="bottom"><b>NEED_ACTIVATION_PROP
     <tr><td class="paramname">props</td><td>Sequence of properties to compute (see above for the possible values). Use the string <code>"all"</code> to compute all possible properties. </td></tr>
     <tr><td class="paramname">area_rtol</td><td>Relative tolerance for the area integral. Setting this too low will result in integration warnings being produced and possibly underestimated residual errors. </td></tr>
     <tr><td class="paramname">min_stability_values</td><td>Minimum number of MOTS-stability eigenvalues to compute. The default is <code>30</code>. </td></tr>
+    <tr><td class="paramname">m_terminate_index</td><td>Index of the eigenvalue of the <code>m=0</code> mode to use to as stopping criterion for the angular mode. Default is <code>30</code>. See .<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a261ec805e4184cc43bfc37a4f801c204" title="Compute the stability parameter. ">curve.expcurve.ExpansionCurve.stability_parameter()</a> for details. </td></tr>
     <tr><td class="paramname">stability_convergence_factors</td><td>Factors by which to multiply the resolution used for computing the stability spectrum. Each of the resulting lower or higher resolutions is used to compute the same spectrum, so that convergence of the individual eigenvalues can be examined. Defaults to <code>(0.2, 0.4, 0.6, 0.8, 0.9, 1.1)</code>. </td></tr>
     <tr><td class="paramname">verbosity</td><td>Whether to print progress information. </td></tr>
     <tr><td class="paramname">MOTS_map</td><td>Dictionary indicating from which runs auxiliary MOTSs should be loaded (used e.g. for the various distances). </td></tr>
@@ -971,7 +1108,7 @@ some/path/foo/run2/inner/inner_discrete_it0000000001.npy
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;=  (<span class="keywordtype">None</span>, <span class="stringliteral">&#39;none&#39;</span>, <span class="stringliteral">&#39;all&#39;</span>, <span class="stringliteral">&#39;length_maps&#39;</span>, <span class="stringliteral">&#39;constraints&#39;</span>, <span class="stringliteral">&#39;ingoing_exp&#39;</span>,</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;             <span class="stringliteral">&#39;avg_ingoing_exp&#39;</span>, <span class="stringliteral">&#39;area&#39;</span>, <span class="stringliteral">&#39;ricci&#39;</span>, <span class="stringliteral">&#39;mean_curv&#39;</span>, <span class="stringliteral">&#39;curv2&#39;</span>,</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;             <span class="stringliteral">&#39;stability&#39;</span>, <span class="stringliteral">&#39;stability_convergence&#39;</span>, <span class="stringliteral">&#39;neck&#39;</span>, <span class="stringliteral">&#39;dist_top_bot&#39;</span>,</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;             <span class="stringliteral">&#39;z_dist_top_inner&#39;</span>, <span class="stringliteral">&#39;z_dist_bot_inner&#39;</span>, <span class="stringliteral">&#39;signature&#39;</span>,</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;             <span class="stringliteral">&#39;point_dists&#39;</span>, <span class="stringliteral">&#39;area_parts&#39;</span>, <span class="stringliteral">&#39;multipoles&#39;</span>)</div></div><!-- fragment -->
+<b>Initial value:</b><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;=  (<span class="keywordtype">None</span>, <span class="stringliteral">&#39;none&#39;</span>, <span class="stringliteral">&#39;all&#39;</span>, <span class="stringliteral">&#39;length_maps&#39;</span>, <span class="stringliteral">&#39;constraints&#39;</span>, <span class="stringliteral">&#39;ingoing_exp&#39;</span>,</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;             <span class="stringliteral">&#39;avg_ingoing_exp&#39;</span>, <span class="stringliteral">&#39;area&#39;</span>, <span class="stringliteral">&#39;ricci&#39;</span>, <span class="stringliteral">&#39;mean_curv&#39;</span>, <span class="stringliteral">&#39;curv2&#39;</span>,</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;             <span class="stringliteral">&#39;stability&#39;</span>, <span class="stringliteral">&#39;stability_null&#39;</span>, <span class="stringliteral">&#39;stability_convergence&#39;</span>,</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;             <span class="stringliteral">&#39;stability_convergence_null&#39;</span>, <span class="stringliteral">&#39;neck&#39;</span>, <span class="stringliteral">&#39;dist_top_bot&#39;</span>,</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;             <span class="stringliteral">&#39;z_dist_top_inner&#39;</span>, <span class="stringliteral">&#39;z_dist_bot_inner&#39;</span>, <span class="stringliteral">&#39;signature&#39;</span>,</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;             <span class="stringliteral">&#39;point_dists&#39;</span>, <span class="stringliteral">&#39;area_parts&#39;</span>, <span class="stringliteral">&#39;multipoles&#39;</span>)</div></div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

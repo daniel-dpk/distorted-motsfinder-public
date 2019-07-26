@@ -782,7 +782,7 @@ class ExpansionCalc(object):
         @return For ``diff==1``, return the first derivatives with indices
             ``dx[A,i]`` meaning \f$\partial_A x^i\f$, where we have
             \f$(x^i) := (x,y,z)\f$ and
-            \f$(\partial_A) := (\partial_\lambda, \partial_phi)\f$.
+            \f$(\partial_A) := (\partial_\lambda, \partial_\varphi)\f$.
             For ``diff==2``, second derivatives are returned with indices
             ``ddx[A,B,i]`` meaning \f$\partial_A\partial_B x^i\f$.
             The same pattern holds for ``diff==3``.

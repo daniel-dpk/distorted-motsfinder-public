@@ -1,12 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1__IntersectionDetectionError.html" title="Raised when self&#45;intersection cannot be located. " alt="" coords="133,5,315,32"/>
-<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1DistanceSearchError.html" title="Raised when the closest distance between curves could not be found. " alt="" coords="153,56,295,83"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1IntegrationError.html" title="Raised for non&#45;converging integrals or if accuracy cannot be reached. " alt="" coords="169,107,279,133"/>
-<area shape="rect" id="node5" href="$classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html" title="Base for exceptions indicating failed convergence of Newton steps. " alt="" coords="166,157,282,184"/>
-<area shape="rect" id="node8" href="$classmotsfinder_1_1axisym_1_1trackmots_1_1AuxResultMissing.html" title="Raised when a result is missing required for computing a property. " alt="" coords="160,208,288,235"/>
-<area shape="rect" id="node9" href="$classmotsfinder_1_1metric_1_1discrete_1_1numerical_1_1GridDataError.html" title="Raised if discrete data is not compatible with this module. " alt="" coords="173,259,275,285"/>
-<area shape="rect" id="node10" href="$classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html" title="Raised for problems of the numerical task (like ill&#45;conditioned boundary conditions). " alt="" coords="173,309,275,336"/>
-<area shape="rect" id="node11" href="$classmotsfinder_1_1numutils_1_1NumericalError.html" title="Exception raised for problems with numerical evaluation. " alt="" coords="169,360,279,387"/>
-<area shape="rect" id="node6" href="$classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html" title="Raised when resolution is too low or roundoff prevents convergence. " alt="" coords="363,121,525,162"/>
-<area shape="rect" id="node7" href="$classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html" title="Raised when convergence not achieved within the step count limit. " alt="" coords="377,187,511,213"/>
+<area shape="rect" id="node1" href="$classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__FDField.html" title="Base class for FD field wrappers. " alt="" coords="5,56,80,83"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__ScalarField.html" title="Wrapper for scalar fields. " alt="" coords="146,5,241,32"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__Sym2TensorField.html" title="Wrapper for symmetric 2&#45;tensor fields. " alt="" coords="128,56,259,83"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__VectorField.html" title="Wrapper for (contravariant) vector fields. " alt="" coords="146,107,241,133"/>
 </map>

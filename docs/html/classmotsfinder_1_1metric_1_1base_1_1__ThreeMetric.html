@@ -96,16 +96,19 @@ Inheritance diagram for _ThreeMetric:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric__inherit__graph.png" border="0" usemap="#__ThreeMetric_inherit__map" alt="Inheritance graph"/></div>
 <map name="__ThreeMetric_inherit__map" id="__ThreeMetric_inherit__map">
-<area shape="rect" id="node4" href="classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html" title="Data for a slice of Schwarzschild spacetime in Kerr&#45;Schild coordinates. " alt="" coords="417,5,572,32"/>
-<area shape="rect" id="node5" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="416,56,573,83"/>
-<area shape="rect" id="node8" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html" title="Flat 3&#45;metric in Cartesian coordinates. " alt="" coords="438,107,551,133"/>
-<area shape="rect" id="node9" href="classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html" title="TransformedMetric" alt="" coords="429,157,560,184"/>
-<area shape="rect" id="node10" href="classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html" title="Base class for discrete axisymmetric metrics. " alt="" coords="441,208,548,235"/>
-<area shape="rect" id="node2" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature). " alt="" coords="111,107,221,133"/>
-<area shape="rect" id="node6" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="641,44,773,71"/>
-<area shape="rect" id="node7" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="621,95,793,121"/>
-<area shape="rect" id="node11" href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html" title="Full discrete slice geometry generated from (analytical) functions. " alt="" coords="645,171,769,197"/>
-<area shape="rect" id="node12" href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html" title="Axisymmetric Riemannian 3&#45;metric of a slice read from simulation data. " alt="" coords="669,221,746,248"/>
+<area shape="rect" id="node4" href="classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html" title="Data for a slice of Kerr spacetime in Kerr&#45;Schild coordinates. " alt="" coords="448,5,541,32"/>
+<area shape="rect" id="node5" href="classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html" title="Data for a slice of Schwarzschild spacetime in Kerr&#45;Schild coordinates. " alt="" coords="417,56,572,83"/>
+<area shape="rect" id="node6" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="416,107,573,133"/>
+<area shape="rect" id="node9" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html" title="Flat 3&#45;metric in Cartesian coordinates. " alt="" coords="438,157,551,184"/>
+<area shape="rect" id="node10" href="classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html" title="TransformedMetric" alt="" coords="429,208,560,235"/>
+<area shape="rect" id="node11" href="classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1FDDerivMetric.html" title="Wrapper for computing derivatives using finite differences. " alt="" coords="441,259,548,285"/>
+<area shape="rect" id="node12" href="classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html" title="Base class for discrete axisymmetric metrics. " alt="" coords="441,309,548,336"/>
+<area shape="rect" id="node2" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature). " alt="" coords="111,157,221,184"/>
+<area shape="rect" id="node7" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html" title="Brill&#45;Lindquist 3&#45;metric of two non&#45;rotating, non&#45;spinning black holes. " alt="" coords="641,81,773,108"/>
+<area shape="rect" id="node8" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1SchwarzschildSliceMetric.html" title="Spatial slice of Schwarzschild metric in isotropic coordinates. " alt="" coords="621,132,793,159"/>
+<area shape="rect" id="node13" href="classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1NumericalMetric.html" title="Metric containing given slice data. " alt="" coords="649,259,766,285"/>
+<area shape="rect" id="node14" href="classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html" title="Full discrete slice geometry generated from (analytical) functions. " alt="" coords="645,309,769,336"/>
+<area shape="rect" id="node15" href="classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html" title="Axisymmetric Riemannian 3&#45;metric of a slice read from simulation data. " alt="" coords="669,360,746,387"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -154,10 +157,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__call__</b> (self, po
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Base class for 3-metrics on a spatial slice of spacetime. </p>
-<p>The methods child classes have to implement are:</p><ul>
+<p>The methods that child classes have to implement are:</p><ul>
 <li><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a8efc33ef9e8648f08abe28e225b94885" title="Compute the metric tensor matrix at a given point. ">_mat_at()</a> computing the metric tensor (matrix) at a given point</li>
-<li><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a4f0fa5515b7e6623e1bac8676cbfbaac" title="Return derivatives of the metric at the given point. ">diff()</a> computing derivatives of the metric at a given point </li>
+<li><a class="el" href="classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#a4f0fa5515b7e6623e1bac8676cbfbaac" title="Return derivatives of the metric at the given point. ">diff()</a> computing derivatives of the metric at a given point</li>
 </ul>
+<p>Furthermore, child classes may implement the methods for returning the lapse function and shift vector field (along with methods returning their respective time derivatives). This will enable construction of a 4-metric that can be evaluated at points of the spatial slice.</p>
+<p>If a 4-metric should be constructed but it does not matter which particular choice of lapse and shift is made, you can implement the methods trivially by returning one of the <code>trivial_*</code> function objects as documented in the respective <code>get_*</code> method. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a629aa5b8809b017932f787feec890d4b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a629aa5b8809b017932f787feec890d4b">&#9670;&nbsp;</a></span>get_curv()</h2>
@@ -176,7 +181,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__call__</b> (self, po
 </div><div class="memdoc">
 
 <p>Return the extrinsic curvature belonging to this 3-metric. </p>
-<p>The default implementation assumes a time-symmetric slice, i.e. vanishing extrinsic curvature. Implementations of non-time-symmetric slices should provide a callable with signature <code>curv(point, diff=n)</code>, where <code>n</code> is the derivative order. </p>
+<p>By default, we assume a time-symmetric slice, i.e. vanishing extrinsic curvature. Implementations of non-time-symmetric slices should provide a callable with signature <code>curv(point, diff=n)</code>, where <code>n</code> is the derivative order. </p>
 
 </div>
 </div>
@@ -197,6 +202,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__call__</b> (self, po
 </div><div class="memdoc">
 
 <p>Return the time derivative of lapse. </p>
+<p>This will be used e.g. when constructing a 4-metric from this 3-metric. This function should return the <code>trivial_dtlapse</code> function object if the trivial lapse function's time derivative (zero) should be used. </p>
 
 </div>
 </div>
@@ -217,6 +223,7 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__call__</b> (self, po
 </div><div class="memdoc">
 
 <p>Return the time derivative of shift. </p>
+<p>This will be used e.g. when constructing a 4-metric from this 3-metric. This function should return the <code>trivial_dtshift</code> function object if the trivial shift vector's time derivative (zero) should be used. </p>
 
 </div>
 </div>
@@ -237,7 +244,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__call__</b> (self, po
 </div><div class="memdoc">
 
 <p>Return the lapse function on the slice. </p>
-
+<p>This will be used e.g. when constructing a 4-metric from this 3-metric. This function should return the <code>trivial_lapse</code> function object if the trivial lapse function (constant 1) should be used. For example:</p>
+<div class="fragment"><div class="line"><span class="keyword">def </span>get_lapse(self):</div><div class="line">    <span class="keywordflow">return</span> trivial_lapse</div></div><!-- fragment --> 
 </div>
 </div>
 <a id="a29b481b49dd28a3492ab3cc36dd2444e"></a>
@@ -257,7 +265,8 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>__call__</b> (self, po
 </div><div class="memdoc">
 
 <p>Return the shift vector field on the slice. </p>
-
+<p>This will be used e.g. when constructing a 4-metric from this 3-metric. This function should return the <code>trivial_shift</code> function object if the trivial shift vector (zero) should be used. For example:</p>
+<div class="fragment"><div class="line"><span class="keyword">def </span>get_shift(self):</div><div class="line">    <span class="keywordflow">return</span> trivial_shift</div></div><!-- fragment --> 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
