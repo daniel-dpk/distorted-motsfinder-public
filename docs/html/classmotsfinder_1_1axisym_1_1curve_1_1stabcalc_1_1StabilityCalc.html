@@ -84,6 +84,7 @@ $(document).ready(function(){initNavTree('classmotsfinder_1_1axisym_1_1curve_1_1
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -96,9 +97,15 @@ $(document).ready(function(){initNavTree('classmotsfinder_1_1axisym_1_1curve_1_1
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a68c5f69cf9a2b13e577f805ebbf4d1a0"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a68c5f69cf9a2b13e577f805ebbf4d1a0">__init__</a> (self, curve, param, metric4=None, transform_torsion=False)</td></tr>
-<tr class="memdesc:a68c5f69cf9a2b13e577f805ebbf4d1a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a stability calculator at a point on a MOTS.  <a href="#a68c5f69cf9a2b13e577f805ebbf4d1a0">More...</a><br /></td></tr>
-<tr class="separator:a68c5f69cf9a2b13e577f805ebbf4d1a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61239beeef6393d156318dbf98bc56b3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a61239beeef6393d156318dbf98bc56b3">__init__</a> (self, curve, param, metric4=None, transform_torsion=False, transformation=None)</td></tr>
+<tr class="memdesc:a61239beeef6393d156318dbf98bc56b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a stability calculator at a point on a MOTS.  <a href="#a61239beeef6393d156318dbf98bc56b3">More...</a><br /></td></tr>
+<tr class="separator:a61239beeef6393d156318dbf98bc56b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8474d93363cf55113a5cb4ffeddab454"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a8474d93363cf55113a5cb4ffeddab454">has_transformation</a> (self)</td></tr>
+<tr class="memdesc:a8474d93363cf55113a5cb4ffeddab454"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether a transformation for the null vectors has been specified.  <a href="#a8474d93363cf55113a5cb4ffeddab454">More...</a><br /></td></tr>
+<tr class="separator:a8474d93363cf55113a5cb4ffeddab454"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e3f95c6c3921bf76e291cffe249dd57"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a8e3f95c6c3921bf76e291cffe249dd57">exp_sigma</a> (self, diff=0)</td></tr>
+<tr class="memdesc:a8e3f95c6c3921bf76e291cffe249dd57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the tranformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/>, or any nonzero derivatives.  <a href="#a8e3f95c6c3921bf76e291cffe249dd57">More...</a><br /></td></tr>
+<tr class="separator:a8e3f95c6c3921bf76e291cffe249dd57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6438f22312bfc7e70455168603420df8"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a6438f22312bfc7e70455168603420df8">compute_op_timesym</a> (self)</td></tr>
 <tr class="memdesc:a6438f22312bfc7e70455168603420df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the time-symmetrical stability operator terms.  <a href="#a6438f22312bfc7e70455168603420df8">More...</a><br /></td></tr>
 <tr class="separator:a6438f22312bfc7e70455168603420df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -118,10 +125,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afd452470878861c74705973f7b5d00a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Christoffel symbols of the 4-metric.  <a href="#afd452470878861c74705973f7b5d00a2">More...</a><br /></td></tr>
 <tr class="separator:afd452470878861c74705973f7b5d00a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a856b1d08af74ae792de369df87a4d81c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a856b1d08af74ae792de369df87a4d81c">n</a> (self)</td></tr>
-<tr class="memdesc:a856b1d08af74ae792de369df87a4d81c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timelike normal to slice (shape=3).  <a href="#a856b1d08af74ae792de369df87a4d81c">More...</a><br /></td></tr>
+<tr class="memdesc:a856b1d08af74ae792de369df87a4d81c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timelike normal to slice (shape=4).  <a href="#a856b1d08af74ae792de369df87a4d81c">More...</a><br /></td></tr>
 <tr class="separator:a856b1d08af74ae792de369df87a4d81c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac82130879c21f89399259c1dbcf6ac4d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#ac82130879c21f89399259c1dbcf6ac4d">dn</a> (self)</td></tr>
-<tr class="memdesc:ac82130879c21f89399259c1dbcf6ac4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Partial derivative of timelike normal, partial_a n^b (4x4-matrix).  <a href="#ac82130879c21f89399259c1dbcf6ac4d">More...</a><br /></td></tr>
+<tr class="memdesc:ac82130879c21f89399259c1dbcf6ac4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Partial derivative of timelike normal, <img class="formulaInl" alt="$\partial_a n^b$" src="form_461.png"/> (4x4-matrix).  <a href="#ac82130879c21f89399259c1dbcf6ac4d">More...</a><br /></td></tr>
 <tr class="separator:ac82130879c21f89399259c1dbcf6ac4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae117da6d2b1d372dabc236d5bdc41c6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aae117da6d2b1d372dabc236d5bdc41c6">dg3_inv</a> (self)</td></tr>
 <tr class="memdesc:aae117da6d2b1d372dabc236d5bdc41c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derivative of inverse metric (shape=(3,3,3)).  <a href="#aae117da6d2b1d372dabc236d5bdc41c6">More...</a><br /></td></tr>
@@ -139,53 +146,113 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af702f8b3193eeda9f96119bc477e16be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spacetime normal vector in slice (shape=4).  <a href="#af702f8b3193eeda9f96119bc477e16be">More...</a><br /></td></tr>
 <tr class="separator:af702f8b3193eeda9f96119bc477e16be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b3bc28a5ee6457419b6d6ca0594f97f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a1b3bc28a5ee6457419b6d6ca0594f97f">k</a> (self)</td></tr>
-<tr class="memdesc:a1b3bc28a5ee6457419b6d6ca0594f97f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingoing future-pointing null normal (shape=4) k^a.  <a href="#a1b3bc28a5ee6457419b6d6ca0594f97f">More...</a><br /></td></tr>
+<tr class="memdesc:a1b3bc28a5ee6457419b6d6ca0594f97f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ingoing future-pointing null normal (shape=4) <img class="formulaInl" alt="$k^a$" src="form_462.png"/>.  <a href="#a1b3bc28a5ee6457419b6d6ca0594f97f">More...</a><br /></td></tr>
 <tr class="separator:a1b3bc28a5ee6457419b6d6ca0594f97f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebdd3f0424ced90f41cac1796d9bb0e4"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aebdd3f0424ced90f41cac1796d9bb0e4">l</a> (self)</td></tr>
-<tr class="memdesc:aebdd3f0424ced90f41cac1796d9bb0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outgoing future-pointing null normal (shape=4) l^a.  <a href="#aebdd3f0424ced90f41cac1796d9bb0e4">More...</a><br /></td></tr>
+<tr class="memdesc:aebdd3f0424ced90f41cac1796d9bb0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outgoing future-pointing null normal (shape=4) <img class="formulaInl" alt="$\ell^a$" src="form_463.png"/>.  <a href="#aebdd3f0424ced90f41cac1796d9bb0e4">More...</a><br /></td></tr>
 <tr class="separator:aebdd3f0424ced90f41cac1796d9bb0e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7d213e8af28b9510ddfedc71209a4e9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aa7d213e8af28b9510ddfedc71209a4e9">k_cov</a> (self)</td></tr>
-<tr class="memdesc:aa7d213e8af28b9510ddfedc71209a4e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant components of k.  <a href="#aa7d213e8af28b9510ddfedc71209a4e9">More...</a><br /></td></tr>
+<tr class="memdesc:aa7d213e8af28b9510ddfedc71209a4e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant components of <img class="formulaInl" alt="$k$" src="form_464.png"/>.  <a href="#aa7d213e8af28b9510ddfedc71209a4e9">More...</a><br /></td></tr>
 <tr class="separator:aa7d213e8af28b9510ddfedc71209a4e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa119741ab1481ad2da0a71eb8278ef1d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aa119741ab1481ad2da0a71eb8278ef1d">l_cov</a> (self)</td></tr>
-<tr class="memdesc:aa119741ab1481ad2da0a71eb8278ef1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant components of l.  <a href="#aa119741ab1481ad2da0a71eb8278ef1d">More...</a><br /></td></tr>
+<tr class="memdesc:aa119741ab1481ad2da0a71eb8278ef1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant components of <img class="formulaInl" alt="$\ell$" src="form_465.png"/>.  <a href="#aa119741ab1481ad2da0a71eb8278ef1d">More...</a><br /></td></tr>
 <tr class="separator:aa119741ab1481ad2da0a71eb8278ef1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adaef209aa5c3d3ed466cda5f2b23e11f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#adaef209aa5c3d3ed466cda5f2b23e11f">dux3</a> (self)</td></tr>
-<tr class="memdesc:adaef209aa5c3d3ed466cda5f2b23e11f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derivatives of x,y,z wrt lambda,phi (shape=(2,3)).  <a href="#adaef209aa5c3d3ed466cda5f2b23e11f">More...</a><br /></td></tr>
+<tr class="memdesc:adaef209aa5c3d3ed466cda5f2b23e11f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Derivatives of <img class="formulaInl" alt="$x,y,z$" src="form_466.png"/> wrt <img class="formulaInl" alt="$\lambda,\phi$" src="form_467.png"/> (shape=(2,3)).  <a href="#adaef209aa5c3d3ed466cda5f2b23e11f">More...</a><br /></td></tr>
 <tr class="separator:adaef209aa5c3d3ed466cda5f2b23e11f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af25d98516f0525b0f4a027029a3d7b96"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#af25d98516f0525b0f4a027029a3d7b96">dexpSigmadlaph</a> (self)</td></tr>
+<tr class="memdesc:af25d98516f0525b0f4a027029a3d7b96"><td class="mdescLeft">&#160;</td><td class="mdescRight">First derivative of the transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> wrt <img class="formulaInl" alt="$\lambda, \phi$" src="form_468.png"/> (shape = (2,)).  <a href="#af25d98516f0525b0f4a027029a3d7b96">More...</a><br /></td></tr>
+<tr class="separator:af25d98516f0525b0f4a027029a3d7b96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5bc09e4425a3aebe198150fce9ccf46"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#ab5bc09e4425a3aebe198150fce9ccf46">dlaphdx4</a> (self)</td></tr>
+<tr class="memdesc:ab5bc09e4425a3aebe198150fce9ccf46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Jacobian matrix <img class="formulaInl" alt="$\frac{\partial(\lambda,\phi)}{\partial(t,x,y,z)}$" src="form_469.png"/> (shape=(2,4)).  <a href="#ab5bc09e4425a3aebe198150fce9ccf46">More...</a><br /></td></tr>
+<tr class="separator:ab5bc09e4425a3aebe198150fce9ccf46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae274c589e7dfb2969ab7fcea44c6eb10"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#ae274c589e7dfb2969ab7fcea44c6eb10">dexpSigmadx4</a> (self)</td></tr>
+<tr class="memdesc:ae274c589e7dfb2969ab7fcea44c6eb10"><td class="mdescLeft">&#160;</td><td class="mdescRight">First derivative of transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> wrt <img class="formulaInl" alt="$t,x,y,z$" src="form_473.png"/> (shape=(4,)).  <a href="#ae274c589e7dfb2969ab7fcea44c6eb10">More...</a><br /></td></tr>
+<tr class="separator:ae274c589e7dfb2969ab7fcea44c6eb10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbe06bcb77bddbede62b069814860256"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#abbe06bcb77bddbede62b069814860256">dl</a> (self)</td></tr>
-<tr class="memdesc:abbe06bcb77bddbede62b069814860256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Partial derivatives of l.  <a href="#abbe06bcb77bddbede62b069814860256">More...</a><br /></td></tr>
+<tr class="memdesc:abbe06bcb77bddbede62b069814860256"><td class="mdescLeft">&#160;</td><td class="mdescRight">First partial derivatives of l.  <a href="#abbe06bcb77bddbede62b069814860256">More...</a><br /></td></tr>
 <tr class="separator:abbe06bcb77bddbede62b069814860256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88bcf65c3ffb636ea0dd90eb621ceedd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a88bcf65c3ffb636ea0dd90eb621ceedd">ddl</a> (self)</td></tr>
+<tr class="memdesc:a88bcf65c3ffb636ea0dd90eb621ceedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second partial derivatives of l.  <a href="#a88bcf65c3ffb636ea0dd90eb621ceedd">More...</a><br /></td></tr>
+<tr class="separator:a88bcf65c3ffb636ea0dd90eb621ceedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa305f7bfc3f95e98dc0ceb116ad53eb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aaa305f7bfc3f95e98dc0ceb116ad53eb">dk</a> (self)</td></tr>
+<tr class="memdesc:aaa305f7bfc3f95e98dc0ceb116ad53eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">First partial derivatives of <img class="formulaInl" alt="$k$" src="form_464.png"/>.  <a href="#aaa305f7bfc3f95e98dc0ceb116ad53eb">More...</a><br /></td></tr>
+<tr class="separator:aaa305f7bfc3f95e98dc0ceb116ad53eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ee2abf287137aeaf3ceccb9beaad068"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a5ee2abf287137aeaf3ceccb9beaad068">dnu3</a> (self)</td></tr>
+<tr class="memdesc:a5ee2abf287137aeaf3ceccb9beaad068"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spatial derivatives of MOTS normal, <img class="formulaInl" alt="$\partial_i \nu^j$" src="form_610.png"/>.  <a href="#a5ee2abf287137aeaf3ceccb9beaad068">More...</a><br /></td></tr>
+<tr class="separator:a5ee2abf287137aeaf3ceccb9beaad068"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40a96f69b7929b4fdbe7282189d2664f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a40a96f69b7929b4fdbe7282189d2664f">dnu</a> (self)</td></tr>
 <tr class="memdesc:a40a96f69b7929b4fdbe7282189d2664f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Spacetime derivatives of MOTS normal in slice.  <a href="#a40a96f69b7929b4fdbe7282189d2664f">More...</a><br /></td></tr>
 <tr class="separator:a40a96f69b7929b4fdbe7282189d2664f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae54ae8bf5e224009ac0507c0c2468b7b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#ae54ae8bf5e224009ac0507c0c2468b7b">cov_a_l</a> (self)</td></tr>
-<tr class="memdesc:ae54ae8bf5e224009ac0507c0c2468b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant derivative of l wrt t,x,y,z (shape=(4,4)).  <a href="#ae54ae8bf5e224009ac0507c0c2468b7b">More...</a><br /></td></tr>
+<tr class="memdesc:ae54ae8bf5e224009ac0507c0c2468b7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant derivative of <img class="formulaInl" alt="$\ell$" src="form_465.png"/> wrt <img class="formulaInl" alt="$t,x,y,z$" src="form_473.png"/> (shape=(4,4)).  <a href="#ae54ae8bf5e224009ac0507c0c2468b7b">More...</a><br /></td></tr>
 <tr class="separator:ae54ae8bf5e224009ac0507c0c2468b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaa5753fc2e5177328db9f0ede92ef95"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aaaa5753fc2e5177328db9f0ede92ef95">cov_A_l</a> (self)</td></tr>
-<tr class="memdesc:aaaa5753fc2e5177328db9f0ede92ef95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant derivative of l wrt lambda,phi (shape=(2,4)).  <a href="#aaaa5753fc2e5177328db9f0ede92ef95">More...</a><br /></td></tr>
+<tr class="memdesc:aaaa5753fc2e5177328db9f0ede92ef95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Covariant derivative of <img class="formulaInl" alt="$\ell$" src="form_465.png"/> wrt <img class="formulaInl" alt="$\lambda,\phi$" src="form_467.png"/> (shape=(2,4)).  <a href="#aaaa5753fc2e5177328db9f0ede92ef95">More...</a><br /></td></tr>
 <tr class="separator:aaaa5753fc2e5177328db9f0ede92ef95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45f55c67b2087e4296fe97d37531ffa5"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a45f55c67b2087e4296fe97d37531ffa5">torsion_1form</a> (self)</td></tr>
-<tr class="memdesc:a45f55c67b2087e4296fe97d37531ffa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Torsion s_A of l (aka rotation 1-form Omega, shape=2).  <a href="#a45f55c67b2087e4296fe97d37531ffa5">More...</a><br /></td></tr>
+<tr class="memdesc:a45f55c67b2087e4296fe97d37531ffa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Torsion <img class="formulaInl" alt="$s_A$" src="form_448.png"/> of <img class="formulaInl" alt="$\ell$" src="form_465.png"/> (aka rotation 1-form <img class="formulaInl" alt="$\Omega$" src="form_482.png"/>, shape=2).  <a href="#a45f55c67b2087e4296fe97d37531ffa5">More...</a><br /></td></tr>
 <tr class="separator:a45f55c67b2087e4296fe97d37531ffa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5dadfaf35eaf74033c1440a3c842f3d6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a5dadfaf35eaf74033c1440a3c842f3d6">torsion_vector</a> (self)</td></tr>
-<tr class="memdesc:a5dadfaf35eaf74033c1440a3c842f3d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contravariant version of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a45f55c67b2087e4296fe97d37531ffa5" title="Torsion s_A of l (aka rotation 1-form Omega, shape=2). ">torsion_1form()</a> (shape=2).  <a href="#a5dadfaf35eaf74033c1440a3c842f3d6">More...</a><br /></td></tr>
+<tr class="memdesc:a5dadfaf35eaf74033c1440a3c842f3d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contravariant version of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a45f55c67b2087e4296fe97d37531ffa5" title="Torsion  of  (aka rotation 1-form , shape=2). ">torsion_1form()</a> (shape=2).  <a href="#a5dadfaf35eaf74033c1440a3c842f3d6">More...</a><br /></td></tr>
 <tr class="separator:a5dadfaf35eaf74033c1440a3c842f3d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aecf5d03b786658cea6a20606912cf9c8"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aecf5d03b786658cea6a20606912cf9c8">q_inv</a> (self)</td></tr>
-<tr class="memdesc:aecf5d03b786658cea6a20606912cf9c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverse 2-metric q^AB on MOTS (shape=(2,2)).  <a href="#aecf5d03b786658cea6a20606912cf9c8">More...</a><br /></td></tr>
+<tr class="memdesc:aecf5d03b786658cea6a20606912cf9c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inverse 2-metric <img class="formulaInl" alt="$q^AB$" src="form_483.png"/> on MOTS (shape=(2,2)).  <a href="#aecf5d03b786658cea6a20606912cf9c8">More...</a><br /></td></tr>
 <tr class="separator:aecf5d03b786658cea6a20606912cf9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44e86fbe94528286c384005c1c5cfacc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a44e86fbe94528286c384005c1c5cfacc">add_neg_axisym_laplacian</a> (self, op)</td></tr>
-<tr class="memdesc:a44e86fbe94528286c384005c1c5cfacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add -Laplacian to the operator, assuming no phi-dependence.  <a href="#a44e86fbe94528286c384005c1c5cfacc">More...</a><br /></td></tr>
+<tr class="memdesc:a44e86fbe94528286c384005c1c5cfacc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add -Laplacian to the operator, assuming no <img class="formulaInl" alt="$\phi$" src="form_409.png"/>-dependence.  <a href="#a44e86fbe94528286c384005c1c5cfacc">More...</a><br /></td></tr>
 <tr class="separator:a44e86fbe94528286c384005c1c5cfacc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e7fb87568f71cd849d9032c6748079a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a1e7fb87568f71cd849d9032c6748079a">compute_s_squared</a> (self)</td></tr>
-<tr class="memdesc:a1e7fb87568f71cd849d9032c6748079a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute s_A s^A.  <a href="#a1e7fb87568f71cd849d9032c6748079a">More...</a><br /></td></tr>
+<tr class="memdesc:a1e7fb87568f71cd849d9032c6748079a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute <img class="formulaInl" alt="$s_A s^A$" src="form_484.png"/>.  <a href="#a1e7fb87568f71cd849d9032c6748079a">More...</a><br /></td></tr>
 <tr class="separator:a1e7fb87568f71cd849d9032c6748079a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ca91b06e2de9b90b3ec52028b91a040"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a1ca91b06e2de9b90b3ec52028b91a040">compute_K_AB_l</a> (self)</td></tr>
+<tr class="memdesc:a1ca91b06e2de9b90b3ec52028b91a040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the extrinsic curvature vector contracted with <img class="formulaInl" alt="$\ell$" src="form_465.png"/>.  <a href="#a1ca91b06e2de9b90b3ec52028b91a040">More...</a><br /></td></tr>
+<tr class="separator:a1ca91b06e2de9b90b3ec52028b91a040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bc4588038f0a59562f9646a47ec6f3c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a5bc4588038f0a59562f9646a47ec6f3c">compute_K_AB_k</a> (self)</td></tr>
+<tr class="memdesc:a5bc4588038f0a59562f9646a47ec6f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the extrinsic curvature vector contracted with <img class="formulaInl" alt="$k$" src="form_464.png"/>.  <a href="#a5bc4588038f0a59562f9646a47ec6f3c">More...</a><br /></td></tr>
+<tr class="separator:a5bc4588038f0a59562f9646a47ec6f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd120e54448c0b0f3bc5632118bde35c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#acd120e54448c0b0f3bc5632118bde35c">compute_Y</a> (self)</td></tr>
 <tr class="memdesc:acd120e54448c0b0f3bc5632118bde35c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the Y quantity of [1] for the slice normal.  <a href="#acd120e54448c0b0f3bc5632118bde35c">More...</a><br /></td></tr>
 <tr class="separator:acd120e54448c0b0f3bc5632118bde35c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95aef4b087204edef098d169b16893e8"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a95aef4b087204edef098d169b16893e8">compute_shear</a> (self)</td></tr>
+<tr class="memdesc:a95aef4b087204edef098d169b16893e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the shear tensor in coordinates on the surface.  <a href="#a95aef4b087204edef098d169b16893e8">More...</a><br /></td></tr>
+<tr class="separator:a95aef4b087204edef098d169b16893e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1428f96e7816d854fd2e8f6df92338b2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a1428f96e7816d854fd2e8f6df92338b2">compute_shear_squared</a> (self)</td></tr>
+<tr class="memdesc:a1428f96e7816d854fd2e8f6df92338b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute <code>|sigma|^2 = sigma_AB sigma^AB</code>.  <a href="#a1428f96e7816d854fd2e8f6df92338b2">More...</a><br /></td></tr>
+<tr class="separator:a1428f96e7816d854fd2e8f6df92338b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3548d0880f93c04fee34109c238e1c30"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a3548d0880f93c04fee34109c238e1c30">compute_shear_scalar</a> (self)</td></tr>
+<tr class="memdesc:a3548d0880f93c04fee34109c238e1c30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the shear scalar.  <a href="#a3548d0880f93c04fee34109c238e1c30">More...</a><br /></td></tr>
+<tr class="separator:a3548d0880f93c04fee34109c238e1c30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a403acb5495659f913a7b0d336237e4ca"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a403acb5495659f913a7b0d336237e4ca">compute_shear_k</a> (self, full_output=False)</td></tr>
+<tr class="memdesc:a403acb5495659f913a7b0d336237e4ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the shear of the ingoing null normal.  <a href="#a403acb5495659f913a7b0d336237e4ca">More...</a><br /></td></tr>
+<tr class="separator:a403acb5495659f913a7b0d336237e4ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d24460badf759cae5fab809e2f8ab94"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a0d24460badf759cae5fab809e2f8ab94">compute_ds_cov</a> (self)</td></tr>
+<tr class="memdesc:a0d24460badf759cae5fab809e2f8ab94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the partial derivatives of the rotation 1-form <img class="formulaInl" alt="$s_A$" src="form_448.png"/>.  <a href="#a0d24460badf759cae5fab809e2f8ab94">More...</a><br /></td></tr>
+<tr class="separator:a0d24460badf759cae5fab809e2f8ab94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa52c5cf36113de1985a66d6a8881e7ff"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aa52c5cf36113de1985a66d6a8881e7ff">compute_div_s</a> (self)</td></tr>
-<tr class="memdesc:aa52c5cf36113de1985a66d6a8881e7ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the divergence div(s) of the rotation 1-form s_A.  <a href="#aa52c5cf36113de1985a66d6a8881e7ff">More...</a><br /></td></tr>
+<tr class="memdesc:aa52c5cf36113de1985a66d6a8881e7ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the divergence div(s) of the rotation 1-form <img class="formulaInl" alt="$s_A$" src="form_448.png"/>.  <a href="#aa52c5cf36113de1985a66d6a8881e7ff">More...</a><br /></td></tr>
 <tr class="separator:aa52c5cf36113de1985a66d6a8881e7ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7f9bb892ab58c843ad7fbfed60d5e6f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aa7f9bb892ab58c843ad7fbfed60d5e6f">nabla_m_ell_n</a> (self, dt_normal)</td></tr>
+<tr class="memdesc:aa7f9bb892ab58c843ad7fbfed60d5e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute <img class="formulaInl" alt="$\nabla_\mu \ell_\nu$" src="form_611.png"/> (shape=(4,4), no NaNs).  <a href="#aa7f9bb892ab58c843ad7fbfed60d5e6f">More...</a><br /></td></tr>
+<tr class="separator:aa7f9bb892ab58c843ad7fbfed60d5e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea34daa878a6417e97de4b3ef5e9f0e2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aea34daa878a6417e97de4b3ef5e9f0e2">nabla_m_k_n</a> (self, dt_normal)</td></tr>
+<tr class="memdesc:aea34daa878a6417e97de4b3ef5e9f0e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute <img class="formulaInl" alt="$\nabla_\mu k_\nu$" src="form_635.png"/> (shape=(4,4), no NaNs).  <a href="#aea34daa878a6417e97de4b3ef5e9f0e2">More...</a><br /></td></tr>
+<tr class="separator:aea34daa878a6417e97de4b3ef5e9f0e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a546ce21a57ab8c488d05008e75365afa"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a546ce21a57ab8c488d05008e75365afa">surface_gravity</a> (self, dt_normal, X=None)</td></tr>
+<tr class="memdesc:a546ce21a57ab8c488d05008e75365afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute a (slicing dependent) surface gravity.  <a href="#a546ce21a57ab8c488d05008e75365afa">More...</a><br /></td></tr>
+<tr class="separator:a546ce21a57ab8c488d05008e75365afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31acecdf54bd9ed17136f8bbce313835"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a31acecdf54bd9ed17136f8bbce313835">xi_vector</a> (self, dt_normal, tev, up=True)</td></tr>
+<tr class="memdesc:a31acecdf54bd9ed17136f8bbce313835"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the xi vector.  <a href="#a31acecdf54bd9ed17136f8bbce313835">More...</a><br /></td></tr>
+<tr class="separator:a31acecdf54bd9ed17136f8bbce313835"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ef9ab43da45280992a5e6d598391d30"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a4ef9ab43da45280992a5e6d598391d30">xi_squared</a> (self, dt_normal, tev)</td></tr>
+<tr class="memdesc:a4ef9ab43da45280992a5e6d598391d30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the square <img class="formulaInl" alt="$\xi^A\xi_A$" src="form_612.png"/> of the xi vector.  <a href="#a4ef9ab43da45280992a5e6d598391d30">More...</a><br /></td></tr>
+<tr class="separator:a4ef9ab43da45280992a5e6d598391d30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00f3c5124dde49e8216745707bb32f46"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a00f3c5124dde49e8216745707bb32f46">xi_scalar</a> (self, dt_normal, tev)</td></tr>
+<tr class="memdesc:a00f3c5124dde49e8216745707bb32f46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute a complex scalar representing the xi vector.  <a href="#a00f3c5124dde49e8216745707bb32f46">More...</a><br /></td></tr>
+<tr class="separator:a00f3c5124dde49e8216745707bb32f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2979cdda9bb7a85ea71f1b89a5827e32"><td class="memItemLeft" align="right" valign="top"><a id="a2979cdda9bb7a85ea71f1b89a5827e32"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>print_debug_info</b> (self)</td></tr>
+<tr class="separator:a2979cdda9bb7a85ea71f1b89a5827e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -202,11 +269,37 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>metric4</b></td></tr>
 <tr class="separator:a36fdd9c00687a30a9de3422227f24303"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:adebbc8db24ac4702f598a79b448d2bd7"><td class="memItemLeft" align="right" valign="top"><a id="adebbc8db24ac4702f598a79b448d2bd7"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#adebbc8db24ac4702f598a79b448d2bd7">_k_orig</a> (self)</td></tr>
+<tr class="memdesc:adebbc8db24ac4702f598a79b448d2bd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-transformed <img class="formulaInl" alt="$k^a$" src="form_462.png"/>. <br /></td></tr>
+<tr class="separator:adebbc8db24ac4702f598a79b448d2bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abef9086a89bd2c816bf41767762d0473"><td class="memItemLeft" align="right" valign="top"><a id="abef9086a89bd2c816bf41767762d0473"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#abef9086a89bd2c816bf41767762d0473">_l_orig</a> (self)</td></tr>
+<tr class="memdesc:abef9086a89bd2c816bf41767762d0473"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-transformed <img class="formulaInl" alt="$\ell^a$" src="form_463.png"/>. <br /></td></tr>
+<tr class="separator:abef9086a89bd2c816bf41767762d0473"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb28e90ed67d70a3248a9cf0e6edb2c2"><td class="memItemLeft" align="right" valign="top"><a id="afb28e90ed67d70a3248a9cf0e6edb2c2"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#afb28e90ed67d70a3248a9cf0e6edb2c2">_dl_orig</a> (self)</td></tr>
+<tr class="memdesc:afb28e90ed67d70a3248a9cf0e6edb2c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-transformed partial derivatives of l. <br /></td></tr>
+<tr class="separator:afb28e90ed67d70a3248a9cf0e6edb2c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aad7a33e9d639c1eb5041e621bf571f"><td class="memItemLeft" align="right" valign="top"><a id="a1aad7a33e9d639c1eb5041e621bf571f"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a1aad7a33e9d639c1eb5041e621bf571f">_ddl_orig</a> (self)</td></tr>
+<tr class="memdesc:a1aad7a33e9d639c1eb5041e621bf571f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-transformed second partial derivatives of l. <br /></td></tr>
+<tr class="separator:a1aad7a33e9d639c1eb5041e621bf571f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c1a586f43011d09cb74a8e8e373adfc"><td class="memItemLeft" align="right" valign="top"><a id="a6c1a586f43011d09cb74a8e8e373adfc"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a6c1a586f43011d09cb74a8e8e373adfc">_dk_orig</a> (self)</td></tr>
+<tr class="memdesc:a6c1a586f43011d09cb74a8e8e373adfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Non-transformed partial derivatives of k. <br /></td></tr>
+<tr class="separator:a6c1a586f43011d09cb74a8e8e373adfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a1b22053d2d00aa48873b95426d9d539f"><td class="memItemLeft" align="right" valign="top"><a id="a1b22053d2d00aa48873b95426d9d539f"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>_transform_torsion</b></td></tr>
 <tr class="separator:a1b22053d2d00aa48873b95426d9d539f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9311f7c311acd7e558af8f7e859e3b0"><td class="memItemLeft" align="right" valign="top"><a id="ad9311f7c311acd7e558af8f7e859e3b0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_transformation</b></td></tr>
+<tr class="separator:ad9311f7c311acd7e558af8f7e859e3b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b5fc493b4b0a458692bfb0a12c22493"><td class="memItemLeft" align="right" valign="top"><a id="a7b5fc493b4b0a458692bfb0a12c22493"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>_g3_inv</b></td></tr>
 <tr class="separator:a7b5fc493b4b0a458692bfb0a12c22493"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -264,16 +357,22 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:aaa1189d161f80d33206e501f557835d9"><td class="memItemLeft" align="right" valign="top"><a id="aaa1189d161f80d33206e501f557835d9"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>_q_inv</b></td></tr>
 <tr class="separator:aaa1189d161f80d33206e501f557835d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ea53bc40e23e815e01fab0b1880101b"><td class="memItemLeft" align="right" valign="top"><a id="a4ea53bc40e23e815e01fab0b1880101b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_shear</b></td></tr>
+<tr class="separator:a4ea53bc40e23e815e01fab0b1880101b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a145e816d1a545bbf4fb55c13ce17a8c3"><td class="memItemLeft" align="right" valign="top"><a id="a145e816d1a545bbf4fb55c13ce17a8c3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_xi_A</b></td></tr>
+<tr class="separator:a145e816d1a545bbf4fb55c13ce17a8c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manage computation of quantities to evaluate stability operator. </p>
-<p>Given a MOTS and a point on the MOTS, this class computes the various quantities needed to evaluate the MOTS stability operator [1]. Notation is mostly compatible with [1]. In particular, we use <img class="formulaInl" alt="$k_\mu \ell^\mu = -2$" src="form_452.png"/>.</p>
+<p>Given a MOTS and a point on the MOTS, this class computes the various quantities needed to evaluate the MOTS stability operator [1]. Notation is mostly compatible with [1]. In particular, we use <img class="formulaInl" alt="$k_\mu \ell^\mu = -2$" src="form_452.png"/> unless otherwise noted in the docstrings.</p>
 <p>Note that we assume vacuum throughout.</p>
 <p><b>References</b> </p>
 <p>[1] Andersson, Lars, Marc Mars, and Walter Simon. "Stability of marginally outer trapped surfaces and existence of marginally outer trapped tubes." arXiv preprint arXiv:0704.2889 (2007). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a68c5f69cf9a2b13e577f805ebbf4d1a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68c5f69cf9a2b13e577f805ebbf4d1a0">&#9670;&nbsp;</a></span>__init__()</h2>
+<a id="a61239beeef6393d156318dbf98bc56b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61239beeef6393d156318dbf98bc56b3">&#9670;&nbsp;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,7 +405,13 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>transform_torsion</em> = <code>False</code>&#160;</td>
+          <td class="paramname"><em>transform_torsion</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>transformation</em> = <code>None</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -323,6 +428,7 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">param</td><td>The parameter along the MOTS identifying the point at which to compute the quantities. </td></tr>
     <tr><td class="paramname">metric4</td><td>The 4-metric object. This is optional and may be omitted if we have time-symmetry. </td></tr>
     <tr><td class="paramname">transform_torsion</td><td>Whether to apply a transformation to the torsion <img class="formulaInl" alt="$s_A$" src="form_448.png"/> of <img class="formulaInl" alt="$\ell^\mu$" src="form_442.png"/> such that <img class="formulaInl" alt="$D_A s^A = 0$" src="form_453.png"/> and (in our coordinates) <img class="formulaInl" alt="$s_\lambda = 0$" src="form_450.png"/>. Default is <code>False</code>. </td></tr>
+    <tr><td class="paramname">transformation</td><td>An evaluator for the explicit transformation to change the torsion such that <img class="formulaInl" alt="$D_A s^A = 0$" src="form_453.png"/> and (in our coordinates) <img class="formulaInl" alt="$s_\lambda = 0$" src="form_450.png"/>. Can be obtained from a NumericExpression using <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#af5401509c27c1b98955426ee9fc235eb" title="Create an evaluator for the expression in the current state. ">motsfinder.exprs.numexpr.NumericExpression.evaluator()</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -356,7 +462,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Add -Laplacian to the operator, assuming no phi-dependence. </p>
+<p>Add -Laplacian to the operator, assuming no <img class="formulaInl" alt="$\phi$" src="form_409.png"/>-dependence. </p>
 
 </div>
 </div>
@@ -376,7 +482,70 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compute the divergence div(s) of the rotation 1-form s_A. </p>
+<p>Compute the divergence div(s) of the rotation 1-form <img class="formulaInl" alt="$s_A$" src="form_448.png"/>. </p>
+
+</div>
+</div>
+<a id="a0d24460badf759cae5fab809e2f8ab94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d24460badf759cae5fab809e2f8ab94">&#9670;&nbsp;</a></span>compute_ds_cov()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_ds_cov </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the partial derivatives of the rotation 1-form <img class="formulaInl" alt="$s_A$" src="form_448.png"/>. </p>
+<p>Indices <code>A, B</code> correspond to <img class="formulaInl" alt="$\partial_A s_B$" src="form_487.png"/>, where <code>A, B</code> run over <img class="formulaInl" alt="$\lambda$" src="form_36.png"/> and <img class="formulaInl" alt="$\varphi$" src="form_107.png"/>. </p>
+
+</div>
+</div>
+<a id="a5bc4588038f0a59562f9646a47ec6f3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bc4588038f0a59562f9646a47ec6f3c">&#9670;&nbsp;</a></span>compute_K_AB_k()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_K_AB_k </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the extrinsic curvature vector contracted with <img class="formulaInl" alt="$k$" src="form_464.png"/>. </p>
+<p>The quantity computed here is <img class="formulaInl" alt="$K^\mu_{AB}k_\mu$" src="form_622.png"/>, where <img class="formulaInl" alt="$k^\mu$" src="form_441.png"/> is the ingoing null normal. Note that the scaling of the returned quantity is such that <img class="formulaInl" alt="$\ell \cdot k = -2$" src="form_623.png"/>. </p>
+
+</div>
+</div>
+<a id="a1ca91b06e2de9b90b3ec52028b91a040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ca91b06e2de9b90b3ec52028b91a040">&#9670;&nbsp;</a></span>compute_K_AB_l()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_K_AB_l </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the extrinsic curvature vector contracted with <img class="formulaInl" alt="$\ell$" src="form_465.png"/>. </p>
+<p>The quantity computed here is <img class="formulaInl" alt="$K^\mu_{AB}\ell_\mu$" src="form_485.png"/>. </p>
 
 </div>
 </div>
@@ -456,7 +625,123 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compute s_A s^A. </p>
+<p>Compute <img class="formulaInl" alt="$s_A s^A$" src="form_484.png"/>. </p>
+
+</div>
+</div>
+<a id="a95aef4b087204edef098d169b16893e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95aef4b087204edef098d169b16893e8">&#9670;&nbsp;</a></span>compute_shear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_shear </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the shear tensor in coordinates on the surface. </p>
+<p>This computes <img class="formulaInl" alt="$\sigma_{AB}$" src="form_517.png"/>, where </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \sqrt{2} \sigma_{AB} = \nabla_A \ell_B - \frac12 q_{AB} q^{CD} \nabla_C \ell_D = -K_{AB}^\mu\ell_\mu + \frac12 q_{AB} q^{CD} K_{CD}^\mu \ell_\mu \,. \]" src="form_531.png"/>
+</p>
+<p> The factor of <img class="formulaInl" alt="$\sqrt{2}$" src="form_532.png"/> results from our definition of the ingoing and outgoing null normals <img class="formulaInl" alt="$k^\mu$" src="form_441.png"/> and <img class="formulaInl" alt="$\ell^\mu$" src="form_442.png"/>, i.e. we use a scaling where <img class="formulaInl" alt="$\ell^\mu k_\mu = -2$" src="form_533.png"/>, whereas e.g. [1] uses <img class="formulaInl" alt="$\ell^\mu k_\mu = -1$" src="form_534.png"/>. This means the values computed here are compatible with [1].</p>
+<p>Also note that for a MOTS, the second term above vanishes by definition.</p>
+<p><b>References</b> </p>
+<p>[1] Dreyer, O., Krishnan, B., Shoemaker, D., &amp; Schnetter, E. (2003). Introduction to isolated horizons in numerical relativity. Physical Review D, 67(2), 024018. </p>
+
+</div>
+</div>
+<a id="a403acb5495659f913a7b0d336237e4ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a403acb5495659f913a7b0d336237e4ca">&#9670;&nbsp;</a></span>compute_shear_k()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_shear_k </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the shear of the ingoing null normal. </p>
+<p>Similar to <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a95aef4b087204edef098d169b16893e8" title="Compute the shear tensor in coordinates on the surface. ">compute_shear()</a>, this computes the symmetric tensor w.r.t. coordinates on the surface, i.e. </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \sigma_{AB} = \frac{1}{\sqrt2} (\nabla_A k_B - \frac12 q_{AB} q^{CD} \nabla_C k_D) = \frac{1}{\sqrt2} (-K_{AB}^\mu k_\mu - \frac12 q_{AB} \Theta_{(k)}) \,. \]" src="form_626.png"/>
+</p>
+<p>The factor of <img class="formulaInl" alt="$1/\sqrt2$" src="form_627.png"/> makes this result compatible with the convention <img class="formulaInl" alt="$\ell \cdot k = -1$" src="form_625.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">full_output</td><td>If <code>False</code> (default), return just the shear of <code>k</code>. If <code>True</code>, return<ul>
+<li>the symmetric tracefree shear of <code>k</code> as 2x2 matrix w.r.t. the current coordinates on the MOTS</li>
+<li>the (coordinate independent) square of this shear</li>
+<li>the expansion of <code>k</code></li>
+<li>the trace of the shear (for diagnostic/debugging purposes) </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3548d0880f93c04fee34109c238e1c30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3548d0880f93c04fee34109c238e1c30">&#9670;&nbsp;</a></span>compute_shear_scalar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_shear_scalar </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the shear scalar. </p>
+<p>See .<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aa641f4b2dd3163ce333e948970884a7c" title="Compute the complex shear scalar. ">expcurve.ExpansionCurve.shear_scalar()</a> for the definition of the shear scalar computed here.</p>
+<p>Uses the convention <img class="formulaInl" alt="$\ell \cdot k = -1$" src="form_625.png"/>. </p>
+
+</div>
+</div>
+<a id="a1428f96e7816d854fd2e8f6df92338b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1428f96e7816d854fd2e8f6df92338b2">&#9670;&nbsp;</a></span>compute_shear_squared()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_shear_squared </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute <code>|sigma|^2 = sigma_AB sigma^AB</code>. </p>
+<p>Uses the convention <img class="formulaInl" alt="$\ell \cdot k = -1$" src="form_625.png"/>. </p>
 
 </div>
 </div>
@@ -496,7 +781,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Covariant derivative of l wrt t,x,y,z (shape=(4,4)). </p>
+<p>Covariant derivative of <img class="formulaInl" alt="$\ell$" src="form_465.png"/> wrt <img class="formulaInl" alt="$t,x,y,z$" src="form_473.png"/> (shape=(4,4)). </p>
 
 </div>
 </div>
@@ -516,7 +801,69 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Covariant derivative of l wrt lambda,phi (shape=(2,4)). </p>
+<p>Covariant derivative of <img class="formulaInl" alt="$\ell$" src="form_465.png"/> wrt <img class="formulaInl" alt="$\lambda,\phi$" src="form_467.png"/> (shape=(2,4)). </p>
+
+</div>
+</div>
+<a id="a88bcf65c3ffb636ea0dd90eb621ceedd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88bcf65c3ffb636ea0dd90eb621ceedd">&#9670;&nbsp;</a></span>ddl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def ddl </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Second partial derivatives of l. </p>
+<p>Computes <img class="formulaInl" alt="$\partial_a\partial_b \ell^c$" src="form_477.png"/>, where <img class="formulaInl" alt="$a,b,c\in\{t,x,y,z\}$" src="form_478.png"/>. If the transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> is given computes <img class="formulaInl" alt="$\partial_a\partial_b \left(\exp(\sigma)\ell^c\right)$" src="form_479.png"/>. </p>
+
+</div>
+</div>
+<a id="af25d98516f0525b0f4a027029a3d7b96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af25d98516f0525b0f4a027029a3d7b96">&#9670;&nbsp;</a></span>dexpSigmadlaph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def dexpSigmadlaph </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>First derivative of the transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> wrt <img class="formulaInl" alt="$\lambda, \phi$" src="form_468.png"/> (shape = (2,)). </p>
+<p>Assuming that the transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> is a function of <img class="formulaInl" alt="$\lambda$" src="form_36.png"/> only. </p>
+
+</div>
+</div>
+<a id="ae274c589e7dfb2969ab7fcea44c6eb10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae274c589e7dfb2969ab7fcea44c6eb10">&#9670;&nbsp;</a></span>dexpSigmadx4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def dexpSigmadx4 </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>First derivative of transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> wrt <img class="formulaInl" alt="$t,x,y,z$" src="form_473.png"/> (shape=(4,)). </p>
 
 </div>
 </div>
@@ -560,6 +907,27 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aaa305f7bfc3f95e98dc0ceb116ad53eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa305f7bfc3f95e98dc0ceb116ad53eb">&#9670;&nbsp;</a></span>dk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def dk </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>First partial derivatives of <img class="formulaInl" alt="$k$" src="form_464.png"/>. </p>
+<p>Computes <img class="formulaInl" alt="$\partial_a k^b$" src="form_480.png"/>, where <img class="formulaInl" alt="$a,b\in\{t,x,y,z\}$" src="form_475.png"/>. If the transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> given, computes <img class="formulaInl" alt="$\partial_a (\exp(-\sigma)k^b)$" src="form_481.png"/>. </p>
+
+</div>
+</div>
 <a id="abbe06bcb77bddbede62b069814860256"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abbe06bcb77bddbede62b069814860256">&#9670;&nbsp;</a></span>dl()</h2>
 
@@ -576,7 +944,29 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Partial derivatives of l. </p>
+<p>First partial derivatives of l. </p>
+<p>Computes <img class="formulaInl" alt="$\partial_a\ell^b$" src="form_474.png"/>, where <img class="formulaInl" alt="$a,b\in\{t,x,y,z\}$" src="form_475.png"/>. If the transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> is given, computes <img class="formulaInl" alt="$\partial_a (\exp(\sigma)\ell^b)$" src="form_476.png"/>. </p>
+
+</div>
+</div>
+<a id="ab5bc09e4425a3aebe198150fce9ccf46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5bc09e4425a3aebe198150fce9ccf46">&#9670;&nbsp;</a></span>dlaphdx4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def dlaphdx4 </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Jacobian matrix <img class="formulaInl" alt="$\frac{\partial(\lambda,\phi)}{\partial(t,x,y,z)}$" src="form_469.png"/> (shape=(2,4)). </p>
+<p>Note that <img class="formulaInl" alt="$\partial_t^n \lambda = 0 = \partial_t^n\phi$" src="form_470.png"/> for <img class="formulaInl" alt="$n &gt; 0$" src="form_486.png"/>. Also, <img class="formulaInl" alt="$\partial_x\phi = 0, \partial_y\phi = \frac{1}{x}, \partial_z\phi = 0$" src="form_472.png"/>. </p>
 
 </div>
 </div>
@@ -596,7 +986,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Partial derivative of timelike normal, partial_a n^b (4x4-matrix). </p>
+<p>Partial derivative of timelike normal, <img class="formulaInl" alt="$\partial_a n^b$" src="form_461.png"/> (4x4-matrix). </p>
 
 </div>
 </div>
@@ -617,6 +1007,26 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Spacetime derivatives of MOTS normal in slice. </p>
+
+</div>
+</div>
+<a id="a5ee2abf287137aeaf3ceccb9beaad068"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ee2abf287137aeaf3ceccb9beaad068">&#9670;&nbsp;</a></span>dnu3()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def dnu3 </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Spatial derivatives of MOTS normal, <img class="formulaInl" alt="$\partial_i \nu^j$" src="form_610.png"/>. </p>
 
 </div>
 </div>
@@ -656,7 +1066,38 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Derivatives of x,y,z wrt lambda,phi (shape=(2,3)). </p>
+<p>Derivatives of <img class="formulaInl" alt="$x,y,z$" src="form_466.png"/> wrt <img class="formulaInl" alt="$\lambda,\phi$" src="form_467.png"/> (shape=(2,3)). </p>
+
+</div>
+</div>
+<a id="a8e3f95c6c3921bf76e291cffe249dd57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e3f95c6c3921bf76e291cffe249dd57">&#9670;&nbsp;</a></span>exp_sigma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def exp_sigma </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>diff</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the tranformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/>, or any nonzero derivatives. </p>
+<p>Assuming the transformation <img class="formulaInl" alt="$\exp(\sigma)$" src="form_460.png"/> is a function of lambda only. </p>
 
 </div>
 </div>
@@ -720,6 +1161,26 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a8474d93363cf55113a5cb4ffeddab454"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8474d93363cf55113a5cb4ffeddab454">&#9670;&nbsp;</a></span>has_transformation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def has_transformation </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether a transformation for the null vectors has been specified. </p>
+
+</div>
+</div>
 <a id="a1b3bc28a5ee6457419b6d6ca0594f97f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1b3bc28a5ee6457419b6d6ca0594f97f">&#9670;&nbsp;</a></span>k()</h2>
 
@@ -736,7 +1197,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Ingoing future-pointing null normal (shape=4) k^a. </p>
+<p>Ingoing future-pointing null normal (shape=4) <img class="formulaInl" alt="$k^a$" src="form_462.png"/>. </p>
 
 </div>
 </div>
@@ -756,7 +1217,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Covariant components of k. </p>
+<p>Covariant components of <img class="formulaInl" alt="$k$" src="form_464.png"/>. </p>
 
 </div>
 </div>
@@ -776,7 +1237,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Outgoing future-pointing null normal (shape=4) l^a. </p>
+<p>Outgoing future-pointing null normal (shape=4) <img class="formulaInl" alt="$\ell^a$" src="form_463.png"/>. </p>
 
 </div>
 </div>
@@ -796,7 +1257,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Covariant components of l. </p>
+<p>Covariant components of <img class="formulaInl" alt="$\ell$" src="form_465.png"/>. </p>
 
 </div>
 </div>
@@ -816,7 +1277,69 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Timelike normal to slice (shape=3). </p>
+<p>Timelike normal to slice (shape=4). </p>
+
+</div>
+</div>
+<a id="aa7f9bb892ab58c843ad7fbfed60d5e6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7f9bb892ab58c843ad7fbfed60d5e6f">&#9670;&nbsp;</a></span>nabla_m_ell_n()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nabla_m_ell_n </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt_normal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute <img class="formulaInl" alt="$\nabla_\mu \ell_\nu$" src="form_611.png"/> (shape=(4,4), no NaNs). </p>
+<p>In order to compute all values, including the time derivatives which usually get assigned NaNs, we need the time derivative of the normal to the MOTSs. This requires knowledge of the MOTT and hence is not the responsibility of this calculator class. </p>
+
+</div>
+</div>
+<a id="aea34daa878a6417e97de4b3ef5e9f0e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea34daa878a6417e97de4b3ef5e9f0e2">&#9670;&nbsp;</a></span>nabla_m_k_n()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def nabla_m_k_n </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt_normal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute <img class="formulaInl" alt="$\nabla_\mu k_\nu$" src="form_635.png"/> (shape=(4,4), no NaNs). </p>
+<p>In order to compute all values, including the time derivatives which usually get assigned NaNs, we need the time derivative of the normal to the MOTSs. This requires knowledge of the MOTT and hence is not the responsibility of this calculator class. </p>
 
 </div>
 </div>
@@ -896,7 +1419,57 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Inverse 2-metric q^AB on MOTS (shape=(2,2)). </p>
+<p>Inverse 2-metric <img class="formulaInl" alt="$q^AB$" src="form_483.png"/> on MOTS (shape=(2,2)). </p>
+
+</div>
+</div>
+<a id="a546ce21a57ab8c488d05008e75365afa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a546ce21a57ab8c488d05008e75365afa">&#9670;&nbsp;</a></span>surface_gravity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def surface_gravity </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt_normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>X</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute a (slicing dependent) surface gravity. </p>
+<p>See .<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#adf576f119b60fc790caa871324a88dca" title="Compute a (slicing dependent) surface gravity. ">expcurve.ExpansionCurve.surface_gravity()</a> for more information. Computes </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \kappa^{(X)} = - k_\mu X^\nu \nabla_\nu \ell^\mu \,, \]" src="form_636.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$X^\mu = \ell^\mu$" src="form_629.png"/> by default.</p>
+<p>Uses the convention <img class="formulaInl" alt="$\ell \cdot k = -1$" src="form_625.png"/>, in particular </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \ell^\mu = \frac{1}{\sqrt{2}} (n^\mu + v^\mu) \,, \qquad k^\mu = \frac{1}{\sqrt{2}} (n^\mu - v^\mu) \,. \]" src="form_637.png"/>
+</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt_normal</td><td>The term <img class="formulaInl" alt="$\partial_t v^\mu$" src="form_638.png"/>, where <code>v</code> is the normal of the MOTS within the slice. Note that this should not simply be the time derivative of the normal's components. See .<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a45c589ad969baa9f956e0eb2491653ba" title="Compute the time derivative of the MOTS normal within the slice. ">expcurve.ExpansionCurve.dt_normals()</a>. </td></tr>
+    <tr><td class="paramname">X</td><td>4-vector with respect to wich to compute the surface gravity. Default is to use the outgoing null normal <img class="formulaInl" alt="$\ell^\mu$" src="form_442.png"/>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -916,7 +1489,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Torsion s_A of l (aka rotation 1-form Omega, shape=2). </p>
+<p>Torsion <img class="formulaInl" alt="$s_A$" src="form_448.png"/> of <img class="formulaInl" alt="$\ell$" src="form_465.png"/> (aka rotation 1-form <img class="formulaInl" alt="$\Omega$" src="form_482.png"/>, shape=2). </p>
 
 </div>
 </div>
@@ -936,7 +1509,131 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Contravariant version of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a45f55c67b2087e4296fe97d37531ffa5" title="Torsion s_A of l (aka rotation 1-form Omega, shape=2). ">torsion_1form()</a> (shape=2). </p>
+<p>Contravariant version of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a45f55c67b2087e4296fe97d37531ffa5" title="Torsion  of  (aka rotation 1-form , shape=2). ">torsion_1form()</a> (shape=2). </p>
+
+</div>
+</div>
+<a id="a00f3c5124dde49e8216745707bb32f46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00f3c5124dde49e8216745707bb32f46">&#9670;&nbsp;</a></span>xi_scalar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def xi_scalar </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt_normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute a complex scalar representing the xi vector. </p>
+<p>See .<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#adcf7be95664f324c9e9a2505b8b82a0a" title="Expand the xi vector into spin weighted spherical harmonics. ">expcurve.ExpansionCurve.expand_xi_scalar()</a> for details. </p>
+
+</div>
+</div>
+<a id="a4ef9ab43da45280992a5e6d598391d30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ef9ab43da45280992a5e6d598391d30">&#9670;&nbsp;</a></span>xi_squared()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def xi_squared </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt_normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tev</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the square <img class="formulaInl" alt="$\xi^A\xi_A$" src="form_612.png"/> of the xi vector. </p>
+
+</div>
+</div>
+<a id="a31acecdf54bd9ed17136f8bbce313835"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31acecdf54bd9ed17136f8bbce313835">&#9670;&nbsp;</a></span>xi_vector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def xi_vector </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt_normal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>up</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the xi vector. </p>
+<p>See .<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a83b04c959af2ec911236de04aab2bc6e" title="Compute the xi vector. ">expcurve.ExpansionCurve.xi_vector()</a> for the definition of the quantity computed here. Note that the result is cached, making repeated calls to this method (e.g. with different values for <code>up</code>) cheap.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dt_normal</td><td>Derivative w.r.t. simulation time (t-coordinate) of the normal of the MOTS within the slice. </td></tr>
+    <tr><td class="paramname">tev</td><td>Time evolution vector (i.e. a TimeVectorData object) at the current point of the MOTS. </td></tr>
+    <tr><td class="paramname">up</td><td>Whether to return <img class="formulaInl" alt="$\xi^A$" src="form_598.png"/> (<code>True</code>) or <img class="formulaInl" alt="$\xi_A$" src="form_599.png"/> (<code>False</code>). Default is <code>True</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

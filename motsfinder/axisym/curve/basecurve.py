@@ -32,6 +32,7 @@ from ...numutils import inf_norm1d, clip
 from ...pickle_helpers import prepare_dict, restore_dict
 from ...utils import insert_missing, update_dict, isiterable
 from ...exprs.cheby import Cheby
+from ...exprs.inverse import InverseExpression
 
 
 __all__ = [
@@ -97,6 +98,7 @@ class BaseCurve(object):
         self._evaluator_overrides = None
         self._name = name
         self._user_data = dict()
+        self.__loaded_from = None
 
     def save(self, filename, overwrite=False, verbose=True, msg=''):
         r"""Save the curve to disk.
@@ -121,22 +123,53 @@ class BaseCurve(object):
             showname='curve%s' % msg
         )
 
-    @staticmethod
-    def load(filename):
-        r"""Static function to load an expression object from disk."""
-        return load_from_file(filename)
+    @classmethod
+    def load(cls, filename, retries=0, sleep=5, verbose=False):
+        r"""Static method to load an object from disk.
+
+        If ``retries > 0`` and loading fails for *any* reason, we retry for up
+        to `retries` times. The total number of trials before failing is hence
+        ``retries+1``.
+
+        @param filename
+            File to load.
+        @param retries
+            How often to retry after failure. Default is `0`, i.e. fail
+            immediately if something goes wrong.
+        @param sleep
+            Seconds to wait between trying. Default is `5`.
+        @param verbose
+            If `True`, print messages when loading fails. Default is `False`.
+        """
+        obj = load_from_file(filename, retries=retries, sleep=sleep,
+                             verbose=verbose)
+        if isinstance(obj, (BaseCurve, cls)):
+            obj.__loaded_from = filename
+        return obj
+
+    @property
+    def loaded_from(self):
+        r"""Filename (if any) from which this object was loaded."""
+        return self.__loaded_from
 
     def __getstate__(self):
         r"""Return a picklable state object representing the whole curve."""
         with self.override_evaluator(None):
-            return prepare_dict(self.__dict__)
+            loaded_from = self.__loaded_from
+            try:
+                self.__loaded_from = None
+                return prepare_dict(self.__dict__)
+            finally:
+                self.__loaded_from = loaded_from
 
     def __setstate__(self, state):
         r"""Restore a complete curve from the given unpickled state."""
-        self.__dict__.update(restore_dict(state))
         # compatibility with data from previous versions
-        self.__dict__['_name'] = self.__dict__.get('_name', '')
-        self.__dict__['_user_data'] = self.__dict__.get('_user_data', dict())
+        self._name = ""
+        self._user_data = dict()
+        self.__loaded_from = None
+        # Restore state. This overrides the above if contained in the data.
+        self.__dict__.update(restore_dict(state))
 
     @property
     def user_data(self):
@@ -147,6 +180,10 @@ class BaseCurve(object):
         picklable in order for saving and loading of the curve to work.
         """
         return self._user_data
+
+    def replace_user_data(self, new_data):
+        r"""Replace the `user_data` dictionary with a different object."""
+        self._user_data = new_data
 
     @property
     def name(self):
@@ -427,8 +464,8 @@ class BaseCurve(object):
                 return val, err
             return val
 
-    def proper_length_map(self, num=None, evaluators=True, full_output=False,
-                          **kw):
+    def proper_length_map(self, num=None, evaluators=True, accurate=True,
+                          full_output=False, **kw):
         r"""Generate functions to map between curve parameter and proper length.
 
         The resulting callables can be used to e.g. plot properties along the
@@ -450,7 +487,7 @@ class BaseCurve(object):
             )
             # plotting w.r.t. actual proper length
             plot_data(
-                [length_map(la)*l0 for la in params], riccis,
+                [l0*length_map(la)/np.pi for la in params], riccis,
                 xlabel=r"proper length", ylabel=r"$\mathcal{R}$",
             )
         @endcode
@@ -477,6 +514,10 @@ class BaseCurve(object):
         @param evaluators
             If `True` (default), return the callables instead of the
             interpolant objects.
+        @param accurate
+            If `True`, create a very accurate but slightly slower inverse
+            function solver object for evaluating the `inv_map`. Default is
+            `True`.
         @param full_output
             If `True`, return the proper length as third return value. Default
             is `False`.
@@ -509,8 +550,11 @@ class BaseCurve(object):
             list(reversed(ys)), # Chebyshev points are reversed
             physical_space=True, lobatto=True
         )
-        interp = PchipInterpolator(ys, xs) # guarantees monotonicity of interpolant
-        inv_map = Cheby.from_function(interp, num=num, domain=(0, np.pi))
+        if accurate:
+            inv_map = InverseExpression(length_map, domain=(0, np.pi))
+        else:
+            interp = PchipInterpolator(ys, xs) # guarantees monotonicity of interpolant
+            inv_map = Cheby.from_function(interp, num=num, domain=(0, np.pi))
         if evaluators:
             result = length_map.evaluator(), inv_map.evaluator()
         else:
@@ -518,6 +562,41 @@ class BaseCurve(object):
         if full_output:
             return result + (proper_length,)
         return result
+
+    def cached_length_maps(self, evaluators=True, warn=True,
+                           full_output=False):
+        r"""Return the proper length maps from the curve's `user_data`.
+
+        A warning is printed if the `user_data` does not contain proper length
+        map data. You can generate and store this data using
+        ..trackmots.props.compute_props().
+
+        @param evaluators
+            If `True` (default), return callable function objects instead of
+            NumericExpression objects.
+        @param warn
+            If `True` (default), print a warning when the data is not found in
+            the `user_data` and is being recomputed.
+        @param full_output
+            Add the full proper length as third returned value. Default is
+            `False`.
+        """
+        try:
+            length_map = self.user_data['length_maps']['length_map']
+            inv_map = self.user_data['length_maps']['inv_map']
+            if evaluators:
+                length_map = length_map.evaluator()
+                inv_map = inv_map.evaluator()
+            if full_output:
+                l0 = self.user_data['length_maps']['proper_length']
+                return length_map, inv_map, l0
+            return length_map, inv_map
+        except KeyError:
+            if warn:
+                print("WARNING: Length map not found in `user_data`. "
+                      "Recomputing.")
+            return self.proper_length_map(evaluators=evaluators,
+                                          full_output=full_output)
 
     def z_distance(self, other_curve=None, atol=1e-12, rtol=1e-12, limit=100,
                    allow_intersection=False, full_output=False):

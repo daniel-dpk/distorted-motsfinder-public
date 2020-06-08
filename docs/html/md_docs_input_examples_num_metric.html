@@ -85,7 +85,10 @@ $(document).ready(function(){initNavTree('md_docs_input_examples_num_metric.html
 <div class="title">Example: Using the finder with a numerical metric </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>See <a class="el" href="md_docs_input_examples_init.html">preparation to running the examples</a> for setting up.</p>
+<div class="textblock"><blockquote class="doxtable">
+<p><b>IMPORTANT</b></p>
+<p>See <a class="el" href="md_docs_input_examples_init.html">Preparation to running the examples</a> for setting up (necessary imports, etc). </p>
+</blockquote>
 <p>This example considers the case that you have numerical data defining an axisymmetric slice of spacetime. Further, we assume you have the components of the metric and extrinsic curvature each as a 2- or 3-dimensional array containing the component values for a grid covering the full domain containing any potential MOTS you would like to find.</p>
 <p>This means, we have 6 matrices of shape <code>(N, N)</code> for the metric:</p>
 <div class="fragment"><div class="line">metric = [</div><div class="line">    np.array(...),  <span class="comment"># xx component, shape=(N,N)</span></div><div class="line">    np.array(...),  <span class="comment"># xy component, shape=(N,N)</span></div><div class="line">    np.array(...),  <span class="comment"># xz component, shape=(N,N)</span></div><div class="line">    np.array(...),  <span class="comment"># yy component, shape=(N,N)</span></div><div class="line">    np.array(...),  <span class="comment"># yz component, shape=(N,N)</span></div><div class="line">    np.array(...),  <span class="comment"># zz component, shape=(N,N)</span></div><div class="line">]</div></div><!-- fragment --><p>And the same for the extrinsic curvature:</p>

@@ -17,7 +17,7 @@ def run_tests():
     except ImportError:
         # Cythonize is not mandatory for this project. If the call fails, the
         # slower pure Python implementations will be used.
-        pass
+        print("NOTE: Cython not installed. Not producing optimized modules.")
     failfast = '-f' in sys.argv or '--failfast' in sys.argv
     buffering = '-b' in sys.argv or '--buffer' in sys.argv
     timing = '-t' in sys.argv or '--timing' in sys.argv

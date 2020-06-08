@@ -167,9 +167,51 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>z_distance</b> (self, 
 <tr class="memitem:a3232841413c3ca20d1a872d5ecd837ea"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a3232841413c3ca20d1a872d5ecd837ea">average_expansion</a> (self, ingoing=False, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aac06a1badf4a956bccce3fad0693d948">area</a>=None, full_output=False, kw)</td></tr>
 <tr class="memdesc:a3232841413c3ca20d1a872d5ecd837ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the average expansion across the surface.  <a href="#a3232841413c3ca20d1a872d5ecd837ea">More...</a><br /></td></tr>
 <tr class="separator:a3232841413c3ca20d1a872d5ecd837ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22e3cdfacfd16d42836d8bf5893eecf5"><td class="memItemLeft" align="right" valign="top"><a id="a22e3cdfacfd16d42836d8bf5893eecf5"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>signature_quantities</b> (self, pts, past_curve=None, future_curve=None)</td></tr>
-<tr class="separator:a22e3cdfacfd16d42836d8bf5893eecf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bb06da2987923a6c0f1efe6b6906d00"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a6bb06da2987923a6c0f1efe6b6906d00">collect_close_in_time</a> (self, curves, steps=3)</td></tr>
+<tr class="memdesc:a6bb06da2987923a6c0f1efe6b6906d00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a list of curves close (in time) to this one.  <a href="#a6bb06da2987923a6c0f1efe6b6906d00">More...</a><br /></td></tr>
+<tr class="separator:a6bb06da2987923a6c0f1efe6b6906d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d3480e378bb9d98fdbe4b6a8a18f5bf"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a5d3480e378bb9d98fdbe4b6a8a18f5bf">time_interpolators</a> (self, curves, points=None, proper=True, steps=3, eps=0.0)</td></tr>
+<tr class="memdesc:a5d3480e378bb9d98fdbe4b6a8a18f5bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a set of functions interpolating along a MOTT.  <a href="#a5d3480e378bb9d98fdbe4b6a8a18f5bf">More...</a><br /></td></tr>
+<tr class="separator:a5d3480e378bb9d98fdbe4b6a8a18f5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a124738aa04c429c1e8b3622ea2b47044"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a124738aa04c429c1e8b3622ea2b47044">time_shift_params</a> (self, params, tevs, next_curve)</td></tr>
+<tr class="memdesc:a124738aa04c429c1e8b3622ea2b47044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transport a list of parameters in time.  <a href="#a124738aa04c429c1e8b3622ea2b47044">More...</a><br /></td></tr>
+<tr class="separator:a124738aa04c429c1e8b3622ea2b47044"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac59f67e49be52dc9c8a6d1a5ff846fc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aac59f67e49be52dc9c8a6d1a5ff846fc">signature_quantities</a> (self, pts, curves, proper=True, steps=3)</td></tr>
+<tr class="memdesc:aac59f67e49be52dc9c8a6d1a5ff846fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the MOTS tube signature along points of this MOTS.  <a href="#aac59f67e49be52dc9c8a6d1a5ff846fc">More...</a><br /></td></tr>
+<tr class="separator:aac59f67e49be52dc9c8a6d1a5ff846fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad4da6539184472b914b8be8af13791"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a4ad4da6539184472b914b8be8af13791">time_evolution_vector</a> (self, pts, curves, steps=3, search_step=1e-3, search_dist_increase=10, max_increases=4, Ns=400, tol=1e-12, full_output=False, verbose=False)</td></tr>
+<tr class="memdesc:a4ad4da6539184472b914b8be8af13791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the time evolution 4D vector.  <a href="#a4ad4da6539184472b914b8be8af13791">More...</a><br /></td></tr>
+<tr class="separator:a4ad4da6539184472b914b8be8af13791"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38053ffe9e087b496b35cdbbc6327d8b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a38053ffe9e087b496b35cdbbc6327d8b">integrate_tev_divergence</a> (self, curves, tev_args=None, n=&quot;auto&quot;, unity_b=False, full_output=False)</td></tr>
+<tr class="memdesc:a38053ffe9e087b496b35cdbbc6327d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integrate the divergence of the time evolution vector (TEV).  <a href="#a38053ffe9e087b496b35cdbbc6327d8b">More...</a><br /></td></tr>
+<tr class="separator:a38053ffe9e087b496b35cdbbc6327d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45c589ad969baa9f956e0eb2491653ba"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a45c589ad969baa9f956e0eb2491653ba">dt_normals</a> (self, pts, curves, steps=3, use_tev=True, tevs=None, unload=True, full_output=False)</td></tr>
+<tr class="memdesc:a45c589ad969baa9f956e0eb2491653ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the time derivative of the MOTS normal within the slice.  <a href="#a45c589ad969baa9f956e0eb2491653ba">More...</a><br /></td></tr>
+<tr class="separator:a45c589ad969baa9f956e0eb2491653ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19bd95251b6fa5eba926e9007588f961"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a19bd95251b6fa5eba926e9007588f961">extremality_parameter</a> (self, curves, steps=3, n=&quot;auto&quot;, full_output=False)</td></tr>
+<tr class="memdesc:a19bd95251b6fa5eba926e9007588f961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the extremality parameter.  <a href="#a19bd95251b6fa5eba926e9007588f961">More...</a><br /></td></tr>
+<tr class="separator:a19bd95251b6fa5eba926e9007588f961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf576f119b60fc790caa871324a88dca"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#adf576f119b60fc790caa871324a88dca">surface_gravity</a> (self, pts, curves, steps=3, wrt=&quot;ell&quot;, tevs=None)</td></tr>
+<tr class="memdesc:adf576f119b60fc790caa871324a88dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute a (slicing dependent) surface gravity.  <a href="#adf576f119b60fc790caa871324a88dca">More...</a><br /></td></tr>
+<tr class="separator:adf576f119b60fc790caa871324a88dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa857530befbb8273056ab18d5f588fd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aaa857530befbb8273056ab18d5f588fd">timescale_tau2</a> (self, tevs, kappas_tev, proper_pts, curves, steps=3, option=0)</td></tr>
+<tr class="memdesc:aaa857530befbb8273056ab18d5f588fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the square of the timescale <code>tau</code>.  <a href="#aaa857530befbb8273056ab18d5f588fd">More...</a><br /></td></tr>
+<tr class="separator:aaa857530befbb8273056ab18d5f588fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40079c05732aedfe1bc8544e7a5d2014"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a40079c05732aedfe1bc8544e7a5d2014">timescale_T2</a> (self, tevs)</td></tr>
+<tr class="memdesc:a40079c05732aedfe1bc8544e7a5d2014"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the square of the timescale <code>T</code>.  <a href="#a40079c05732aedfe1bc8544e7a5d2014">More...</a><br /></td></tr>
+<tr class="separator:a40079c05732aedfe1bc8544e7a5d2014"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83b04c959af2ec911236de04aab2bc6e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a83b04c959af2ec911236de04aab2bc6e">xi_vector</a> (self, pts, curves, steps=3, full_output=False)</td></tr>
+<tr class="memdesc:a83b04c959af2ec911236de04aab2bc6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the xi vector.  <a href="#a83b04c959af2ec911236de04aab2bc6e">More...</a><br /></td></tr>
+<tr class="separator:a83b04c959af2ec911236de04aab2bc6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e1dca9e2b825bc59677a54a64a07b7c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a4e1dca9e2b825bc59677a54a64a07b7c">xi_square_integral</a> (self, curves, steps=3, n=&quot;auto&quot;)</td></tr>
+<tr class="memdesc:a4e1dca9e2b825bc59677a54a64a07b7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the integral of the square of the xi vector.  <a href="#a4e1dca9e2b825bc59677a54a64a07b7c">More...</a><br /></td></tr>
+<tr class="separator:a4e1dca9e2b825bc59677a54a64a07b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adcf7be95664f324c9e9a2505b8b82a0a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#adcf7be95664f324c9e9a2505b8b82a0a">expand_xi_scalar</a> (self, curves, steps=3, lmax=&quot;auto&quot;, zeta=None, min_lmax=64, max_lmax=512, coeff_threshold=None, compress=True, full_output=False)</td></tr>
+<tr class="memdesc:adcf7be95664f324c9e9a2505b8b82a0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expand the xi vector into spin weighted spherical harmonics.  <a href="#adcf7be95664f324c9e9a2505b8b82a0a">More...</a><br /></td></tr>
+<tr class="separator:adcf7be95664f324c9e9a2505b8b82a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af82822ba93eadd30cf5d02bdbcab3887"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#af82822ba93eadd30cf5d02bdbcab3887">get_stability_calc_obj</a> (self, param)</td></tr>
+<tr class="memdesc:af82822ba93eadd30cf5d02bdbcab3887"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a StabilityCalc object at the given point of the curve.  <a href="#af82822ba93eadd30cf5d02bdbcab3887">More...</a><br /></td></tr>
+<tr class="separator:af82822ba93eadd30cf5d02bdbcab3887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2f87fe8930191d84b8a0f9c878f3078"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#af2f87fe8930191d84b8a0f9c878f3078">linearized_equation_at</a> (self, param, target_expansion=0.0)</td></tr>
 <tr class="memdesc:af2f87fe8930191d84b8a0f9c878f3078"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the terms of the linearized version of H=0 at one point.  <a href="#af2f87fe8930191d84b8a0f9c878f3078">More...</a><br /></td></tr>
 <tr class="separator:af2f87fe8930191d84b8a0f9c878f3078"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,9 +227,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>signature_quantities</
 <tr class="memitem:aac06a1badf4a956bccce3fad0693d948"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aac06a1badf4a956bccce3fad0693d948">area</a> (self, full_output=False, disp=False, domain=(0, np.pi), kw)</td></tr>
 <tr class="memdesc:aac06a1badf4a956bccce3fad0693d948"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the area of the surface represented by this curve.  <a href="#aac06a1badf4a956bccce3fad0693d948">More...</a><br /></td></tr>
 <tr class="separator:aac06a1badf4a956bccce3fad0693d948"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca583853d9351f18fdd647ddc7b109d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a2ca583853d9351f18fdd647ddc7b109d">get_det_q_func</a> (self)</td></tr>
-<tr class="memdesc:a2ca583853d9351f18fdd647ddc7b109d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a function to evaluate det(q).  <a href="#a2ca583853d9351f18fdd647ddc7b109d">More...</a><br /></td></tr>
-<tr class="separator:a2ca583853d9351f18fdd647ddc7b109d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad95132b13eed51da5774d19df48cd8f7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#ad95132b13eed51da5774d19df48cd8f7">get_ricci_scalar_func</a> (self, cached=False)</td></tr>
+<tr class="memdesc:ad95132b13eed51da5774d19df48cd8f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an (optionally cached) function to evaluate the Ricci scalar.  <a href="#ad95132b13eed51da5774d19df48cd8f7">More...</a><br /></td></tr>
+<tr class="separator:ad95132b13eed51da5774d19df48cd8f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d5f7aa93ad9cf41e64aa493710e7ac7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a5d5f7aa93ad9cf41e64aa493710e7ac7">get_det_q_func</a> (self, cached=False)</td></tr>
+<tr class="memdesc:a5d5f7aa93ad9cf41e64aa493710e7ac7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a function to evaluate det(q).  <a href="#a5d5f7aa93ad9cf41e64aa493710e7ac7">More...</a><br /></td></tr>
+<tr class="separator:a5d5f7aa93ad9cf41e64aa493710e7ac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afea218e8051c9c6b433fc008c252d9b1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#afea218e8051c9c6b433fc008c252d9b1">get_area_integrand</a> (self)</td></tr>
 <tr class="memdesc:afea218e8051c9c6b433fc008c252d9b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a callable evaluating the sqrt(det(q)), i.e.  <a href="#afea218e8051c9c6b433fc008c252d9b1">More...</a><br /></td></tr>
 <tr class="separator:afea218e8051c9c6b433fc008c252d9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,12 +245,27 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>signature_quantities</
 <tr class="memitem:a321e36a1dbf23d671dda1f83832d8d07"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a321e36a1dbf23d671dda1f83832d8d07">horizon_radius</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aac06a1badf4a956bccce3fad0693d948">area</a>=None)</td></tr>
 <tr class="memdesc:a321e36a1dbf23d671dda1f83832d8d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the horizon radius.  <a href="#a321e36a1dbf23d671dda1f83832d8d07">More...</a><br /></td></tr>
 <tr class="separator:a321e36a1dbf23d671dda1f83832d8d07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a261ec805e4184cc43bfc37a4f801c204"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a261ec805e4184cc43bfc37a4f801c204">stability_parameter</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177">num</a>=None, m_max=None, m_terminate_index=30, rtol=1e-12, compute_eigenfunctions=False, slice_normal=True, transform_torsion=False, full_output=False)</td></tr>
-<tr class="memdesc:a261ec805e4184cc43bfc37a4f801c204"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability parameter.  <a href="#a261ec805e4184cc43bfc37a4f801c204">More...</a><br /></td></tr>
-<tr class="separator:a261ec805e4184cc43bfc37a4f801c204"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1593d55a85a61e1578c554b68370f9d7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a1593d55a85a61e1578c554b68370f9d7">multipoles</a> (self, max_n=10, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177">num</a>=None, full_output=False, disp=False, kw)</td></tr>
-<tr class="memdesc:a1593d55a85a61e1578c554b68370f9d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the multipoles I_n of the horizon.  <a href="#a1593d55a85a61e1578c554b68370f9d7">More...</a><br /></td></tr>
-<tr class="separator:a1593d55a85a61e1578c554b68370f9d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b1390f65a098858013ad5ec3d755e7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#ae0b1390f65a098858013ad5ec3d755e7">stability_parameter</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177">num</a>=None, m_max=None, m_terminate_index=30, rtol=1e-12, compute_eigenfunctions=False, slice_normal=True, transform_torsion=False, zeta=None, full_output=False)</td></tr>
+<tr class="memdesc:ae0b1390f65a098858013ad5ec3d755e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the stability parameter.  <a href="#ae0b1390f65a098858013ad5ec3d755e7">More...</a><br /></td></tr>
+<tr class="separator:ae0b1390f65a098858013ad5ec3d755e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92b72eda23af6809e3e8fe0efc629bea"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a92b72eda23af6809e3e8fe0efc629bea">shear</a> (self, param, full_output=False)</td></tr>
+<tr class="memdesc:a92b72eda23af6809e3e8fe0efc629bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the shear of the MOTS at a point.  <a href="#a92b72eda23af6809e3e8fe0efc629bea">More...</a><br /></td></tr>
+<tr class="separator:a92b72eda23af6809e3e8fe0efc629bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a380a3fc19ab9398c2ac5a30068553444"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a380a3fc19ab9398c2ac5a30068553444">shear_square_integral</a> (self, n=&quot;auto&quot;)</td></tr>
+<tr class="memdesc:a380a3fc19ab9398c2ac5a30068553444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the integral of the shear squared.  <a href="#a380a3fc19ab9398c2ac5a30068553444">More...</a><br /></td></tr>
+<tr class="separator:a380a3fc19ab9398c2ac5a30068553444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa641f4b2dd3163ce333e948970884a7c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aa641f4b2dd3163ce333e948970884a7c">shear_scalar</a> (self, param, full_output=False)</td></tr>
+<tr class="memdesc:aa641f4b2dd3163ce333e948970884a7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the complex shear scalar.  <a href="#aa641f4b2dd3163ce333e948970884a7c">More...</a><br /></td></tr>
+<tr class="separator:aa641f4b2dd3163ce333e948970884a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bebdf970199a51b83307470facf265c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a2bebdf970199a51b83307470facf265c">expand_shear_scalar</a> (self, lmax=&quot;auto&quot;, zeta=None, min_lmax=64, max_lmax=4096, coeff_threshold=None, compress=True, full_output=False)</td></tr>
+<tr class="memdesc:a2bebdf970199a51b83307470facf265c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expand the shear scalar into spin 2 weighted spherical harmonics.  <a href="#a2bebdf970199a51b83307470facf265c">More...</a><br /></td></tr>
+<tr class="separator:a2bebdf970199a51b83307470facf265c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f22b1b99aaf1965a8acee1648a16499"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a9f22b1b99aaf1965a8acee1648a16499">compute_zeta</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177">num</a>=None, det_q_function=None)</td></tr>
+<tr class="memdesc:a9f22b1b99aaf1965a8acee1648a16499"><td class="mdescLeft">&#160;</td><td class="mdescRight">Numerically compute the invariant angle zeta.  <a href="#a9f22b1b99aaf1965a8acee1648a16499">More...</a><br /></td></tr>
+<tr class="separator:a9f22b1b99aaf1965a8acee1648a16499"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa931f51a2b9f73fa403301047ba979b7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aa931f51a2b9f73fa403301047ba979b7">multipoles</a> (self, min_n=0, max_n=10, <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8e123567df79f0eb5b554d595e328177">num</a>=None, det_q_function=None, ricci_scalar_function=None, zeta=None, full_output=False, disp=False, kw)</td></tr>
+<tr class="memdesc:aa931f51a2b9f73fa403301047ba979b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the multipoles I_n of the horizon.  <a href="#aa931f51a2b9f73fa403301047ba979b7">More...</a><br /></td></tr>
+<tr class="separator:aa931f51a2b9f73fa403301047ba979b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d1289f5b3e099b0f8f124aaa50be6b1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a3d1289f5b3e099b0f8f124aaa50be6b1">circumference</a> (self, param)</td></tr>
 <tr class="memdesc:a3d1289f5b3e099b0f8f124aaa50be6b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the circumference of the surface at the given parameter.  <a href="#a3d1289f5b3e099b0f8f124aaa50be6b1">More...</a><br /></td></tr>
 <tr class="separator:a3d1289f5b3e099b0f8f124aaa50be6b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -237,6 +297,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>signature_quantities</
 <tr class="memitem:a3700b94d209d5fc275b75342c97ab92a inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a3700b94d209d5fc275b75342c97ab92a">save</a> (self, filename, overwrite=False, verbose=True, msg='')</td></tr>
 <tr class="memdesc:a3700b94d209d5fc275b75342c97ab92a inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save the curve to disk.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a3700b94d209d5fc275b75342c97ab92a">More...</a><br /></td></tr>
 <tr class="separator:a3700b94d209d5fc275b75342c97ab92a inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7177919b0036bb495fb3aa3fbdd9f102 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a7177919b0036bb495fb3aa3fbdd9f102">load</a> (cls, filename, retries=0, sleep=5, verbose=False)</td></tr>
+<tr class="memdesc:a7177919b0036bb495fb3aa3fbdd9f102 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static method to load an object from disk.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a7177919b0036bb495fb3aa3fbdd9f102">More...</a><br /></td></tr>
+<tr class="separator:a7177919b0036bb495fb3aa3fbdd9f102 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5fff96e4e479ac2c0657a9d7b5c277a inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac5fff96e4e479ac2c0657a9d7b5c277a">loaded_from</a> (self)</td></tr>
+<tr class="memdesc:ac5fff96e4e479ac2c0657a9d7b5c277a inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Filename (if any) from which this object was loaded.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac5fff96e4e479ac2c0657a9d7b5c277a">More...</a><br /></td></tr>
+<tr class="separator:ac5fff96e4e479ac2c0657a9d7b5c277a inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a452fb35a3c468c1f56497580833a223d inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a452fb35a3c468c1f56497580833a223d">__getstate__</a> (self)</td></tr>
 <tr class="memdesc:a452fb35a3c468c1f56497580833a223d inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a picklable state object representing the whole curve.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a452fb35a3c468c1f56497580833a223d">More...</a><br /></td></tr>
 <tr class="separator:a452fb35a3c468c1f56497580833a223d inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -246,6 +312,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>signature_quantities</
 <tr class="memitem:ade300aee3cd305ca4ada280d408f471c inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ade300aee3cd305ca4ada280d408f471c">user_data</a> (self)</td></tr>
 <tr class="memdesc:ade300aee3cd305ca4ada280d408f471c inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dictionary of custom data stored in the curve.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ade300aee3cd305ca4ada280d408f471c">More...</a><br /></td></tr>
 <tr class="separator:ade300aee3cd305ca4ada280d408f471c inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac25b8d0cbf89b13338c98f0d5d1012b4 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac25b8d0cbf89b13338c98f0d5d1012b4">replace_user_data</a> (self, new_data)</td></tr>
+<tr class="memdesc:ac25b8d0cbf89b13338c98f0d5d1012b4 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace the <code>user_data</code> dictionary with a different object.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac25b8d0cbf89b13338c98f0d5d1012b4">More...</a><br /></td></tr>
+<tr class="separator:ac25b8d0cbf89b13338c98f0d5d1012b4 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5907ca3bbf8e7cd8f40c3007338f6d02 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02">name</a> (self)</td></tr>
 <tr class="memdesc:a5907ca3bbf8e7cd8f40c3007338f6d02 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of this curve (used e.g. as label for plotting).  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02">More...</a><br /></td></tr>
 <tr class="separator:a5907ca3bbf8e7cd8f40c3007338f6d02 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -294,9 +363,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>name</b> (self, value)
 <tr class="memitem:a0bf941a618b577b673e4d897bca584d7 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0bf941a618b577b673e4d897bca584d7">arc_length_using_metric</a> (self, metric, a=0, b=np.pi, atol=1e-12, rtol=1e-12, limit=100, full_output=False)</td></tr>
 <tr class="memdesc:a0bf941a618b577b673e4d897bca584d7 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the length of this curve w.r.t. a given metric.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0bf941a618b577b673e4d897bca584d7">More...</a><br /></td></tr>
 <tr class="separator:a0bf941a618b577b673e4d897bca584d7 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0947d643e386c5ab4ac57734fabfec58 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0947d643e386c5ab4ac57734fabfec58">proper_length_map</a> (self, num=None, evaluators=True, full_output=False, kw)</td></tr>
-<tr class="memdesc:a0947d643e386c5ab4ac57734fabfec58 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate functions to map between curve parameter and proper length.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0947d643e386c5ab4ac57734fabfec58">More...</a><br /></td></tr>
-<tr class="separator:a0947d643e386c5ab4ac57734fabfec58 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61c3a2e790aa565d29f50ec79b1325ec inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a61c3a2e790aa565d29f50ec79b1325ec">proper_length_map</a> (self, num=None, evaluators=True, accurate=True, full_output=False, kw)</td></tr>
+<tr class="memdesc:a61c3a2e790aa565d29f50ec79b1325ec inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate functions to map between curve parameter and proper length.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a61c3a2e790aa565d29f50ec79b1325ec">More...</a><br /></td></tr>
+<tr class="separator:a61c3a2e790aa565d29f50ec79b1325ec inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e6955081abbb4458fdd3002cc159d5 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a09e6955081abbb4458fdd3002cc159d5">cached_length_maps</a> (self, evaluators=True, warn=True, full_output=False)</td></tr>
+<tr class="memdesc:a09e6955081abbb4458fdd3002cc159d5 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the proper length maps from the curve's <code>user_data</code>.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a09e6955081abbb4458fdd3002cc159d5">More...</a><br /></td></tr>
+<tr class="separator:a09e6955081abbb4458fdd3002cc159d5 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2053028a7c722407c3e0156724d8969 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ad2053028a7c722407c3e0156724d8969">z_distance</a> (self, other_curve=None, atol=1e-12, rtol=1e-12, limit=100, allow_intersection=False, full_output=False)</td></tr>
 <tr class="memdesc:ad2053028a7c722407c3e0156724d8969 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the z-distance to another curve or the origin.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ad2053028a7c722407c3e0156724d8969">More...</a><br /></td></tr>
 <tr class="separator:ad2053028a7c722407c3e0156724d8969 inherit pub_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -352,6 +424,29 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_create_evaluators</b>
 <tr class="memitem:a56ba5441991ba928333e024d28a0c5d4"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a56ba5441991ba928333e024d28a0c5d4">_create_calc_obj</a> (self, param)</td></tr>
 <tr class="memdesc:a56ba5441991ba928333e024d28a0c5d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a cache/calculator for a specific parameter value.  <a href="#a56ba5441991ba928333e024d28a0c5d4">More...</a><br /></td></tr>
 <tr class="separator:a56ba5441991ba928333e024d28a0c5d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6ee3888e09c401cdec36c825977c33"><td class="memItemLeft" align="right" valign="top"><a id="a0c6ee3888e09c401cdec36c825977c33"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a0c6ee3888e09c401cdec36c825977c33">_integrate_tev_divergence_unity_time</a> (self, curves, tev_args, n)</td></tr>
+<tr class="memdesc:a0c6ee3888e09c401cdec36c825977c33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a38053ffe9e087b496b35cdbbc6327d8b" title="Integrate the divergence of the time evolution vector (TEV). ">integrate_tev_divergence()</a> for unity time component. <br /></td></tr>
+<tr class="separator:a0c6ee3888e09c401cdec36c825977c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1095dc03d2653673d46009d7beb02163"><td class="memItemLeft" align="right" valign="top"><a id="a1095dc03d2653673d46009d7beb02163"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a1095dc03d2653673d46009d7beb02163">_integrate_tev_divergence_unity_b</a> (self, curves, tev_args, n)</td></tr>
+<tr class="memdesc:a1095dc03d2653673d46009d7beb02163"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a38053ffe9e087b496b35cdbbc6327d8b" title="Integrate the divergence of the time evolution vector (TEV). ">integrate_tev_divergence()</a> for unity <code>b</code> coefficient. <br /></td></tr>
+<tr class="separator:a1095dc03d2653673d46009d7beb02163"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a870663199b128cdaa750a4eb54ea86c1"><td class="memItemLeft" align="right" valign="top"><a id="a870663199b128cdaa750a4eb54ea86c1"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a870663199b128cdaa750a4eb54ea86c1">_dt_normals</a> (self, pts, curves, steps, use_tev, tevs, unload, full_output)</td></tr>
+<tr class="memdesc:a870663199b128cdaa750a4eb54ea86c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a45c589ad969baa9f956e0eb2491653ba" title="Compute the time derivative of the MOTS normal within the slice. ">dt_normals()</a>. <br /></td></tr>
+<tr class="separator:a870663199b128cdaa750a4eb54ea86c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbded0fcab5b47058c77890ad26922fb"><td class="memItemLeft" align="right" valign="top"><a id="adbded0fcab5b47058c77890ad26922fb"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#adbded0fcab5b47058c77890ad26922fb">_surface_gravity</a> (self, pts, curves, steps, wrt, tevs)</td></tr>
+<tr class="memdesc:adbded0fcab5b47058c77890ad26922fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#adf576f119b60fc790caa871324a88dca" title="Compute a (slicing dependent) surface gravity. ">surface_gravity()</a>. <br /></td></tr>
+<tr class="separator:adbded0fcab5b47058c77890ad26922fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25c2d1d395d70dec7a17863e4137eafd"><td class="memItemLeft" align="right" valign="top"><a id="a25c2d1d395d70dec7a17863e4137eafd"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_compute_dtau_c</b> (self, curves, steps, tevs)</td></tr>
+<tr class="separator:a25c2d1d395d70dec7a17863e4137eafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97d85720d041ce3165070dcebeb8090c"><td class="memItemLeft" align="right" valign="top"><a id="a97d85720d041ce3165070dcebeb8090c"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a97d85720d041ce3165070dcebeb8090c">_xi_vector</a> (self, pts, curves, steps, full_output)</td></tr>
+<tr class="memdesc:a97d85720d041ce3165070dcebeb8090c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a83b04c959af2ec911236de04aab2bc6e" title="Compute the xi vector. ">xi_vector()</a>. <br /></td></tr>
+<tr class="separator:a97d85720d041ce3165070dcebeb8090c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8a14271c4bcf292a4c843cc8edaf8fba"><td class="memItemLeft" align="right" valign="top"><a id="a8a14271c4bcf292a4c843cc8edaf8fba"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>_cached_stability_op</b> (self, func, pts, m, cache=None, kw)</td></tr>
 <tr class="separator:a8a14271c4bcf292a4c843cc8edaf8fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -363,6 +458,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a6e7e3196d9adc51db55bba3688db8697">_stability_eigenvalue_equation_general</a> (self, pts, slice_normal, transform_torsion)</td></tr>
 <tr class="memdesc:a6e7e3196d9adc51db55bba3688db8697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eigenvalue equation evaluator for the general case. <br /></td></tr>
 <tr class="separator:a6e7e3196d9adc51db55bba3688db8697"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14cfdebdef5897c08023f7ccd43db3be"><td class="memItemLeft" align="right" valign="top"><a id="a14cfdebdef5897c08023f7ccd43db3be"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_cache_vectorized</b> (cls, func, boundary_tol=0.0, boundary_val=0.0, domain=(0.0, np.pi))</td></tr>
+<tr class="separator:a14cfdebdef5897c08023f7ccd43db3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73205e27f89026e04b1efa80b0e6288b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a73205e27f89026e04b1efa80b0e6288b">_expand_into_SWSPH</a> (self, func, spinweight, lmax, min_lmax, max_lmax, coeff_threshold, compress, zeta=None, full_output=False)</td></tr>
+<tr class="memdesc:a73205e27f89026e04b1efa80b0e6288b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expand some quantity into SWSPH.  <a href="#a73205e27f89026e04b1efa80b0e6288b">More...</a><br /></td></tr>
+<tr class="separator:a73205e27f89026e04b1efa80b0e6288b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a729cfd2b525e29c406af01b6e413cd94"><td class="memItemLeft" align="right" valign="top"><a id="a729cfd2b525e29c406af01b6e413cd94"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a729cfd2b525e29c406af01b6e413cd94">_locate_self_intersection</a> (self, neck, xtol)</td></tr>
 <tr class="memdesc:a729cfd2b525e29c406af01b6e413cd94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a6ca1e6cd728f86908a070a06765d59ae" title="Locate a loop in the MOTS around its neck. ">locate_self_intersection()</a>. <br /></td></tr>
@@ -377,9 +478,6 @@ Private Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html">BaseCurve</a></td></tr>
-<tr class="memitem:abaa7ea341ccde12aa7ad22b948b714b6 inherit pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#abaa7ea341ccde12aa7ad22b948b714b6">load</a> (filename)</td></tr>
-<tr class="memdesc:abaa7ea341ccde12aa7ad22b948b714b6 inherit pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static function to load an expression object from disk.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#abaa7ea341ccde12aa7ad22b948b714b6">More...</a><br /></td></tr>
-<tr class="separator:abaa7ea341ccde12aa7ad22b948b714b6 inherit pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a633ad52910822ac982ff3214ec097451 inherit pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a633ad52910822ac982ff3214ec097451">plot_curves</a> (curves, cmap=None, last_callback=None, kw)</td></tr>
 <tr class="memdesc:a633ad52910822ac982ff3214ec097451 inherit pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static method for plotting multiple curves in the same plot.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a633ad52910822ac982ff3214ec097451">More...</a><br /></td></tr>
 <tr class="separator:a633ad52910822ac982ff3214ec097451 inherit pub_static_methods_classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -480,6 +578,93 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Create a cache/calculator for a specific parameter value. </p>
 <p>This is only called when a new calculator object needs to be constructed (i.e. this is a calculator factory). Subclasses should create the respective calculator type they need. </p>
+
+</div>
+</div>
+<a id="a73205e27f89026e04b1efa80b0e6288b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73205e27f89026e04b1efa80b0e6288b">&#9670;&nbsp;</a></span>_expand_into_SWSPH()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def _expand_into_SWSPH </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>spinweight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>lmax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>min_lmax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>max_lmax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>coeff_threshold</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>compress</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>zeta</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Expand some quantity into SWSPH. </p>
+<p>The <code>func</code> has to be vectorized, i.e. take a sequence of parameter values and return a sequence of complex values of the same length. </p>
 
 </div>
 </div>
@@ -643,6 +828,182 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a6bb06da2987923a6c0f1efe6b6906d00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bb06da2987923a6c0f1efe6b6906d00">&#9670;&nbsp;</a></span>collect_close_in_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def collect_close_in_time </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return a list of curves close (in time) to this one. </p>
+<p>Given a list of <code>curves</code>, which may or may not contain the current one (<code>self</code>), we collect at most <code>steps</code> curves before and <code>steps</code> curves after this one. The returned list will contain the current curve. </p>
+
+</div>
+</div>
+<a id="a9f22b1b99aaf1965a8acee1648a16499"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f22b1b99aaf1965a8acee1648a16499">&#9670;&nbsp;</a></span>compute_zeta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def compute_zeta </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>num</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>det_q_function</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Numerically compute the invariant angle zeta. </p>
+<p>For a "round" 2-sphere we have <img class="formulaInl" alt="$\zeta = \cos\theta$" src="form_508.png"/>. In general, it is defined in [1] via </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \partial_A\zeta = \frac{1}{R^2} \epsilon_{BA} \phi^B, \qquad \int_{\mathcal{S}} \zeta\, d^2V = 0 \,, \]" src="form_509.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$\epsilon_{AB}$" src="form_510.png"/> is the volume 2-form on the surface <img class="formulaInl" alt="$\mathcal{S}$" src="form_407.png"/> represented by this curve. Since our coordinates <img class="formulaInl" alt="$(\lambda, \varphi)$" src="form_511.png"/> are already adapted to the axisymmetry, this simplifies to an ODE for <img class="formulaInl" alt="$\zeta$" src="form_149.png"/>, namely </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \partial_\lambda = - \frac{\sqrt{\det q}}{R^2} \,, \]" src="form_515.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$R$" src="form_513.png"/> is the areal radius of <img class="formulaInl" alt="$\mathcal{S}$" src="form_407.png"/>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions. ">exprs.numexpr.NumericExpression</a> representing <img class="formulaInl" alt="$\zeta$" src="form_149.png"/>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">num</td><td>Spectral resolution of the numerical solution. The default is to take the curve's current resolution and at least <code>100</code>. </td></tr>
+    <tr><td class="paramname">det_q_function</td><td>Optional callable evaluating <img class="formulaInl" alt="$\det q$" src="form_514.png"/>. Can be used to supply a cached version of <code>det_q</code>. If not supplied, uses an uncached version.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>References</b> </p>
+<p>[1] Ashtekar, Abhay, et al. "Multipole moments of isolated horizons." Classical and Quantum Gravity 21.11 (2004): 2549. </p>
+
+</div>
+</div>
+<a id="a45c589ad969baa9f956e0eb2491653ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45c589ad969baa9f956e0eb2491653ba">&#9670;&nbsp;</a></span>dt_normals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def dt_normals </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>use_tev</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tevs</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>unload</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the time derivative of the MOTS normal within the slice. </p>
+<p>The outward pointing normal to the MOTS within the spatial slice is traced along the MOTT section (defined by the <code>curves</code>) and its derivative w.r.t. coordinate time is computed.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pts</td><td>List of points (in terms of pi-normalized proper length) to compute the derivative of the normal at. It is much more efficient to compute multiple normals at once instead of calling this method multiple times. This holds especially when the metric is given as data on a grid loaded from a file and not available in memory. </td></tr>
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>. </td></tr>
+    <tr><td class="paramname">use_tev</td><td>Which <code>tau</code> coordinate to use (see below). If <code>True</code>, use the integral curve of the time evolution vector (i.e. with tangents orthogonal to the MOTSs). This is much more expensive. If <code>False</code>, just use a curve constructed from taking the same fraction of the proper length of the curves on each curve. The two variants should produce the same results (within numerical errors). If the time evolution vectors are needed afterwords, it makes sense to set <code>use_tev=True</code> and <code>full_output=True</code> to get the vectors together with the time computed derivative. </td></tr>
+    <tr><td class="paramname">tevs</td><td>Optional list of time evolution vector objects. Only used in case <code>use_tev==True</code>. Each vector in this sequence has to correspond to the respective element in <code>pts</code>. </td></tr>
+    <tr><td class="paramname">unload</td><td>Whether to free memory by unloading slice data from all MOTSs not in the same slice as the current MOTS. Default is <code>True</code>. If <code>False</code>, slice data of up to <code>2*steps + 1</code> will reside simultaneously in memory and not be removed after calling this method. </td></tr>
+    <tr><td class="paramname">full_output</td><td>Whether to also return the tangent vectors to the MOTT that were used to compute the time derivative of the normal. In case <code>use_tev=True</code>, this will be a list of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1TimeVectorData.html" title="MOTT time evolution vector. ">TimeVectorData</a> objects, while for <code>use_tev=False</code>, it will be a list of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html" title="Class storing quantities allowing visualization of signature. ">SignatureQuantities</a> objects.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Notes</b> </p>
+<p>This computes <img class="formulaInl" alt="$\partial_t \nu^i$" src="form_574.png"/>, where <img class="formulaInl" alt="$\nu^i$" src="form_575.png"/> are the spatial components of the normal vector in the slice. It does <b>not</b> simply compute how the normal changes along the MOTT. If we define a "time" parameter along the MOTT via <img class="formulaInl" alt="$\tau(p) = t$" src="form_565.png"/> iff <img class="formulaInl" alt="$p\in\mathcal{S}_t\subset\Sigma_t$" src="form_576.png"/>, then we can choose some coordinates on the MOTSs and follow the lines of varying <img class="formulaInl" alt="$\tau$" src="form_563.png"/>. There are two options to do that: One is to use the fraction of each curve's proper length as curve parameter and the other is to choose the parameter such that the <img class="formulaInl" alt="$\tau$" src="form_563.png"/> coordinate produces a vector field <img class="formulaInl" alt="$\partial_\tau$" src="form_564.png"/> that is orthogonal to the MOTSs. The latter is used if <code>use_tev=True</code>. Note that </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \partial_\tau = \frac{\partial x^\mu}{\partial\tau} \partial_\mu = \partial_t + \dot x^i \partial_i \,, \]" src="form_577.png"/>
+</p>
+<p> where the dot is defined as derivative w.r.t. <img class="formulaInl" alt="$\tau$" src="form_563.png"/>. As a result, we compute the derivative of the normal w.r.t. time via </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \partial_t \nu^i = \dot\nu^i - \dot x^j \partial_j \nu^i \,. \]" src="form_578.png"/>
+</p>
+ 
+</div>
+</div>
 <a id="a21fec2419badaa52a2606abc7f398dc1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a21fec2419badaa52a2606abc7f398dc1">&#9670;&nbsp;</a></span>euler_char()</h2>
 
@@ -709,6 +1070,178 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">full_output</td><td>Whether to return information about the integration in addition to the value. If <code>True</code>, return a tuple of <code>chi, chi_err, info, warning</code>. Otherwise (default), return just <code>chi</code>. If <code>warning</code> is not <code>None</code>, the integral did not converge as expected. </td></tr>
     <tr><td class="paramname">disp</td><td>Whether to raise an error in case the integral did not converge as expected. </td></tr>
     <tr><td class="paramname">**kw</td><td>Further keyword arguments are passed to <code>scipy.integrate.quad()</code>. Use these to set e.g. <code>epsrel</code> to the desired tolerance. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2bebdf970199a51b83307470facf265c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bebdf970199a51b83307470facf265c">&#9670;&nbsp;</a></span>expand_shear_scalar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def expand_shear_scalar </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>lmax</em> = <code>&quot;auto&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>zeta</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>min_lmax</em> = <code>64</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>max_lmax</em> = <code>4096</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>coeff_threshold</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>compress</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Expand the shear scalar into spin 2 weighted spherical harmonics. </p>
+<p>This uses the <code>spinsfast</code> module to expand the shear scalar (computed using <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aa641f4b2dd3163ce333e948970884a7c" title="Compute the complex shear scalar. ">shear_scalar()</a>) into spherical harmonics of spin weight 2. To do this, the shear scalar is constructed as a function of <img class="formulaInl" alt="$\theta$" src="form_528.png"/>, where <img class="formulaInl" alt="$\cos\theta=\zeta$" src="form_529.png"/> is the invariant angle defining a geometrically invariant parameterization of axisymmetric MOTSs.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lmax</td><td>Largest <code>ell</code> value in the expansion into <img class="formulaInl" alt="${}_2Y_{\ell m}$" src="form_530.png"/>. The default, <code>"auto"</code> will start with a low resolution and successively double this resolution until a "knee" is detected in the expansion coefficients. Such a knee indicates convergence and increasing the resolution further does not increase accuracy of results. </td></tr>
+    <tr><td class="paramname">zeta</td><td>Expression evaluating the invariant angle as function of the intrinsic curve parameter <img class="formulaInl" alt="$\lambda$" src="form_36.png"/>. If not given, this function is numerically computed using <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a9f22b1b99aaf1965a8acee1648a16499" title="Numerically compute the invariant angle zeta. ">compute_zeta()</a>. </td></tr>
+    <tr><td class="paramname">min_lmax,max_lmax</td><td>If <code>lmax="auto"</code>, start expanding with <code>lmax=min_lmax</code>. If no "knee" is detected in the resulting coefficients, the resolution is doubled until a knee is detected or we have reached <code>max_lmax</code>. </td></tr>
+    <tr><td class="paramname">coeff_threshold</td><td>If the final few coefficients are larger than <code>coeff_threshold</code> times the largest coefficient, then do not try to detect a knee in the coefficients but immediately increase the resolution. By default, knee detection is always run. </td></tr>
+    <tr><td class="paramname">compress</td><td>Since the shear scalar is purely real for axisymmetric MOTSs, the only non-zero coefficients in the expansion will be the ones with <code>m=0</code>. Setting <code>compress=True</code> (default) will extract this one row of possibly non-vanishing coefficients and return it. </td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the coefficients, the (complex) shear scalar values at the grid points in <img class="formulaInl" alt="$\theta=\arccos\zeta$" src="form_537.png"/> and the grid points themselves. Otherwise (default), return just the coefficients. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="adcf7be95664f324c9e9a2505b8b82a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcf7be95664f324c9e9a2505b8b82a0a">&#9670;&nbsp;</a></span>expand_xi_scalar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def expand_xi_scalar </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>lmax</em> = <code>&quot;auto&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>zeta</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>min_lmax</em> = <code>64</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>max_lmax</em> = <code>512</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>coeff_threshold</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>compress</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Expand the xi vector into spin weighted spherical harmonics. </p>
+<p>We expand the quantity </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \xi_{(\ell)} := \overline{m}^A \xi_A \]" src="form_606.png"/>
+</p>
+<p> into spin weighted spherical harmonics of spin weight -1. The complex null tetrad <img class="formulaInl" alt="$(\ell, k, m, \overline{m})$" src="form_607.png"/> is constructed using <img class="formulaInl" alt="$m = \frac{1}{\sqrt{2}} (e_1 + i e_2)$" src="form_608.png"/>, where <img class="formulaInl" alt="$e_1 = \frac{\partial_\lambda}{\sqrt{q_{\lambda\lambda}}}$" src="form_526.png"/> and <img class="formulaInl" alt="$e_2 = \frac{\partial_\varphi}{\sqrt{q_{\varphi\varphi}}}$" src="form_527.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>. </td></tr>
+    <tr><td class="paramname">lmax</td><td>Largest <code>ell</code> value in the expansion into <img class="formulaInl" alt="${}_{-1}Y_{\ell m}$" src="form_609.png"/>. Default is <code>"auto"</code>, which tries to find a maximum between <code>min_lmax</code> and <code>max_lmax</code> such that the coefficients fall off sufficiently up to <code>lmax</code>. </td></tr>
+    <tr><td class="paramname">min_lmax,max_lmax</td><td>If <code>lmax="auto"</code>, start expanding with <code>lmax=min_lmax</code>. If no "knee" is detected in the resulting coefficients, the resolution is doubled until a knee is detected or we have reached <code>max_lmax</code>. </td></tr>
+    <tr><td class="paramname">coeff_threshold</td><td>If the final few coefficients are larger than <code>coeff_threshold</code> times the largest coefficient, then do not try to detect a knee in the coefficients but immediately increase the resolution. By default, knee detection is always run. </td></tr>
+    <tr><td class="paramname">compress</td><td>Since the scalar is purely real for axisymmetric MOTSs, the only non-zero coefficients in the expansion will be the ones with <code>m=0</code>. Setting <code>compress=True</code> (default) will extract this one row of possibly non-vanishing coefficients and return it. </td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the coefficients, the (complex) shear scalar values at the grid points in <img class="formulaInl" alt="$\theta=\arccos\zeta$" src="form_537.png"/> and the grid points themselves. Otherwise (default), return just the coefficients. </td></tr>
   </table>
   </dd>
 </dl>
@@ -805,6 +1338,67 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>As <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a8d946c32710bf1ff05efb654bee672fc" title="Compute the expansion at one parameter value. ">expansion()</a>, but on a whole set of parameter values. </p>
+
+</div>
+</div>
+<a id="a19bd95251b6fa5eba926e9007588f961"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19bd95251b6fa5eba926e9007588f961">&#9670;&nbsp;</a></span>extremality_parameter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def extremality_parameter </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>&quot;auto&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the extremality parameter. </p>
+<p>This computes the extremality parameter given in [1] (the correct formula can be found as eq. (14) in [2]) as </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ e = 1 - \frac{1}{8\pi} \int_{\mathcal{S}} \left(\frac{v_\bot + 1}{v_\bot - 1}\right) \Vert \sqrt{2}\sigma_{(\ell)} \Vert^2\ d^2V = 1 - \frac{1}{2} \int_0^\pi \sqrt{q} \left(\frac{v_\bot + 1}{v_\bot - 1}\right) \Vert \sigma_{(\ell)} \Vert^2\ d\lambda \,, \]" src="form_579.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$\lambda$" src="form_36.png"/> is our parameter along the curve and <img class="formulaInl" alt="$v_\bot$" src="form_580.png"/> is defined via </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ V^\mu = \alpha\;( n^\mu + v_\bot \nu^\mu ) \,. \]" src="form_581.png"/>
+</p>
+<p> Here <img class="formulaInl" alt="$\alpha$" src="form_161.png"/> is the lapse function, <img class="formulaInl" alt="$n^\mu$" src="form_582.png"/> the future pointing timelike normal to the spatial slice, <img class="formulaInl" alt="$\nu^\mu$" src="form_583.png"/> the normal of the MOTS within the slice, and <img class="formulaInl" alt="$V^\mu$" src="form_584.png"/> the time evolution vector (tangent to the MOTT and normal to the MOTS).</p>
+<p>The factor of <img class="formulaInl" alt="$\sqrt{2}$" src="form_532.png"/> results from a different scaling convention for the null normals used to define the shear.</p>
+<p><b>References</b> </p>
+<p>[1] Booth, Ivan, and Stephen Fairhurst. "Extremality conditions for
+     isolated and dynamical horizons." Physical review D 77.8 (2008): 084005.</p>
+<p>[2] Booth, Ivan. "Two physical characteristics of numerical apparent
+     horizons." Canadian Journal of Physics 86.4 (2008): 669-673. </p>
 
 </div>
 </div>
@@ -974,8 +1568,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ca583853d9351f18fdd647ddc7b109d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ca583853d9351f18fdd647ddc7b109d">&#9670;&nbsp;</a></span>get_det_q_func()</h2>
+<a id="a5d5f7aa93ad9cf41e64aa493710e7ac7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d5f7aa93ad9cf41e64aa493710e7ac7">&#9670;&nbsp;</a></span>get_det_q_func()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -984,13 +1578,29 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">def get_det_q_func </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em></td><td>)</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cached</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Create a function to evaluate det(q). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cached</td><td>If <code>True</code>, cache every evaluation of the returned callable. Default is <code>False</code>. Note that a new cache is created for each created function. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1065,6 +1675,66 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ad95132b13eed51da5774d19df48cd8f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad95132b13eed51da5774d19df48cd8f7">&#9670;&nbsp;</a></span>get_ricci_scalar_func()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def get_ricci_scalar_func </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cached</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an (optionally cached) function to evaluate the Ricci scalar. </p>
+
+</div>
+</div>
+<a id="af82822ba93eadd30cf5d02bdbcab3887"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af82822ba93eadd30cf5d02bdbcab3887">&#9670;&nbsp;</a></span>get_stability_calc_obj()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def get_stability_calc_obj </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>param</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return a StabilityCalc object at the given point of the curve. </p>
 
 </div>
 </div>
@@ -1269,6 +1939,74 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">metric</td><td>Which metric to use for integrating along the connecting line of the two points. By default, takes the current metric stored in this curve. Explicitely specify <code>None</code> to get the coordinate distance. </td></tr>
     <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the computed result and an estimation of the error. Otherwise (default), just return the result. </td></tr>
     <tr><td class="paramname">**kw</td><td>Further keyword arguments are passed to <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0bf941a618b577b673e4d897bca584d7" title="Compute the length of this curve w.r.t. a given metric. ">arc_length_using_metric()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a38053ffe9e087b496b35cdbbc6327d8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38053ffe9e087b496b35cdbbc6327d8b">&#9670;&nbsp;</a></span>integrate_tev_divergence()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def integrate_tev_divergence </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tev_args</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>&quot;auto&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>unity_b</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Integrate the divergence of the time evolution vector (TEV). </p>
+<p>This computes the integral of the divergence of the time evolution vector (TEV) over the MOTS. We compute the integrand via </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ q^{\mu\nu} \nabla_\mu V_\nu = q^{\mu\nu} \nabla_\mu (b \ell_\nu + c k_\nu) = c q^{\mu\nu} \nabla_\mu k_\nu = c \Theta_{(k)} \,. \]" src="form_620.png"/>
+</p>
+<p>Note that the ingoing expansion is computed with the convention <img class="formulaInl" alt="$\ell^\mu k_\mu = -2$" src="form_533.png"/>. To convert the result to the other often used convention <img class="formulaInl" alt="$\ell^\mu k_\mu = -1$" src="form_534.png"/>, simply divide the integration result by <img class="formulaInl" alt="$\sqrt{2}$" src="form_532.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. </td></tr>
+    <tr><td class="paramname">tev_args</td><td>Optional further arguments for the <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a4ad4da6539184472b914b8be8af13791" title="Compute the time evolution 4D vector. ">time_evolution_vector()</a> call. </td></tr>
+    <tr><td class="paramname">n</td><td>Order of the fixed quadrature integration (roughly equal to the number of points at which the integrand is evaluated). The default <code>"auto"</code> will use twice the current curve's resolution, but at least 30 points. </td></tr>
+    <tr><td class="paramname">unity_b</td><td>If <code>True</code>, expand the TEV as <img class="formulaInl" alt="$V = \ell + c k$" src="form_621.png"/>, effectively transforming <code>c</code> to <code>c/b</code>. If <code>False</code> (default), use the usual scaling (with unity time component of the TEV). </td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the computed value of the integral and a list of <code>n</code> <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1TimeVectorData.html" title="MOTT time evolution vector. ">TimeVectorData</a> objects created while evaluating the integrand. Default is <code>False</code>, i.e. to only return the value. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1539,8 +2277,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a1593d55a85a61e1578c554b68370f9d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1593d55a85a61e1578c554b68370f9d7">&#9670;&nbsp;</a></span>multipoles()</h2>
+<a id="aa931f51a2b9f73fa403301047ba979b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa931f51a2b9f73fa403301047ba979b7">&#9670;&nbsp;</a></span>multipoles()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1555,6 +2293,12 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>min_n</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>max_n</em> = <code>10</code>, </td>
         </tr>
         <tr>
@@ -1562,6 +2306,24 @@ Additional Inherited Members</h2></td></tr>
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>num</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>det_q_function</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ricci_scalar_function</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>zeta</em> = <code>None</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1593,9 +2355,9 @@ Additional Inherited Members</h2></td></tr>
 <p>This is based on the considerations in [1].</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">max_n</td><td>Integer specifying the maximum number <code>n</code> (inclusive) up to which the moments <img class="formulaInl" alt="$I_n$" src="form_319.png"/> should be computed. </td></tr>
+    <tr><td class="paramname">min_n,max_n</td><td>Integers specifying the minimum and maximum number <code>n</code> (inclusive) up to which the moments <img class="formulaInl" alt="$I_n$" src="form_319.png"/> should be computed. By default, we compute for <code>n=0,...,10</code>. </td></tr>
     <tr><td class="paramname">num</td><td>Resolution for the pseudospectral solution of the invariant coordinate <img class="formulaInl" alt="$\zeta$" src="form_149.png"/>. Default is to use the current curve's resolution, but at least 100. </td></tr>
-    <tr><td class="paramname">get_zeta</td><td>Optional argument. If specified and <code>True</code>, don't return the multipole moments but the solution <img class="formulaInl" alt="$\zeta$" src="form_149.png"/>. </td></tr>
+    <tr><td class="paramname">det_q_function,ricci_scalar_function,zeta</td><td>Optional callables evaluating <img class="formulaInl" alt="$\det q$" src="form_514.png"/>, the Ricci scalar, and the invariant angle <img class="formulaInl" alt="$\zeta(\lambda)$" src="form_516.png"/>, respectively. Can be used to supply cached or previously generated versions of these functions. </td></tr>
     <tr><td class="paramname">full_output</td><td>Whether to return an <a class="el" href="classmotsfinder_1_1numutils_1_1IntegrationResults.html" title="Represents a sequence of multiple integration results. ">numutils.IntegrationResults</a> object containing all values with their errors and any warnings. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">disp</td><td>Raise an error in case of an integration warning. </td></tr>
     <tr><td class="paramname">**kw</td><td>Additional keyword arguments are supplied to the <code>scipy.integrate.quad</code> call.</td></tr>
@@ -1801,8 +2563,214 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="a261ec805e4184cc43bfc37a4f801c204"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a261ec805e4184cc43bfc37a4f801c204">&#9670;&nbsp;</a></span>stability_parameter()</h2>
+<a id="a92b72eda23af6809e3e8fe0efc629bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92b72eda23af6809e3e8fe0efc629bea">&#9670;&nbsp;</a></span>shear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def shear </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the shear of the MOTS at a point. </p>
+<p>See ..<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a95aef4b087204edef098d169b16893e8" title="Compute the shear tensor in coordinates on the surface. ">stabcalc.StabilityCalc.compute_shear()</a> for more information.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>Point on the MOTS to compute the shear at. </td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the shear (2,2)-tensor and its square <img class="formulaInl" alt="$\sigma_{AB}\sigma^{AB}$" src="form_502.png"/>. Default is <code>False</code>, i.e. only return the shear tensor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa641f4b2dd3163ce333e948970884a7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa641f4b2dd3163ce333e948970884a7c">&#9670;&nbsp;</a></span>shear_scalar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def shear_scalar </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the complex shear scalar. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>Point on the MOTS to compute the shear scalar at. </td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the shear scalar, the shear tensor, and the square of the shear. Default is <code>False</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Notes</b> </p>
+<p>Given two orthonormal spacelike tangents <img class="formulaInl" alt="$e_1$" src="form_519.png"/>, <img class="formulaInl" alt="$e_2$" src="form_520.png"/> to the MOTS, we define a null tetrad <img class="formulaInl" alt="$(\ell, k, m, \bar m)$" src="form_535.png"/>, where <img class="formulaInl" alt="$m^\mu = \frac{1}{\sqrt{2}}(e_1 + i e_2)$" src="form_522.png"/>. Here, <img class="formulaInl" alt="$\ell^\mu, k^\mu$" src="form_536.png"/> are the outgoing and ingoing future pointing null normals to the MOTS, respectively, with the scaling condition <img class="formulaInl" alt="$\ell^\mu k_\mu = -1$" src="form_534.png"/> (notice that this is different than our usual scaling condition, see also ..<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a95aef4b087204edef098d169b16893e8" title="Compute the shear tensor in coordinates on the surface. ">stabcalc.StabilityCalc.compute_shear()</a>). Then, the shear scalar is defined as </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \sigma_{(\ell)} = m^\mu m^\nu \nabla_\mu \ell_\nu = \frac{1}{2} \left( \frac{\sigma_{\lambda\lambda}}{q_{\lambda\lambda}} - \frac{\sigma_{\varphi\varphi}}{q_{\varphi\varphi}} \right) + i \frac{\sigma_{\lambda\varphi}} {\sqrt{q_{\lambda\lambda}q_{\varphi\varphi}}} \,, \]" src="form_525.png"/>
+</p>
+<p> where we have used <img class="formulaInl" alt="$e_1 = \frac{\partial_\lambda}{\sqrt{q_{\lambda\lambda}}}$" src="form_526.png"/> and <img class="formulaInl" alt="$e_2 = \frac{\partial_\varphi}{\sqrt{q_{\varphi\varphi}}}$" src="form_527.png"/>. </p>
+
+</div>
+</div>
+<a id="a380a3fc19ab9398c2ac5a30068553444"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a380a3fc19ab9398c2ac5a30068553444">&#9670;&nbsp;</a></span>shear_square_integral()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def shear_square_integral </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>&quot;auto&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the integral of the shear squared. </p>
+<p>This computes the integral </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \int_\mathcal{S} \sigma_{AB}\sigma^{AB}\ dV = 2\pi \int_0^\pi \sigma_{AB}\sigma^{AB} \sqrt{q}\ d\lambda\,. \]" src="form_549.png"/>
+</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Order of the fixed quadrature integration (which is equal to the number of points at which the integrand is evaluated). The default <code>"auto"</code> will use twice the current curve's resolution, but at least 30 points. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aac59f67e49be52dc9c8a6d1a5ff846fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac59f67e49be52dc9c8a6d1a5ff846fc">&#9670;&nbsp;</a></span>signature_quantities()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def signature_quantities </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>proper</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the MOTS tube signature along points of this MOTS. </p>
+<p>This method takes a list of points and evaluates the signature of the MOTT, i.e. the hypersurface consisting of stacking the MOTSs at different times to build a world-tube. This surface may be space-like (the usual case for a dynamical horizon) or null (in the static case, e.g. Schwarzschild), timelike, or even of mixed signature.</p>
+<p>The signature is computed using a list of curves representing this MOTS at different time steps. We collect a given number of such curves before and after the time slice of this current MOTS and interpolate along the time direction in order to evaluate the coordinate derivative vector.</p>
+<dl class="section return"><dt>Returns</dt><dd>A list of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html" title="Class storing quantities allowing visualization of signature. ">SignatureQuantities</a> objects, one for each point in <code>pts</code>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pts</td><td>The points along the MOTS at which to evaluate the signature. Should be a sequence of values in the open interval <code>(0, pi)</code>. Interpretation of these values is subject to <code>proper</code>. </td></tr>
+    <tr><td class="paramname">curves</td><td>Additional curves for different times in order to interpolate and compute the time derivative. The current MOTS (i.e. this object) may or may not be part of this list and their order does not matter. This list needs to have at least one other MOTS that is not the current object. </td></tr>
+    <tr><td class="paramname">proper</td><td>Whether to interpret the values in <code>pts</code> as fraction of the proper length (scaled by <code>pi</code>) or as simple curve parameter. Default is <code>True</code>. If the parameterization of the other curves in <code>curves</code> does not vary slowly in time, taking the 'simple' parameter values produces non-differentiable world lines of constant curve parameter and hence very inaccurate signature evaluations. Since smooth parameterization can not be guaranteed in most cases, it is highly recommended to take the proper parameterizations. Note that in both cases, the values of <code>pts</code> should lie in <code>(0, pi)</code>. <b>NOTE:</b> All curves (the current one and those in <code>curves</code>) should have <code>'length_maps'</code> data in <code>user_data</code>. This can be obtained using the methods in ..<a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots_1_1props.html" title="Functions to compute and store physical properties of MOTS curves. ">trackmots.props</a>. </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Notes</b> </p>
+<p>Let <img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> be the MOTT foliated by the MOTSs given in the <code>curves</code> parameter and <img class="formulaInl" alt="$N$" src="form_552.png"/> a normal of <img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/>. Then, at a point <img class="formulaInl" alt="$p \in \mathcal{H}$" src="form_553.png"/> we have</p><ul>
+<li><img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> spacelike at <img class="formulaInl" alt="$p$" src="form_554.png"/> iff <img class="formulaInl" alt="$g(N_p, N_p) &lt; 0$" src="form_555.png"/>,</li>
+<li><img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> timelike at <img class="formulaInl" alt="$p$" src="form_554.png"/> iff <img class="formulaInl" alt="$g(N_p, N_p) &gt; 0$" src="form_556.png"/>,</li>
+<li><img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> null at <img class="formulaInl" alt="$p$" src="form_554.png"/> iff <img class="formulaInl" alt="$g(N_p, N_p) = 0$" src="form_557.png"/>.</li>
+</ul>
+<p>Let <img class="formulaInl" alt="$k^\mu$" src="form_441.png"/> and <img class="formulaInl" alt="$\ell^\mu$" src="form_442.png"/> span the (2D) space of normals to the current MOTS in spacetime <img class="formulaInl" alt="$M$" src="form_558.png"/>, with the scaling fixed such that <img class="formulaInl" alt="$k^\mu \ell_\mu = -2$" src="form_559.png"/>. Then, <img class="formulaInl" alt="$N$" src="form_552.png"/> will be of the form <img class="formulaInl" alt="$N = c_1 \ell + c_2 k$" src="form_560.png"/> and hence <img class="formulaInl" alt="$g(N,N) = -4c_1c_2$" src="form_561.png"/>. This follows from the fact that a normal to the MOTT is also a normal to the MOTS. The condition for <img class="formulaInl" alt="$N$" src="form_552.png"/> to be normal to <img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> now becomes </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ g(N, \partial_\tau) = 0 \qquad \Leftrightarrow \qquad \frac{c_1}{c_2} = -\frac{k\cdot\partial_\tau}{\ell\cdot\partial_\tau}\,, \]" src="form_562.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$\tau$" src="form_563.png"/> is a coordinate along <img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> and <img class="formulaInl" alt="$\partial_\tau$" src="form_564.png"/> a tangent to <img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> (which is not necessarily normal to the MOTS). We choose <img class="formulaInl" alt="$\tau(p) = t$" src="form_565.png"/> iff <img class="formulaInl" alt="$p \in \mathcal{S}_t$" src="form_566.png"/>, where <img class="formulaInl" alt="$\mathcal{S}_t$" src="form_567.png"/> is the MOTS in the slice with coordinate time <img class="formulaInl" alt="$t$" src="form_568.png"/>. We get the coordinate line of <img class="formulaInl" alt="$\tau$" src="form_563.png"/> by fixing the other coordinates on the MOTSs. As explained above, we do not fix the parameter <img class="formulaInl" alt="$\lambda$" src="form_36.png"/> of our MOTS representation. Instead, we use a fraction of the proper length as coordinate, which ensures a smooth coordinate line when varying just <img class="formulaInl" alt="$\tau$" src="form_563.png"/>.</p>
+<p>The sign of <img class="formulaInl" alt="$g(N,N) = -4c_1c_2$" src="form_561.png"/> is the same as that of <img class="formulaInl" alt="$-\frac{c_1}{c_2}$" src="form_569.png"/>, which is the same as that of <img class="formulaInl" alt="$f_{sig}:=(k\cdot\partial_\tau)(\ell\cdot\partial_\tau)$" src="form_570.png"/>. We then have</p><ul>
+<li><img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> spacelike iff <img class="formulaInl" alt="$f_{sig} &lt; 0$" src="form_571.png"/>,</li>
+<li><img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> timelike iff <img class="formulaInl" alt="$f_{sig} &gt; 0$" src="form_572.png"/>,</li>
+<li><img class="formulaInl" alt="$\mathcal{H}$" src="form_551.png"/> null iff <img class="formulaInl" alt="$f_{sig} = 0$" src="form_573.png"/>. </li>
+</ul>
+
+</div>
+</div>
+<a id="ae0b1390f65a098858013ad5ec3d755e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0b1390f65a098858013ad5ec3d755e7">&#9670;&nbsp;</a></span>stability_parameter()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1859,6 +2827,12 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>zeta</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
         </tr>
         <tr>
@@ -1881,6 +2855,7 @@ Additional Inherited Members</h2></td></tr>
     <tr><td class="paramname">compute_eigenfunctions</td><td>Whether to compute the eigenfunction for each eigenvalue. Default is <code>False</code>. The eigenfunctions will be accessible from the StabilitySpectrum object via the <code>spectrum.get_eigenfunction()</code> method. Note that the method for computing the eigenvalues is a different one in this case and hence the numerical values (and even the accuracy) may differ from the case <code>compute_eigenfunctions=False</code>. </td></tr>
     <tr><td class="paramname">slice_normal</td><td>Whether to consider the stability operator w.r.t. the outward normal in the spatial slice (default). If <code>False</code>, consider the operator w.r.t. the past-pointing outward null normal <img class="formulaInl" alt="$-k^\mu$" src="form_447.png"/>. </td></tr>
     <tr><td class="paramname">transform_torsion</td><td>Apply a transformation to the lightlike null vectors <code>k</code> and <code>l</code> such that the rotation 1-form <img class="formulaInl" alt="$s_A$" src="form_448.png"/> (torsion of <code>l</code>) becomes divergence free. Default is <code>False</code>. </td></tr>
+    <tr><td class="paramname">zeta</td><td>Optional invariant angle zeta as function of curve parameter. If not supplied, will generate it when needed (i.e. when eigenfunctions are requested). </td></tr>
     <tr><td class="paramname">full_output</td><td>If <code>True</code>, return all eigenvalues in addition to the principal eigenvalue.</td></tr>
   </table>
   </dd>
@@ -1907,6 +2882,81 @@ Additional Inherited Members</h2></td></tr>
 </p>
 <p><b>References</b> </p>
 <p>[1] Andersson, Lars, Marc Mars, and Walter Simon. "Stability of marginally outer trapped surfaces and existence of marginally outer trapped tubes." arXiv preprint arXiv:0704.2889 (2007). </p>
+
+</div>
+</div>
+<a id="adf576f119b60fc790caa871324a88dca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf576f119b60fc790caa871324a88dca">&#9670;&nbsp;</a></span>surface_gravity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def surface_gravity </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>wrt</em> = <code>&quot;ell&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tevs</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute a (slicing dependent) surface gravity. </p>
+<p>This computes the surface gravity according to eq. (19) in Ref. [1], i.e. </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \kappa = - k_\mu X^\nu \nabla_\nu \ell^\mu \,, \]" src="form_628.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$X^\mu = \ell^\mu$" src="form_629.png"/> by default. However, we use a different (slicing dependent) scaling of the null normals. In particular, we choose </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \ell^\mu = \frac{1}{\sqrt{2}} (n^\mu + v^\mu) \,, \qquad k^\mu = \frac{1}{\sqrt{2}} (n^\mu - v^\mu) \,, \]" src="form_586.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$\ell^\mu$" src="form_442.png"/> and <img class="formulaInl" alt="$k^\mu$" src="form_441.png"/> are the future pointing outgoing and ingoing null normals, respectively. Here, <img class="formulaInl" alt="$n^\mu$" src="form_582.png"/> is the timelike future pointing normal on the spatial slice and <img class="formulaInl" alt="$v^\mu$" src="form_587.png"/> the outward normal of the MOTS within the slice. The above choice leads to a cross-normalization of <img class="formulaInl" alt="$\ell^\mu k_\mu = -1$" src="form_534.png"/>.</p>
+<p>Note that this cross-normalization does not fix the scaling of the null normals. If <img class="formulaInl" alt="$f$" src="form_588.png"/> is an arbitrary positive function, then <img class="formulaInl" alt="$\tilde\ell^\mu := f\ell^\mu$" src="form_589.png"/> and <img class="formulaInl" alt="$\tilde k^\mu := fk^\mu$" src="form_590.png"/> satisfy the same condition but will result in different values for the surface gravity.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pts</td><td>Points at which to compute the surface gravity. Values should be the pi-normalized proper lengths, i.e. <code>0</code> is at the north pole, <code>pi</code> at the south pole, and <code>0.5</code> at <code>50%</code> proper length. </td></tr>
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. This parameter is needed to numerically estimate the time derivative of the normal to the MOTS in the slice. </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>. </td></tr>
+    <tr><td class="paramname">wrt</td><td>Vector with respect to which to compute the surface gravity. Possible values are <code>"ell"</code> (default) and <code>"tev"</code>. </td></tr>
+    <tr><td class="paramname">tevs</td><td>In case you use the time evolution vector (<code>"tev"</code>) option for the <code>wrt</code> parameter, you may optionally supply a list of these vectors (objects) here, in case they are already precomputed. These should correspond to the points in <code>pts</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>References</b> </p>
+<p>[1] Pielahn, Mathias, Gabor Kunstatter, and Alex B. Nielsen. "Dynamical surface gravity in spherically symmetric black hole
+     formation." Physical Review D 84.10 (2011): 104008. </p>
 
 </div>
 </div>
@@ -1982,6 +3032,352 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a4ad4da6539184472b914b8be8af13791"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ad4da6539184472b914b8be8af13791">&#9670;&nbsp;</a></span>time_evolution_vector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def time_evolution_vector </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>search_step</em> = <code>1e-3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>search_dist_increase</em> = <code>10</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>max_increases</em> = <code>4</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Ns</em> = <code>400</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-12</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the time evolution 4D vector. </p>
+<p>Stacking the MOTSs at different times produces a 3-dimensional manifold, the marginally outer trapped tube (MOTT) foliated by the MOTSs. At any given point of a MOTS, we can find a normal in spacetime pointing tangent to the MOTT. This will be a linear combination of the ingoing and outgoing null normals <img class="formulaInl" alt="$k$" src="form_464.png"/> and <img class="formulaInl" alt="$\ell$" src="form_465.png"/>, since these span the 2D space of normals to the MOTS.</p>
+<p><b>NOTE 1:</b> This method is currently limited to MOTSs with vanishing spin (i.e. where the ingoing and outgoing null normals to the MOTS have no <code>y</code> component).</p>
+<p><b>NOTE 2:</b> All curves (the current one and those in <code>curves</code>) should have <code>'length_maps'</code> data in <code>user_data</code>. This can be obtained using the methods in ..<a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots_1_1props.html" title="Functions to compute and store physical properties of MOTS curves. ">trackmots.props</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>For each value in <code>pts</code>, a 4-vector <code>V</code> pointing along the MOTT. If <code>full_output==True</code>, return a <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1TimeVectorData.html" title="MOTT time evolution vector. ">TimeVectorData</a> object for each such value.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pts</td><td>The points along the MOTS at which to evaluate the signature. Should be a sequence of values in the open interval <code>(0, pi)</code>. Note that these are not the intrinsic parameters (called <code>lambda</code> or <code>param</code> in this code) but the <code>pi</code>-normalized proper length parameters. For example, a value <code>pi/2</code> is the point splitting the curve into two parts of equal proper length. </td></tr>
+    <tr><td class="paramname">curves</td><td>Additional curves for different times in order to interpolate and compute the time derivative. The current MOTS (i.e. this object) may or may not be part of this list and their order does not matter. This list needs to have at least one other MOTS that is not the current object. </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>. </td></tr>
+    <tr><td class="paramname">search_step</td><td>Initial step for optimizing the tilting parameter (see below). Default is <code>1e-3</code>. </td></tr>
+    <tr><td class="paramname">search_dist_increase</td><td>Factor by which the searched region for the tilting parameter is increased in each trial. Default is <code>10</code>. </td></tr>
+    <tr><td class="paramname">max_increases</td><td>Maximum number of times the search region for the tilting parameter is increased by <code>search_dist_increase</code>. Default is <code>4</code>. </td></tr>
+    <tr><td class="paramname">Ns</td><td>Number of sample points for the <code>scipy.optimize.brute()</code> searches done after the search region is increased. </td></tr>
+    <tr><td class="paramname">tol</td><td>Tolerance for the error. If the error drops below <code>tol</code>, we define the current tilting parameter as converged and return the resulting time evolution vector. </td></tr>
+    <tr><td class="paramname">full_output</td><td>Wether to output a list of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1TimeVectorData.html" title="MOTT time evolution vector. ">TimeVectorData</a> object (if <code>True</code>) or a list of 4D numpy vectors (default).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Notes</b> </p>
+<p>The time vector is found using a numerical minimization strategy as follows. For each MOTS we take one point at the same relative proper length (say <code>25%</code> of the curve's total length) and interpolate a curve through these points. The curve parameter will be the simulation time. The tangent to this curve is a candidate for the 4D time evolution vector of the MOTT. However, in general it will be slightly off the plane of normals from the MOTS (it points along the MOTT, but not orthogonal to the MOTS). We project this vector onto the plane spanned by <img class="formulaInl" alt="$k$" src="form_464.png"/> and <img class="formulaInl" alt="$\ell$" src="form_465.png"/> and compute the sum of the squares of coordinate changes this induces. This is the error we wish to minimize. We then tilt the vector by building a new time interpolation curve. The tilting is achieved by not taking the same relative proper length parameter for each MOTS. Instead, we move away from this parameter linearly in coordinate time. The "speed" for this moving is then numerically optimized to minimize the error. We call this speed the tilting parameter.</p>
+<p>The optimization is first performed using Brent's method, starting from the same tilting parameter that was successful for the previous point. Near the poles, the tilting is guaranteed to be small. Having a large number of points in <code>pts</code> hence leads to faster convergence per point, given the points are ordered and somewhat evenly distributed. If the search converges in a local minimum (given tolerance is not reached), we do a brute search on a grid of points in a larger region around the previously successful tilting parameter. The best match is then used as starting point for another search using Brent's method. </p>
+
+</div>
+</div>
+<a id="a5d3480e378bb9d98fdbe4b6a8a18f5bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d3480e378bb9d98fdbe4b6a8a18f5bf">&#9670;&nbsp;</a></span>time_interpolators()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def time_interpolators </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>points</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>proper</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>eps</em> = <code>0.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Construct a set of functions interpolating along a MOTT. </p>
+<dl class="section return"><dt>Returns</dt><dd>A list of callables with signature <code>f(x, nu=0)</code>, where <code>x</code> is the time <code>t</code> at which to evaluate and <code>nu</code> the time derivative. There will be one such function per point in <code>points</code> (see below). Each function will return a 3-element array with the coordinates of the intersection of the tube with the <code>t=const</code> slice. The coordinates will correspond to the same point on the respective curve for each <code>t</code>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. </td></tr>
+    <tr><td class="paramname">points</td><td>List of points each being a number in <code>[0, pi]</code>. Alternatively, this can be an integer specifying how many of such points should be created. They will be equally spaced and exclude the boundary. Default is to take the current curve's resolution <code>self.num</code>. </td></tr>
+    <tr><td class="paramname">proper</td><td>Whether to take the points at the pi-normalized proper length or at the curves current parameterization. It is strongly recommended to take the proper length, which is also the default. Otherwise, the worldlines are most likely not differentiable (i.e. the interpolation may be very poor). </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves before and after this current curve to consider for interpolation. Default is <code>3</code>. Set to <code>None</code> to use all curves as-is. The current curve then has to be in <code>curves</code>. </td></tr>
+    <tr><td class="paramname">eps</td><td>Parameterized deviation from the "equal-parameter" rule. If nonzero, the surrounding curves are not evaluated at the same (possibly proper-length) parameter <code>u</code> as this curve but instead at <code>u + eps*(t-t0)</code>, where <code>t0</code> is the time of the slice this curve lives in. Default is <code>0.0</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a124738aa04c429c1e8b3622ea2b47044"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a124738aa04c429c1e8b3622ea2b47044">&#9670;&nbsp;</a></span>time_shift_params()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def time_shift_params </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>params</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tevs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>next_curve</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Transport a list of parameters in time. </p>
+<p>This takes a set of parameter values (i.e. points along the MOTS) and computes the parameters of points on a future (or past) MOTS obtained by transporting the points along the evolution vector field on the dynamical horizon.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">params</td><td>Sequence of parameter values specifying the points on the MOTS to transport. </td></tr>
+    <tr><td class="paramname">tevs</td><td>List of time evolution vectors along the current MOTS. These will be interpolated to the given <code>params</code> to obtain the direction into which to transport the points. </td></tr>
+    <tr><td class="paramname">next_curve</td><td>The MOTS to transport the points to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a40079c05732aedfe1bc8544e7a5d2014"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40079c05732aedfe1bc8544e7a5d2014">&#9670;&nbsp;</a></span>timescale_T2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def timescale_T2 </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tevs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the square of the timescale <code>T</code>. </p>
+<p>This computes </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ T^2 := \left( \frac{1}{A} \int_{\mathcal{S}} \sigma^{(V)}_{AB}\sigma^{(\tau)\,AB}\ dA \right)^{-1} \,, \]" src="form_632.png"/>
+</p>
+<p> where <code>A</code> is the MOTS's surface area, <code>V</code> is the time evolution vector (scaled to have unity time component) with </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ V^\mu = b \ell^\mu + c k^\mu \,. \]" src="form_633.png"/>
+</p>
+<p> Then, <img class="formulaInl" alt="$\tau^\mu = b \ell^\mu - c k^\mu$" src="form_634.png"/>. <img class="formulaInl" alt="$\ell$" src="form_465.png"/> and <img class="formulaInl" alt="$k$" src="form_464.png"/> are the outgoing and ingoing null normals with scaling <img class="formulaInl" alt="$\ell \cdot k = -1$" src="form_625.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tevs</td><td>List of <code>n</code> time evolution vector objects at the Gaussian quadrature points for an integral of order <code>n</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aaa857530befbb8273056ab18d5f588fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa857530befbb8273056ab18d5f588fd">&#9670;&nbsp;</a></span>timescale_tau2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def timescale_tau2 </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tevs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kappas_tev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>proper_pts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>option</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the square of the timescale <code>tau</code>. </p>
+<p>This computes </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \tau^2 := \left( \frac{1}{A} \int_{\mathcal{S}} \kappa^{(V)} \Theta_{(V)}\ dA \right)^{-1} \,, \]" src="form_630.png"/>
+</p>
+<p> where <code>A</code> is the MOTS's surface area, <img class="formulaInl" alt="$\kappa^{(V)} = - k^\mu V^\nu \nabla_\nu \ell_\mu$" src="form_631.png"/> is the surface gravity with respect to the time evolution vector <code>V</code> (with unit time component) and <img class="formulaInl" alt="$\ell$" src="form_465.png"/> and <img class="formulaInl" alt="$k$" src="form_464.png"/> are the outgoing and ingoing null normals with scaling <img class="formulaInl" alt="$\ell \cdot k = -1$" src="form_625.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tevs</td><td>List of <code>n</code> time evolution vector objects at the Gaussian quadrature points for an integral of order <code>n</code>. </td></tr>
+    <tr><td class="paramname">kappas_tev</td><td>List of values of the surface gravity w.r.t. the time evolution vectors. </td></tr>
+    <tr><td class="paramname">proper_pts</td><td>List of proper parameter values (in <code>[0, pi]</code>) at which the <code>kappas_tev</code> are computed. Only used to verify that all quantities are evaluated at the correct points. </td></tr>
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. This parameter is needed to numerically estimate the time derivative of the <code>c</code> coefficient of the time evolution vectors (used only in option 4, see below). </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>. </td></tr>
+    <tr><td class="paramname">option</td><td>For debugging/exploration purposes. Use different definitions of <img class="formulaInl" alt="$\tau$" src="form_563.png"/> to experiment with. The options are (<b>note</b> that for option 2 we return <img class="formulaInl" alt="$\tau$" src="form_563.png"/> instead of <img class="formulaInl" alt="$\tau^2$" src="form_649.png"/>):<ul>
+<li>option 0: default, the one given in the above equation</li>
+<li>option 1: use <img class="formulaInl" alt="$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} \Theta_{(V)}^2\ dA$" src="form_642.png"/></li>
+<li>option 2: use <img class="formulaInl" alt="$1/\tau = \frac{1}{A} \int_{\mathcal{S}} \Theta_{(V)}\ dA$" src="form_643.png"/></li>
+<li>option 3: use <img class="formulaInl" alt="$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 \Theta_{(V)}^2] \ dA$" src="form_650.png"/></li>
+<li>option 4: use <img class="formulaInl" alt="$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 \Theta_{(V)}^2 - \Theta_{(V)} \frac{d}{dt} \ln c] \ dA$" src="form_651.png"/> </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ab5d876f9c0547a82a18593efaf10f2c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab5d876f9c0547a82a18593efaf10f2c1">&#9670;&nbsp;</a></span>x_distance()</h2>
 
@@ -2015,6 +3411,131 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the proper length of a coordinate line from the curve to the z-axis. </p>
+
+</div>
+</div>
+<a id="a4e1dca9e2b825bc59677a54a64a07b7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e1dca9e2b825bc59677a54a64a07b7c">&#9670;&nbsp;</a></span>xi_square_integral()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def xi_square_integral </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>&quot;auto&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the integral of the square of the xi vector. </p>
+<p>We compute <img class="formulaInl" alt="$\int_\mathcal{S} \xi^A \xi_A d^2V$" src="form_605.png"/>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>. </td></tr>
+    <tr><td class="paramname">n</td><td>Order of the fixed quadrature integration (equal to the number of points at which the integrand is evaluated). The default <code>"auto"</code> will use twice the current curve's resolution, but at least 30 points. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a83b04c959af2ec911236de04aab2bc6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83b04c959af2ec911236de04aab2bc6e">&#9670;&nbsp;</a></span>xi_vector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def xi_vector </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>curves</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the xi vector. </p>
+<p>The quantity computed here is called <img class="formulaInl" alt="$\zeta^A$" src="form_591.png"/> in eq. (3.10) in Ref. [1], see also eq. (3.19) in Ref. [2]. We compute </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \xi^A := q^{AB} \hat r^\mu \nabla_\mu \ell_B \,, \]" src="form_592.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$\hat r^\mu$" src="form_593.png"/> is the normalized time evolution vector (see <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a4ad4da6539184472b914b8be8af13791" title="Compute the time evolution 4D vector. ">time_evolution_vector()</a>), <img class="formulaInl" alt="$q^{AB}$" src="form_594.png"/> the inverse 2-metric on the MOTS, and <img class="formulaInl" alt="$\ell^\mu$" src="form_442.png"/> the future pointing outgoing null normal to the MOTS. Note that we use the scaling <img class="formulaInl" alt="$k^\mu \ell_\mu = -1$" src="form_595.png"/> here, where <img class="formulaInl" alt="$k^\mu$" src="form_441.png"/> is the future pointing ingoing null normal.</p>
+<p><b>Note:</b> This quantity depends on the scaling of the null normals. We construct the null normals in a slicing dependent way using </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \ell^\mu = \frac{1}{\sqrt{2}} (n^\mu + v^\mu) \,, \qquad k^\mu = \frac{1}{\sqrt{2}} (n^\mu - v^\mu) \,, \]" src="form_586.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$n^\mu$" src="form_582.png"/> is the future pointing normal on the slice and <img class="formulaInl" alt="$v^\mu$" src="form_587.png"/> the outward normal of the MOTS within the slice. This choice leads to <img class="formulaInl" alt="$\ell^\mu k_\mu = -1$" src="form_534.png"/>. However, you can scale both null normals by an arbitrary function in a way to keep the condition <img class="formulaInl" alt="$\ell^\mu k_\mu = -1$" src="form_534.png"/>. In Ref. [2], a different choice is made, namely </p><p class="formulaDsp">
+<img class="formulaDsp" alt="\[ \ell^\mu = \hat\tau^\mu + \hat r^\mu \,, \]" src="form_596.png"/>
+</p>
+<p> where <img class="formulaInl" alt="$\hat\tau^\mu$" src="form_597.png"/> is the normalized outward normal to the MOTT (i.e. a timelike vector for spacelike surfaces like dynamical horizons) and <img class="formulaInl" alt="$\hat r^\mu$" src="form_593.png"/> the time evolution vector, i.e. the tangent to the MOTT which is also a normal to the MOTS. Hence, quantitative results presented in [2] will not hold for the vector computed here.</p>
+<dl class="section return"><dt>Returns</dt><dd>Components of <img class="formulaInl" alt="$\xi^A$" src="form_598.png"/> as a 2-element array. If <code>full_output=True</code>, return <img class="formulaInl" alt="$\xi^A$" src="form_598.png"/>, <img class="formulaInl" alt="$\xi_A$" src="form_599.png"/>, <img class="formulaInl" alt="$|\xi|^2$" src="form_600.png"/>, <img class="formulaInl" alt="$\xi_{(\ell)}$" src="form_601.png"/>, where <img class="formulaInl" alt="$\xi_{(\ell)} := \overline{m}^A \xi_A$" src="form_602.png"/>. Here <img class="formulaInl" alt="$\overline{m}^\mu$" src="form_603.png"/> is one of the components of the complex null tetrad <img class="formulaInl" alt="$(\ell,k,m,\overline{m})$" src="form_604.png"/>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pts</td><td>Proper length parameters at which to compute the results. Each point should be in the range <code>(0, pi)</code>, where a value of e.g. <code>pi/2</code> refers to a point on the MOTS dividing the curve into two parts of equal proper length. </td></tr>
+    <tr><td class="paramname">curves</td><td>List of curves that build up the tube. The current object (<code>self</code>) may or may not be in that list. Each curve needs to have a metric with a <code>time</code> attribute. They do not need to be sorted. This parameter is needed to numerically estimate the time derivative of the normal to the MOTS in the slice. </td></tr>
+    <tr><td class="paramname">steps</td><td>How many curves in the future and past of this curve to consider from <code>curves</code>. Default is <code>3</code>. </td></tr>
+    <tr><td class="paramname">full_output</td><td>Whether to return just the contravariant components of the xi vector or also the covariant, the square, and the complex scalar. See above for details. Default is <code>False</code>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>References</b> </p>
+<p>[1] Ashtekar, Abhay, Miguel Campiglia, and Samir Shah. "Dynamical
+ black  Approach to the final state." Physical Review D 88.6 (2013): 064045.</p>
+<p>[2] Ashtekar, Abhay, and Badri Krishnan. "Dynamical horizons and their
+           properties." Physical Review D 68.10 (2003): 104030. </p>
 
 </div>
 </div>

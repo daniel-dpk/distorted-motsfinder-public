@@ -152,9 +152,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a967c310cea1332b0c21b68053be37366"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a967c310cea1332b0c21b68053be37366">save_to_file</a> (filename, data, overwrite=False, verbose=True, showname='data', mkpath=True)</td></tr>
 <tr class="memdesc:a967c310cea1332b0c21b68053be37366"><td class="mdescLeft">&#160;</td><td class="mdescRight">Save an object to disk.  <a href="#a967c310cea1332b0c21b68053be37366">More...</a><br /></td></tr>
 <tr class="separator:a967c310cea1332b0c21b68053be37366"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14f6edebd8ac608ec6ebfa89b072f4b8"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a14f6edebd8ac608ec6ebfa89b072f4b8">load_from_file</a> (filename, allow_pickle=True, kw)</td></tr>
-<tr class="memdesc:a14f6edebd8ac608ec6ebfa89b072f4b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from disk.  <a href="#a14f6edebd8ac608ec6ebfa89b072f4b8">More...</a><br /></td></tr>
-<tr class="separator:a14f6edebd8ac608ec6ebfa89b072f4b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdfcd88e25cb107e413c7c2863c3d376"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#afdfcd88e25cb107e413c7c2863c3d376">load_from_file</a> (filename, allow_pickle=True, retries=0, sleep=5, verbose=False, kw)</td></tr>
+<tr class="memdesc:afdfcd88e25cb107e413c7c2863c3d376"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load an object from disk.  <a href="#afdfcd88e25cb107e413c7c2863c3d376">More...</a><br /></td></tr>
+<tr class="separator:afdfcd88e25cb107e413c7c2863c3d376"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e1d9b39fc611d28c472d58c4e3ecaa2"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a8e1d9b39fc611d28c472d58c4e3ecaa2">update_user_data_in_file</a> (fname, data, keys_to_remove=(), retries=10, sleep=10, verbose=True)</td></tr>
+<tr class="memdesc:a8e1d9b39fc611d28c472d58c4e3ecaa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the <code>user_data</code> of an object stored in a file.  <a href="#a8e1d9b39fc611d28c472d58c4e3ecaa2">More...</a><br /></td></tr>
+<tr class="separator:a8e1d9b39fc611d28c472d58c4e3ecaa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8196b8d81fae69f2a93e570c913d8a07"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a8196b8d81fae69f2a93e570c913d8a07">find_file</a> (pattern, recursive=False, skip_regex=None, regex=None, load=False, full_output=False, verbose=False)</td></tr>
 <tr class="memdesc:a8196b8d81fae69f2a93e570c913d8a07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a file based on a glob pattern and optional regex patterns.  <a href="#a8196b8d81fae69f2a93e570c913d8a07">More...</a><br /></td></tr>
 <tr class="separator:a8196b8d81fae69f2a93e570c913d8a07"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -522,8 +525,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a14f6edebd8ac608ec6ebfa89b072f4b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14f6edebd8ac608ec6ebfa89b072f4b8">&#9670;&nbsp;</a></span>load_from_file()</h2>
+<a id="afdfcd88e25cb107e413c7c2863c3d376"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdfcd88e25cb107e413c7c2863c3d376">&#9670;&nbsp;</a></span>load_from_file()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -544,6 +547,24 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>retries</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sleep</em> = <code>5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
           <td class="paramname"><em>kw</em>&#160;</td>
         </tr>
         <tr>
@@ -559,6 +580,9 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">allow_pickle</td><td>Passed to <code>numpy.load()</code> to allow loading objects stored in the file. </td></tr>
+    <tr><td class="paramname">retries</td><td>How often to retry in case of failure. Default is <code>0</code>, i.e. fail immediately if something goes wrong. </td></tr>
+    <tr><td class="paramname">sleep</td><td>Seconds to wait between trying. Default is <code>5</code>. </td></tr>
+    <tr><td class="paramname">verbose</td><td>If <code>True</code>, print messages when loading fails. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">**kw</td><td>Further keyword arguments are passed to <code>numpy.load()</code>.</td></tr>
   </table>
   </dd>
@@ -838,11 +862,12 @@ formatter
 </div><div class="memdoc">
 
 <p>Save an object to disk. </p>
-<p>This uses <code>numpy.save()</code> to store an object in a file. Use <a class="el" href="namespacemotsfinder_1_1utils.html#a14f6edebd8ac608ec6ebfa89b072f4b8" title="Load an object from disk. ">load_from_file()</a> to restore the data afterwards.</p>
+<p>This uses <code>numpy.save()</code> to store an object in a file. Use <a class="el" href="namespacemotsfinder_1_1utils.html#afdfcd88e25cb107e413c7c2863c3d376" title="Load an object from disk. ">load_from_file()</a> to restore the data afterwards.</p>
+<p>This operation is atomic for <code>overwrite=True</code>. This means that any failure during saving will leave the original file untouched. This may happen e.g. when the data to save is not picklable or when classes have been reloaded but the object to be saved is of the "old version" of that class.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>The file name to store the data in. An extension <code>'.npy'</code> will be added if not already there. </td></tr>
-    <tr><td class="paramname">overwrite</td><td>Whether to overwrite an existing file with the same name. If <code>False</code> (default) and such a file exists, a <code>RuntimeError</code> is raised. </td></tr>
+    <tr><td class="paramname">overwrite</td><td>Whether to overwrite an existing file with the same name. If <code>False</code> (default) and such a file exists, a <code>RuntimeError</code> is raised. This is not completely atomic, since we first write the data to a temporary file, which is then renamed to the destination. </td></tr>
     <tr><td class="paramname">verbose</td><td>Whether to print when the file was written. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">showname</td><td>Name to print in the confirmation message in case <code>verbose==True</code>. </td></tr>
     <tr><td class="paramname">mkpath</td><td>If the parent folder(s) of the given filename don't exist, they are created if <code>mkpath==True</code> (default). Otherwise, an error is raised.</td></tr>
@@ -933,6 +958,72 @@ formatter
 
 <p>Merge items into a dict non-destructively. </p>
 <p>A new dict is returned, the original dict is not changed. </p>
+
+</div>
+</div>
+<a id="a8e1d9b39fc611d28c472d58c4e3ecaa2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e1d9b39fc611d28c472d58c4e3ecaa2">&#9670;&nbsp;</a></span>update_user_data_in_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.utils.update_user_data_in_file </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>keys_to_remove</em> = <code>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>retries</em> = <code>10</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sleep</em> = <code>10</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the <code>user_data</code> of an object stored in a file. </p>
+<p>This method is safe to call in concurrent situations even across nodes accessing the file via NFS. The file is first locked for access by other processes/nodes. It is then loaded, its data update, and finally written back to the file. The lock is then released.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fname</td><td>Filename of the object to update. </td></tr>
+    <tr><td class="paramname">data</td><td>Dictionary containing the data to add/replace in the object's <code>user_data</code> dictionary. </td></tr>
+    <tr><td class="paramname">keys_to_remove</td><td>Optional list of keys to delete from the <code>user_data</code>. Keys in this list should not also appear in <code>data</code>. </td></tr>
+    <tr><td class="paramname">retries</td><td>Number of times loading the file is retried in case access fails for some reason. Default is <code>10</code>. </td></tr>
+    <tr><td class="paramname">sleep</td><td>Seconds to sleep between trying to load the file. Default is <code>10</code>. </td></tr>
+    <tr><td class="paramname">verbose</td><td>Whether to print messages notifying about having to wait for a foreign lock to be released and when the update file has been written. Default is <code>True</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

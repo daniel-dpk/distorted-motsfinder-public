@@ -1,6 +1,9 @@
 # Example: Using the finder with a numerical metric
 
-See [preparation to running the examples](./examples_init.md) for setting up.
+> **IMPORTANT**
+>
+> See [Preparation to running the examples](./examples_init.md) for setting up (necessary imports, etc).
+
 
 This example considers the case that you have numerical data defining an
 axisymmetric slice of spacetime. Further, we assume you have the components of

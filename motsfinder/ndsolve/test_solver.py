@@ -82,7 +82,7 @@ class TestNdsolve(DpkTestCase):
     def test_ode1(self):
         self._ode1(num=20, atol=0.16)
         self._ode1(num=50, atol=4e-8)
-        self._ode1(num=80, atol=1e-12)
+        self._ode1(num=80, atol=1e-11)
         # Just to test for errors, don't expect good accuracy here:
         self._ode1(num=10, atol=10, use_mp=True, mat_solver='scipy.solve')
         self._ode1(num=10, atol=10, use_mp=True, mat_solver='mp.lu_solve')

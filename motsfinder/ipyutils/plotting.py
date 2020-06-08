@@ -13,19 +13,25 @@ import copy
 import numpy as np
 from mpmath import mp
 import matplotlib as mpl
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+except ModuleNotFoundError:
+    mpl.use('agg', warn=False, force=True)  # switch to a more basic backend
+    import matplotlib.pyplot as plt
 from matplotlib import cm
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-from .plotctx import plot_ctx
+from .plotutils import (_crop, add_two_colorbars,
+                        _configure_legend, _extract_data_in_xlim)
+from .plotctx import plot_ctx, wrap_simple_plot_ctx
 from ..utils import isiterable, insert_missing, merge_dicts, update_dict, lmap
-from ..numutils import clip
+from ..numutils import clip, extrapolate_root, interpolate_root
+from ..numutils import find_all_roots
 
 
 __all__ = [
     "plot_1d",
     "plot_data",
+    "plot_data_disconnected",
     "plot_curve",
     "plot_polar",
     "plot_mat",
@@ -122,8 +128,8 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         Also allows an argument ``(pts, linestyle, opts)``, where `opts` is a
         dict of options passed to `ax.plot`.
     @param zero_line (boolean, optional)
-        Whether to draw a line for ``y == 0``. If a string, it is used as the
-        linestyle. Default is `False`.
+        Whether to draw a line for ``y == 0``. A `dict` can be given to
+        further tweak the appearance. Default is `False`.
     @param yscilimits (tuple, optional)
         `yscilimits` option passed to `ax.ticklabel_format` to activate
         scientific notation for the `y`-axis labels. E.g., `(-2, 2)` will use
@@ -200,8 +206,6 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
     @param **kw
         Additional keyword arguments are passed to the plot_ctx() function.
     """
-    if legendargs is None:
-        legendargs = dict()
     if plot_kw is None:
         plot_kw = dict()
     if not isinstance(plot_kw, (list, tuple)):
@@ -265,9 +269,8 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         fun = lambda x: f(x) - other_fun(x)
     else:
         fun = f
-    with plot_ctx(show=show, close=close, xlog=xlog, **kw) as ax:
-        if zero_line:
-            ax.plot(xs, [0] * len(space), '-k' if zero_line is True else zero_line)
+    with plot_ctx(show=show, close=close, xlog=xlog, zero_line=zero_line,
+                  **kw) as ax:
         f1 = (lambda x: abs(fun(x))) if absolute else fun
         line, = ax.plot(xs, [f1(x-offset) for x in space], l1, label=label1, **kw1)
         if f2 is not None:
@@ -292,15 +295,16 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
                 marker_opts['color'] = line.get_color()
             pts = [p for p in pts if xs[0] <= p <= xs[-1]]
             ax.plot(pts, [f1(x-offset) for x in pts], ls, **marker_opts)
-        if label is not None:
-            ax.legend(**insert_missing(legendargs, labelspacing=0))
+        if label:
+            _configure_legend(ax, legendargs)
     if not show and not close:
         return ax
 
 
 def plot_data(x, y=None, l='.-k', color=None, lw=1.5, absolute=False,
               zero_line=False, label=None, legendargs=None, plot_kw=None,
-              copy_x=False, copy_y=False, show=True, close=False, **kw):
+              copy_x=False, copy_y=False, extract=False, show=True,
+              close=False, **kw):
     r"""Plot the data given as x- and y-values and optionally save the plot to disk.
 
     This is a convenience function to quickly plot the given pairs of x- and
@@ -330,9 +334,10 @@ def plot_data(x, y=None, l='.-k', color=None, lw=1.5, absolute=False,
         Repeat the plot with all y-values replaced by their negatives. If both
         `copy_x` and `copy_y` are set to `True`, a third plot is added where
         both sets of values are sign-changed.
+    @param extract
+        If `True`, remove data far outside the given x-limits. This affects
+        the automatic y-limits. Default is `False`.
     """
-    if legendargs is None:
-        legendargs = dict()
     if plot_kw is None:
         plot_kw = dict()
     if l is None:
@@ -341,23 +346,131 @@ def plot_data(x, y=None, l='.-k', color=None, lw=1.5, absolute=False,
     if y is None:
         y = x
         x = range(len(y))
+    x = np.asarray(x)
+    y = np.asarray(y)
     if color and l and not l[-1].isalpha():
         plot_kw = insert_missing(plot_kw, color=color)
-    with plot_ctx(show=show, close=close, **kw) as ax:
+    with plot_ctx(show=show, close=close, zero_line=zero_line, **kw) as ax:
         if absolute:
             y = np.array(lmap(abs, y))
-        if zero_line:
-            ax.plot(x, [0] * len(x), '-k' if zero_line is True else zero_line)
+        xs, ys = x, y
+        if extract:
+            x, y = _extract_data_in_xlim(xs, ys, kw.get('xlim', None))
         line, = ax.plot(x, y, l, label=label, **plot_kw)
         plot_kw['color'] = line.get_color()
         if copy_x:
-            ax.plot(-x, y, l, **plot_kw)
+            x, y = -xs, ys
+            if extract:
+                x, y = _extract_data_in_xlim(x, y, kw.get('xlim', None))
+            ax.plot(x, y, l, **plot_kw)
         if copy_y:
-            ax.plot(x, -y, l, **plot_kw)
+            x, y = xs, -ys
+            if extract:
+                x, y = _extract_data_in_xlim(x, y, kw.get('xlim', None))
+            ax.plot(x, y, l, **plot_kw)
         if copy_x and copy_y:
-            ax.plot(-x, -y, l, **plot_kw)
+            x, y = -xs, -ys
+            if extract:
+                x, y = _extract_data_in_xlim(x, y, kw.get('xlim', None))
+            ax.plot(x, y, l, **plot_kw)
         if label is not None:
-            ax.legend(**insert_missing(legendargs, labelspacing=0))
+            _configure_legend(ax, legendargs)
+    if not show and not close:
+        return ax
+
+
+def plot_data_disconnected(x, y, split_at=None, keep_color=True,
+                           interpolate=False, points=500,
+                           extrapolate_to_zero=False, extrap_kw=None,
+                           interpolate_across_zero=False, interp_kw=None,
+                           **kw):
+    r"""Plot a series of data points split at a specific point.
+
+    This is identical to plot_data(), except that there are various options to
+    split the data at a certain point. The use cases include:
+        * plot two disconnected data curves, split at a certain point
+        * extrapolate at the split point up to a root
+        * interpret the data as continuous and interpolate to a root
+
+    @param x,y
+        Complete data set (x- and y-values).
+    @param split_at
+        Point at which to split the data.
+    @param keep_color
+        Use the same color for the two lines. Default is `True`.
+    @param interpolate
+        If `True`, interpolate the given data points and plot the interpolant
+        instead. Uses the `points` parameter to plot the interpolant. Also,
+        the roots that can be found from the data points are found and a
+        plotting point is put close to each root. This helps when log plotting
+        the absolute value of the interpolant, since roots will have poles at
+        the bottom of the y-axis in this case. Default is `False`.
+    @param points
+        In case ``interpolate=True``, uses this many points to plot the
+        interpolant.
+    @param extrapolate_to_zero,extrap_kw
+        Whether to plot an extrapolation to the first root (from both sides).
+        Default is `False`. The `extrap_kw` is an optional dictionary with
+        plotting options for the curve.
+    @param interpolate_across_zero,interp_kw
+        Whether to plot an interpolation to the root (connecting both sides).
+        Default is `False`. The `interp_kw` is an optional dictionary with
+        plotting options for the curve.
+    @param **kw
+        Further arguments are passed to plot_data().
+    """
+    def _plot(xs, ys, **kwargs):
+        if interpolate and len(xs):
+            roots, interp = find_all_roots(xs, ys, full_output=True)
+            pts = np.linspace(xs[0], xs[-1], points).tolist()
+            pts = list(sorted(pts + roots))
+            return plot_1d(interp, domain=(xs[0], xs[-1]), points=pts, **kwargs)
+        else:
+            return plot_data(xs, ys, **kwargs)
+    if split_at is None:
+        return _plot(x, y, **kw)
+    xs = np.asarray(x)
+    ys = np.asarray(y)
+    xs1 = xs[xs <= split_at]
+    ys1 = ys[xs <= split_at]
+    xs2 = xs[xs > split_at]
+    ys2 = ys[xs > split_at]
+    if not len(xs1):
+        xs1, xs2 = xs2, []
+        ys1, ys2 = ys2, []
+    show = kw.get('show', True)
+    close = kw.get('close', False)
+    with wrap_simple_plot_ctx(kw) as (ax, kw):
+        _plot(xs1, ys1, **kw)
+        kw.pop('label', None)
+        opts = kw.copy()
+        if keep_color:
+            opts['color'] = ax.get_lines()[-1].get_color()
+        if len(xs2):
+            _plot(xs2, ys2, **opts)
+        if extrapolate_to_zero:
+            r1, f1 = extrapolate_root(xs1, ys1, full_output=True, guess=split_at)
+            r2, f2 = extrapolate_root(xs2, ys2, full_output=True, guess=split_at,
+                                      at_end=False)
+            opts = update_dict(kw, points=50)
+            extrap_kw = insert_missing(extrap_kw or {}, l='--k')
+            opts.update(**extrap_kw)
+            if f1:
+                plot_1d(f1, domain=(xs1[-1], r1), **opts)
+            if f2:
+                plot_1d(f2, domain=(r2, xs2[0]), **opts)
+        if interpolate_across_zero:
+            if len(ys2) and ys2[0] > 0.0:
+                ys = np.asarray(ys1.tolist() + (-ys2).tolist())
+            r, f = interpolate_root(xs, ys, guess=split_at, step=split_at-xs1[-1],
+                                    full_output=True)
+            opts = update_dict(kw, points=50)
+            interp_kw = insert_missing(interp_kw or {}, l='--k', absolute=True)
+            opts.update(**interp_kw)
+            if len(xs1):
+                plot_1d(f, domain=(xs1[-1], r), **opts)
+            if len(xs2):
+                plot_1d(f, domain=(r, xs2[0]), **opts)
     if not show and not close:
         return ax
 
@@ -807,62 +920,3 @@ def plot_image(image_file, dpi=72, show=True, crop=None, **kw):
     if not show:
         return ax, image_ctrl
     plt.show()
-
-
-def _crop(image, left, bottom, right, top):
-    h, w, _ = image.shape
-    return image[
-        top:h-bottom,
-        left:w-right
-    ]
-
-
-def add_two_colorbars(ax, values1, cmap1, values2, cmap2, fraction1=(0, 1),
-                      fraction2=(0, 1), label1="", label2="", gap=5,
-                      width="5%", pad=0.05):
-    r"""Convenience function to add *two* colorbars to an axis object.
-
-    @b Examples
-    ```
-        ax = plot_1d(lambda x: x**2, show=False, figsize=(3, 4))
-        add_two_colorbars(
-            ax,
-            values1=[1*0.01, 7*0.01], cmap1=cm.coolwarm, fraction1=(1, 0.5),
-            values2=[-1*0.01, -7*0.01], cmap2=cm.coolwarm, fraction2=(0.5, 0),
-            label1=dict(label="positive CE values", labelpad=15),
-            label2=dict(label="negative CE values", labelpad=6),
-            gap=8,
-        )
-    ```
-    """
-    divider = make_axes_locatable(ax)
-    iax = divider.append_axes("right", size="0%", pad=0.0)
-    im1 = iax.imshow(
-        np.array([values1]),
-        cmap=mpl.colors.LinearSegmentedColormap.from_list(
-            "map", cm.coolwarm(np.linspace(*fraction1, 100))
-        )
-    )
-    im2 = iax.imshow(
-        np.array([values2]),
-        cmap=mpl.colors.LinearSegmentedColormap.from_list(
-            "map", cm.coolwarm(np.linspace(*fraction2, 100))
-        )
-    )
-    iax.set_visible(False)
-    cax = inset_axes(
-        ax, width=width, height="%.2f%%" % (50-gap/2.), loc='upper left',
-        bbox_to_anchor=(1+pad, 0., 1, 1), bbox_transform=ax.transAxes,
-        borderpad=0,
-    )
-    cbar = plt.colorbar(im1, cax=cax);
-    if label1:
-        cbar.set_label(**label1 if isinstance(label1, dict) else label1)
-    cax = inset_axes(
-        ax, width=width, height="%.2f%%" % (50-gap/2.), loc='lower left',
-        bbox_to_anchor=(1+pad, 0., 1, 1), bbox_transform=ax.transAxes,
-        borderpad=0,
-    )
-    cbar = plt.colorbar(im2, cax=cax)
-    if label2:
-        cbar.set_label(**label2 if isinstance(label2, dict) else label2)

@@ -458,3 +458,195 @@
 \form#457:$f(x) = x$
 \form#458:$r$
 \form#459:$\ell_{\mu}$
+\form#460:$\exp(\sigma)$
+\form#461:$\partial_a n^b$
+\form#462:$k^a$
+\form#463:$\ell^a$
+\form#464:$k$
+\form#465:$\ell$
+\form#466:$x,y,z$
+\form#467:$\lambda,\phi$
+\form#468:$\lambda, \phi$
+\form#469:$\frac{\partial(\lambda,\phi)}{\partial(t,x,y,z)}$
+\form#470:$\partial_t^n \lambda = 0 = \partial_t^n\phi$
+\form#471:$n> 0$
+\form#472:$\partial_x\phi = 0, \partial_y\phi = \frac{1}{x}, \partial_z\phi = 0$
+\form#473:$t,x,y,z$
+\form#474:$\partial_a\ell^b$
+\form#475:$a,b\in\{t,x,y,z\}$
+\form#476:$\partial_a (\exp(\sigma)\ell^b)$
+\form#477:$\partial_a\partial_b \ell^c$
+\form#478:$a,b,c\in\{t,x,y,z\}$
+\form#479:$\partial_a\partial_b \left(\exp(\sigma)\ell^c\right)$
+\form#480:$\partial_a k^b$
+\form#481:$\partial_a (\exp(-\sigma)k^b)$
+\form#482:$\Omega$
+\form#483:$q^AB$
+\form#484:$s_A s^A$
+\form#485:$K^\mu_{AB}\ell_\mu$
+\form#486:$n > 0$
+\form#487:$\partial_A s_B$
+\form#488:$S^2$
+\form#489:$\mathbb{R}^3$
+\form#490:$\mathbb{R}$
+\form#491:\[ f(\theta, \varphi) = \sum_{n=0}^{N-1} \sum_{-n}^n a^m_n Y^m_n(\theta, \varphi) \]
+\form#492:\[ f(\theta, \varphi) = \sum_{n=0}^{N-1} \sum_{m=-n}^n a^m_n Y^m_n(\theta, \varphi) \]
+\form#493:$d$
+\form#494:\[ \partial_i g^{jk} = - g^{jl} (\partial_i g_{lm}) g^{mk} \]
+\form#495:\[ \partial_i\partial_j g^{kl} = - g^{-1} [ (\partial_i\partial_j g) g^{-1} + (\partial_i g) (\partial_j g^{-1}) + (\partial_j g) (\partial_i g^{-1}) ] \,. \]
+\form#496:$\partial_{i_1}\partial_{i_2}\ldots\partial_{i_N} g_{jk}$
+\form#497:\[ \partial_i\partial_j g^{-1} = - g^{-1} [ (\partial_i\partial_j g) g^{-1} + (\partial_i g) (\partial_j g^{-1}) + (\partial_j g) (\partial_i g^{-1}) ] \,. \]
+\form#498:$0 = \partial_i \delta^i_j = \partial_i g^{ik} g_{kj}$
+\form#499:$0 = \partial_i\partial_j \delta^k_l = \partial_i\partial_j g^{km} g_{ml}$
+\form#500:$0 = \partial_i \delta^j_k = \partial_i g^{jl} g_{lk}$
+\form#501:\[ \sigma_{AB} = \nabla_A \ell_B - \frac12 q_{AB} q^{CD} \nabla_C \ell_D = -K_{AB}^\mu\ell_\mu + \frac12 q_{AB} q^{CD} K_{CD}^\mu \ell_\mu \,. \]
+\form#502:$\sigma_{AB}\sigma^{AB}$
+\form#503:\[ \psi = 1 + \sum_{n=1}^N \frac{m_n}{2 r_n} \,. \]
+\form#504:$ m_n $
+\form#505:$ r_n $
+\form#506:\[ r_n = \Vert \vec x_n \Vert, \quad\mbox{where}\quad \vec x_n := \vec x - \vec c_n. \]
+\form#507:\begin{eqnarray*} \partial_i\psi &=& - \sum_{n=1}^N \frac{m_n x_n^i}{2r_n^3} \\ \partial_i\partial_j\psi &=& -\delta_{ij} \sum_{n=1}^N \frac{m_n}{2r_n^3} + \frac{3}{2} \sum_{n=1}^N \frac{m_n x_n^i x_n^j}{r_n^5}. \end{eqnarray*}
+\form#508:$\zeta = \cos\theta$
+\form#509:\[ \partial_A\zeta = \frac{1}{R^2} \epsilon_{BA} \phi^B, \qquad \int_{\mathcal{S}} \zeta\, d^2V = 0 \,, \]
+\form#510:$\epsilon_{AB}$
+\form#511:$(\lambda, \varphi)$
+\form#512:\[ \partial_\lambda = - \frac{\sqrt(\det q)}{R^2} \,, \]
+\form#513:$R$
+\form#514:$\det q$
+\form#515:\[ \partial_\lambda = - \frac{\sqrt{\det q}}{R^2} \,, \]
+\form#516:$\zeta(\lambda)$
+\form#517:$\sigma_{AB}$
+\form#518:$|\sigma|^2$
+\form#519:$e_1$
+\form#520:$e_2$
+\form#521:$(\ell, n, m, \bar m)$
+\form#522:$m^\mu = \frac{1}{\sqrt{2}}(e_1 + i e_2)$
+\form#523:$\ell^\mu, n^\mu$
+\form#524:$\ell^\mu n_\mu = -1$
+\form#525:\[ \sigma_{(\ell)} = m^\mu m^\nu \nabla_\mu \ell_\nu = \frac{1}{2} \left( \frac{\sigma_{\lambda\lambda}}{q_{\lambda\lambda}} - \frac{\sigma_{\varphi\varphi}}{q_{\varphi\varphi}} \right) + i \frac{\sigma_{\lambda\varphi}} {\sqrt{q_{\lambda\lambda}q_{\varphi\varphi}}} \,, \]
+\form#526:$e_1 = \frac{\partial_\lambda}{\sqrt{q_{\lambda\lambda}}}$
+\form#527:$e_2 = \frac{\partial_\varphi}{\sqrt{q_{\varphi\varphi}}}$
+\form#528:$\theta$
+\form#529:$\cos\theta=\zeta$
+\form#530:${}_2Y_{\ell m}$
+\form#531:\[ \sqrt{2} \sigma_{AB} = \nabla_A \ell_B - \frac12 q_{AB} q^{CD} \nabla_C \ell_D = -K_{AB}^\mu\ell_\mu + \frac12 q_{AB} q^{CD} K_{CD}^\mu \ell_\mu \,. \]
+\form#532:$\sqrt{2}$
+\form#533:$\ell^\mu k_\mu = -2$
+\form#534:$\ell^\mu k_\mu = -1$
+\form#535:$(\ell, k, m, \bar m)$
+\form#536:$\ell^\mu, k^\mu$
+\form#537:$\theta=\arccos\zeta$
+\form#538:\[ V^\mu = \ell^\mu + c k^\mu \]
+\form#539:\[ \tilde V^\mu = \ell^\mu \cos\chi + k^\mu \sin\chi\,. \]
+\form#540:$\tilde V$
+\form#541:\[ \tau^\mu = a V^\mu = \tilde a \tilde V^\mu \]
+\form#542:$a = - \tau \cdot k$
+\form#543:$\tilde a = \sqrt{(\tau\cdot\ell)^2 + (\tau\cdot k)^2}$
+\form#544:$\tan\chi = \tau\cdot\ell/\tau \cdot k = c$
+\form#545:$\tau^\mu\ell_\mu$
+\form#546:$\tau^\mu k_\mu$
+\form#547:$\tilde a$
+\form#548:\[ q^{\mu\nu} \nabla_\mu V_\nu = q^{\mu\nu} \nabla_\mu (\ell_\nu + c k_\nu) = c q^{\mu\nu} \nabla_\mu k_\nu = c \Theta_{(k)} \,. \]
+\form#549:\[ \int_\mathcal{S} \sigma_{AB}\sigma^{AB}\ dV = 2\pi \int_0^\pi \sigma_{AB}\sigma^{AB} \sqrt{q}\ d\lambda\,. \]
+\form#550:$a_{lm}$
+\form#551:$\mathcal{H}$
+\form#552:$N$
+\form#553:$p \in \mathcal{H}$
+\form#554:$p$
+\form#555:$g(N_p, N_p) < 0$
+\form#556:$g(N_p, N_p) > 0$
+\form#557:$g(N_p, N_p) = 0$
+\form#558:$M$
+\form#559:$k^\mu \ell_\mu = -2$
+\form#560:$N = c_1 \ell + c_2 k$
+\form#561:$g(N,N) = -4c_1c_2$
+\form#562:\[ g(N, \partial_\tau) = 0 \qquad \Leftrightarrow \qquad \frac{c_1}{c_2} = -\frac{k\cdot\partial_\tau}{\ell\cdot\partial_\tau}\,, \]
+\form#563:$\tau$
+\form#564:$\partial_\tau$
+\form#565:$\tau(p) = t$
+\form#566:$p \in \mathcal{S}_t$
+\form#567:$\mathcal{S}_t$
+\form#568:$t$
+\form#569:$-\frac{c_1}{c_2}$
+\form#570:$f_{sig}:=(k\cdot\partial_\tau)(\ell\cdot\partial_\tau)$
+\form#571:$f_{sig} < 0$
+\form#572:$f_{sig} > 0$
+\form#573:$f_{sig} = 0$
+\form#574:$\partial_t \nu^i$
+\form#575:$\nu^i$
+\form#576:$p\in\mathcal{S}_t\subset\Sigma_t$
+\form#577:\[ \partial_\tau = \frac{\partial x^\mu}{\partial\tau} \partial_\mu = \partial_t + \dot x^i \partial_i \,, \]
+\form#578:\[ \partial_t \nu^i = \dot\nu^i - \dot x^j \partial_j \nu^i \,. \]
+\form#579:\[ e = 1 - \frac{1}{8\pi} \int_{\mathcal{S}} \left(\frac{v_\bot + 1}{v_\bot - 1}\right) \Vert \sqrt{2}\sigma_{(\ell)} \Vert^2\ d^2V = 1 - \frac{1}{2} \int_0^\pi \sqrt{q} \left(\frac{v_\bot + 1}{v_\bot - 1}\right) \Vert \sigma_{(\ell)} \Vert^2\ d\lambda \,, \]
+\form#580:$v_\bot$
+\form#581:\[ V^\mu = \alpha\;( n^\mu + v_\bot \nu^\mu ) \,. \]
+\form#582:$n^\mu$
+\form#583:$\nu^\mu$
+\form#584:$V^\mu$
+\form#585:\[ \kappa = - k_\mu \ell^\nu \nabla_\nu \ell^\mu \,. \]
+\form#586:\[ \ell^\mu = \frac{1}{\sqrt{2}} (n^\mu + v^\mu) \,, \qquad k^\mu = \frac{1}{\sqrt{2}} (n^\mu - v^\mu) \,, \]
+\form#587:$v^\mu$
+\form#588:$f$
+\form#589:$\tilde\ell^\mu := f\ell^\mu$
+\form#590:$\tilde k^\mu := fk^\mu$
+\form#591:$\zeta^A$
+\form#592:\[ \xi^A := q^{AB} \hat r^\mu \nabla_\mu \ell_B \,, \]
+\form#593:$\hat r^\mu$
+\form#594:$q^{AB}$
+\form#595:$k^\mu \ell_\mu = -1$
+\form#596:\[ \ell^\mu = \hat\tau^\mu + \hat r^\mu \,, \]
+\form#597:$\hat\tau^\mu$
+\form#598:$\xi^A$
+\form#599:$\xi_A$
+\form#600:$|\xi|^2$
+\form#601:$\xi_{(\ell)}$
+\form#602:$\xi_{(\ell)} := \overline{m}^A \xi_A$
+\form#603:$\overline{m}^\mu$
+\form#604:$(\ell,k,m,\overline{m})$
+\form#605:$\int_\mathcal{S} \xi^A \xi_A d^2V$
+\form#606:\[ \xi_{(\ell)} := \overline{m}^A \xi_A \]
+\form#607:$(\ell, k, m, \overline{m})$
+\form#608:$m = \frac{1}{\sqrt{2}} (e_1 + i e_2)$
+\form#609:${}_{-1}Y_{\ell m}$
+\form#610:$\partial_i \nu^j$
+\form#611:$\nabla_\mu \ell_\nu$
+\form#612:$\xi^A\xi_A$
+\form#613:\[ \mathcal{V}^\mu = \alpha\ (n^\mu + v_\bot \nu^\mu) = \frac{\alpha}{\sqrt{2}}(1 + v_\bot) \ell^\mu + \frac{\alpha}{\sqrt{2}}(1 - v_\bot) k^\mu =: b_B \ell^\mu + c_B k^\mu \,, \]
+\form#614:$\mathcal{V}$
+\form#615:\[ \tilde V^\mu = \cos(\chi)\,\ell^\mu + \sin(\chi) k^\mu \,. \]
+\form#616:\[ \tilde V^\mu = \cos(\chi)\,\ell^\mu + \sin(\chi)\,k^\mu \,. \]
+\form#617:$\mathcal{V}^\mu$
+\form#618:$b_B$
+\form#619:$c_B$
+\form#620:\[ q^{\mu\nu} \nabla_\mu V_\nu = q^{\mu\nu} \nabla_\mu (b \ell_\nu + c k_\nu) = c q^{\mu\nu} \nabla_\mu k_\nu = c \Theta_{(k)} \,. \]
+\form#621:$V = \ell + c k$
+\form#622:$K^\mu_{AB}k_\mu$
+\form#623:$\ell \cdot k = -2$
+\form#624:\[ \sqrt{2} \sigma_{AB} = \nabla_A k_B - \frac12 q_{AB} q^{CD} \nabla_C k_D = -K_{AB}^\mu k_\mu + \frac12 q_{AB} q^{CD} K_{CD}^\mu \ell_\mu \,. \]
+\form#625:$\ell \cdot k = -1$
+\form#626:\[ \sigma_{AB} = \frac{1}{\sqrt2} (\nabla_A k_B - \frac12 q_{AB} q^{CD} \nabla_C k_D) = \frac{1}{\sqrt2} (-K_{AB}^\mu k_\mu - \frac12 q_{AB} \Theta_{(k)}) \,. \]
+\form#627:$1/\sqrt2$
+\form#628:\[ \kappa = - k_\mu X^\nu \nabla_\nu \ell^\mu \,, \]
+\form#629:$X^\mu = \ell^\mu$
+\form#630:\[ \tau^2 := \left( \frac{1}{A} \int_{\mathcal{S}} \kappa^{(V)} \Theta_{(V)}\ dA \right)^{-1} \,, \]
+\form#631:$\kappa^{(V)} = - k^\mu V^\nu \nabla_\nu \ell_\mu$
+\form#632:\[ T^2 := \left( \frac{1}{A} \int_{\mathcal{S}} \sigma^{(V)}_{AB}\sigma^{(\tau)\,AB}\ dA \right)^{-1} \,, \]
+\form#633:\[ V^\mu = b \ell^\mu + c k^\mu \,. \]
+\form#634:$\tau^\mu = b \ell^\mu - c k^\mu$
+\form#635:$\nabla_\mu k_\nu$
+\form#636:\[ \kappa^{(X)} = - k_\mu X^\nu \nabla_\nu \ell^\mu \,, \]
+\form#637:\[ \ell^\mu = \frac{1}{\sqrt{2}} (n^\mu + v^\mu) \,, \qquad k^\mu = \frac{1}{\sqrt{2}} (n^\mu - v^\mu) \,. \]
+\form#638:$\partial_t v^\mu$
+\form#639:\[ \tau^2 := \left( \frac{1}{A} \int_{\mathcal{S}} \Theta_{(V)}^2\ dA \right)^{-1} \,, \]
+\form#640:\[ \tau := \left( \frac{1}{A} \int_{\mathcal{S}} \Theta_{(V)}\ dA \right)^{-1} \,, \]
+\form#641:\[ \tau^2 := \left( \frac{1}{A} \int_{\mathcal{S}} [ \kappa^{(V)} \Theta_{(V)} - \frac12 (\Theta^{(V)})^2 ] \ dA \right)^{-1} \,, \]
+\form#642:$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} \Theta_{(V)}^2\ dA$
+\form#643:$1/\tau = \frac{1}{A} \int_{\mathcal{S}} \Theta_{(V)}\ dA$
+\form#644:$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 (\Theta^{(V)})^2] \ dA$
+\form#645:$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 (\Theta^{(V)})^2 - \Theta^{(V)} \frac{d}{dt} \ln c] \ dA$
+\form#646:$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 (\Theta_{(V)})^2] \ dA$
+\form#647:$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 (\Theta_{(V)})^2 - \Theta_{(V)} \frac{d}{dt} \ln c] \ dA$
+\form#648:\[ \tau^2 := \left( \frac{1}{A} \int_{\mathcal{S}} [ \kappa^{(V)} \Theta_{(V)} - \frac12 (\Theta_{(V)})^2 ] \ dA \right)^{-1} \,, \]
+\form#649:$\tau^2$
+\form#650:$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 \Theta_{(V)}^2] \ dA$
+\form#651:$1/\tau^2 = \frac{1}{A} \int_{\mathcal{S}} [\kappa^{(V)} \Theta_{(V)} - \frac12 \Theta_{(V)}^2 - \Theta_{(V)} \frac{d}{dt} \ln c] \ dA$

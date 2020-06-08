@@ -7,6 +7,7 @@ from __future__ import print_function
 import functools
 import importlib.util
 from builtins import range, map
+from tempfile import NamedTemporaryFile
 
 from glob import glob
 import os
@@ -19,6 +20,8 @@ import datetime
 from contextlib import contextmanager
 
 import numpy as np
+
+from .lockfile import LockFile
 
 
 __all__ = [
@@ -38,6 +41,7 @@ __all__ = [
     "cache_method_results",
     "find_file",
     "find_files",
+    "update_user_data_in_file",
 ]
 
 
@@ -428,12 +432,20 @@ def save_to_file(filename, data, overwrite=False, verbose=True,
     This uses `numpy.save()` to store an object in a file. Use
     load_from_file() to restore the data afterwards.
 
+    This operation is atomic for ``overwrite=True``. This means that any
+    failure during saving will leave the original file untouched. This may
+    happen e.g. when the data to save is not picklable or when classes have
+    been reloaded but the object to be saved is of the "old version" of that
+    class.
+
     @param filename
         The file name to store the data in. An extension ``'.npy'`` will be
         added if not already there.
     @param overwrite
         Whether to overwrite an existing file with the same name. If `False`
-        (default) and such a file exists, a `RuntimeError` is raised.
+        (default) and such a file exists, a `RuntimeError` is raised. This is
+        not completely atomic, since we first write the data to a temporary
+        file, which is then renamed to the destination.
     @param verbose
         Whether to print when the file was written. Default is `True`.
     @param showname
@@ -450,16 +462,36 @@ def save_to_file(filename, data, overwrite=False, verbose=True,
     filename = op.expanduser(filename)
     if not filename.endswith('.npy'):
         filename += '.npy'
+    path = op.abspath(op.normpath(op.dirname(filename)))
     if mkpath:
-        os.makedirs(op.normpath(op.dirname(filename)), exist_ok=True)
+        os.makedirs(path, exist_ok=True)
     if op.exists(filename) and not overwrite:
         raise RuntimeError("File already exists.")
-    np.save(filename, [data])
-    if verbose:
-        print("%s saved to: %s" % (showname, filename))
+    tname = None
+    try:
+        with NamedTemporaryFile(dir=path, delete=False) as tfile:
+            tname = tfile.name
+            np.save(tfile, [data])
+        # Check again, since writing may have taken some time. Note that this
+        # is not truly atomic, i.e. multiple processes writing to the same
+        # filename have a (low) chance to overwrite each other's data here
+        # even with `overwrite=False`.
+        if op.exists(filename) and not overwrite:
+            raise RuntimeError("File already exists.")
+        # Silently overwrite an existing file
+        os.replace(tname, filename)
+        if verbose:
+            print("%s saved to: %s" % (showname, filename))
+    finally:
+        if tname is not None:
+            try:
+                os.unlink(tname) # clean up after any failures
+            except:
+                pass
 
 
-def load_from_file(filename, allow_pickle=True, **kw):
+def load_from_file(filename, allow_pickle=True, retries=0, sleep=5,
+                   verbose=False, **kw):
     r"""Load an object from disk.
 
     If the object had been stored using save_to_file(), the result should be a
@@ -467,6 +499,13 @@ def load_from_file(filename, allow_pickle=True, **kw):
 
     @param allow_pickle
         Passed to `numpy.load()` to allow loading objects stored in the file.
+    @param retries
+        How often to retry in case of failure. Default is `0`, i.e. fail
+        immediately if something goes wrong.
+    @param sleep
+        Seconds to wait between trying. Default is `5`.
+    @param verbose
+        If `True`, print messages when loading fails. Default is `False`.
     @param **kw
         Further keyword arguments are passed to `numpy.load()`.
 
@@ -477,11 +516,59 @@ def load_from_file(filename, allow_pickle=True, **kw):
     the data is not a single-element list, it is returned as is.
     """
     filename = op.expanduser(filename)
-    result = np.load(filename, allow_pickle=allow_pickle, **kw)
+    for retry_count in range(retries+1):
+        try:
+            result = np.load(filename, allow_pickle=allow_pickle, **kw)
+            break
+        except Exception as e:
+            if retry_count == retries:
+                raise
+            if verbose:
+                print("Could not load %s" % filename)
+                print("%s: %s" % (type(e).__name__, e))
+                print("  ... will retry in %s seconds" % sleep)
+            time.sleep(sleep)
     if result.shape == (1,):
         return result[0]
     # Not a single value. Return as is.
     return result
+
+
+def update_user_data_in_file(fname, data, keys_to_remove=(), retries=10,
+                             sleep=10, verbose=True):
+    r"""Update the `user_data` of an object stored in a file.
+
+    This method is safe to call in concurrent situations even across nodes
+    accessing the file via NFS. The file is first locked for access by other
+    processes/nodes. It is then loaded, its data update, and finally written
+    back to the file. The lock is then released.
+
+    @param fname
+        Filename of the object to update.
+    @param data
+        Dictionary containing the data to add/replace in the object's
+        `user_data` dictionary.
+    @param keys_to_remove
+        Optional list of keys to delete from the `user_data`. Keys in this
+        list should not also appear in `data`.
+    @param retries
+        Number of times loading the file is retried in case access fails for
+        some reason. Default is `10`.
+    @param sleep
+        Seconds to sleep between trying to load the file. Default is `10`.
+    @param verbose
+        Whether to print messages notifying about having to wait for a foreign
+        lock to be released and when the update file has been written. Default
+        is `True`.
+    """
+    with LockFile(fname, verbosity=1 if verbose else 0):
+        obj = load_from_file(
+            fname, retries=retries, sleep=sleep, verbose=verbose
+        )
+        for key in keys_to_remove:
+            obj.user_data.pop(key, None)
+        obj.user_data.update(data)
+        obj.save(fname, overwrite=True)
 
 
 def find_file(pattern, recursive=False, skip_regex=None, regex=None,

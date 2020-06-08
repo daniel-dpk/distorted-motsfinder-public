@@ -27,8 +27,8 @@ var hierarchy =
     ] ],
     [ "_FuncWrap", "classmotsfinder_1_1utils_1_1__FuncWrap.html", null ],
     [ "_LapseWrapper", "classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1__LapseWrapper.html", null ],
-    [ "_NeckInfo", "classmotsfinder_1_1axisym_1_1trackmots_1_1__NeckInfo.html", null ],
-    [ "_PropResult", "classmotsfinder_1_1axisym_1_1trackmots_1_1__PropResult.html", null ],
+    [ "_NeckInfo", "classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1__NeckInfo.html", null ],
+    [ "_PropResult", "classmotsfinder_1_1axisym_1_1trackmots_1_1props_1_1__PropResult.html", null ],
     [ "_Runner", "classmotsfinder_1_1utils_1_1__Runner.html", null ],
     [ "_ShiftWrapper", "classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1__ShiftWrapper.html", null ],
     [ "BBox", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1BBox.html", null ],
@@ -38,11 +38,16 @@ var hierarchy =
       [ "_IntersectionDetectionError", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1__IntersectionDetectionError.html", null ],
       [ "DistanceSearchError", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1DistanceSearchError.html", null ],
       [ "IntegrationError", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1IntegrationError.html", null ],
+      [ "TimeEvolutionVectorSearchError", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1TimeEvolutionVectorSearchError.html", null ],
       [ "NoConvergence", "classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html", [
         [ "InsufficientResolutionOrRoundoff", "classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html", null ],
         [ "StepLimitExceeded", "classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html", null ]
       ] ],
-      [ "AuxResultMissing", "classmotsfinder_1_1axisym_1_1trackmots_1_1AuxResultMissing.html", null ],
+      [ "AuxResultMissing", "classmotsfinder_1_1axisym_1_1trackmots_1_1props_1_1AuxResultMissing.html", null ],
+      [ "LockFileError", "classmotsfinder_1_1lockfile_1_1lockfile_1_1LockFileError.html", [
+        [ "AlreadyLockedError", "classmotsfinder_1_1lockfile_1_1lockfile_1_1AlreadyLockedError.html", null ],
+        [ "DanglingLockfile", "classmotsfinder_1_1lockfile_1_1lockfile_1_1DanglingLockfile.html", null ]
+      ] ],
       [ "GridDataError", "classmotsfinder_1_1metric_1_1discrete_1_1numerical_1_1GridDataError.html", null ],
       [ "NDSolveError", "classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html", null ],
       [ "NumericalError", "classmotsfinder_1_1numutils_1_1NumericalError.html", null ]
@@ -56,6 +61,7 @@ var hierarchy =
     [ "KerrKSSliceCurv", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSliceCurv.html", null ],
     [ "KerrKSSliceLapse", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSliceLapse.html", null ],
     [ "KerrKSSliceShift", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSliceShift.html", null ],
+    [ "LockFile", "classmotsfinder_1_1lockfile_1_1lockfile_1_1LockFile.html", null ],
     [ "metaclass", null, [
       [ "BaseParametricCurve", "classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html", [
         [ "BipolarCurve", "classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html", null ],
@@ -66,7 +72,7 @@ var hierarchy =
       [ "BrillLindquistConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html", null ],
       [ "GeneralMotsConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html", null ]
     ] ],
-    [ "MOTSTracker", "classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html", null ],
+    [ "MOTSTracker", "classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html", null ],
     [ "object", null, [
       [ "BaseCurve", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html", [
         [ "BaseParametricCurve", "classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html", null ],
@@ -108,6 +114,7 @@ var hierarchy =
         [ "SumExpression", "classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html", [
           [ "BlendExpression2D", "classmotsfinder_1_1exprs_1_1basics_1_1BlendExpression2D.html", null ]
         ] ],
+        [ "InverseExpression", "classmotsfinder_1_1exprs_1_1inverse_1_1InverseExpression.html", null ],
         [ "SimpleExpression", "classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html", [
           [ "SimpleCosExpression", "classmotsfinder_1_1exprs_1_1basics_1_1SimpleCosExpression.html", null ],
           [ "SimpleCoshExpression", "classmotsfinder_1_1exprs_1_1basics_1_1SimpleCoshExpression.html", null ],
@@ -170,6 +177,7 @@ var hierarchy =
     [ "TestCase", null, [
       [ "DpkTestCase", "classtestutils_1_1DpkTestCase.html", null ]
     ] ],
+    [ "TimeVectorData", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1TimeVectorData.html", null ],
     [ "UserWarning", null, [
       [ "ExpressionWarning", "classmotsfinder_1_1exprs_1_1numexpr_1_1ExpressionWarning.html", null ]
     ] ],

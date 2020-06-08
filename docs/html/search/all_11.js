@@ -3,8 +3,8 @@ var searchData=
   ['r',['r',['../classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html#ac8af78384283e4d3c83c71e7c77e5284',1,'motsfinder::metric::analytical::kerrks::KerrKSSlice']]],
   ['raise_5fall_5fwarnings',['raise_all_warnings',['../namespacemotsfinder_1_1numutils.html#a037496c5c59fcf131f27ee81af4d8636',1,'motsfinder::numutils']]],
   ['raise_5fidx',['raise_idx',['../classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a311626909916b7ce474916ddff79f964',1,'motsfinder::metric::base::MetricTensor']]],
-  ['ref_5fnum_5ffactor',['ref_num_factor',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#ab27d8628449a2f1be881f40874b66966',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
-  ['ref_5fsmoothing',['ref_smoothing',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#af78c84bff8304d5c95a16a6ba9d1e8f5',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['ref_5fnum_5ffactor',['ref_num_factor',['../classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ab27d8628449a2f1be881f40874b66966',1,'motsfinder::axisym::trackmots::tracker::MOTSTracker']]],
+  ['ref_5fsmoothing',['ref_smoothing',['../classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#af78c84bff8304d5c95a16a6ba9d1e8f5',1,'motsfinder::axisym::trackmots::tracker::MOTSTracker']]],
   ['reference_5fcurves',['reference_curves',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#ae2c7bb902353b200a201fed6e51dfb78',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
   ['refparamcurve',['RefParamCurve',['../classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html',1,'motsfinder::axisym::curve::refparamcurve']]],
   ['release_5ffile_5fhandle',['release_file_handle',['../classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html#af69344e38826be74811e1c8020b89c7d',1,'motsfinder::metric::discrete::metric::DiscreteMetric']]],
@@ -14,6 +14,7 @@ var searchData=
   ['reparameterize_5fby_5fcurvature',['reparameterize_by_curvature',['../classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html#a8fd44171e402ca6ec16b59506aae37d1',1,'motsfinder::axisym::curve::baseparamcurve::BaseParametricCurve']]],
   ['reparameterize_5fby_5fextr_5fcurvature2',['reparameterize_by_extr_curvature2',['../classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html#a62c6fda975e64e9380b4b60126d7a3ba',1,'motsfinder::axisym::curve::baseparamcurve::BaseParametricCurve']]],
   ['replace',['replace',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#a756e50f4e2718d9326777587302b5c11',1,'motsfinder::axisym::curve::stabcalc::StabilitySpectrum']]],
+  ['replace_5fuser_5fdata',['replace_user_data',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ac25b8d0cbf89b13338c98f0d5d1012b4',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
   ['res',['res',['../classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1NumericalMetric.html#ae3933a10680aab45dd71b9425b1b3440',1,'motsfinder.metric.discrete.construct.NumericalMetric.res()'],['../classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1FDDerivMetric.html#ae3933a10680aab45dd71b9425b1b3440',1,'motsfinder.metric.discrete.fdderivs.FDDerivMetric.res()']]],
   ['res_5fdecrease_5faccel',['res_decrease_accel',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aa9dd66a32356bfd71137df42be8c73a4',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
   ['res_5fdecrease_5ffactor',['res_decrease_factor',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aaf04768a60d8ed848631d375af2804e4',1,'motsfinder::axisym::newton::NewtonKantorovich']]],
@@ -25,7 +26,7 @@ var searchData=
   ['resize_5fcoeffs',['resize_coeffs',['../namespacemotsfinder_1_1exprs_1_1series.html#aedd59a49e4016ac1c1f319dffb0586f8',1,'motsfinder::exprs::series']]],
   ['restore_5fdict',['restore_dict',['../namespacemotsfinder_1_1pickle__helpers.html#a34ee80af3d184c6d7ae24a9b6c116f65',1,'motsfinder::pickle_helpers']]],
   ['restore_5fvalue',['restore_value',['../namespacemotsfinder_1_1pickle__helpers.html#a2e71e4b0a3b1495ae7fdcba0cade38cd',1,'motsfinder::pickle_helpers']]],
-  ['retry_5fafter',['retry_after',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a7c7a098f8fb9762eabf93023784c39a9',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['retry_5fafter',['retry_after',['../classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a7c7a098f8fb9762eabf93023784c39a9',1,'motsfinder::axisym::trackmots::tracker::MOTSTracker']]],
   ['rho',['rho',['../classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html#a66c109a8211bd1c7cd525c7ad39bf712',1,'motsfinder::metric::analytical::kerrks::KerrKSSlice']]],
   ['ricci_5fscalar',['ricci_scalar',['../classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html#ae5dcd5322e3a34af3c21ae93ace09e22',1,'motsfinder.axisym.curve.expcalc.ExpansionCalc.ricci_scalar()'],['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a05b59585b2daf3036737fe2e3a3a9f80',1,'motsfinder.axisym.curve.expcurve.ExpansionCurve.ricci_scalar()'],['../classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#acd45666fca6ad95717e8e6e82998bdee',1,'motsfinder.metric.base._GeneralMetric.ricci_scalar()']]],
   ['ricci_5ftensor',['ricci_tensor',['../classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html#ad662879ce5ef0e3c5ca735ba5edd52ce',1,'motsfinder::metric::base::_GeneralMetric']]],
@@ -33,5 +34,5 @@ var searchData=
   ['riemann_5fcomponents',['riemann_components',['../namespacemotsfinder_1_1metric_1_1helpers.html#aa416643a8da709e36879d34d1cb0ae38',1,'motsfinder::metric::helpers']]],
   ['robincondition',['RobinCondition',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1RobinCondition.html',1,'motsfinder::ndsolve::bcs']]],
   ['rotate_5fto_5fxz_5fplane',['rotate_to_xz_plane',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a0d8fe559aeaa7a8bd70a89a39bb2fb94',1,'motsfinder::axisym::curve::basecurve::BaseCurve']]],
-  ['rtol',['rtol',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#a7978e9a4674f869e6b2950e2f6262ca5',1,'motsfinder.axisym.curve.stabcalc.StabilitySpectrum.rtol()'],['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a7978e9a4674f869e6b2950e2f6262ca5',1,'motsfinder.axisym.newton.NewtonKantorovich.rtol()']]]
+  ['rtol',['rtol',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#a7978e9a4674f869e6b2950e2f6262ca5',1,'motsfinder.axisym.curve.stabcalc.StabilitySpectrum.rtol()'],['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a7978e9a4674f869e6b2950e2f6262ca5',1,'motsfinder.axisym.newton.NewtonKantorovich.rtol()'],['../classmotsfinder_1_1exprs_1_1inverse_1_1InverseExpression.html#a7978e9a4674f869e6b2950e2f6262ca5',1,'motsfinder.exprs.inverse.InverseExpression.rtol()']]]
 ];

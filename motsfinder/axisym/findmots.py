@@ -559,10 +559,13 @@ class GeneralMotsConfig(MotsFindingConfig):
         return self.fname_desc
 
     @classmethod
-    def preset(cls, preset, hname, out_folder=None, **kw):
+    def preset(cls, preset, hname=None, out_folder=None, **kw):
         r"""Create a configuration based on a manually crafted preset.
 
         The currently available presets are:
+            * **general**:
+                Useful defaults for general metrics. Best suited for cases
+                with analytically known metric and derivatives.
             * **discrete1**:
                 Fixed resolution with no accuracy detection and flat space
                 reparameterization of the reference curve. This provides
@@ -598,10 +601,10 @@ class GeneralMotsConfig(MotsFindingConfig):
                 plateau is known and `atol` can be specified).
             * **discrete6**:
                 As `discrete4`, but with dynamically optimized ``'curv2'``
-                reparameterization in s-z-coordinate space.
+                reparameterization in s-t-coordinate space.
             * **discrete7**:
                 As `discrete5`, but with dynamically optimized ``'curv2'``
-                reparameterization in s-z-coordinate space.
+                reparameterization in s-t-coordinate space.
             * **discrete8**:
                 As `discrete2`, but better suited for Hermite interpolation.
                 This preset allows a maximum single-step resolution increase
@@ -639,7 +642,8 @@ class GeneralMotsConfig(MotsFindingConfig):
             One of the above preset names.
         @param hname
             Name given to the horizon to find (e.g. ``'AH'``). This is used as
-            a filename prefix.
+            a filename prefix. If an additional prefix is specified via the
+            `prefix` argument, the `hname` is appended after the prefix.
         @param out_folder
             Optional folder to store curves in. By default, curves are not
             stored. If this folder is specified (and neither `save`,
@@ -651,6 +655,11 @@ class GeneralMotsConfig(MotsFindingConfig):
             Further options not explained there are documented as public class
             attributes of .newton.NewtonKantorovich.
         """
+        if hname is not None:
+            prefix = kw.get('prefix', '')
+            if prefix and not prefix.endswith('_'):
+                prefix = "%s_" % prefix
+            kw['prefix'] = "%s%s" % (prefix, hname)
         def _hermite_settings(**kw):
             return insert_missing(
                 kw, max_res_increase=100, plateau_tol=2.0,
@@ -660,7 +669,7 @@ class GeneralMotsConfig(MotsFindingConfig):
             cfg = cls(
                 ref_num=5, num=30, atol=1e-8,
                 reparam=True, reparam_with_metric=False,
-                auto_resolution=False, accurate_test_res=None, prefix=hname,
+                auto_resolution=False, accurate_test_res=None,
                 save_failed_curve=True, verbose=True, v=''
             )
         elif preset == "discrete2":
@@ -675,7 +684,7 @@ class GeneralMotsConfig(MotsFindingConfig):
                 linear_regime_res_factor=1,
                 res_decrease_factor=0.75, res_decrease_accel=0.9,
                 downsampling_tol_factor=1.5, liberal_downsampling=True,
-                accurate_test_res="twice", prefix=hname,
+                accurate_test_res="twice",
                 save_failed_curve=True, verbose=True, simple_name=True,
             )
         elif preset == "discrete3":
@@ -683,7 +692,7 @@ class GeneralMotsConfig(MotsFindingConfig):
             # Absolute tolerance should be specified correctly for this to
             # work best.
             cfg = cls.preset(
-                "discrete2", hname,
+                "discrete2",
                 max_resolution=12000,
                 min_res_increase_factor=None,
                 res_increase_factor=1.2,
@@ -693,14 +702,14 @@ class GeneralMotsConfig(MotsFindingConfig):
             )
         elif preset == "discrete4":
             cfg = cls.preset(
-                "discrete2", hname,
+                "discrete2",
                 reparam=("arc_length", dict(coord_space=True)),
                 reparam_with_metric=False,
                 bipolar_ref_curve=True,
             )
         elif preset == "discrete5":
             cfg = cls.preset(
-                "discrete4", hname,
+                "discrete4",
                 max_resolution=12000,
                 min_res_increase_factor=None,
                 res_increase_factor=1.2,
@@ -710,29 +719,33 @@ class GeneralMotsConfig(MotsFindingConfig):
             )
         elif preset == "discrete6":
             cfg = cls.preset(
-                "discrete4", hname,
+                "discrete4",
                 reparam=("curv2", dict(coord_space=True)),
             )
         elif preset == "discrete7":
             cfg = cls.preset(
-                "discrete5", hname,
+                "discrete5",
                 reparam=("curv2", dict(coord_space=True)),
             )
         elif preset == "discrete8":
             cfg = cls.preset(
-                "discrete2", hname, **_hermite_settings()
+                "discrete2", **_hermite_settings()
             )
         elif preset == "discrete9":
             cfg = cls.preset(
-                "discrete3", hname, **_hermite_settings()
+                "discrete3", **_hermite_settings()
             )
         elif preset == "discrete10":
             cfg = cls.preset(
-                "discrete6", hname, **_hermite_settings(max_res_increase=400)
+                "discrete6", **_hermite_settings(max_res_increase=400)
             )
         elif preset == "discrete11":
             cfg = cls.preset(
-                "discrete7", hname, **_hermite_settings(max_res_increase=800)
+                "discrete7", **_hermite_settings(max_res_increase=800)
+            )
+        elif preset == "general":
+            cfg = cls.preset(
+                "discrete3", num=50, atol=1e-12, reparam=False,
             )
         else:
             raise ValueError("Unknown preset: %s" % preset)

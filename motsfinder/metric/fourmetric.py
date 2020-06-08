@@ -364,10 +364,11 @@ class FourMetric(_GeneralMetric):
             implicitly taken from the 3-metric.
         @param diff
             Derivative order to compute. Default is 0, i.e. no derivative.
-            Note that none of the time derivatives is currently implemented
-            and all such values are set to ``NaN``. This means that any
-            component with a derivative index being zero will be ``NaN``.
-            Spatial derivatives of the time component are computed, however.
+            Note that time derivatives are currently only implemented for
+            ``diff=1``. However, all non-computed values are set to ``NaN``.
+            This means that any component with a derivative index being zero
+            will be ``NaN``. Spatial derivatives of the time component are
+            computed, however.
         """
         lapse = self._lapse(point)
         shift = self._shift(point)
@@ -376,20 +377,21 @@ class FourMetric(_GeneralMetric):
             n[1:] = -shift
             n /= lapse
             return n
-        dxlapse = self._lapse(point, diff=1)
-        dxshift = self._shift(point, diff=1)
         if diff == 1:
-            dn = np.zeros((4, 4)) # a,b -> del_a n^b
-            dn[0,:] = np.nan # not needed, but we don't want *wrong* values even if not needed
-            dn[1:,0] = -dxlapse/lapse**2
-            dn[1:,1:] = (
-                1/lapse**2 * np.einsum('i,m->im', dxlapse, shift)
-                - 1/lapse * dxshift
+            dlapse = self.dlapse(point)
+            dshift = self.dshift(point)
+            dn = np.zeros((4, 4)) # a,b -> partial_a n^b
+            dn[:,0] = -dlapse/lapse**2
+            dn[:,1:] = (
+                1/lapse**2 * np.einsum('i,m->im', dlapse, shift)
+                - 1/lapse * dshift
             )
             return dn
         d2xlapse = self._lapse(point, diff=2) # shape=(3,3), i,j -> del_i del_j lapse
         d2xshift = self._shift(point, diff=2) # shape=(3,3,3), i,j,k -> del_i del_j shift^k
         if diff == 2:
+            dxlapse = self._lapse(point, diff=1)
+            dxshift = self._shift(point, diff=1)
             ddn = np.zeros((4, 4, 4)) # a,b,c -> del_a del_b n^c
             ddn[0,:,:] = ddn[:,0,:] = np.nan # time derivatives not computed
             ddn[1:,1:,0] = - d2xlapse/lapse**2 + 2 * np.outer(dxlapse, dxlapse)/lapse**3

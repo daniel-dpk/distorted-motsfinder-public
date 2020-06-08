@@ -84,21 +84,32 @@ $(document).ready(function(){initNavTree('classmotsfinder_1_1axisym_1_1curve_1_1
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SignatureQuantities Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class storing quantities allowing visualization of signature.  
+ <a href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae8e4258774c2a7ed0148a724fac6b764"><td class="memItemLeft" align="right" valign="top"><a id="ae8e4258774c2a7ed0148a724fac6b764"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>__init__</b> (self, param, g4, l, k, tau, future_it, past_it)</td></tr>
-<tr class="separator:ae8e4258774c2a7ed0148a724fac6b764"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd27b30643fb3d21f86eea487da2a3ae"><td class="memItemLeft" align="right" valign="top"><a id="afd27b30643fb3d21f86eea487da2a3ae"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>signature</b> (self)</td></tr>
+<tr class="memitem:a2a937aec7152624ff00ed879ec898bfd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html#a2a937aec7152624ff00ed879ec898bfd">__init__</a> (self, param, g4, l, k, tau)</td></tr>
+<tr class="memdesc:a2a937aec7152624ff00ed879ec898bfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up an object holding signature data at a point of a MOTS.  <a href="#a2a937aec7152624ff00ed879ec898bfd">More...</a><br /></td></tr>
+<tr class="separator:a2a937aec7152624ff00ed879ec898bfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd27b30643fb3d21f86eea487da2a3ae"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html#afd27b30643fb3d21f86eea487da2a3ae">signature</a> (self)</td></tr>
+<tr class="memdesc:afd27b30643fb3d21f86eea487da2a3ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return one of <code>{-1,0,1}</code> representing the signature.  <a href="#afd27b30643fb3d21f86eea487da2a3ae">More...</a><br /></td></tr>
 <tr class="separator:afd27b30643fb3d21f86eea487da2a3ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b10051312333cdba8e8ed56268aeccb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html#a2b10051312333cdba8e8ed56268aeccb">f_sig</a> (self)</td></tr>
+<tr class="memdesc:a2b10051312333cdba8e8ed56268aeccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the value of <code>f_sig</code>.  <a href="#a2b10051312333cdba8e8ed56268aeccb">More...</a><br /></td></tr>
+<tr class="separator:a2b10051312333cdba8e8ed56268aeccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37a31d38355b42e85a3da79a04e33930"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html#a37a31d38355b42e85a3da79a04e33930">__setstate__</a> (self, state)</td></tr>
+<tr class="memdesc:a37a31d38355b42e85a3da79a04e33930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore this object from the given unpickled state.  <a href="#a37a31d38355b42e85a3da79a04e33930">More...</a><br /></td></tr>
+<tr class="separator:a37a31d38355b42e85a3da79a04e33930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -135,12 +146,167 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a3b9285fee5c1a67fef72ac2639acad9a"><td class="memItemLeft" align="right" valign="top"><a id="a3b9285fee5c1a67fef72ac2639acad9a"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>past_it</b></td></tr>
 <tr class="separator:a3b9285fee5c1a67fef72ac2639acad9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab534afedcc6c7db5aed990faa72fabba"><td class="memItemLeft" align="right" valign="top"><a id="ab534afedcc6c7db5aed990faa72fabba"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>DEPRECATION_WARNING_PRINTED</b></td></tr>
+<tr class="separator:ab534afedcc6c7db5aed990faa72fabba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a843444681c6009bda8b8a7a61b364326"><td class="memItemLeft" align="right" valign="top"><a id="a843444681c6009bda8b8a7a61b364326"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>DEPRECATION_WARNING_PRINTED</b> = True</td></tr>
+<tr class="separator:a843444681c6009bda8b8a7a61b364326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:ac6b6c4c7f1ad3f588484a76d4b6b42cd"><td class="memItemLeft" align="right" valign="top"><a id="ac6b6c4c7f1ad3f588484a76d4b6b42cd"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html#ac6b6c4c7f1ad3f588484a76d4b6b42cd">_warn_deprecated</a> (cls)</td></tr>
+<tr class="memdesc:ac6b6c4c7f1ad3f588484a76d4b6b42cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Warn that depcretated data has been loaded into this object. <br /></td></tr>
+<tr class="separator:ac6b6c4c7f1ad3f588484a76d4b6b42cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
 <tr class="memitem:aef04051147f1d02390e4e37bc7a09417"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><b>__slots__</b></td></tr>
 <tr class="separator:aef04051147f1d02390e4e37bc7a09417"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class storing quantities allowing visualization of signature. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2a937aec7152624ff00ed879ec898bfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a937aec7152624ff00ed879ec898bfd">&#9670;&nbsp;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def __init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>param</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>g4</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>l</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>k</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tau</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set up an object holding signature data at a point of a MOTS. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>The parameter along the MOTS at which the signature is computed. </td></tr>
+    <tr><td class="paramname">g4</td><td>The 4x4 matrix representing the 4-metric at the point of the MOTS. </td></tr>
+    <tr><td class="paramname">l,k</td><td>The outgoing and ingoing null normals to the MOTS, respectively. </td></tr>
+    <tr><td class="paramname">tau</td><td>Any timelike tangent vector along the MOTS tube. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a37a31d38355b42e85a3da79a04e33930"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37a31d38355b42e85a3da79a04e33930">&#9670;&nbsp;</a></span>__setstate__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def __setstate__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>state</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Restore this object from the given unpickled state. </p>
+
+</div>
+</div>
+<a id="a2b10051312333cdba8e8ed56268aeccb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b10051312333cdba8e8ed56268aeccb">&#9670;&nbsp;</a></span>f_sig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def f_sig </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return the value of <code>f_sig</code>. </p>
+<p>See the documentation of <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aac59f67e49be52dc9c8a6d1a5ff846fc" title="Compute the MOTS tube signature along points of this MOTS. ">ExpansionCurve.signature_quantities()</a> for more information. </p>
+
+</div>
+</div>
+<a id="afd27b30643fb3d21f86eea487da2a3ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd27b30643fb3d21f86eea487da2a3ae">&#9670;&nbsp;</a></span>signature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def signature </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return one of <code>{-1,0,1}</code> representing the signature. </p>
+<p>The values <code>-1, 0, 1</code> indicate timelike, null, and spacelike signature respectively. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="aef04051147f1d02390e4e37bc7a09417"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aef04051147f1d02390e4e37bc7a09417">&#9670;&nbsp;</a></span>__slots__</h2>

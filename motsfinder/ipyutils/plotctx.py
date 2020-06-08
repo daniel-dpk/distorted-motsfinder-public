@@ -9,20 +9,27 @@ from contextlib import contextmanager
 import subprocess
 import os
 import os.path as op
+import inspect
 
 import numpy as np
 import matplotlib as mpl
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+except ModuleNotFoundError:
+    mpl.use('agg', warn=False, force=True)  # switch to a more basic backend
+    import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 # This import has side-effects we need.
 from mpl_toolkits.mplot3d import Axes3D # pylint: disable=unused-import
 
-from ..utils import insert_missing
+from ..utils import insert_missing, merge_dicts
+from .plotutils import add_zero_line
 
 
 __all__ = [
     "matplotlib_rc",
     "simple_plot_ctx",
+    "wrap_simple_plot_ctx",
     "plot_ctx",
     "plot_ctx_3d",
     "pi_ticks",
@@ -78,7 +85,11 @@ def _equal_lengths(axes, ax):
 def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
                     fontsize=None, save=None, ax=None, show=True, close=False,
                     cfg_callback=None, dpi=None, save_opts=None,
-                    subplot_kw=None):
+                    subplot_kw=None, subplots_kw=None, fixed_layout=None,
+                    pad=0, ypad=0, zero_line=False, xlog=False, ylog=False,
+                    xlim=(None, None), ylim=(None, None), xtick_spacing=None,
+                    ytick_spacing=None, pi_xticks=None, pi_yticks=None,
+                    nrows=1, ncols=1):
     r"""Simple context for creating an setting up a figure and axis/axes.
 
     The given `ax` axis object can be a callable, in which case it is used to
@@ -89,6 +100,20 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
     """
     if close and show:
         raise ValueError("Cannot close and show figures.")
+    if fixed_layout:
+        if fixed_layout is True:
+            fixed_layout = {}
+        if isinstance(fixed_layout, (list, tuple)):
+            left, bottom, right, top = fixed_layout
+            fixed_layout = dict(left=left, right=right, bottom=bottom, top=top)
+        fixed_layout = insert_missing(
+            fixed_layout, left=0.2, right=0.95, top=0.85, bottom=0.2
+        )
+        fixed_layout.update((subplots_kw or {}).get("gridspec_kw", {}))
+        save_opts = insert_missing(save_opts or {}, bbox_inches=None)
+        subplots_kw = insert_missing(
+            subplots_kw or {}, gridspec_kw=fixed_layout,
+        )
     rc_opts = dict()
     if usetex is not None:
         rc_opts['text.usetex'] = usetex
@@ -99,21 +124,76 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
         rc_opts['font.size'] = fontsize
     with matplotlib_rc(rc_opts):
         if ax is None:
-            fig = plt.figure(
-                figsize=figsize, **(dict(dpi=dpi) if dpi else dict())
-            )
-            if projection is not None:
-                ax = fig.add_subplot(111, projection=projection,
-                                     **(subplot_kw or dict()))
-            else:
+            if subplot_kw is None:
+                subplot_kw = dict()
+            if projection:
+                subplot_kw.setdefault('projection', projection)
+            figopts = dict(figsize=figsize)
+            if dpi:
+                figopts['dpi'] = dpi
+            if nrows == 1 == ncols and subplots_kw is None:
+                fig = plt.figure(**figopts)
                 ax = fig.add_subplot(111, **(subplot_kw or dict()))
+            else:
+                fig, ax = plt.subplots(
+                    nrows, ncols, **(subplots_kw or dict()), **figopts,
+                    subplot_kw=subplot_kw,
+                )
         else:
             if callable(ax):
                 ax = ax()
-            fig = ax.figure
-        yield ax
+            fig = np.asarray([ax]).flat[0].figure
+        ax_result = ax
+        axes = list(np.asarray([ax_result]).flat)
+        ax = None
+        if zero_line:
+            for ax in axes:
+                add_zero_line(ax, zero_line)
+        yield ax_result
+        for ax in axes:
+            if xlog:
+                ax.set_xscale('log')
+            if ylog:
+                ax.set_yscale('log')
+            xmin, xmax = xlim
+            if xmin is not None:
+                ax.set_xlim(left=xmin)
+            if xmax is not None:
+                ax.set_xlim(right=xmax)
+            ymin, ymax = ylim
+            if ymin is not None:
+                ax.set_ylim(bottom=ymin)
+            if ymax is not None:
+                ax.set_ylim(top=ymax)
+            if pad:
+                ax.set_xlim(auto=True)
+                ax.set_xlim(*_interpret_pad(pad, *xlim, *ax.get_xlim()))
+            if ypad:
+                ax.relim()
+                ax.autoscale(axis='y')
+                ax.set_ylim(auto=True)
+                ax.set_ylim(*_interpret_pad(ypad, *ylim, *ax.get_ylim()))
         if cfg_callback:
-            cfg_callback(ax)
+            cfg_callback(ax_result)
+        for ax in axes:
+            if xtick_spacing is not None:
+                if xlog:
+                    ax.xaxis.set_major_locator(
+                        plticker.LogLocator(base=10, numticks=xtick_spacing)
+                    )
+                else:
+                    ax.xaxis.set_major_locator(plticker.MultipleLocator(xtick_spacing))
+            elif pi_xticks:
+                pi_ticks(ax, **(dict() if pi_xticks is True else pi_xticks))
+            if ytick_spacing is not None:
+                if ylog:
+                    ax.yaxis.set_major_locator(
+                        plticker.LogLocator(base=10, numticks=ytick_spacing)
+                    )
+                else:
+                    ax.yaxis.set_major_locator(plticker.MultipleLocator(ytick_spacing))
+            elif pi_yticks:
+                pi_ticks(ax, axis='y', **(dict() if pi_yticks is True else pi_yticks))
         if save is not None and save is not False:
             if "." not in op.basename(save):
                 save += ".pdf"
@@ -128,14 +208,58 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
 
 
 @contextmanager
+def wrap_simple_plot_ctx(opts=None, **kw):
+    r"""Plotting context, extracting figure options.
+
+    Use this to extract figure options (like `figsize`, `dpi`, `ax`, etc.) and
+    create the axis object. All remaining parameters will be supplied to the
+    context.
+
+    The returned options will be configured to use the new axis and defer
+    showing until leaving the context.
+
+    @b Examples
+    ```
+        with wrap_simple_plot_ctx(dpi=120, grid=False, l='.-') as (ax, opts):
+            plot_data([1, 2, 3], **opts)
+            plot_data([4, 5, 6], **opts)
+    ```
+
+    @param opts
+        Dictionary with options. Default is the empty dictionary.
+    @param **kw
+        Default options. These are overridden by `opts` for keys that exist in
+        both.
+    """
+    sig = inspect.signature(simple_plot_ctx)
+    ctx_opts = {k: v.default for k, v in sig.parameters.items()}
+    remaining_opts = merge_dicts(kw, opts or {})
+    for k in list(remaining_opts.keys()):
+        if k in ctx_opts:
+            ctx_opts[k] = remaining_opts.pop(k)
+    if "xlim" in ctx_opts:
+        xmin, xmax = ctx_opts["xlim"]
+        if xmin is not None or xmax is not None:
+            remaining_opts["xlim"] = ctx_opts["xlim"]
+    with simple_plot_ctx(**ctx_opts) as ax:
+        if not isinstance(ax, np.ndarray):
+            remaining_opts['ax'] = ax
+        remaining_opts['show'] = False
+        if ctx_opts["fixed_layout"]:
+            remaining_opts['tight_layout'] = False
+        yield ax, remaining_opts
+
+
+@contextmanager
 def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
              ylog=False, xlim=(None, None), ylim=(None, None), pad=0, ypad=0,
              yscilimits=(-3, 3), xscilimits=None, xtick_spacing=None,
-             pi_xticks=None, pi_yticks=None,
+             pi_xticks=None, pi_yticks=None, zero_line=False,
              ytick_spacing=None, title=None, xlabel=None, ylabel=None,
              tight=True, tight_layout=True, usetex=None, fontsize=None,
              save=None, ax=None, show=True, close=False, cfg_callback=None,
-             equal_lengths=False, dpi=None, save_opts=None, subplot_kw=None):
+             equal_lengths=False, dpi=None, save_opts=None, subplot_kw=None,
+             subplots_kw=None, fixed_layout=None):
     r"""Context manager for preparing a figure and applying configuration.
 
     This is a convenience function with which it is possible to easily create
@@ -155,40 +279,26 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
         if equal_lengths:
             axes = "xy" if equal_lengths is True else equal_lengths
             _equal_lengths(axes, ax)
+    if fixed_layout:
+        tight_layout = False
     with simple_plot_ctx(figsize=figsize, projection=projection,
                          usetex=usetex, fontsize=fontsize, save=save, ax=ax,
                          show=show, close=close, cfg_callback=_cb, dpi=dpi,
-                         save_opts=save_opts, subplot_kw=subplot_kw) as ax:
+                         save_opts=save_opts, subplot_kw=subplot_kw,
+                         subplots_kw=subplots_kw,
+                         fixed_layout=fixed_layout, pad=pad, ypad=ypad,
+                         zero_line=zero_line, xlog=xlog, ylog=ylog, xlim=xlim,
+                         ylim=ylim, xtick_spacing=xtick_spacing,
+                         ytick_spacing=ytick_spacing, pi_xticks=pi_xticks,
+                         pi_yticks=pi_yticks) as ax:
         yield ax
         ax.grid(grid)
         if tight is not None:
             ax.autoscale(axis='x', tight=tight)
-        if ylog: ax.set_yscale('log')
-        if xlog: ax.set_xscale('log')
         if yscilimits is not None and ax.get_yscale() == 'linear':
             ax.ticklabel_format(axis='y', style='sci', scilimits=yscilimits)
         if xscilimits is not None and ax.get_xscale() == 'linear':
             ax.ticklabel_format(axis='x', style='sci', scilimits=xscilimits)
-        xmin, xmax = xlim
-        if xmin is not None: ax.set_xlim(left=xmin)
-        if xmax is not None: ax.set_xlim(right=xmax)
-        ymin, ymax = ylim
-        if ymin is not None: ax.set_ylim(bottom=ymin)
-        if ymax is not None: ax.set_ylim(top=ymax)
-        if xtick_spacing is not None:
-            if xlog:
-                ax.xaxis.set_major_locator(plticker.LogLocator(xtick_spacing))
-            else:
-                ax.xaxis.set_major_locator(plticker.MultipleLocator(xtick_spacing))
-        elif pi_xticks:
-            pi_ticks(ax, **(dict() if pi_xticks is True else pi_xticks))
-        if ytick_spacing is not None:
-            if ylog:
-                ax.yaxis.set_major_locator(plticker.LogLocator(ytick_spacing))
-            else:
-                ax.yaxis.set_major_locator(plticker.MultipleLocator(ytick_spacing))
-        elif pi_yticks:
-            pi_ticks(ax, axis='y', **(dict() if pi_yticks is True else pi_yticks))
         if title is not None:
             opts = dict()
             if isinstance(title, (list, tuple)):
@@ -207,14 +317,6 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
         if tight_layout:
             opts = tight_layout if isinstance(tight_layout, dict) else dict()
             ax.figure.tight_layout(**opts)
-        if pad:
-            ax.set_xlim(auto=True)
-            ax.set_xlim(*_interpret_pad(pad, *xlim, *ax.get_xlim()))
-        if ypad:
-            ax.relim()
-            ax.autoscale(axis='y')
-            ax.set_ylim(auto=True)
-            ax.set_ylim(*_interpret_pad(ypad, *ylim, *ax.get_ylim()))
 
 
 @contextmanager

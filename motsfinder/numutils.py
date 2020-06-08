@@ -16,6 +16,7 @@ import warnings
 
 from scipy.linalg import LinAlgWarning
 from scipy.integrate import IntegrationWarning
+from scipy.interpolate import interp1d
 from scipy import optimize
 import numpy as np
 import sympy as sp
@@ -29,10 +30,18 @@ __all__ = [
     "inf_norm1d",
     "raise_all_warnings",
     "try_quad_tolerances",
+    "bracket_root",
+    "find_root",
+    "find_all_roots",
+    "interpolate_root",
+    "extrapolate_root",
     "IntegrationResult",
     "IntegrationResults",
     "NumericalError",
 ]
+
+
+_golden = 1.61803398874989 # (1+sqrt(5))/2, the "golden ratio"
 
 
 class NumericalError(Exception):
@@ -454,6 +463,172 @@ def inverse_2x2_matrix_derivative(A, dA=None, ddA=None, diff=1):
           + 1/det * ddB[i,j]
           for j in ra] for i in ra]
     )
+
+
+def bracket_root(f, x0, step, domain=(float("-inf"), float("+inf")),
+                 max_steps=10000, full_output=False, disp=False):
+    r"""Simple (naive) sign change finder to bracket a root.
+
+    Starting from an initial position (`x0`), this takes repeated steps until
+    the function changes sign. The two x-values before and after the sign
+    change are then returned (in undefined order) as a bracket. For any step
+    taken, the step size is increased by the "golden ratio".
+
+    If the function's absolute value increases, we continue to walk in the
+    other direction. The step size is still increased, so that there is a
+    chance to escape a local minimum.
+
+    @param f
+        Function to bracket a root of.
+    @param x0
+        Where to start walking.
+    @param step
+        Initial step length.
+    @param domain
+        Where to look for a sign change. If the search hits one of these
+        boundaries, we either return the current (boundary) position or raise
+        an error, depending on the `disp` parameter. Default is to not impose
+        a boundary.
+    @param max_steps
+        Maximum number of steps to try. Default is `10000`.
+    @param full_output
+        If `True`, return the bracket and the two corresponding function
+        values as ``a, b, f(a), f(b)``. Default is `False`, i.e. only return
+        the bracket.
+    @param disp
+        If `True` and we get stuck at a domain boundary, raise a
+        NumericalError. Default is `False`, i.e. return the boundary position
+        as ``a, a, f(a), f(a)``.
+    """
+    a = x0
+    fa = f(a)
+    turned = False
+    for _ in range(max_steps):
+        b = clip(a + step, *domain)
+        if a == b and turned: # we ran against the domain boundary
+            if disp:
+                break
+            return (a, a, fa, fa) if full_output else (a, a)
+        fb = f(b)
+        if fa*fb < 0.0:
+            return (a, b, fa, fb) if full_output else (a, b)
+        step *= _golden
+        if abs(fa) <= abs(fb):
+            step = -step
+            turned = True
+        else:
+            a = b
+            fa = fb
+    raise NumericalError(
+        "Could not bracket a root within %s steps." % max_steps
+    )
+
+
+def find_root(f, x0, step, max_steps=10000, **kw):
+    r"""Find a root of a function using Brent's method.
+
+    This is a simple wrapper around `scipy.optimize.brentq()`, which first
+    tries to automatically find a bracket required for the `brentq()` call.
+
+    @param f
+        Function (callable) to find a root of.
+    @param x0
+        Point to start searching for a sign change.
+    @param step
+        First step for the sign change search.
+    @param max_steps
+        Number of steps to take before givin up. Default is `10000`.
+    @param **kw
+        Further keyword arguments are passed to the `brentq()` call.
+    """
+    a, b = bracket_root(f, x0=x0, step=step, max_steps=max_steps, disp=True)
+    if b < a:
+        a, b = b, a
+    return optimize.brentq(f, a, b, **kw)
+
+
+def find_all_roots(xs, ys, func=None, full_output=False):
+    r"""Find all roots of a sampled function.
+
+    This is used for functions that are already sampled at a grid of points
+    `xs` with function values `ys`. It is assumed that this grid is dense
+    enough such that all roots appear as sign changes in consecutive values in
+    `ys` (and hence that the roots all have odd multiplicity).
+
+    @return List of roots. Empty list if no sign change occurs in `ys`.
+
+    @param xs,ys
+        Precomputed abscissas and ordinates of `func`.
+    @param func
+        Callable for fine-tuning the root search. If not specified, an
+        interpolating function will be generated from the `xs` and `ys` data.
+    @param full_output
+        Whether to output the roots only (`False`, default) or the roots and
+        interpolating function (`True`).
+    """
+    if len(xs) == 0:
+        return ([], None) if full_output else []
+    if func is None:
+        kind = 'linear' if len(xs) < 4 else 'cubic'
+        func = interp1d(xs, ys, kind=kind, fill_value="extrapolate")
+    roots = []
+    for i in range(1, len(ys)):
+        if ys[i]*ys[i-1] < 0: # sign change => root here
+            x0 = optimize.brentq(func, a=xs[i-1], b=xs[i])
+            roots.append(x0)
+    return (roots, func) if full_output else roots
+
+
+def interpolate_root(xs, ys, guess, step, kind="cubic", full_output=False):
+    r"""Interpolate data to estimate a root.
+
+    @param xs,ys
+        The data points (x- and y-values). The y-values need to change sign.
+    @param guess
+        The point to start searching for a root.
+    @param step
+        The first step size for searching for a root.
+    @param kind
+        Interpolation kind. Default is ``"cubic"``.
+    @param full_output
+        Whether to output the root only (`False`, default) or the root and
+        interpolating function (`True`).
+    """
+    if not len(xs):
+        return (None, None) if full_output else None
+    f = interp1d(xs, ys, kind=kind, fill_value="extrapolate")
+    r = find_root(f, x0=guess, step=step)
+    return (r, f) if full_output else r
+
+
+def extrapolate_root(xs, ys, guess=None, at_end=True, kind="cubic",
+                     full_output=False):
+    r"""Extrapolate data to estimate a root.
+
+    @param xs,ys
+        The data points (x- and y-values). These need not have a sign change.
+    @param guess
+        The point to start searching for a root in the interpolant. If not
+        given, take the last x-interval as first guess.
+    @param at_end
+        If `True` (default), try to find a root *after* the data. Else, try to
+        find it *before* the data.
+    @param kind
+        Interpolation kind. Default is ``"cubic"``.
+    @param full_output
+        Whether to output the root only (`False`, default) or the root and
+        interpolating function (`True`).
+    """
+    if not len(xs):
+        return (None, None) if full_output else None
+    if not at_end:
+        xs = list(reversed(xs))
+        ys = list(reversed(ys))
+    f = interp1d(xs, ys, kind=kind, fill_value="extrapolate")
+    if guess is None:
+        guess = 2*xs[-1] - xs[-2]
+    r = find_root(f, x0=xs[-1], step=guess - xs[-1])
+    return (r, f) if full_output else r
 
 
 @contextmanager

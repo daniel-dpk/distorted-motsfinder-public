@@ -7,6 +7,7 @@ var classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve =
     [ "_diff", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#a0bcc7b9887b6e05b97146156b8624643", null ],
     [ "create_line_segment", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#ad2bc6f217ea9d72c88dfb804521e0f9b", null ],
     [ "from_curve", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#a2208327d18dc49771b41258b5d921dd4", null ],
+    [ "from_functions", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#aacccaa7b9f86fae0c62347a9bfc03c89", null ],
     [ "x_fun", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#a29fe32f7fe4469e5f66a4e2c3f949161", null ],
     [ "x_fun", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#ac04e67d962c5fe28656907400e0bebd9", null ],
     [ "z_fun", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html#aea54796785921e0f296176506bc486be", null ],

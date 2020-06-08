@@ -8,7 +8,7 @@ var searchData=
   ['mat_5fsolve',['mat_solve',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html#acf7b2a4f30cf09a68dc4fb8688ab640c',1,'motsfinder::ndsolve::solver::NDSolver']]],
   ['matplotlib_5frc',['matplotlib_rc',['../namespacemotsfinder_1_1ipyutils_1_1plotctx.html#acc6fd3af940769a776c74e46ac1f033d',1,'motsfinder::ipyutils::plotctx']]],
   ['matrix',['matrix',['../classmotsfinder_1_1pickle__helpers_1_1__MpMatrix.html#a801ec57ae6323df9ed96cd3c7b8a37bd',1,'motsfinder::pickle_helpers::_MpMatrix']]],
-  ['max_5fconstraint_5falong_5fcurve',['max_constraint_along_curve',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a44f504c967adaa7a431df3d75520ce35',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['max_5fconstraint_5falong_5fcurve',['max_constraint_along_curve',['../classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a3869f70da5b9bc88328a06f744dd12cf',1,'motsfinder.axisym.trackmots.tracker.MOTSTracker.max_constraint_along_curve()'],['../namespacemotsfinder_1_1axisym_1_1trackmots_1_1props.html#a05a8a04b50b21e04b3730ddfca633a88',1,'motsfinder.axisym.trackmots.props.max_constraint_along_curve()']]],
   ['max_5fconstraints_5fper_5fchunk',['max_constraints_per_chunk',['../classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a7c859f73c6b21c61345343b6f8e4e9f8',1,'motsfinder::metric::discrete::utils::ConstraintAnalyzer']]],
   ['max_5fconstraints_5fper_5fradius',['max_constraints_per_radius',['../classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a971a82f9c823d1c0518b0b71e2e60ab8',1,'motsfinder::metric::discrete::utils::ConstraintAnalyzer']]],
   ['merge_5fdicts',['merge_dicts',['../namespacemotsfinder_1_1utils.html#a444d5690803373aa85c09baf38643f95',1,'motsfinder::utils']]],
@@ -16,5 +16,5 @@ var searchData=
   ['metric_5ffrom_5fdata',['metric_from_data',['../namespacemotsfinder_1_1metric_1_1discrete_1_1construct.html#a57c7529cf2ae22cc3921fd6926ed9dfa',1,'motsfinder::metric::discrete::construct']]],
   ['mpmath_5fcontext',['mpmath_context',['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a6520f51fc0e3f2b73c83f31ca8fe3a52',1,'motsfinder::exprs::numexpr::NumericExpression']]],
   ['multiplicity',['multiplicity',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilitySpectrum.html#ac6ed82c5ae1ebeb25310fd3a306eebcd',1,'motsfinder::axisym::curve::stabcalc::StabilitySpectrum']]],
-  ['multipoles',['multipoles',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a1593d55a85a61e1578c554b68370f9d7',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]]
+  ['multipoles',['multipoles',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#aa931f51a2b9f73fa403301047ba979b7',1,'motsfinder::axisym::curve::expcurve::ExpansionCurve']]]
 ];

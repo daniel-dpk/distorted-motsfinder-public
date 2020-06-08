@@ -1,13 +1,15 @@
 var searchData=
 [
-  ['n',['N',['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a8d46d885c64dcd7e03c1cce176d06b3e',1,'motsfinder.exprs.series.SeriesExpression.N()'],['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a856b1d08af74ae792de369df87a4d81c',1,'motsfinder.axisym.curve.stabcalc.StabilityCalc.n()']]],
+  ['n',['n',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#a856b1d08af74ae792de369df87a4d81c',1,'motsfinder.axisym.curve.stabcalc.StabilityCalc.n()'],['../classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a8d46d885c64dcd7e03c1cce176d06b3e',1,'motsfinder.exprs.series.SeriesExpression.N()']]],
+  ['nabla_5fm_5fell_5fn',['nabla_m_ell_n',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aa7f9bb892ab58c843ad7fbfed60d5e6f',1,'motsfinder::axisym::curve::stabcalc::StabilityCalc']]],
+  ['nabla_5fm_5fk_5fn',['nabla_m_k_n',['../classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#aea34daa878a6417e97de4b3ef5e9f0e2',1,'motsfinder::axisym::curve::stabcalc::StabilityCalc']]],
   ['name',['name',['../classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a5907ca3bbf8e7cd8f40c3007338f6d02',1,'motsfinder.axisym.curve.basecurve.BaseCurve.name()'],['../classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a5907ca3bbf8e7cd8f40c3007338f6d02',1,'motsfinder.exprs.numexpr.NumericExpression.name()']]],
   ['nan_5fmat',['nan_mat',['../namespacemotsfinder_1_1numutils.html#a62d955bcc07efc721a2ddc88c474b7ca',1,'motsfinder::numutils']]],
   ['ndsolve',['ndsolve',['../namespacemotsfinder_1_1ndsolve_1_1solver.html#aa9b143582d20b970c4f3001cad8fa3b5',1,'motsfinder::ndsolve::solver']]],
   ['ndsolveerror',['NDSolveError',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html',1,'motsfinder::ndsolve::bcs']]],
   ['ndsolver',['NDSolver',['../classmotsfinder_1_1ndsolve_1_1solver_1_1NDSolver.html',1,'motsfinder::ndsolve::solver']]],
-  ['neck_5ftrick',['neck_trick',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#aeefa806c0241123693fbe09763456857',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
-  ['neck_5ftrick_5fthresholds',['neck_trick_thresholds',['../classmotsfinder_1_1axisym_1_1trackmots_1_1MOTSTracker.html#a26a581cf5d1713935a7fee21d5921982',1,'motsfinder::axisym::trackmots::MOTSTracker']]],
+  ['neck_5ftrick',['neck_trick',['../classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#aeefa806c0241123693fbe09763456857',1,'motsfinder::axisym::trackmots::tracker::MOTSTracker']]],
+  ['neck_5ftrick_5fthresholds',['neck_trick_thresholds',['../classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a26a581cf5d1713935a7fee21d5921982',1,'motsfinder::axisym::trackmots::tracker::MOTSTracker']]],
   ['neumanncondition',['NeumannCondition',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1NeumannCondition.html',1,'motsfinder::ndsolve::bcs']]],
   ['newton_5fkantorovich',['newton_kantorovich',['../namespacemotsfinder_1_1axisym_1_1newton.html#a07bd447136c9537221096f7c8ef3384a',1,'motsfinder::axisym::newton']]],
   ['newtonkantorovich',['NewtonKantorovich',['../classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html',1,'motsfinder::axisym::newton']]],

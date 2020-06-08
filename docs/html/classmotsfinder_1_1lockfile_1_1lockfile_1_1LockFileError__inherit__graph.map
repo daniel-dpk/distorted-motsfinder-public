@@ -1,0 +1,4 @@
+<map id="LockFileError" name="LockFileError">
+<area shape="rect" id="node3" href="$classmotsfinder_1_1lockfile_1_1lockfile_1_1AlreadyLockedError.html" title="Raised when we try to lock while already having a lock. " alt="" coords="5,155,141,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1lockfile_1_1lockfile_1_1DanglingLockfile.html" title="Raised when an unknown lockfile is present which we can&#39;t handle. " alt="" coords="166,155,285,181"/>
+</map>

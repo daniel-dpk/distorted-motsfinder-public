@@ -31,6 +31,10 @@ class Parser():
         return link
 
     def _process_link(self, link):
+        if link.startswith("docs_input/") and (link.endswith(".html") or
+                                               link.endswith(".ipynb")):
+            # Links to static HTML pages in docs_input/ should be preserved.
+            return "../../%s" % link
         comps = link.split("/")
         if not comps[0].startswith("."):
             return link

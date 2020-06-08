@@ -7,7 +7,6 @@ from builtins import range
 
 import math
 
-import sympy as sp
 from mpmath import mp
 
 from ..numutils import binomial_coeffs

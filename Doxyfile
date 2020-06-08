@@ -798,6 +798,8 @@ INPUT                  = ./motsfinder/
 INPUT                 += docs_input/examples_init.md
 INPUT                 += docs_input/examples_bl.md
 INPUT                 += docs_input/examples_num_metric.md
+INPUT                 += docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.ipynb
+INPUT                 += docs_input/Tutorial_Implement_New_Analytical_Metric.ipynb
 INPUT                 += README_SRC.md
 INPUT                 += README.md
 INPUT                 += testutils.py
@@ -973,6 +975,7 @@ INPUT_FILTER           =
 
 FILTER_PATTERNS        = *.py=./scripts/py_filter
 FILTER_PATTERNS       += *.md=./scripts/md_filter.py
+FILTER_PATTERNS       += *.ipynb=./scripts/ipynb_filter
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
 # INPUT_FILTER) will also be used to filter the input files that are used for

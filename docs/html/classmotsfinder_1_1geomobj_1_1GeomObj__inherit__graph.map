@@ -1,0 +1,12 @@
+<map id="GeomObj" name="GeomObj">
+<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html" title="Base class for curves in the x&#45;z&#45;plane. " alt="" coords="299,155,385,181"/>
+<area shape="rect" id="node11" href="$classmotsfinder_1_1general3d_1_1surface_1_1basesurface_1_1BaseSurface.html" title="Base class for surfaces with S^2 topology. " alt="" coords="441,155,539,181"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html" title="Base class for parametric curves in the x&#45;z&#45;plane. " alt="" coords="108,229,259,256"/>
+<area shape="rect" id="node8" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion. " alt="" coords="283,229,401,256"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html" title="Parametric curve in bipolar coordinates. " alt="" coords="5,304,103,331"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x&#45;z&#45;plane. " alt="" coords="127,304,247,331"/>
+<area shape="rect" id="node9" href="$classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html" title="Represent a curve as offset function relative to another curve. " alt="" coords="280,304,396,331"/>
+<area shape="rect" id="node10" href="$classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html" title="Represent as angle&#45;dependent distance from some origin. " alt="" coords="421,304,546,331"/>
+<area shape="rect" id="node12" href="$classmotsfinder_1_1general3d_1_1surface_1_1parametricsurface_1_1ParametricSurface.html" title="Surface with S^2 topology immersed in space. " alt="" coords="425,229,555,256"/>
+<area shape="rect" id="node13" href="$classmotsfinder_1_1general3d_1_1surface_1_1refparamsurface_1_1RefParamSurface.html" title="RefParamSurface" alt="" coords="580,229,707,256"/>
+</map>

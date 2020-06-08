@@ -5,5 +5,6 @@ var searchData=
   ['insufficientresolutionorroundoff',['InsufficientResolutionOrRoundoff',['../classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html',1,'motsfinder::axisym::newton']]],
   ['integrationerror',['IntegrationError',['../classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1IntegrationError.html',1,'motsfinder::axisym::curve::expcurve']]],
   ['integrationresult',['IntegrationResult',['../classmotsfinder_1_1numutils_1_1IntegrationResult.html',1,'motsfinder::numutils']]],
-  ['integrationresults',['IntegrationResults',['../classmotsfinder_1_1numutils_1_1IntegrationResults.html',1,'motsfinder::numutils']]]
+  ['integrationresults',['IntegrationResults',['../classmotsfinder_1_1numutils_1_1IntegrationResults.html',1,'motsfinder::numutils']]],
+  ['inverseexpression',['InverseExpression',['../classmotsfinder_1_1exprs_1_1inverse_1_1InverseExpression.html',1,'motsfinder::exprs::inverse']]]
 ];

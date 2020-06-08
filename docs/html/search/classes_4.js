@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['danglinglockfile',['DanglingLockfile',['../classmotsfinder_1_1lockfile_1_1lockfile_1_1DanglingLockfile.html',1,'motsfinder::lockfile::lockfile']]],
   ['datapatch',['DataPatch',['../classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html',1,'motsfinder::metric::discrete::patch']]],
   ['dirichletcondition',['DirichletCondition',['../classmotsfinder_1_1ndsolve_1_1bcs_1_1DirichletCondition.html',1,'motsfinder::ndsolve::bcs']]],
   ['discretemetric',['DiscreteMetric',['../classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html',1,'motsfinder::metric::discrete::metric']]],

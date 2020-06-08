@@ -484,7 +484,7 @@ Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">point</td><td>3-D point in the slice to evaluate at. The time coordinate is implicitly taken from the 3-metric. </td></tr>
-    <tr><td class="paramname">diff</td><td>Derivative order to compute. Default is 0, i.e. no derivative. Note that none of the time derivatives is currently implemented and all such values are set to <code>NaN</code>. This means that any component with a derivative index being zero will be <code>NaN</code>. Spatial derivatives of the time component are computed, however. </td></tr>
+    <tr><td class="paramname">diff</td><td>Derivative order to compute. Default is 0, i.e. no derivative. Note that time derivatives are currently only implemented for <code>diff=1</code>. However, all non-computed values are set to <code>NaN</code>. This means that any component with a derivative index being zero will be <code>NaN</code>. Spatial derivatives of the time component are computed however. </td></tr>
   </table>
   </dd>
 </dl>

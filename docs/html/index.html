@@ -99,31 +99,47 @@ stability of marginally trapped surfaces in black-hole spacetimes." Physical Rev
 <p><b>IMPORTANT</b></p>
 <p>If a class method is not documented, check if the parent class one is instead. </p>
 </blockquote>
-<h2>Examples</h2>
+<h2>Examples and tutorials</h2>
 <ul>
 <li><a class="el" href="md_docs_input_examples_bl.html">Brill-Lindquist initial data</a></li>
 <li><a class="el" href="md_docs_input_examples_num_metric.html">Using the finder with a numerical metric</a></li>
+<li>Finding stability spectra in Kerr slices (<a href="../../docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.html">html</a>, <a href="../../docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.ipynb">notebook</a>)</li>
+<li>Implementing a new analytical metric (<a href="../../docs_input/Tutorial_Implement_New_Analytical_Metric.html">html</a>, <a href="../../docs_input/Tutorial_Implement_New_Analytical_Metric.ipynb">notebook</a>)</li>
 </ul>
 <h2>Installation</h2>
-<p>The prerequisites to running the MOTS Finder are as follows:</p>
+<p>The prerequisites for running the MOTS Finder are as follows:</p>
 <ul>
-<li>Python 3.6.6</li>
-<li>SciPy 1.1.0</li>
-<li>NumPy 1.14.3</li>
-<li>SymPy 1.1.1</li>
-<li>mpmath 1.0.0</li>
-<li>matplotlib</li>
+<li>Python 3.6 or 3.7 (not tested with Python 3.8; use e.g. <code>pyenv</code> to obtain any Python version)</li>
+<li>SciPy 1.2.1</li>
+<li>NumPy 1.16.1</li>
+<li>SymPy 1.3</li>
+<li>mpmath 1.1.0</li>
+<li>matplotlib 2.2.5</li>
 <li>Jupyter</li>
-<li>For reading simulation data: <a href="https://github.com/eschnett/SimulationIO">SimulationIO</a> with its prerequisites and Python 3 bindings</li>
+<li>Optionally, for speeding up several computations, cython 0.29.15</li>
+<li>Optionally, for reading simulation data: <a href="https://github.com/eschnett/SimulationIO">SimulationIO</a> with its prerequisites and Python 3 bindings</li>
+<li>Optionally, for expansions into spin-weighted spherical harmonics: <a href="https://github.com/moble/spinsfast">spinsfast</a> with its prerequisites</li>
 </ul>
 <p>The simplest way to set up the environment on a Linux-based machine is as follows. Here, we use <code>apt</code> (e.g. in Ubuntu), please translate to your preferred package management method.</p>
-<div class="fragment"><div class="line">$ sudo apt install virtualenv</div><div class="line">$ cd ~</div><div class="line">$ virtualenv --always-copy --python=python3 py3env</div><div class="line">$ source ~/py3env/bin/activate</div><div class="line">$ pip install numpy scipy sympy mpmath matplotlib jupyter</div><div class="line">$ mkdir -p ~/src</div><div class="line">$ cd ~/src</div><div class="line">$ git clone https://github.com/daniel-dpk/distorted-motsfinder-public.git</div></div><!-- fragment --><p>Then, to start a notebook server in a dedicated folder:</p>
-<div class="fragment"><div class="line">$ source ~/py3env/bin/activate</div><div class="line">$ mkdir -p ~/src/motsfinder-local-notebooks</div><div class="line">$ cd ~/src/motsfinder-local-notebooks</div><div class="line">$ jupyter notebook</div></div><!-- fragment --><p>If you need to read simulation data and would like to use <a href="https://github.com/eschnett/SimulationIO">SimulationIO</a> for this purpose, please see its instructions for building and installation.</p>
-<h2>Authors</h2>
+<p>First, create a new Python environment to not interfere with any of your system Python configurations:</p>
+<div class="fragment"><div class="line">$ sudo apt install virtualenv</div><div class="line">$ cd ~</div><div class="line">$ virtualenv --always-copy --python=python3 py3env</div></div><!-- fragment --><p>Next, clone this repo to get the MOTS Finder source code:</p>
+<div class="fragment"><div class="line">$ mkdir -p ~/src</div><div class="line">$ cd ~/src</div><div class="line">$ git clone https://github.com/daniel-dpk/distorted-motsfinder-public.git</div></div><!-- fragment --><p>Finally, install all the required Python packages. The following installs the exact package versions the MOTS Finder was tested with. You may also try to install the most up to date versions. To do this, replace the second line below with <code>pip install numpy scipy sympy mpmath matplotlib jupyter</code>.</p>
+<div class="fragment"><div class="line">$ source ~/py3env/bin/activate</div><div class="line">$ pip install -r ~/src/distorted-motsfinder-public/python-requirements.txt</div></div><!-- fragment --><h3>Using the MOTS Finder</h3>
+<p>To use the finder, start a notebook server in a dedicated folder:</p>
+<div class="fragment"><div class="line">$ source ~/py3env/bin/activate  # in case it&#39;s not already active</div><div class="line">$ mkdir -p ~/src/motsfinder-local-notebooks</div><div class="line">$ cd ~/src/motsfinder-local-notebooks</div><div class="line">$ jupyter notebook</div></div><!-- fragment --><p><b>NOTE:</b> If you already use Jupyter from a different Python environment, the above will probably override your system Jupyter settings. To avoid that, replace the last line with:</p>
+<div class="fragment"><div class="line">$ JUPYTER_CONFIG_DIR=&quot;$HOME/.jupyter-motsfinder&quot; JUPYTER_DATA_DIR=&quot;$HOME/.local/share/jupyter-motsfinder&quot; jupyter notebook</div></div><!-- fragment --><p>Likewise, to install the Jupyter extensions into this environment, execute the following and then restart the Jupyter notebook server using the above command:</p>
+<div class="fragment"><div class="line">$ source ~/py3env/bin/activate  # in case it&#39;s not already active</div><div class="line">$ JUPYTER_CONFIG_DIR=&quot;$HOME/.jupyter-motsfinder&quot; JUPYTER_DATA_DIR=&quot;$HOME/.local/share/jupyter-motsfinder&quot; jupyter contrib nbextension install --user</div></div><!-- fragment --><h3>(Optional) Using Cython to speed up some computations</h3>
+<p>A short summary of the required steps to utilize the Cython implementations is:</p>
+<div class="fragment"><div class="line">$ sudo apt install python3-dev</div><div class="line">$ source ~/py3env/bin/activate</div><div class="line">$ cd ~/src/distorted-motsfinder-public</div><div class="line">$ pip install cython==0.29.15  # remove the &#39;==...&#39; part to use the current version</div><div class="line">$ ./cythonize_helper.py</div></div><!-- fragment --><h3>(Optional) For reading simulation data using the <code>SioMetric</code> class</h3>
+<p>If you need to read simulation data and would like to use <a href="https://github.com/eschnett/SimulationIO">SimulationIO</a> for this purpose, please see its instructions for building and installation.</p>
+<h3>(Optional) For expanding into spin-weighted spherical harmonics</h3>
+<p>The following works on Ubuntu-based systems. Please translate to your environment as needed.</p>
+<div class="fragment"><div class="line">$ sudo apt install libfftw3-dev</div><div class="line">... restart shell ...</div><div class="line">$ source ~/py3env/bin/activate</div><div class="line">$ pip install spinsfast</div></div><!-- fragment --><h2>Authors</h2>
 <p>Maintainer: Daniel Pook-Kolb</p>
 <p>Further authors and contributors:</p>
 <ul>
 <li>Ofek Birnholtz</li>
+<li>Jose Luis Jaramillo</li>
 <li>Badri Krishnan</li>
 <li>Erik Schnetter</li>
 <li>Victor Zhang</li>

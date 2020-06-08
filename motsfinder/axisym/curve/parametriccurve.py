@@ -55,8 +55,6 @@ Continuing the previous example, we can plot the normal vectors too:
 """
 
 import numpy as np
-from scipy.linalg import norm
-from scipy.integrate import solve_ivp, quad
 
 from ...exprs.trig import SineSeries, CosineSeries
 from ...exprs.cheby import Cheby
@@ -142,9 +140,33 @@ class ParametricCurve(BaseParametricCurve):
         with curve.fix_evaluator():
             fx = lambda t: curve(t)[0]
             fz = lambda t: curve(t)[1]
-            x_fun = x_cls.from_function(fx, num=num, domain=curve.domain)
-            z_fun = z_cls.from_function(fz, num=num, domain=curve.domain)
-            return cls(x_fun, z_fun)
+            return cls.from_functions(x=fx, z=fz, num=num,
+                                      x_cls=x_cls, z_cls=z_cls)
+
+    @classmethod
+    def from_functions(cls, x, z, num, x_cls=Cheby, z_cls=Cheby):
+        r"""Static method to convert any two-component function to a parametric curve.
+
+        This takes any callables for the x- and z-component and creates a
+        ParametricCurve. By default, the two component functions are expanded
+        into a Chebyshev polynomial series truncated after the `num`th term.
+
+        @param x,z
+            Callables for the x- and z-component, respectively. These will be
+            evaluated in the domain `[0, pi]`.
+        @param num
+            Spectral resolution, i.e. number of basis function to use to
+            represent the two component functions.
+        @param x_cls,z_cls
+            Series classes used for expanding the functions. Default is
+            ...exprs.cheby.Cheby, i.e. expanding into Chebyshev polynomials.
+            Suitable choices for a circular-type curve are
+            ...exprs.trig.SineSeries for `x_cls` and
+            ...exprs.trig.CosineSeries for `z_cls`.
+        """
+        x_fun = x_cls.from_function(x, num=num, domain=[0, np.pi])
+        z_fun = z_cls.from_function(z, num=num, domain=[0, np.pi])
+        return cls(x_fun, z_fun)
 
     @classmethod
     def create_line_segment(cls, point_a, point_b):

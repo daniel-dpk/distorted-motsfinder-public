@@ -23,6 +23,7 @@ import numpy as np
 
 from ...numutils import binomial_coeffs
 from ...exprs.trig import CosineSeries
+from ...metric import FlatThreeMetric
 from .expcalc import ExpansionCalc
 from .expcurve import ExpansionCurve
 
@@ -77,7 +78,7 @@ class StarShapedCurve(ExpansionCurve):
         self.set_origin(origin)
 
     @staticmethod
-    def create_sphere(radius, num, metric, origin=(0, 0, 0)):
+    def create_sphere(radius, num=1, metric=None, origin=(0, 0, 0)):
         r"""Create a circle of given radius representing a sphere in 3D.
 
         @param radius
@@ -85,14 +86,16 @@ class StarShapedCurve(ExpansionCurve):
         @param num
             Resolution of the horizon function. This only affects subsequent
             modification, since one coefficient is enough to represent a
-            circle.
+            circle. Default is `1`.
         @param metric
             The Riemannian 3-metric defining the geometry of the surrounding
-            space.
+            space. Default is the flat metric.
         @param origin
             Origin with respect to which this curve is parameterized. See
             #__init__() for details.
         """
+        if metric is None:
+            metric = FlatThreeMetric()
         h = CosineSeries([radius], domain=(0, np.pi))
         curve = StarShapedCurve(h=h, metric=metric, origin=origin)
         return curve.resample(num)

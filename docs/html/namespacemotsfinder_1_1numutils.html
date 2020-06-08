@@ -83,7 +83,8 @@ $(document).ready(function(){initNavTree('namespacemotsfinder_1_1numutils.html',
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">motsfinder.numutils Namespace Reference</div>  </div>
 </div><!--header-->
@@ -130,9 +131,30 @@ Functions</h2></td></tr>
 <tr class="memitem:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a24489f5e58131c2fa6ad0ef9d36c732b">inverse_2x2_matrix_derivative</a> (A, dA=None, ddA=None, diff=1)</td></tr>
 <tr class="memdesc:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute derivatives of the inverse of a 2x2 matrix.  <a href="#a24489f5e58131c2fa6ad0ef9d36c732b">More...</a><br /></td></tr>
 <tr class="separator:a24489f5e58131c2fa6ad0ef9d36c732b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af61314d950493e3347758e9aa35570"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a0af61314d950493e3347758e9aa35570">bracket_root</a> (f, x0, step, domain=(float(&quot;-inf&quot;), float(&quot;+inf&quot;)), max_steps=10000, full_output=False, disp=False)</td></tr>
+<tr class="memdesc:a0af61314d950493e3347758e9aa35570"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple (naive) sign change finder to bracket a root.  <a href="#a0af61314d950493e3347758e9aa35570">More...</a><br /></td></tr>
+<tr class="separator:a0af61314d950493e3347758e9aa35570"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35cee7b9ffea88c0f058eb37765bad57"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a35cee7b9ffea88c0f058eb37765bad57">find_root</a> (f, x0, step, max_steps=10000, kw)</td></tr>
+<tr class="memdesc:a35cee7b9ffea88c0f058eb37765bad57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find a root of a function using Brent's method.  <a href="#a35cee7b9ffea88c0f058eb37765bad57">More...</a><br /></td></tr>
+<tr class="separator:a35cee7b9ffea88c0f058eb37765bad57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15fc56d129d00740db5b509ad31b60b"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#ad15fc56d129d00740db5b509ad31b60b">find_all_roots</a> (xs, ys, func=None, full_output=False)</td></tr>
+<tr class="memdesc:ad15fc56d129d00740db5b509ad31b60b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find all roots of a sampled function.  <a href="#ad15fc56d129d00740db5b509ad31b60b">More...</a><br /></td></tr>
+<tr class="separator:ad15fc56d129d00740db5b509ad31b60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdb6e610eeb52758e1e0fd5dca193976"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#abdb6e610eeb52758e1e0fd5dca193976">interpolate_root</a> (xs, ys, guess, step, kind=&quot;cubic&quot;, full_output=False)</td></tr>
+<tr class="memdesc:abdb6e610eeb52758e1e0fd5dca193976"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolate data to estimate a root.  <a href="#abdb6e610eeb52758e1e0fd5dca193976">More...</a><br /></td></tr>
+<tr class="separator:abdb6e610eeb52758e1e0fd5dca193976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc5d2dd405310be63acd4b5ac7749280"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#adc5d2dd405310be63acd4b5ac7749280">extrapolate_root</a> (xs, ys, guess=None, at_end=True, kind=&quot;cubic&quot;, full_output=False)</td></tr>
+<tr class="memdesc:adc5d2dd405310be63acd4b5ac7749280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extrapolate data to estimate a root.  <a href="#adc5d2dd405310be63acd4b5ac7749280">More...</a><br /></td></tr>
+<tr class="separator:adc5d2dd405310be63acd4b5ac7749280"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a037496c5c59fcf131f27ee81af4d8636"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1numutils.html#a037496c5c59fcf131f27ee81af4d8636">raise_all_warnings</a> ()</td></tr>
 <tr class="memdesc:a037496c5c59fcf131f27ee81af4d8636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Context manager for turning numpy and native warnings into exceptions.  <a href="#a037496c5c59fcf131f27ee81af4d8636">More...</a><br /></td></tr>
 <tr class="separator:a037496c5c59fcf131f27ee81af4d8636"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a0868e23c71d4c0138a1d30bb6c0fa630"><td class="memItemLeft" align="right" valign="top"><a id="a0868e23c71d4c0138a1d30bb6c0fa630"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>_golden</b></td></tr>
+<tr class="separator:a0868e23c71d4c0138a1d30bb6c0fa630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Miscellaneous numerical utilities and helpers. </p>
@@ -191,6 +213,80 @@ Functions</h2></td></tr>
  
 </div>
 </div>
+<a id="a0af61314d950493e3347758e9aa35570"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0af61314d950493e3347758e9aa35570">&#9670;&nbsp;</a></span>bracket_root()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.numutils.bracket_root </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>domain</em> = <code>(float(&quot;-inf&quot;),&#160;float(&quot;+inf&quot;))</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>max_steps</em> = <code>10000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>disp</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Simple (naive) sign change finder to bracket a root. </p>
+<p>Starting from an initial position (<code>x0</code>), this takes repeated steps until the function changes sign. The two x-values before and after the sign change are then returned (in undefined order) as a bracket. For any step taken, the step size is increased by the "golden ratio".</p>
+<p>If the function's absolute value increases, we continue to walk in the other direction. The step size is still increased, so that there is a chance to escape a local minimum.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Function to bracket a root of. </td></tr>
+    <tr><td class="paramname">x0</td><td>Where to start walking. </td></tr>
+    <tr><td class="paramname">step</td><td>Initial step length. </td></tr>
+    <tr><td class="paramname">domain</td><td>Where to look for a sign change. If the search hits one of these boundaries, we either return the current (boundary) position or raise an error, depending on the <code>disp</code> parameter. Default is to not impose a boundary. </td></tr>
+    <tr><td class="paramname">max_steps</td><td>Maximum number of steps to try. Default is <code>10000</code>. </td></tr>
+    <tr><td class="paramname">full_output</td><td>If <code>True</code>, return the bracket and the two corresponding function values as <code>a, b, f(a), f(b)</code>. Default is <code>False</code>, i.e. only return the bracket. </td></tr>
+    <tr><td class="paramname">disp</td><td>If <code>True</code> and we get stuck at a domain boundary, raise a <a class="el" href="classmotsfinder_1_1numutils_1_1NumericalError.html" title="Exception raised for problems with numerical evaluation. ">NumericalError</a>. Default is <code>False</code>, i.e. return the boundary position as <code>a, a, f(a), f(a)</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a24bb6306a5375d7582871cee03b725ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a24bb6306a5375d7582871cee03b725ec">&#9670;&nbsp;</a></span>clip()</h2>
 
@@ -224,6 +320,181 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Confine a value to an interval. </p>
+
+</div>
+</div>
+<a id="adc5d2dd405310be63acd4b5ac7749280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc5d2dd405310be63acd4b5ac7749280">&#9670;&nbsp;</a></span>extrapolate_root()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.numutils.extrapolate_root </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>xs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ys</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>guess</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>at_end</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kind</em> = <code>&quot;cubic&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Extrapolate data to estimate a root. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xs,ys</td><td>The data points (x- and y-values). These need not have a sign change. </td></tr>
+    <tr><td class="paramname">guess</td><td>The point to start searching for a root in the interpolant. If not given, take the last x-interval as first guess. </td></tr>
+    <tr><td class="paramname">at_end</td><td>If <code>True</code> (default), try to find a root <em>after</em> the data. Else, try to find it <em>before</em> the data. </td></tr>
+    <tr><td class="paramname">kind</td><td>Interpolation kind. Default is <code>"cubic"</code>. </td></tr>
+    <tr><td class="paramname">full_output</td><td>Whether to output the root only (<code>False</code>, default) or the root and interpolating function (<code>True</code>). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad15fc56d129d00740db5b509ad31b60b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad15fc56d129d00740db5b509ad31b60b">&#9670;&nbsp;</a></span>find_all_roots()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.numutils.find_all_roots </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>xs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ys</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>func</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find all roots of a sampled function. </p>
+<p>This is used for functions that are already sampled at a grid of points <code>xs</code> with function values <code>ys</code>. It is assumed that this grid is dense enough such that all roots appear as sign changes in consecutive values in <code>ys</code> (and hence that the roots all have odd multiplicity).</p>
+<dl class="section return"><dt>Returns</dt><dd>List of roots. Empty list if no sign change occurs in <code>ys</code>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xs,ys</td><td>Precomputed abscissas and ordinates of <code>func</code>. </td></tr>
+    <tr><td class="paramname">func</td><td>Callable for fine-tuning the root search. If not specified, an interpolating function will be generated from the <code>xs</code> and <code>ys</code> data. </td></tr>
+    <tr><td class="paramname">full_output</td><td>Whether to output the roots only (<code>False</code>, default) or the roots and interpolating function (<code>True</code>). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a35cee7b9ffea88c0f058eb37765bad57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35cee7b9ffea88c0f058eb37765bad57">&#9670;&nbsp;</a></span>find_root()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.numutils.find_root </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>max_steps</em> = <code>10000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find a root of a function using Brent's method. </p>
+<p>This is a simple wrapper around <code>scipy.optimize.brentq()</code>, which first tries to automatically find a bracket required for the <code>brentq()</code> call.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>Function (callable) to find a root of. </td></tr>
+    <tr><td class="paramname">x0</td><td>Point to start searching for a sign change. </td></tr>
+    <tr><td class="paramname">step</td><td>First step for the sign change search. </td></tr>
+    <tr><td class="paramname">max_steps</td><td>Number of steps to take before givin up. Default is <code>10000</code>. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Further keyword arguments are passed to the <code>brentq()</code> call. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -283,6 +554,70 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair <code>(x, delta)</code>, where <code>x</code> is the point at which the maximum difference was found and <code>delta</code> is the difference at that point. </dd></dl>
+
+</div>
+</div>
+<a id="abdb6e610eeb52758e1e0fd5dca193976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdb6e610eeb52758e1e0fd5dca193976">&#9670;&nbsp;</a></span>interpolate_root()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.numutils.interpolate_root </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>xs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ys</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>guess</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>step</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kind</em> = <code>&quot;cubic&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Interpolate data to estimate a root. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">xs,ys</td><td>The data points (x- and y-values). The y-values need to change sign. </td></tr>
+    <tr><td class="paramname">guess</td><td>The point to start searching for a root. </td></tr>
+    <tr><td class="paramname">step</td><td>The first step size for searching for a root. </td></tr>
+    <tr><td class="paramname">kind</td><td>Interpolation kind. Default is <code>"cubic"</code>. </td></tr>
+    <tr><td class="paramname">full_output</td><td>Whether to output the root only (<code>False</code>, default) or the root and interpolating function (<code>True</code>). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
