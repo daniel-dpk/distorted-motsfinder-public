@@ -1,0 +1,13 @@
+# Tags files are generated/updated on the fly from the current source
+tags
+# might be left over from long-running tag updates
+tags.temp
+
+# OS files
+Thumbs.db
+.DS_Store
+*.lnk
+
+# Vim backup/swap files
+*~
+*.sw[nop]
