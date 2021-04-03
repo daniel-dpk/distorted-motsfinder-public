@@ -1,4 +1,0 @@
-<map id="NoConvergence" name="NoConvergence">
-<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html" title="Raised when resolution is too low or roundoff prevents convergence. " alt="" coords="5,155,168,196"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html" title="Raised when convergence not achieved within the step count limit. " alt="" coords="193,162,327,189"/>
-</map>

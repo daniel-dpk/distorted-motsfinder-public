@@ -1,6 +1,0 @@
-<map id="_SpectralBasis" name="_SpectralBasis">
-<area shape="rect" id="node3" href="$classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html" title="Spectral basis base class utilizing implemented series expansions. " alt="" coords="97,155,244,181"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html" title="Pseudospectral basis set of Chebyshev polynomials. " alt="" coords="5,229,99,256"/>
-<area shape="rect" id="node5" href="$classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html" title="Pseudospectral basis set of cosines. " alt="" coords="123,229,219,256"/>
-<area shape="rect" id="node6" href="$classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html" title="Pseudospectral basis set of sines. " alt="" coords="243,229,325,256"/>
-</map>

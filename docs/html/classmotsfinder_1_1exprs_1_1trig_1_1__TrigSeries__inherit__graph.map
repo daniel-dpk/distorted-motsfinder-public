@@ -1,6 +1,0 @@
-<map id="_TrigSeries" name="_TrigSeries">
-<area shape="rect" id="node5" href="$classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function. " alt="" coords="5,304,105,331"/>
-<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression. " alt="" coords="130,304,215,331"/>
-<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html" title="Base class for truncated series expressions. " alt="" coords="52,155,176,181"/>
-<area shape="rect" id="node3" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions. " alt="" coords="46,80,182,107"/>
-</map>

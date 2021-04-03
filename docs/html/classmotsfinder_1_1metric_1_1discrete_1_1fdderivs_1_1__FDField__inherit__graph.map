@@ -1,5 +1,0 @@
-<map id="_FDField" name="_FDField">
-<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__ScalarField.html" title="Wrapper for scalar fields. " alt="" coords="5,80,100,107"/>
-<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__Sym2TensorField.html" title="Wrapper for symmetric 2&#45;tensor fields. " alt="" coords="125,80,255,107"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__VectorField.html" title="Wrapper for (contravariant) vector fields. " alt="" coords="280,80,375,107"/>
-</map>

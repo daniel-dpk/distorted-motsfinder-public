@@ -1,5 +1,0 @@
-<map id="GeneralBrillLindquistMetric" name="GeneralBrillLindquistMetric">
-<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics. " alt="" coords="15,155,173,181"/>
-<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html" title="Base class for 3&#45;metrics on a spatial slice of spacetime. " alt="" coords="45,80,143,107"/>
-<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature). " alt="" coords="39,5,149,32"/>
-</map>
