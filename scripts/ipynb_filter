@@ -1,2 +1,6 @@
 #!/bin/bash
-jupyter nbconvert --to html $1
+if [ -x "$(command -v pyenv)" ]; then
+    pyenv exec jupyter nbconvert --to html $1
+else
+    jupyter nbconvert --to html $1
+fi

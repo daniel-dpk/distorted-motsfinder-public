@@ -26,19 +26,22 @@ For any questions/comments/ideas, feel free to contact
 
 ## Documentation
 
-HTML documentation (including this readme) is available in:
+HTML documentation (including this readme) is available
+[online](https://daniel-dpk.github.io/distorted-motsfinder-public/)
+or can be generated from the current source
+(see [README_SRC.md](README_SRC.md)).
 
-```
-./docs/html/index.html
-```
-
-> **IMPORTANT**
+> **NOTE**
 >
 > If a class method is not documented, check if the parent class one is
 > instead.
 
 
 ## Examples and tutorials
+
+Some of the below links only work in the
+[online](https://daniel-dpk.github.io/distorted-motsfinder-public/)
+version of this help.
 
 * [Brill-Lindquist initial data](docs_input/examples_bl.md)
 * [Using the finder with a numerical metric](docs_input/examples_num_metric.md)

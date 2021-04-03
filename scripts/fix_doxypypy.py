@@ -89,9 +89,12 @@ class DoxyCommentBlock():
         self._brief = None
         self._long = []
         self._start_pat = re.compile(r"\s*(?:## @brief\s|##[^#\s])")
-        self._end_pat = re.compile(r"\s*[^#\s]")
+        self._end_pat = re.compile(r"\s*(?:[^#\s]|## @brief\s)")
         self._indent_pat = re.compile(r"\s*#(\s*)")
         self._empty_pat = re.compile(r"\s*#(?:\s*| @\w+)?$")
+        self._nonempty_pat = re.compile(r"(\s*#\s*)(\S.*)")
+        self._invalid_brief_pat = re.compile(r"(\s*##\s*)@brief\s+(@package\s+.*)")
+        self._invalid_brief = False
 
     def reset(self):
         r"""Reset this object to be ready to find the next block."""
@@ -117,7 +120,13 @@ class DoxyCommentBlock():
             raise RuntimeError(
                 "Cannot start Doxygen comment inside Doxygen comment."
             )
-        self._brief = brief
+        m = self._invalid_brief_pat.match(brief)
+        if m:
+            self._brief = "%s%s" % (m[1], m[2])
+            self._invalid_brief = True
+        else:
+            self._brief = brief
+            self._invalid_brief = False
 
     def add(self, line):
         r"""Add a line to the long description of this comment block."""
@@ -141,15 +150,23 @@ class DoxyCommentBlock():
 
     def long_desc(self):
         r"""Return a generator for the fixed long description block."""
-        indents = map(self._get_indent, self._long)
+        lines = self._long
+        if self._invalid_brief:
+            lines = lines.copy()
+            for i, line in enumerate(lines):
+                m = self._nonempty_pat.match(line)
+                if m:
+                    lines[i] = "%s@brief %s" % (m[1], m[2])
+                    break
+        indents = map(self._get_indent, lines)
         indents = [i for i in indents if i is not None]
         if not indents:
-            for line in self._long:
+            for line in lines:
                 yield line
             return
         indent = min(indents)
         pat = re.compile(r"(^\s*#)\s{%d}" % indent)
-        for line in self._long:
+        for line in lines:
             yield pat.sub(r"\1 ", line)
 
     def __str__(self):
