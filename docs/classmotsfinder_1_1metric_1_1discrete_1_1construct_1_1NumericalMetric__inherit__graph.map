@@ -1,0 +1,7 @@
+<map id="NumericalMetric" name="NumericalMetric">
+<area shape="rect" id="node1" title="Metric containing given slice data." alt="" coords="5,304,136,331"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1discrete_1_1metric_1_1DiscreteMetric.html" title="Base class for discrete axisymmetric metrics." alt="" coords="12,229,129,256"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html" title="Base class for 3&#45;metrics on a spatial slice of spacetime." alt="" coords="17,155,124,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature)." alt="" coords="10,80,131,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="39,5,102,32"/>
+</map>

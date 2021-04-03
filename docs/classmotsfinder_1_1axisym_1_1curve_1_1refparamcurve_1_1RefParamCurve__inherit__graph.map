@@ -1,0 +1,6 @@
+<map id="RefParamCurve" name="RefParamCurve">
+<area shape="rect" id="node1" title="Represent a curve as offset function relative to another curve." alt="" coords="7,229,130,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion." alt="" coords="5,155,132,181"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html" title="Base class for curves in the x&#45;z&#45;plane." alt="" coords="23,80,115,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="37,5,100,32"/>
+</map>

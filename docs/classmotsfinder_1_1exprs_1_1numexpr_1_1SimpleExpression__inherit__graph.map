@@ -1,0 +1,10 @@
+<map id="SimpleExpression" name="SimpleExpression">
+<area shape="rect" id="node1" title="Base class for simple functions." alt="" coords="312,107,451,133"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleCosExpression.html" title="Cosine expression with arbitrary derivatives." alt="" coords="503,5,665,32"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleCoshExpression.html" title="Hyperbolic cosine (cosh) expression with arbitrary derivatives." alt="" coords="499,56,669,83"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleSinExpression.html" title="Sine expression with arbitrary derivatives." alt="" coords="505,107,663,133"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleSinhExpression.html" title="Hyperbolic sine (sinh) expression with arbitrary derivatives." alt="" coords="501,157,667,184"/>
+<area shape="rect" id="node8" href="$classmotsfinder_1_1exprs_1_1basics_1_1SinSquaredExpression.html" title="Sine squared (sin(x)**2) expression with first two derivatives." alt="" coords="501,208,667,235"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="116,107,264,133"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,107,68,133"/>
+</map>

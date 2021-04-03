@@ -1,0 +1,9 @@
+<map id="DiscreteMetric" name="DiscreteMetric">
+<area shape="rect" id="node1" title="Base class for discrete axisymmetric metrics." alt="" coords="169,229,287,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1NumericalMetric.html" title="Metric containing given slice data." alt="" coords="5,304,136,331"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html" title="Full discrete slice geometry generated from (analytical) functions." alt="" coords="160,304,296,331"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioMetric.html" title="Axisymmetric Riemannian 3&#45;metric of a slice read from simulation data." alt="" coords="320,304,403,331"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html" title="Base class for 3&#45;metrics on a spatial slice of spacetime." alt="" coords="175,155,281,181"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature)." alt="" coords="167,80,289,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="197,5,259,32"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="BrillLindquistConfig" name="BrillLindquistConfig">
+<area shape="rect" id="node1" title="Configuration for finding MOTSs in Brill&#45;Lindquist metrics." alt="" coords="5,80,153,107"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html" title="Abstract configuration base class for find_mots()." alt="" coords="8,5,151,32"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="BaseParametricCurve" name="BaseParametricCurve">
+<area shape="rect" id="node1" title="Base class for parametric curves in the x&#45;z&#45;plane." alt="" coords="85,155,247,181"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html" title="Parametric curve in bipolar coordinates." alt="" coords="42,229,149,256"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x&#45;z&#45;plane." alt="" coords="173,229,303,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html" title="Base class for curves in the x&#45;z&#45;plane." alt="" coords="5,80,97,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="20,5,83,32"/>
+<area shape="rect" id="node4" title=" " alt="" coords="121,80,211,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="235,80,318,107"/>
+</map>

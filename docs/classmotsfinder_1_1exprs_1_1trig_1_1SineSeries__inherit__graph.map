@@ -1,0 +1,7 @@
+<map id="SineSeries" name="SineSeries">
+<area shape="rect" id="node1" title="Truncated sine series expression." alt="" coords="34,304,125,331"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="33,229,125,256"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html" title="Base class for truncated series expressions." alt="" coords="13,155,146,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="5,80,153,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="48,5,111,32"/>
+</map>

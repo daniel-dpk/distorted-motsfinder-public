@@ -1,0 +1,6 @@
+<map id="SimpleCoshExpression" name="SimpleCoshExpression">
+<area shape="rect" id="node1" title="Hyperbolic cosine (cosh) expression with arbitrary derivatives." alt="" coords="5,229,176,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html" title="Base class for simple functions." alt="" coords="21,155,160,181"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="17,80,165,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="59,5,122,32"/>
+</map>

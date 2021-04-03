@@ -1,0 +1,6 @@
+<map id="SumExpression" name="SumExpression">
+<area shape="rect" id="node1" title="Sum of two expressions is an optional coefficient for the second term." alt="" coords="18,155,141,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1exprs_1_1basics_1_1BlendExpression2D.html" title="Blend between two expressions based on a third." alt="" coords="5,229,153,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="5,80,153,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="48,5,111,32"/>
+</map>

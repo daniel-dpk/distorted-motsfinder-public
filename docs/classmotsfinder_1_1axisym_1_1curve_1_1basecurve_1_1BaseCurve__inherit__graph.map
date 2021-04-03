@@ -1,0 +1,10 @@
+<map id="BaseCurve" name="BaseCurve">
+<area shape="rect" id="node1" title="Base class for curves in the x&#45;z&#45;plane." alt="" coords="234,80,326,107"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html" title="Base class for parametric curves in the x&#45;z&#45;plane." alt="" coords="115,155,277,181"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion." alt="" coords="302,155,429,181"/>
+<area shape="rect" id="node2" title=" " alt="" coords="249,5,311,32"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html" title="Parametric curve in bipolar coordinates." alt="" coords="5,229,112,256"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html" title="Parametric curve in the x&#45;z&#45;plane." alt="" coords="136,229,267,256"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html" title="Represent a curve as offset function relative to another curve." alt="" coords="300,229,423,256"/>
+<area shape="rect" id="node8" href="$classmotsfinder_1_1axisym_1_1curve_1_1starshapedcurve_1_1StarShapedCurve.html" title="Represent as angle&#45;dependent distance from some origin." alt="" coords="447,229,582,256"/>
+</map>

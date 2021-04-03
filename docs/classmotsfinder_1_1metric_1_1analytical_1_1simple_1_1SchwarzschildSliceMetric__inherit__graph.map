@@ -1,0 +1,7 @@
+<map id="SchwarzschildSliceMetric" name="SchwarzschildSliceMetric">
+<area shape="rect" id="node1" title="Spatial slice of Schwarzschild metric in isotropic coordinates." alt="" coords="5,304,192,331"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html" title="Base class for conformally flat 3&#45;metrics." alt="" coords="11,229,186,256"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html" title="Base class for 3&#45;metrics on a spatial slice of spacetime." alt="" coords="45,155,152,181"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html" title="Base class for general metrics (i.e. of any dimension and signature)." alt="" coords="38,80,159,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="67,5,130,32"/>
+</map>

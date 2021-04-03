@@ -1,0 +1,5 @@
+<map id="InsufficientResolutionOrRoundoff" name="InsufficientResolutionOrRoundoff">
+<area shape="rect" id="node1" title="Raised when resolution is too low or roundoff prevents convergence." alt="" coords="5,155,184,196"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html" title="Base for exceptions indicating failed convergence of Newton steps." alt="" coords="32,80,157,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="51,5,138,32"/>
+</map>
