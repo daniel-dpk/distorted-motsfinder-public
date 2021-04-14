@@ -98,7 +98,6 @@ class TestCheby(DpkTestCase):
 
     def test_values(self):
         a, b = 10., 20.
-        # pylint: disable=bad-whitespace
         cheby = Cheby([-3.249, -3.743,  4.731,  7.597,  1.126, -1.15 , -0.909,
                        -2.088,  0.002,  1.229,  0.353,  0.234, -0.35 , -0.745,
                        -0.612, -0.612, -0.482, -0.347, -0.323, -0.215, -0.197,
@@ -224,7 +223,6 @@ class TestCheby(DpkTestCase):
 
     def test_roundtrip(self):
         a, b = 10., 20.
-        # pylint: disable=bad-whitespace
         cheby1 = Cheby([-3.249, -3.743,  4.731,  7.597,  1.126, -1.15 , -0.909,
                         -2.088,  0.002,  1.229,  0.353,  0.234, -0.35 , -0.745,
                         -0.612, -0.612, -0.482, -0.347, -0.323, -0.215, -0.197,

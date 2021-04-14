@@ -15,7 +15,7 @@ from contextlib import contextmanager
 import warnings
 
 from scipy.linalg import LinAlgWarning
-from scipy.integrate import IntegrationWarning
+from scipy.integrate import fixed_quad, IntegrationWarning
 from scipy.interpolate import interp1d
 from scipy import optimize
 import numpy as np
@@ -25,6 +25,7 @@ import sympy as sp
 __all__ = [
     "nan_mat",
     "clip",
+    "linear_interp",
     "binomial",
     "binomial_coeffs",
     "inf_norm1d",
@@ -63,6 +64,21 @@ def nan_mat(shape):
 def clip(x, x_min, x_max):
     r"""Confine a value to an interval."""
     return max(x_min, min(x_max, x))
+
+
+def linear_interp(x, x1, x2, y1, y2, extrapolate=True):
+    r"""Linearly interpolate between two numbers.
+
+    @param x
+        Abscissa to interpolate to.
+    @param x1,x2
+        Abscissas of the two data points to interpolate between.
+    @param y1,y2
+        Ordinates of the two data points to interpolate between.
+    """
+    if not extrapolate:
+        x = clip(x, x1, x2)
+    return (y2-y1) * (x-x1)/(x2-x1) + y1
 
 
 def binomial(n, k):
@@ -131,6 +147,7 @@ def inf_norm1d(f1, f2=None, domain=None, Ns=50, xatol=1e-12):
         f2 = lambda x: 0.0
     if not callable(f2):
         f2 = f2.evaluator()
+    domain = list(map(float, domain))
     a, b = domain
     func = lambda x: (
         -float(abs(f1(float(x))-f2(float(x)))) if a <= x <= b else 0.
@@ -629,6 +646,52 @@ def extrapolate_root(xs, ys, guess=None, at_end=True, kind="cubic",
         guess = 2*xs[-1] - xs[-2]
     r = find_root(f, x0=xs[-1], step=guess - xs[-1])
     return (r, f) if full_output else r
+
+
+def _fixed_quad_abscissas(a, b, n):
+    r"""Return the abscissas of the Gaussian quadrature of order `n`.
+
+    These are the exact points at which an integrand will be evaluated by
+    `scipy.integrate.fixed_quad(..., a, b, n)`. Note that this will hold for
+    _fixed_quad() *only* if no `full_domain` is given (or it is equal to the
+    integration interval).
+    """
+    xs_list = [None]
+    def f(x):
+        xs_list[0] = x
+        return np.zeros_like(x)
+    fixed_quad(f, a=a, b=b, n=n)
+    return xs_list[0]
+
+
+def _fixed_quad(func, a, b, n, full_domain=None, min_n=30):
+    r"""Integrate a function using fixed order Gaussian quadrature.
+
+    This is a wrapper for `scipy.integrate.fixed_quad()`. Given a full domain
+    to integrate, it uses the information of the current sub-domain to choose
+    less than the full set of `n` points such that integrating the full domain
+    in several intervals, the total number of evaluations is approximately
+    `n`.
+
+    @param func
+        Function taking a list of values and returning a list of results.
+    @param a,b
+        Interval to integrate over.
+    @param n
+        Order of the Gaussian quadrature for the `full_domain`.
+    @param full_domain
+        Full domain to eventually integrate over. If not given, `a,b` is taken
+        to be the full domain, i.e. no reduction of quadrature order is done.
+    @param min_n
+        Minimum quadrature order for very small sub-domains.
+    """
+    if full_domain is not None:
+        w = full_domain[1] - full_domain[0]
+        if abs(b-a) < 1e-14*w:
+            return 0.0
+        n = max(min_n, int(round(n * abs(b-a)/w)))
+    value, _ = fixed_quad(func, a=a, b=b, n=n)
+    return value
 
 
 @contextmanager

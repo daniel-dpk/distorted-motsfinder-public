@@ -22,12 +22,13 @@ import matplotlib.ticker as plticker
 # This import has side-effects we need.
 from mpl_toolkits.mplot3d import Axes3D # pylint: disable=unused-import
 
-from ..utils import insert_missing, merge_dicts
-from .plotutils import add_zero_line
+from ..utils import insert_missing, merge_dicts, cmp_versions
+from .plotutils import add_zero_line, add_zero_vline
 
 
 __all__ = [
     "matplotlib_rc",
+    "unify_axes_ranges",
     "simple_plot_ctx",
     "wrap_simple_plot_ctx",
     "plot_ctx",
@@ -64,32 +65,42 @@ def matplotlib_rc(opts):
             mpl.rcParams[k] = old_values[k]
 
 
-def _equal_lengths(axes, ax):
+def unify_axes_ranges(ax, axes="xyz"):
     r"""Modify an Axis object to have equal length axes.
 
     @param ax
+        Axis object to modify.
+    @param axes
         String containing the axes, like ``"xyz"`` that should have equal
-        length.
+        length. (Axes that do not exist are ignored.)
     """
-    lims = [getattr(ax, "get_%slim" % x)() for x in axes]
-    max_length = max(x[1]-x[0] for x in lims)
+    lims = []
+    used_axes = []
+    for axis in axes:
+        try:
+            lim = getattr(ax, "get_%slim" % axis)()
+            lims.append(lim)
+            used_axes.append(axis)
+        except AttributeError:
+            pass
+    max_length = max(b-a for a, b in lims)
     def _lim(a, b, l):
         c = 0.5 * (a + b)
         d = 0.5 * l
         return c - d, c + d
-    for x, lim in zip(axes, lims):
-        getattr(ax, "set_%slim" % x)(*_lim(*lim, l=max_length))
+    for axis, lim in zip(used_axes, lims):
+        getattr(ax, "set_%slim" % axis)(*_lim(*lim, l=max_length))
 
 
 @contextmanager
-def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
+def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None, useoffset=None,
                     fontsize=None, save=None, ax=None, show=True, close=False,
                     cfg_callback=None, dpi=None, save_opts=None,
                     subplot_kw=None, subplots_kw=None, fixed_layout=None,
-                    pad=0, ypad=0, zero_line=False, xlog=False, ylog=False,
+                    pad=0, ypad=0, zero_line=False, zero_vline=False, xlog=False, ylog=False,
                     xlim=(None, None), ylim=(None, None), xtick_spacing=None,
                     ytick_spacing=None, pi_xticks=None, pi_yticks=None,
-                    nrows=1, ncols=1):
+                    nrows=1, ncols=1, verbose=True):
     r"""Simple context for creating an setting up a figure and axis/axes.
 
     The given `ax` axis object can be a callable, in which case it is used to
@@ -109,17 +120,20 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
         fixed_layout = insert_missing(
             fixed_layout, left=0.2, right=0.95, top=0.85, bottom=0.2
         )
-        fixed_layout.update((subplots_kw or {}).get("gridspec_kw", {}))
+        subplots_kw = subplots_kw or {}
+        fixed_layout.update(subplots_kw.get("gridspec_kw", {}))
         save_opts = insert_missing(save_opts or {}, bbox_inches=None)
-        subplots_kw = insert_missing(
-            subplots_kw or {}, gridspec_kw=fixed_layout,
-        )
+        subplots_kw.update(gridspec_kw=fixed_layout)
     rc_opts = dict()
     if usetex is not None:
         rc_opts['text.usetex'] = usetex
         if usetex:
+            if cmp_versions(mpl.__version__, [3, 3]) < 0: # matplotlib<3.3
+                rc_opts['text.latex.preview'] = True
             rc_opts['font.family'] = 'DejaVu Serif', 'serif'
             rc_opts['font.serif'] = ['Computer Modern']
+        if useoffset is not None:
+            rc_opts['axes.formatter.useoffset'] = useoffset
     if fontsize is not None:
         rc_opts['font.size'] = fontsize
     with matplotlib_rc(rc_opts):
@@ -149,6 +163,9 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
         if zero_line:
             for ax in axes:
                 add_zero_line(ax, zero_line)
+        if zero_vline:
+            for ax in axes:
+                add_zero_vline(ax, zero_vline)
         yield ax_result
         for ax in axes:
             if xlog:
@@ -201,6 +218,8 @@ def simple_plot_ctx(figsize=(6, 2), projection=None, usetex=None,
             os.makedirs(op.normpath(op.dirname(fname)), exist_ok=True)
             fig.savefig(fname, **insert_missing(save_opts or dict(),
                                                 bbox_inches='tight'))
+            if verbose:
+                print("Figure saved to: %s" % fname)
         if show:
             plt.show()
         elif close:
@@ -254,12 +273,13 @@ def wrap_simple_plot_ctx(opts=None, **kw):
 def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
              ylog=False, xlim=(None, None), ylim=(None, None), pad=0, ypad=0,
              yscilimits=(-3, 3), xscilimits=None, xtick_spacing=None,
-             pi_xticks=None, pi_yticks=None, zero_line=False,
+             pi_xticks=None, pi_yticks=None, zero_line=False, zero_vline=False,
              ytick_spacing=None, title=None, xlabel=None, ylabel=None,
-             tight=True, tight_layout=True, usetex=None, fontsize=None,
-             save=None, ax=None, show=True, close=False, cfg_callback=None,
-             equal_lengths=False, dpi=None, save_opts=None, subplot_kw=None,
-             subplots_kw=None, fixed_layout=None):
+             tight=True, tight_layout=True, usetex=None, useoffset=None,
+             fontsize=None, save=None, ax=None, show=True, close=False,
+             cfg_callback=None, equal_lengths=False, dpi=None, save_opts=None,
+             subplot_kw=None, subplots_kw=None, fixed_layout=None,
+             verbose=True):
     r"""Context manager for preparing a figure and applying configuration.
 
     This is a convenience function with which it is possible to easily create
@@ -278,19 +298,21 @@ def plot_ctx(figsize=(6, 2), projection=None, grid=True, xlog=False,
             cfg_callback(ax)
         if equal_lengths:
             axes = "xy" if equal_lengths is True else equal_lengths
-            _equal_lengths(axes, ax)
+            unify_axes_ranges(ax, axes)
     if fixed_layout:
         tight_layout = False
     with simple_plot_ctx(figsize=figsize, projection=projection,
-                         usetex=usetex, fontsize=fontsize, save=save, ax=ax,
-                         show=show, close=close, cfg_callback=_cb, dpi=dpi,
+                         usetex=usetex, useoffset=useoffset,
+                         fontsize=fontsize, save=save, ax=ax, show=show,
+                         close=close, cfg_callback=_cb, dpi=dpi,
                          save_opts=save_opts, subplot_kw=subplot_kw,
                          subplots_kw=subplots_kw,
                          fixed_layout=fixed_layout, pad=pad, ypad=ypad,
-                         zero_line=zero_line, xlog=xlog, ylog=ylog, xlim=xlim,
-                         ylim=ylim, xtick_spacing=xtick_spacing,
+                         zero_line=zero_line, zero_vline=zero_vline,
+                         xlog=xlog, ylog=ylog, xlim=xlim, ylim=ylim,
+                         xtick_spacing=xtick_spacing,
                          ytick_spacing=ytick_spacing, pi_xticks=pi_xticks,
-                         pi_yticks=pi_yticks) as ax:
+                         pi_yticks=pi_yticks, verbose=verbose) as ax:
         yield ax
         ax.grid(grid)
         if tight is not None:
@@ -329,7 +351,7 @@ def plot_ctx_3d(zlim=(None, None), zscilimits=None, ztick_spacing=None,
             cfg_callback(ax)
         if equal_lengths:
             axes = "xyz" if equal_lengths is True else equal_lengths
-            _equal_lengths(axes, ax)
+            unify_axes_ranges(ax, axes)
     with plot_ctx(figsize=figsize, projection='3d', cfg_callback=_cb, **kw) as ax:
         ax.azim = azim
         ax.elev = elev

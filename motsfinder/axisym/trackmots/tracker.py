@@ -334,8 +334,11 @@ class MOTSTracker():
         ## unconditionally.
         self.follow_bipolar_scaling = True
         ## If `True`, move the origin of the bipolar coordinate system to the
-        ## center between the lower end of the top and upper end of the bottom
-        ## MOTS.
+        ## predicted location of the MOTS.\ Where this is depends on the
+        ## chosen location prediction method.\ In case of an activated
+        ## *neck trick*, choses the center between the lower end of the top
+        ## and upper end of the bottom MOTS (even if the conditions for
+        ## applying the neck trick are not met).
         self.auto_bipolar_move = True
         ## Minimum resolution of the reference curve.
         self.min_ref_num = 5
@@ -363,6 +366,18 @@ class MOTSTracker():
         ## an error is raised if either of the two individual MOTSs for this
         ## slice is not found.
         self.neck_trick_thresholds = (10.0, 2.0)
+        ## Whether to estimate a "coordinate velocity" of the MOTS to predict
+        ## its location in the next slice.\ The reference shape is then moved
+        ## by an appropriate amount prior to starting the search.
+        self.predict_location = False
+        ## Which location to use for tracking and predicting the next MOTS
+        ## location.\ ``"center"`` (default) uses the coordinate center
+        ## between the north and south pole while ``"north"`` and ``"south"``
+        ## only consider the location of that pole.\ ``"xmin"`` uses a local
+        ## minimum of the x-coordinate.
+        self.use_location = "center"
+        ## Coordinate velocity to use before it can be estimated.
+        self.initial_velocity = 0.0
         ## Kind of interpolation to perform on numerical data on a grid.\ Refer
         ## to motsfinder.metric.discrete.patch.DataPatch.set_interpolation()
         ## for more details.
@@ -371,6 +386,9 @@ class MOTSTracker():
         ## derivatives.\ This controls the stencil size and is currently only
         ## used for the Hermite-type interpolations.
         self.fd_order = None
+        # positions (e.g. coordinate centers) of MOTS in previous slices (keys
+        # are time, values are z-locations)
+        self._prev_locations = dict()
         self._last_neck_info = None
         self._files = None
         self._c_ref = None
@@ -563,11 +581,14 @@ class MOTSTracker():
                 self._c_ref = c
                 c, fname = self._call_find_mots(
                     cfg, pass_nr=2, timings=self.timings,
-                    c_ref=self._current_ref_curve(cfg, allow_neck_trick=False),
+                    c_ref=self._current_ref_curve(cfg, allow_transform=False),
                 )
                 if not c:
                     return None, None
         self._compute_properties(c, fname)
+        shape_location = self._get_shape_location(c)
+        if shape_location is not None:
+            self._prev_locations[g.time] = shape_location
         # NOTE: Assigning to `self._c_ref` has the effect that *any*
         #       subsequent invocation of `_call_find_mots()` deletes the
         #       search config of the assigned curve (the data in
@@ -581,7 +602,25 @@ class MOTSTracker():
         self._c_ref = c
         return c, fname
 
-    def _current_ref_curve(self, cfg, allow_neck_trick=True):
+    def _get_shape_location(self, c):
+        r"""Return the z-coordinate of the location of the curve's shape."""
+        if self.use_location == "center":
+            return (c(0)[1] + c(np.pi)[1]) / 2.0
+        if self.use_location == "north":
+            return c(0)[1]
+        if self.use_location == "south":
+            return c(np.pi)[1]
+        if self.use_location == "xmin":
+            param = c.find_local_min_x()
+            if param is None:
+                self._p("Could not determine location of local x-minimum.")
+                return None
+            z = c(param)[1]
+            self._p("z-coordinate of x-minimum: %s" % z)
+            return z
+        raise ValueError("Unknown location: %s" % (self.use_location,))
+
+    def _current_ref_curve(self, cfg, allow_transform=True):
         r"""Prepare and return the current reference curve.
 
         This also updates the given configuration with the bipolar coordinate
@@ -599,7 +638,8 @@ class MOTSTracker():
             cfg.bipolar_kw = bipolar_kw
             if self._do_curv2_optimization(cfg):
                 cfg.reparam = self._get_curv2_reparam_settings(c_ref, cfg)
-        if allow_neck_trick:
+        if allow_transform:
+            c_ref = self.apply_velocity(g, c_ref)
             c_ref = self.neck_trick(g, c_ref)
         return c_ref
 
@@ -669,14 +709,23 @@ class MOTSTracker():
         r"""Return the origin for bipolar coordinates.
 
         If the origin is specified using configuration options (`bipolar_kw`),
-        then this value is returned. Otherwise, we use the center between the
-        top and bottom MOTSs (assuming they have already been found).
+        then this value is returned. Otherwise, we use the predicted location
+        of the MOTS (i.e. the center between the top and bottom MOTSs in case
+        the neck trick is chosen).
         """
         g = cfg.metric
-        neck_info = self._get_neck_info(g)
-        if neck_info.has_data:
-            return neck_info.z_center
         c_ref = self._c_ref
+        if self.predict_location:
+            z, _ = self.predicted_location(
+                time=g.time, prev_curve=c_ref, full_output=True,
+                verbose=False,
+            )
+            if z is not None:
+                return z
+        else:
+            neck_info = self._get_neck_info(g)
+            if neck_info.has_data:
+                return neck_info.z_center
         if callable(c_ref):
             return (c_ref(0)[1]+c_ref(np.pi)[1]) / 2.0
         if isinstance(c_ref, (list, tuple)):
@@ -692,8 +741,7 @@ class MOTSTracker():
             self._p("Using previous scale=%s" % scale, level=2)
         except AttributeError:
             # crude estimate that should be OK but not optimal
-            neck_info = self._get_neck_info(g)
-            if not neck_info.has_data:
+            def _crude_scale_estimate(curve):
                 if callable(curve):
                     scale = 0.25 * (curve(0)[1]-curve(np.pi)[1])
                 else:
@@ -701,10 +749,17 @@ class MOTSTracker():
                         scale = curve[0] / 2.0
                     else:
                         scale = curve / 2.0
-            else:
-                scale = abs(neck_info.z_dist)**(2/3.)
-                scale = min(scale, 2/3. * neck_info.smaller_z_extent)
-                scale = max(1e-3*neck_info.z_extent, scale)
+                return scale
+            if self.predict_location: # don't assume inner common MOTS case
+                scale = _crude_scale_estimate(curve)
+            else: # assume we are doing neck trick with inner common MOTS
+                neck_info = self._get_neck_info(g)
+                if neck_info.has_data:
+                    scale = abs(neck_info.z_dist)**(2/3.)
+                    scale = min(scale, 2/3. * neck_info.smaller_z_extent)
+                    scale = max(1e-3*neck_info.z_extent, scale)
+                else:
+                    scale = _crude_scale_estimate(curve)
             self._p("Using estimated scale=%s" % scale, level=2)
         move = self._get_bipolar_origin(cfg)
         return scale, move
@@ -856,6 +911,77 @@ class MOTSTracker():
         )
         return neck_info
 
+    def predicted_location(self, time, prev_curve, full_output=False, verbose=True):
+        r"""Predict the location of a given curve at a given time.
+
+        This predicts the location of the *anchor* point at a given time. This
+        anchor is configured with the ``use_location`` property.
+
+        @return A tuple ``(z, dz)`` of the predicted location of the
+            z-coordinate of the anchor point and the amount `dz` by which
+            the `prev_curve` needs to be moved. Returns ``(None, None)`` if
+            the location cannot be predicted for any reason, e.g. when too few
+            steps have been taken or location prediction is not active.
+
+        @param time
+            Time at which the location of `prev_curve` should be predicted.
+        @param prev_curve
+            Curve to predict the location of.
+        @param verbose
+            Print some info. Default is `True`.
+        """
+        if not self.predict_location:
+            return (None, None) if full_output else None
+        times = sorted(self._prev_locations.keys())
+        if self.backwards:
+            times = [t for t in reversed(times) if t > time]
+        else:
+            times = [t for t in times if t < time]
+        if len(times) < 2:
+            if verbose:
+                self._p("Too few previous curves to predict location.")
+            if not self.initial_velocity:
+                return (None, None) if full_output else None
+            if verbose:
+                self._p("Using given initial velocity dz/dt = %s" %
+                        self.initial_velocity)
+            velocity = self.initial_velocity
+        else:
+            dz = self._prev_locations[times[-1]] - self._prev_locations[times[-2]]
+            dt = times[-1] - times[-2]
+            velocity = dz / dt
+            if verbose:
+                self._p("Estimated coordinate velocity dz/dt = %g/%g = %s"
+                        % (dz, dt, velocity))
+        translation = velocity * (time - prev_curve.metric.time)
+        if not full_output:
+            return translation
+        try:
+            z0 = self._prev_locations[prev_curve.metric.time]
+        except KeyError:
+            z0 = self._get_shape_location(prev_curve)
+            if z0 is None:
+                return None, None
+        z_goal = z0 + translation
+        return z_goal, translation
+
+    def apply_velocity(self, g, prev_curve):
+        r"""Estimate horizon velocity and move the given curve accordingly.
+
+        @param g
+            Metric representing the time at which to estimate the MOTS
+            position.
+        @param prev_curve
+            Previous curve to move to the estimated position.
+        """
+        dz = self.predicted_location(
+            time=g.time, prev_curve=prev_curve, verbose=True,
+        )
+        if not self.predict_location or dz is None:
+            return prev_curve
+        self._p("Applying translation of dz = %s" % dz)
+        return self._move_curve(prev_curve, dz)
+
     def neck_trick(self, g, c):
         r"""Check and possibly perform the *neck trick*.
 
@@ -876,16 +1002,21 @@ class MOTSTracker():
         self._p("Neck pinching above threshold. Moving...")
         z_neck = neck_info.z_neck
         z_center = neck_info.z_center
+        delta_z = -(z_neck - z_center)
+        c = self._move_curve(c, delta_z)
+        self._p("Neck moved by dz=%s to z=%s" % (delta_z, z_center))
+        return c
+
+    def _move_curve(self, c, delta_z):
         if hasattr(c, 'ref_curve') and hasattr(c.ref_curve, 'add_z_offset'):
             c = c.copy()
             c.ref_curve = c.ref_curve.copy()
-            c.ref_curve.add_z_offset(-(z_neck - z_center))
+            c.ref_curve.add_z_offset(delta_z)
         else:
             # Not a RefParamCurve. Convert to parametric curve.
             c = ParametricCurve.from_curve(c, num=c.num)
-            c.add_z_offset(-(z_neck - z_center))
             self._p("Curve converted to ParametricCurve with resolution %s." % c.num)
-        self._p("Neck moved by dz=%s to z=%s" % (z_center - z_neck, z_center))
+            c.add_z_offset(delta_z)
         return c
 
     @classmethod

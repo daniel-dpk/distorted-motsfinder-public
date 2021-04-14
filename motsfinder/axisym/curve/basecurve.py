@@ -28,7 +28,7 @@ from scipy.optimize import minimize_scalar, brute, brentq
 import numpy as np
 
 from ...utils import save_to_file, load_from_file
-from ...numutils import inf_norm1d, clip
+from ...numutils import inf_norm1d, clip, find_all_roots
 from ...pickle_helpers import prepare_dict, restore_dict
 from ...utils import insert_missing, update_dict, isiterable
 from ...exprs.cheby import Cheby
@@ -870,6 +870,30 @@ class BaseCurve(object):
             )
             return res.x
 
+    def find_local_min_x(self, Ns=None):
+        r"""Find the location of a local minimum of the x-coordinate.
+
+        @return Parameter of the curve where the minimum is located or `None`
+            if no minimum could be found.
+
+        @param Ns
+            Number of points to use for the initial search. Default is to use
+            the curve's current resolution (which needs to be defined as `num`
+            property on this curve object).
+        """
+        if Ns is None:
+            Ns = self.num
+        with self.fix_evaluator():
+            params = np.linspace(0, np.pi, Ns)
+            dx_func = lambda param: self.diff(param)[0]
+            dx = [dx_func(param) for param in params]
+            # roots of dx are extrema of x
+            roots = find_all_roots(params, dx, func=dx_func)
+            if len(roots) < 3: # need at least two maxima and a minimum
+                return None
+            # take the interior root with smallest x-value
+            return min(roots[1:-1], key=lambda param: self(param)[0])
+
     def inf_norm(self, other_curve, **kw):
         r"""Compute L_inf norm of this curve minus another curve.
 
@@ -1010,7 +1034,10 @@ class BaseCurve(object):
                     label = opts.pop('label', None)
                     fmt = opts.pop('l', fmt)
             if cmap is not None:
-                c = cmap(float(i) / (len(curves)-1))
+                if len(curves) == 1:
+                    c = cmap(0.5)
+                else:
+                    c = cmap(float(i) / (len(curves)-1))
                 opts['color'] = opts.get('color', c)
             if label is None:
                 label = curve.name

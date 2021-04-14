@@ -27,10 +27,12 @@ def disp(tex, *expr, eq=True):
     @param eq
         Wehther to enter LaTeX math mode or not. Default is `True`.
 
-    Example:
+    @b Examples
 
+    ```
         from sympy import cos, pi, symbols
         disp("f(x) = %s", cos(pi/2-symbols('x')))
+    ```
     """
     delim = '$$' if eq else ''
     display(Latex(delim + (tex % tuple(sp.latex(e) for e in expr)) + delim))

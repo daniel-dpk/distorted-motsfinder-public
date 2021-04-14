@@ -42,9 +42,9 @@ class _MpMatrix(object):
     def __init__(self, mat):
         r"""Init function.
 
-        Args:
-            mat: mpmath matrix which will be stored converted to a list. This
-                list is picklable, since `mp.mpf` floats are.
+        @param mat
+            mpmath matrix which will be stored converted to a list. This list
+            is picklable, since `mp.mpf` floats are.
         """
         self._mat = mat.tolist()
 

@@ -15,8 +15,6 @@ import numpy as np
 from scipy.linalg import norm
 from scipy.integrate import solve_ivp, quad
 
-from ...exprs.trig import SineSeries, CosineSeries
-from ...exprs.cheby import Cheby
 from ...metric import FlatThreeMetric
 from .basecurve import BaseCurve
 
@@ -310,7 +308,8 @@ class BaseParametricCurve(BaseCurve, metaclass=ABCMeta):
         self.reparameterize(strategy='arc_length', metric=metric, num=init_num)
         c_flat = RefParamCurve.from_curve(self, metric=metric)
         with c_flat.fix_evaluator():
-            f = CosineSeries.from_function(
+            cls = type(self.t_fun)
+            f = cls.from_function(
                 lambda x: c_flat.extrinsic_surface_curvature(x, square=True),
                 num=c_flat.num, domain=(0.0, np.pi), lobatto=False,
             )

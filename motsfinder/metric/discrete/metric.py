@@ -306,6 +306,14 @@ class DiscreteMetric(_ThreeMetric):
         r"""Index bounding box of the full domain."""
         return self.field.components[0].box
 
+    @property
+    def domain(self):
+        return self.field.components[0].domain
+
+    @property
+    def safe_domain(self):
+        return self.field.components[0].safe_domain
+
     def component_matrix(self, i, j):
         r"""Return the DataPatch of a component of the metric."""
         gij = self.field.components

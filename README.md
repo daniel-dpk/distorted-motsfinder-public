@@ -45,6 +45,9 @@ version of this help.
 
 * [Brill-Lindquist initial data](docs_input/examples_bl.md)
 * [Using the finder with a numerical metric](docs_input/examples_num_metric.md)
+* Using the shooting method
+  ([html](docs_input/Tutorial_shooting_method.html),
+  [notebook](docs_input/Tutorial_shooting_method.ipynb))
 * Finding stability spectra in Kerr slices
   ([html](docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.html),
   [notebook](docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.ipynb))
@@ -55,10 +58,10 @@ version of this help.
 
 ## Installation
 
-The prerequisites for running the MOTS Finder are as follows:
+The prerequisites for running the MOTS Finder are as follows (indicated
+package versions have been tested, newer versions work in most cases):
 
-* Python 3.6 or 3.7 (not tested with Python 3.8; use e.g. `pyenv` to obtain
-  any Python version)
+* Python 3.6, 3.7, 3.8, 3.9
 * SciPy 1.2.1
 * NumPy 1.16.1
 * SymPy 1.3
@@ -94,10 +97,7 @@ $ cd ~/src
 $ git clone https://github.com/daniel-dpk/distorted-motsfinder-public.git
 ```
 
-Finally, install all the required Python packages. The following installs the
-exact package versions the MOTS Finder was tested with. You may also try to
-install the most up to date versions. To do this, replace the second line
-below with `pip install numpy scipy sympy mpmath matplotlib jupyter`.
+Finally, install all the required Python packages:
 
 ```.sh
 $ source ~/py3env/bin/activate
@@ -142,7 +142,7 @@ is:
 $ sudo apt install python3-dev
 $ source ~/py3env/bin/activate
 $ cd ~/src/distorted-motsfinder-public
-$ pip install cython==0.29.15  # remove the '==...' part to use the current version
+$ pip install cython
 $ ./cythonize_helper.py
 ```
 
@@ -173,6 +173,8 @@ Maintainer: Daniel Pook-Kolb
 Further authors and contributors:
 
 * Ofek Birnholtz
+* Ivan Booth
+* Robie A. Hennigar
 * Jose Luis Jaramillo
 * Badri Krishnan
 * Erik Schnetter

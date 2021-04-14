@@ -24,18 +24,11 @@ import gc
 from six import add_metaclass
 import numpy as np
 
-from ...numutils import nan_mat
 from .numerical import eval_sym_axisym_matrix, _get_fy, _get_fxy_fyy_fyz
 from .numerical import _get_Vy, _get_Vxy_Vyy_Vyz
 
 
 __all__ = []
-
-
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
 
 
 @add_metaclass(ABCMeta)

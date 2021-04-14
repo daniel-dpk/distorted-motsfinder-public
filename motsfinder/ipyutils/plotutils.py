@@ -18,6 +18,7 @@ from ..utils import insert_missing
 
 __all__ = [
     "add_zero_line",
+    "add_zero_vline",
 ]
 
 
@@ -29,7 +30,7 @@ def _crop(image, left, bottom, right, top):
     ]
 
 
-def add_zero_line(ax, opts):
+def add_zero_line(ax, opts=None):
     r"""Add a line at y=0 to the given axis object.
 
     If the `opts` argument is a `dict`, it can be used to configure the
@@ -38,6 +39,21 @@ def add_zero_line(ax, opts):
     if not isinstance(opts, dict):
         opts = dict()
     ax.axhline(
+        **insert_missing(
+            opts, linewidth=0.75, linestyle='-', color='k', alpha=0.33
+        )
+    )
+
+
+def add_zero_vline(ax, opts=None):
+    r"""Add a line at x=0 to the given axis object.
+
+    If the `opts` argument is a `dict`, it can be used to configure the
+    `ax.axhline` call. Otherwise it is ignored.
+    """
+    if not isinstance(opts, dict):
+        opts = dict()
+    ax.axvline(
         **insert_missing(
             opts, linewidth=0.75, linestyle='-', color='k', alpha=0.33
         )
@@ -102,6 +118,12 @@ def _configure_legend(ax, legendargs=None, labelspacing=0, **defaults):
         defaults['loc'] = 'upper left'
         defaults = insert_missing(
             defaults, ncol=1, bbox_to_anchor=(1.05, 1.0), fancybox=False,
+            borderaxespad=0,
+        )
+    if defaults.get('loc', None) == 'above':
+        defaults['loc'] = 'lower center'
+        defaults = insert_missing(
+            defaults, ncol=1, bbox_to_anchor=(0.5, 1.0), frameon=False, #fancybox=False,
             borderaxespad=0,
         )
     ax.legend(**defaults)

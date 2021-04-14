@@ -61,6 +61,7 @@ from .series import SeriesExpression
 __all__ = [
     "SineSeries",
     "CosineSeries",
+    "FourierSeries",
 ]
 
 
@@ -132,19 +133,19 @@ class _TrigEval(EvaluatorBase):
         ## Whether to clamp the arguments to evaluate at to the domain.
         ## Default is `True`.
         self.clamp = True
-        ## Constant `pi` with correct accuracy (float or mpmath).
-        self._pi = pi = mp.pi if use_mp else np.pi
+        ctx = self.ctx
+        ## Constant `pi` (or 2pi for Fourier series) with correct accuracy (float or mpmath).
+        self._upper = upper = ctx.mpf(expr.internal_domain()[1])
         an = expr.a_n
         ## Number of coefficients.
         self._num = num = len(an)
         ## Indices of active basis functions.
         self._jn = expr.create_frequencies(num)
-        ctx = self.ctx
         a, b = map(ctx.mpf, expr.domain)
         ## Scale factor for transforming to native domain.
-        self._scale = pi/(b-a)
+        self._scale = upper/(b-a)
         ## Translation for transforming to native domain.
-        self._trans = -pi*a/(b-a)
+        self._trans = -upper*a/(b-a)
         ## Coefficients of the function and any derivatives.
         self._deriv_coeffs = [self._vector(an)]
         ## Current point to evaluate at in native domain.
@@ -162,7 +163,7 @@ class _TrigEval(EvaluatorBase):
 
     def _x_changed(self, x):
         if self.clamp:
-            self._xrel = min(self._pi, max(0, self._scale * x + self._trans))
+            self._xrel = min(self._upper, max(0, self._scale * x + self._trans))
         else:
             self._xrel = self._scale * x + self._trans
         self._sin = None
@@ -388,6 +389,144 @@ class _CosineSeriesEval(_TrigEval):
         if diff_order % 2:
             return diff_cos_coeffs
         return diff_sin_coeffs
+
+
+class FourierSeries(SeriesExpression):
+    r"""Truncated Fourier series to represent a function.
+
+    This series is suitable to approximate any 2 pi-periodic function.
+    """
+
+    def _expr_str(self):
+        where = ", where a_n=%r" % (self.a_n,)
+        return "sum (a_{2n} cos(n x) + a_{2n+1} sin(n x))" + where
+
+    def internal_domain(self):
+        return (0, 2*mp.pi)
+
+    def is_orthogonal(self):
+        return True
+
+    def resample(self, num, use_mp=False, dps=None):
+        if num % 2:
+            num = num + 1
+        return super().resample(num, use_mp=use_mp, dps=dps)
+
+    def _from_physical_space(self, a_n, lobatto, use_mp, dps):
+        self._check_a_n(a_n)
+        uj = a_n # we're in physical space, so the a_n are function values uj := u(x_j)
+        num = len(a_n) # num = N in formulas
+        with self.context(use_mp, dps):
+            x = self.collocation_points(num, internal_domain=True,
+                                        lobatto=lobatto, use_mp=use_mp)
+            if use_mp:
+                raise NotImplementedError("mpmath Fourier transform")
+            else:
+                uj = np.asarray(uj) # we're in physical space, so the a_n are function values
+                x = np.asarray(x)
+                ks = self.create_frequencies(num)
+                ak = 2.0/num * uj.dot(np.cos(np.outer(x, ks)))
+                bk = 2.0/num * uj[1:].dot(np.sin(np.outer(x[1:], ks[1:-1])))
+                ak[0] = ak[0] / 2.0
+                ak[-1] = ak[-1] / 2.0
+                a_n = self.zip_items(ak, bk)
+        return a_n
+
+    def _check_a_n(self, a_n):
+        super()._check_a_n(a_n)
+        if len(a_n) % 2:
+            raise ValueError("Fourier series needs an even number of coefficients.")
+
+    def _evaluator(self, use_mp):
+        self._check_a_n(self.a_n)
+        if use_mp:
+            raise NotImplementedError("mpmath Fourier transform")
+        # pylint: disable=len-as-condition
+        if len(self.a_n) == 0: # handle list and numpy array case
+            return self.zero
+        return _FourierSeriesEval(expr=self, use_mp=use_mp)
+
+    def _approximate_constant(self, value, num, lobatto, use_mp, dps):
+        with self.context(use_mp, dps) as ctx:
+            self.a_n = [ctx.mpf(value)] + [ctx.zero] * (num-1)
+
+    def add_constant(self, value):
+        r"""Add a constant value to the function."""
+        if len(self.a_n) == 0:
+            self.a_n = [0.0]
+        self.a_n[0] += value
+
+    def set_constant(self, value):
+        r"""Set the first coefficient to a given value."""
+        if len(self.a_n) == 0:
+            self.a_n = [0.0]
+        else:
+            self.a_n[0] = value
+
+    def get_constant(self, value):
+        r"""Get the first coefficient."""
+        if len(self.a_n) == 0:
+            return 0.0
+        return self.a_n[0]
+
+    def create_frequencies(self, num):
+        return np.arange(num//2 + 1)
+
+    @classmethod
+    def validate_and_fix_resolution(cls, proposed_resolution):
+        if proposed_resolution % 2:
+            return super().validate_and_fix_resolution(proposed_resolution + 1)
+        return super().validate_and_fix_resolution(proposed_resolution)
+
+    @classmethod
+    def zip_items(cls, aitems, bitems):
+        return np.concatenate((
+            [aitems[0]],
+            np.asarray(list(zip(aitems[1:-1], bitems))).flatten(),
+            [aitems[-1]]
+        ))
+
+    @classmethod
+    def create_collocation_points(cls, num, lobatto=True, use_mp=False,
+                                  dps=None):
+        with cls.context(use_mp, dps):
+            pi = mp.pi if use_mp else np.pi
+            fl = mp.mpf if use_mp else float
+            N = fl(num)
+            return [2*pi*j/N for j in range(0, num)]
+
+
+class _FourierSeriesEval(_TrigEval):
+    r"""Evaluator class for CosineSeries.
+
+    This evaluator can efficiently evaluate the function represented by the
+    series expression and its derivatives up to arbitrary order.
+    """
+
+    def basis_values(self, diff_order):
+        if diff_order % 2:
+            afuncs = self.sin_values
+            bfuncs = self.cos_values[1:-1]
+        else:
+            afuncs = self.cos_values
+            bfuncs = self.sin_values[1:-1]
+        return FourierSeries.zip_items(afuncs, bfuncs)
+
+    def _get_diff_coeff_gen(self, diff_order):
+        def _gen(an, jn, use_mp, scale):
+            num = len(an)
+            ak = [an[0]] + list(an[1::2])
+            bk = an[2::2]
+            if diff_order % 2:
+                diff_ak = diff_cos_coeffs(ak, jn, use_mp, scale)
+                diff_bk = diff_sin_coeffs(bk, jn[1:-1], use_mp, scale)
+            else:
+                diff_ak = diff_sin_coeffs(ak, jn, use_mp, scale)
+                diff_bk = diff_cos_coeffs(bk, jn[1:-1], use_mp, scale)
+            diff_ak = diff_ak if isinstance(diff_ak, list) else list(diff_ak)
+            diff_bk = diff_bk if isinstance(diff_bk, list) else list(diff_bk)
+            return FourierSeries.zip_items(diff_ak, diff_bk)
+        return _gen
 
 
 def evaluate_trig_mat(trig_func, xs, jn, use_mp, diff=0, scale=1.0):

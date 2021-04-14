@@ -34,12 +34,12 @@ from abc import ABCMeta, abstractmethod
 import os.path as op
 import numbers
 from collections import OrderedDict
-from six import add_metaclass
 
 from ..utils import insert_missing, timethis
 from ..numutils import raise_all_warnings
 from ..metric import BrillLindquistMetric
 from ..exprs.numexpr import save_to_file
+from ..exprs.trig import CosineSeries, FourierSeries
 from .curve import StarShapedCurve, RefParamCurve, BaseCurve
 from .curve import ParametricCurve, BipolarCurve
 from .newton import newton_kantorovich, NoConvergence
@@ -106,6 +106,19 @@ def find_mots(cfg, user_data=None, full_output=False, **kw):
         [(c0.ref_curve, "ref", "--k")] + newton_args.get('reference_curves', [])
     )
     newton_args['reference_curves'] = ref_curves
+    if cfg.save_trial_surfaces:
+        if not fname:
+            raise ValueError("Saving trial surfaces requires saving result too.")
+        fbase, ext = op.splitext(op.basename(fname))
+        fpath = op.join(op.dirname(fname), "newton_steps")
+        prev_cb = newton_args.get("post_step_hook", None)
+        def post_step_hook(curve, d, step):
+            fn = op.join(fpath, "%s.step%04d%s" % (fbase, step, ext))
+            curve.save(fn, verbose=cfg.save_verbose,
+                       msg="step %s trial surface" % step)
+            if prev_cb:
+                prev_cb(curve=curve, d=d, step=step)
+        newton_args["post_step_hook"] = post_step_hook
     if cfg.accurate_test_res == "auto":
         cfg.accurate_test_res = max(500, 1.9*getattr(cfg.c_ref, 'num', 500))
     try:
@@ -142,7 +155,8 @@ def _prepare_initial_curve(cfg):
         num = cfg.c_ref.num
     c0 = RefParamCurve.from_curve(
         c_ref, offset_coeffs=cfg.offset_coeffs, num=num,
-        metric=cfg.get_metric(), name=cfg.name
+        metric=cfg.get_metric(), name=cfg.name,
+        cls=cfg.horizon_class,
     )
     return c0
 
@@ -159,6 +173,10 @@ def prepare_ref_curve(cfg):
     the stored settings.
     """
     verbose = cfg.newton_args.get('verbose', False)
+    cls_opts = {}; bipolar_cls_opts = {}
+    if cfg.horizon_class is FourierSeries:
+        cls_opts.update(x_cls=FourierSeries, z_cls=FourierSeries)
+        bipolar_cls_opts.update(s_cls=FourierSeries, t_cls=FourierSeries)
     metric = cfg.get_metric()
     if isinstance(cfg.c_ref, numbers.Number):
         return StarShapedCurve.create_sphere(
@@ -170,6 +188,8 @@ def prepare_ref_curve(cfg):
             radius=radius, num=1, metric=metric, origin=origin
         )
     ref_num = cfg.ref_num
+    if ref_num is not None:
+        ref_num = cfg.horizon_class.validate_and_fix_resolution(ref_num)
     reparam = cfg.reparam
     with_metric = metric if cfg.reparam_with_metric else None
     if ref_num and reparam:
@@ -177,11 +197,13 @@ def prepare_ref_curve(cfg):
             bipolar_kw = cfg.bipolar_kw or dict()
             c_ref = BipolarCurve.from_curve(
                 cfg.c_ref, num=cfg.c_ref.num, **bipolar_kw,
+                **bipolar_cls_opts,
             )
             if verbose:
                 print("Using bipolar coordinates with settings: %s" % bipolar_kw)
         else:
-            c_ref = ParametricCurve.from_curve(cfg.c_ref, num=cfg.c_ref.num)
+            c_ref = ParametricCurve.from_curve(cfg.c_ref, num=cfg.c_ref.num,
+                                               **cls_opts)
         strategy = "arc_length"
         opts = dict()
         if isinstance(reparam, (list, tuple)):
@@ -212,12 +234,14 @@ def prepare_ref_curve(cfg):
         if ref_num is None:
             c_ref = cfg.c_ref
         else:
-            c_ref = ParametricCurve.from_curve(cfg.c_ref, num=ref_num)
+            c_ref = ParametricCurve.from_curve(
+                cfg.c_ref, num=ref_num, **cls_opts
+            )
     return c_ref
 
 
-@add_metaclass(ABCMeta)
-class MotsFindingConfig():
+# not using six.add_metaclass() since it breaks the super() calls
+class MotsFindingConfig(metaclass=ABCMeta):
     r"""Abstract configuration base class for find_mots().
 
     This stores all the settings for the find_mots() runs.
@@ -257,6 +281,9 @@ class MotsFindingConfig():
             If `c_ref` is a float (i.e. a sphere is created), then `ref_num`
             is ignored. Otherwise, if not given, the reference shape is used
             as-is without reparameterization.
+        @param horizon_class
+            Series class to expand the horizon function into. Default is
+            `CosineSeries`.
         @param recompute
             Whether to start the search even if a result file exists.
             Default is `False`.
@@ -271,6 +298,9 @@ class MotsFindingConfig():
             Whether to print a message containing the filename when saving a
             curve.
             Default is `True`.
+        @param save_trial_surfaces
+            Whether to save the trial surface (i.e. the current curve) after
+            each Newton step. Default is `False`.
         @param save_failed_curve
             Whether to save a dummy file to indicate a curve was searched but not
             found.
@@ -356,10 +386,12 @@ class MotsFindingConfig():
         self.c_ref = None
         self.num = 'auto'
         self.ref_num = None
+        self.horizon_class = CosineSeries
         self.recompute = False
         self.dont_compute = False
         self.save = False
         self.save_verbose = True
+        self.save_trial_surfaces = False
         self.save_failed_curve = False
         self.offset_coeffs = ()
         self.reparam = True
@@ -453,7 +485,7 @@ class MotsFindingConfig():
 
     def __setattr__(self, attr, value):
         if attr.startswith('_') or not getattr(self, '_init_done', False):
-            super(MotsFindingConfig, self).__setattr__(attr, value)
+            super().__setattr__(attr, value)
         else:
             self.update(**{attr: value})
 
@@ -743,6 +775,16 @@ class GeneralMotsConfig(MotsFindingConfig):
             cfg = cls.preset(
                 "discrete7", **_hermite_settings(max_res_increase=800)
             )
+        elif preset == "discrete12":
+            cfg = cls.preset("discrete2", **_hermite_settings(
+                max_res_increase=400,
+                max_resolution=12000,
+                min_res_increase_factor=None,
+                res_increase_factor=1.2,
+                res_decrease_factor=0.9,
+                downsampling_tol_factor=2.0,
+                liberal_downsampling=False,
+            ))
         elif preset == "general":
             cfg = cls.preset(
                 "discrete3", num=50, atol=1e-12, reparam=False,

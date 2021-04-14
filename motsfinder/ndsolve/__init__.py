@@ -41,5 +41,6 @@ sol = ndsolve(
 
 from .solver import ndsolve, NDSolver
 from .bases.cheby import ChebyBasis
-from .bases.trig import SineBasis, CosineBasis
+from .bases.trig import SineBasis, CosineBasis, FourierBasis
+from .bases import choose_basis_class
 from .bcs import DirichletCondition, NeumannCondition, RobinCondition

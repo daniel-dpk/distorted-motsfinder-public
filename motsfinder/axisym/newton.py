@@ -35,7 +35,7 @@ import numpy as np
 
 from ..utils import insert_missing, process_pool
 from ..numutils import raise_all_warnings, NumericalError
-from ..ndsolve import ndsolve, CosineBasis
+from ..ndsolve import ndsolve, choose_basis_class
 from .utils import detect_coeff_knee
 
 
@@ -189,7 +189,7 @@ class NewtonKantorovich(object):
     public instance attributes. Then, call solve() to perform the search.
     """
 
-    __slots__ = ("max_steps", "step_mult", "atol", "rtol", "verbose",
+    __slots__ = ("max_steps", "step_mult", "min_step_mult", "atol", "rtol", "verbose",
                  "target_expansion", "accurate_test_res", "auto_resolution",
                  "max_resolution", "linear_regime_threshold", "mat_solver",
                  "__fake_convergent_steps", "max_fake_convergent_steps",
@@ -203,7 +203,7 @@ class NewtonKantorovich(object):
                  "liberal_downsampling", "plot_steps", "plot_deltas",
                  "plot_opts", "reference_curves", "disp", "parallel",
                  "_prev_accurate_delta", "_prev_res_accurate_delta",
-                 "user_data")
+                 "post_step_hook", "user_data")
 
     def __init__(self, max_steps=50, step_mult=0.5, atol=1e-12, rtol=0,
                  verbose=False):
@@ -235,6 +235,8 @@ class NewtonKantorovich(object):
         self.max_steps = max_steps
         ## Factor to multiply the Newton steps with.
         self.step_mult = step_mult
+        ## Minimum Newton step length used for non-trivial line searches.
+        self.min_step_mult = 0.1
         ## Absolute tolerance. If the error at the collocation points falls
         ## below this threshold, the result is assumed to be converged.
         ## However, if accurate convergence detection is active, this
@@ -358,6 +360,12 @@ class NewtonKantorovich(object):
         ## lead to an immense increase in memory usage, so it is best to use
         ## this only for analytical metrics.
         self.parallel = False
+        ## Callback function to call after each step.\ Will be called as
+        ## ``post_step_hook(curve=curve, d=d, step=step)``, where ``step`` is
+        ## the number of steps taken.\ Note that the curve will not have
+        ## undergone convergence checks, so its ``user_data["converged"]``
+        ## value will always be `False`.
+        self.post_step_hook = None
         ## Custom data to store in the final curve (excluding convergence data).
         self.user_data = dict()
         self._prev_accurate_delta = None
@@ -398,19 +406,24 @@ class NewtonKantorovich(object):
             if self.verbose:
                 print("Initial steps with resolution %s" % new_res)
             curve.resample(new_res)
+            new_res = curve.num
         curve.user_data['converged'] = False
         curve.user_data['reason'] = "unspecified"
         for i in range(self.max_steps):
             self._plot_step(curve, step=i)
             d = ndsolve(
                 eq=eq,
-                basis=CosineBasis(domain=curve.domain, num=curve.num,
-                                  lobatto=False),
+                basis=choose_basis_class(curve.h)(
+                    domain=curve.domain, num=curve.num, lobatto=False
+                ),
                 mat_solver=self.mat_solver,
             )
             if self.verbose:
-                print("%02d: max error at %d collocation points: %s"
-                      % (i+1, d.N, eq.prev_abs_delta))
+                msg = ("%02d: max error at %d collocation points: %s"
+                       % (i+1, d.N, eq.prev_abs_delta))
+                if i:
+                    msg = "%-70s (previous Newton step: %s)" % (msg, step_mult)
+                print(msg)
             if self._has_converged(eq, curve, d):
                 self._downsample(eq, curve)
                 break
@@ -422,7 +435,9 @@ class NewtonKantorovich(object):
                     % (self.max_steps)
                 )
                 curve.user_data['reason'] = "step limit"
-            if eq.prev_abs_delta <= self.linear_regime_threshold:
+            if self.step_mult in ("auto", "simple"):
+                step_mult = self._line_search_simple(eq=eq, d=d, atol=self.atol)
+            elif eq.prev_abs_delta <= self.linear_regime_threshold:
                 if step_mult != 1.0:
                     if self.linear_regime_res_factor == "restore":
                         new_res = initial_res
@@ -434,8 +449,34 @@ class NewtonKantorovich(object):
                         self._change_resolution(curve, d, new_res)
                 step_mult = 1.0
             curve.h.a_n += step_mult * np.asarray(d.a_n)
+            if self.post_step_hook:
+                self.post_step_hook(curve=curve, d=d, step=i+1)
             self._plot_delta(d, step=i)
         return curve
+
+    def _line_search_simple(self, eq, d, atol):
+        r"""Perform a very simple line search.
+
+        We first take a full Newton step. If this produces a larger error than
+        the current trial surface has, we half the step length and repeat.
+        Once a minimum step length is reached, the step is taken even if it
+        increases the error.
+        """
+        if eq.resolution_changed():
+            # Don't do a line search when the resolution has just changed.
+            return 1.0
+        mult = 1.0
+        while True:
+            try:
+                err = eq.evaluate_step(coeffs=d.a_n, mult=mult)
+            except (LinAlgWarning, LinAlgError, FloatingPointError,
+                    NumericalError) as e:
+                err = np.inf
+            if err <= atol or err < eq.prev_abs_delta:
+                return mult
+            mult = mult / 2.0
+            if mult <= self.min_step_mult:
+                return self.min_step_mult
 
     def _downsample(self, eq, curve):
         r"""Downsample the given curve without making the result worse.
@@ -490,12 +531,18 @@ class NewtonKantorovich(object):
         (which is a fast O(1) test), a more detailed convergence check is
         performed at more points using _accurate_convergence_test().
 
+        Note that the curve (and step delta `d`) may be resampled by this call
+        in case the conditions for increasing the resolution are met.
+
         @param eq
             _LinearExpansionEquation object.
         @param curve
             The current state of the solution.
         @param d
-            The current solution of the linear problem.
+            The current solution of the linear problem. This is not used for
+            anything except when resampling the curve. In this case, it is
+            made sure the the representation of `d` has the same number of
+            coefficients as the current trial solution `curve`.
         """
         if eq.prev_rel_delta > self.rtol and eq.prev_abs_delta > self.atol:
             self.__fake_convergent_steps = 0
@@ -634,7 +681,7 @@ class NewtonKantorovich(object):
         """
         res = max(self.min_res, res)
         curve.resample(res)
-        d.resample(res)
+        d.resample(curve.num)
 
     def _knee_detection(self, curve):
         r"""Check if there is a *knee* in the coefficient list."""
@@ -665,13 +712,14 @@ class NewtonKantorovich(object):
         if not self.plot_steps:
             return
         opts = self.plot_opts.copy()
+        max_points = opts.pop("max_points", 50)
         opts['title'] = opts.get('title', "step {step}").format(step=step)
         ax = curve.plot_curves(
             (curve, 'trial', '-k'), *self.reference_curves,
             show=False, **opts
         )
         curve.plot(
-            points=curve.h.collocation_points(min(50, curve.num)),
+            points=curve.h.collocation_points(min(max_points, curve.num)),
             label=None, ax=ax, **insert_missing(opts, l='.k')
         )
 
@@ -713,9 +761,11 @@ class _LinearExpansionEquation(object):
         self._max_deltas = []
         self._parallel = parallel
         self._pool = pool
+        self._prev_points = None
 
     def __call__(self, pts):
         r"""Return the equation suitable for ndsolve()."""
+        self._prev_points = pts
         eq = self.curve.linearized_equation(pts, target_expansion=self.c,
                                             parallel=self._parallel,
                                             pool=self._pool)
@@ -724,6 +774,28 @@ class _LinearExpansionEquation(object):
         # boundary points (where the operator is not defined anyway).
         self._max_deltas.append(np.absolute(inhom[1:-1]).max())
         return eq
+
+    def resolution_changed(self):
+        return self.curve.num != len(self._prev_points)
+
+    def evaluate_step(self, coeffs, mult=1.0, full_output=False):
+        r"""Evaluate a linear step by adding the given coefficients."""
+        if self._prev_points is None:
+            raise RuntimeError("Equation needs to be computed before a step "
+                               "can be evaluated.")
+        orig_coeffs = np.asarray(self.curve.h.a_n, dtype=np.float).copy()
+        try:
+            pts = self._prev_points
+            if mult != 0.0:
+                self.curve.h.a_n += mult * np.asarray(coeffs)
+            expansions = np.asarray(self.curve.expansions(pts[1:-1]))
+            residuals = expansions - self.c
+            err = np.absolute(residuals).max()
+            if full_output:
+                return err, residuals
+            return err
+        finally:
+            self.curve.h.a_n = orig_coeffs
 
     @property
     def prev_rel_delta(self):

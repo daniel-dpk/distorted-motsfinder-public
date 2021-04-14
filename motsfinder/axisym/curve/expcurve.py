@@ -17,7 +17,7 @@ import warnings
 
 import numpy as np
 from scipy import linalg
-from scipy.integrate import quad, fixed_quad, IntegrationWarning
+from scipy.integrate import quad, IntegrationWarning
 from scipy.interpolate import CubicSpline
 from scipy.optimize import minimize_scalar, bracket, brentq, root, brute
 from scipy.special import sph_harm # pylint: disable=no-name-in-module
@@ -25,12 +25,12 @@ from mpmath import mp
 
 from ...utils import insert_missing, isiterable, parallel_compute
 from ...numutils import clip, IntegrationResult, IntegrationResults
-from ...numutils import find_all_roots
+from ...numutils import find_all_roots, _fixed_quad, _fixed_quad_abscissas
 from ...exprs.inverse import InverseExpression
 from ...exprs.trig import CosineSeries
 from ...metric import FlatThreeMetric, FourMetric
-from ...ndsolve import ndsolve, NDSolver, CosineBasis, ChebyBasis
-from ...ndsolve import DirichletCondition
+from ...ndsolve import ndsolve, NDSolver, DirichletCondition
+from ...ndsolve import SineBasis, CosineBasis, ChebyBasis, FourierBasis
 from ..utils import detect_coeff_knee
 from .basecurve import BaseCurve
 from .parametriccurve import ParametricCurve
@@ -42,12 +42,6 @@ __all__ = [
     "alm_matrix",
     "evaluate_al0",
 ]
-
-
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
 
 
 class ExpansionCurve(BaseCurve):
@@ -490,11 +484,11 @@ class ExpansionCurve(BaseCurve):
         epsilons = [v.eps for v in tevs]
         eps_interp = CubicSpline(pts, epsilons)
         epsilons = eps_interp(proper_params)
-        _next_im = next_curve.cached_length_maps()[1]
+        bare_next_im = next_curve.cached_length_maps()[1]
         def next_im(proper_param):
             if max(abs(proper_param), abs(np.pi-proper_param)) < 1e-6:
                 return proper_param
-            return _next_im(proper_param)
+            return bare_next_im(proper_param)
         t = next_curve.metric.time
         next_params = [
             next_im(clip(proper_param + eps*(t-t0), 0.0, np.pi))
@@ -855,7 +849,7 @@ class ExpansionCurve(BaseCurve):
         # determine all sign-changes of `cos(chi)` just by looking at these
         # points.
         length_map = self.cached_length_maps()[0]
-        params = _get_fixed_quad_abscissas(a=0.0, b=np.pi, n=n)
+        params = _fixed_quad_abscissas(a=0.0, b=np.pi, n=n)
         area_element = self.get_area_integrand()
         def _chis(xs, full_output=False):
             # We convert the points to proper length parameters since that's
@@ -1008,7 +1002,7 @@ class ExpansionCurve(BaseCurve):
         r"""Implements dt_normals()."""
         curves = self.collect_close_in_time(curves, steps=steps)
         t0 = self.metric.time
-        im = self.cached_length_maps()[1]
+        im = self.cached_length_maps()[1] # inverse length map : proper param -> param
         if use_tev:
             if tevs is None:
                 tevs = self.time_evolution_vector(
@@ -1022,8 +1016,13 @@ class ExpansionCurve(BaseCurve):
                 for proper, tev in zip(pts, tevs):
                     param = im(proper)
                     if abs(param-tev.param) > 1e-10:
+                        max_deviation = np.asarray(
+                            [abs(im(pp)-v.param) for pp, v in zip(pts, tevs)]
+                        ).max()
                         print("WARNING: Given time evolution vectors don't "
                               "seem to correspond to given points.")
+                        print("         Max deviation in curve parameter: %g"
+                              % max_deviation)
                         break
             vectors = tevs
             epsilons = [v.eps for v in tevs]
@@ -1174,7 +1173,7 @@ class ExpansionCurve(BaseCurve):
         @param pts
             Points at which to compute the surface gravity. Values should be
             the pi-normalized proper lengths, i.e. `0` is at the north pole,
-            `pi` at the south pole, and `0.5` at `50%` proper length.
+            `pi` at the south pole, and `pi/2` at `50%` proper length.
         @param curves
             List of curves that build up the tube. The current object (`self`)
             may or may not be in that list. Each curve needs to have a metric
@@ -1384,7 +1383,8 @@ class ExpansionCurve(BaseCurve):
             integral = 2*np.pi * _fixed_quad(integrand, a=0.0, b=np.pi, n=n)
             return 1/integral
 
-    def xi_vector(self, pts, curves, steps=3, full_output=False):
+    def xi_vector(self, pts, curves, steps=3, r_hat=True, full_output=False,
+                  get_tevs=False, tevs=None):
         r"""Compute the xi vector.
 
         The quantity computed here is called \f$\zeta^A\f$ in eq. (3.10) in
@@ -1442,27 +1442,41 @@ class ExpansionCurve(BaseCurve):
         @param steps
             How many curves in the future and past of this curve to consider
             from `curves`. Default is `3`.
+        @param r_hat
+            Whether to compute \f$\xi^A\f$ with the normalized vector
+            \f$\hat r^\mu := V^\mu/|V|\f$ or with the slicing-adapted evolution
+            vector \f$\mathcal{V}^\mu\f$ (see .curve.expcurve.TimeVectorData()
+            for the difference). Default is `True`, i.e. to use the normalized
+            vector.
         @param full_output
             Whether to return just the contravariant components of the xi
             vector or also the covariant, the square, and the complex scalar.
             See above for details. Default is `False`.
+        @param get_tevs
+            Add the time evolution vectors at the requested points as list to
+            the output.
+        @param tevs
+            Optional sequence of evolution vectors corresponding to the points
+            given in `pts`. If not specified, will compute them.
 
         @b References
 
-        [1] Ashtekar, Abhay, Miguel Campiglia, and Samir Shah. "Dynamical
-            black holes: Approach to the final state." Physical Review D 88.6
-            (2013): 064045.
+        [1] Ashtekar, Abhay, Miguel Campiglia, and Samir Shah. "Dynamical black holes:
+            Approach to the final state." Physical Review D 88.6 (2013): 064045.
 
         [2] Ashtekar, Abhay, and Badri Krishnan. "Dynamical horizons and their
             properties." Physical Review D 68.10 (2003): 104030.
         """
         with self.fix_evaluator():
-            return self._xi_vector(pts, curves, steps, full_output)
+            return self._xi_vector(pts, curves, steps, r_hat, full_output,
+                                   get_tevs, tevs)
 
-    def _xi_vector(self, pts, curves, steps, full_output):
+    def _xi_vector(self, pts, curves, steps, r_hat, full_output, get_tevs,
+                   tevs):
         r"""Implements xi_vector()."""
         dt_normals, tevs = self.dt_normals(
-            pts, curves, steps=steps, use_tev=True, full_output=True
+            pts, curves, steps=steps, use_tev=True, full_output=True,
+            tevs=tevs,
         )
         xi_A_up = []
         xi_A = []
@@ -1472,16 +1486,22 @@ class ExpansionCurve(BaseCurve):
         for proper_param, dt_normal, tev in zip(pts, dt_normals, tevs):
             param = im(proper_param)
             stab_calc = self.get_stability_calc_obj(param)
-            xi_A_up.append(stab_calc.xi_vector(dt_normal, tev, up=True))
+            xi_A_up.append(stab_calc.xi_vector(dt_normal, tev, up=True,
+                                               r_hat=r_hat))
             if full_output:
-                xi_A.append(stab_calc.xi_vector(dt_normal, tev, up=False))
-                xi2.append(stab_calc.xi_squared(dt_normal, tev))
-                xi_scalar.append(stab_calc.xi_scalar(dt_normal, tev))
+                xi_A.append(stab_calc.xi_vector(dt_normal, tev, up=False,
+                                                r_hat=r_hat))
+                xi2.append(stab_calc.xi_squared(dt_normal, tev, r_hat=r_hat))
+                xi_scalar.append(
+                    stab_calc.xi_scalar(dt_normal, tev, r_hat=r_hat)
+                )
         xi_A_up = np.asarray(xi_A_up)
         if full_output:
             xi_A = np.asarray(xi_A)
             xi2 = np.asarray(xi2)
             xi_scalar = np.asarray(xi_scalar)
+            if get_tevs:
+                return xi_A_up, xi_A, xi2, xi_scalar, tevs
             return xi_A_up, xi_A, xi2, xi_scalar
         return xi_A_up
 
@@ -1507,10 +1527,12 @@ class ExpansionCurve(BaseCurve):
             n = max(30, 2 * self.num)
         with self.fix_evaluator():
             area_element = self.get_area_integrand()
+            length_map = self.cached_length_maps()[0]
             def integrand(xs):
+                proper_params = [length_map(param) for param in xs]
                 measure = np.asarray([area_element(x) for x in xs])
-                xi2 = self.xi_vector(pts=xs, curves=curves, steps=steps,
-                                     full_output=True)[2]
+                xi2 = self.xi_vector(pts=proper_params, curves=curves,
+                                     steps=steps, full_output=True)[2]
                 return measure * xi2
             return 2*np.pi * _fixed_quad(
                 integrand, a=0.0, b=np.pi, n=n
@@ -1518,7 +1540,8 @@ class ExpansionCurve(BaseCurve):
 
     def expand_xi_scalar(self, curves, steps=3, lmax="auto", zeta=None,
                          min_lmax=64, max_lmax=512, coeff_threshold=None,
-                         compress=True, full_output=False):
+                         compress=True, hat=False, r_hat=True,
+                         full_output=False):
         r"""Expand the xi vector into spin weighted spherical harmonics.
 
         We expand the quantity
@@ -1557,19 +1580,30 @@ class ExpansionCurve(BaseCurve):
             non-zero coefficients in the expansion will be the ones with
             `m=0`. Setting ``compress=True`` (default) will extract this one
             row of possibly non-vanishing coefficients and return it.
+        @param hat
+            Expand \f$\hat\xi\f$ instead of \f$\xi\f$. Default is `False`.
+        @param r_hat
+            Use the normalized evolution vector to construct \f$\xi^\mu\f$.
+            Default is `True`.
         @param full_output
             If `True`, return the coefficients, the (complex) shear scalar
             values at the grid points in \f$\theta=\arccos\zeta\f$ and the
             grid points themselves. Otherwise (default), return just the
             coefficients.
         """
+        if hat and not r_hat:
+            raise ValueError("Argument `hat` requires ``r_hat=True``.")
         curves = self.collect_close_in_time(curves, steps=steps)
         lm = self.cached_length_maps()[0]
         def _xi_scalar(params):
             pts = [lm(param) for param in params]
-            xi_scalar = self.xi_vector(
-                pts, curves=curves, steps=None, full_output=True
-            )[3]
+            _, _, _, xi_scalar, tevs = self.xi_vector(
+                pts, curves=curves, steps=None, r_hat=r_hat, full_output=True,
+                get_tevs=True,
+            )
+            if hat:
+                conversion = np.asarray([(-tev.b_B/tev.c_B) for tev in tevs])
+                xi_scalar = conversion * xi_scalar
             return xi_scalar
         return self._expand_into_SWSPH(
             func=_xi_scalar, spinweight=-1, lmax=lmax, min_lmax=min_lmax,
@@ -1877,7 +1911,8 @@ class ExpansionCurve(BaseCurve):
     def stability_parameter(self, num=None, m_max=None, m_terminate_index=30,
                             rtol=1e-12, compute_eigenfunctions=False,
                             slice_normal=True, transform_torsion=False,
-                            zeta=None, full_output=False):
+                            force_general=False, zeta=None,
+                            basis_cls=ChebyBasis, full_output=False):
         r"""Compute the stability parameter.
 
         The stability parameter is defined in [1] as the principal eigenvalue
@@ -1926,10 +1961,18 @@ class ExpansionCurve(BaseCurve):
             Apply a transformation to the lightlike null vectors `k` and `l`
             such that the rotation 1-form \f$s_A\f$ (torsion of `l`) becomes
             divergence free. Default is `False`.
+        @param force_general
+            Use the general equation even for time-symmetric initial data.
         @param zeta
             Optional invariant angle zeta as function of curve parameter. If
             not supplied, will generate it when needed (i.e. when
             eigenfunctions are requested).
+        @param basis_cls
+            Class to expand the operator in for computing the stability
+            spectrum. Default is to use Chebyshev polynomials. Can be either a
+            basis suitable for `ndsolve()` or a string indicating the basis to
+            choose. Possible values are ``"Cheby"``, ``"Sine"``, ``"Cosine"``,
+            ``"Fourier"``.
         @param full_output
             If `True`, return all eigenvalues in addition to the principal
             eigenvalue.
@@ -2013,6 +2056,7 @@ class ExpansionCurve(BaseCurve):
             marginally outer trapped surfaces and existence of marginally
             outer trapped tubes." arXiv preprint arXiv:0704.2889 (2007).
         """
+        basis_cls = interpret_basis_class(basis_cls)
         if compute_eigenfunctions and zeta is None:
             zeta = self.compute_zeta(num=num)
         if num is None:
@@ -2022,7 +2066,7 @@ class ExpansionCurve(BaseCurve):
             m_terminate_index = min(num-1, m_terminate_index)
         spectrum = StabilitySpectrum(rtol=rtol, zeta=zeta)
         with self.fix_evaluator():
-            if self.extr_curvature is None:
+            if self.extr_curvature is None or force_general:
                 func = self._stability_eigenvalue_equation_timesym
             else:
                 func = self._stability_eigenvalue_equation_general
@@ -2034,7 +2078,7 @@ class ExpansionCurve(BaseCurve):
                         slice_normal=slice_normal,
                         transform_torsion=transform_torsion,
                     ),
-                    basis=ChebyBasis(domain=(0, np.pi), num=num, lobatto=False),
+                    basis=basis_cls(domain=(0, np.pi), num=num, lobatto=False),
                 )
                 eigenfunctions = ()
                 if compute_eigenfunctions:
@@ -2148,6 +2192,59 @@ class ExpansionCurve(BaseCurve):
             return sigma, sigma2
         return sigma
 
+    def shear_hat_square_integral(self, tevs):
+        n = len(tevs)
+        with self.fix_evaluator():
+            area_element = self.get_area_integrand()
+            length_map = self.cached_length_maps()[0]
+            def integrand(xs):
+                cmp_opts = dict(rtol=1e-10, atol=0.0)
+                if not np.allclose(xs, [tev.param for tev in tevs], **cmp_opts):
+                    print("WARNING: Objects not sampled at quadrature points. "
+                          "Integral value might be incorrect.")
+                sigma_hat2 = []
+                for param, tev in zip(xs, tevs):
+                    stab_calc = self.get_stability_calc_obj(param)
+                    sigma2 = stab_calc.compute_shear_squared()
+                    sigma_hat2.append((-tev.b_B/tev.c_B) * sigma2)
+                sigma_hat2 = np.asarray(sigma_hat2)
+                measure = np.asarray([area_element(x) for x in xs])
+                return sigma_hat2 * measure
+            integral = 2*np.pi * _fixed_quad(integrand, a=0.0, b=np.pi, n=n)
+            return integral
+
+    def xi_hat_square_integral(self, tevs, curves, steps=3):
+        return self.compute_xi_square_integral(
+            tevs=tevs, curves=curves, steps=steps, hat=True, r_hat=True,
+        )
+
+    def compute_xi_square_integral(self, tevs, curves, steps=3, hat=False,
+                                   r_hat=True):
+        # TODO: This generalizes (and hence can replace) xi_square_integral().
+        #       However, we still need to harmonize the interfaces to both methods.
+        if hat and not r_hat:
+            raise ValueError("Argument `hat` requires ``r_hat=True``.")
+        n = len(tevs)
+        with self.fix_evaluator():
+            area_element = self.get_area_integrand()
+            length_map = self.cached_length_maps()[0]
+            def integrand(xs):
+                proper_params = [length_map(param) for param in xs]
+                cmp_opts = dict(rtol=1e-10, atol=0.0)
+                if not np.allclose(xs, [tev.param for tev in tevs], **cmp_opts):
+                    print("WARNING: Objects not sampled at quadrature points. "
+                          "Integral value might be incorrect.")
+                xi2 = self.xi_vector(pts=proper_params, curves=curves,
+                                     steps=steps, full_output=True,
+                                     tevs=tevs, r_hat=r_hat)[2]
+                if hat:
+                    conversion = np.asarray([(-tev.b_B/tev.c_B) for tev in tevs])
+                    xi2 = conversion * xi2
+                measure = np.asarray([area_element(x) for x in xs])
+                return xi2 * measure
+            integral = 2*np.pi * _fixed_quad(integrand, a=0.0, b=np.pi, n=n)
+            return integral
+
     def shear_square_integral(self, n="auto"):
         r"""Compute the integral of the shear squared.
 
@@ -2222,8 +2319,9 @@ class ExpansionCurve(BaseCurve):
         return sigma_l
 
     def expand_shear_scalar(self, lmax="auto", zeta=None, min_lmax=64,
-                            max_lmax=4096, coeff_threshold=None,
-                            compress=True, full_output=False):
+                            max_lmax=4096, coeff_threshold=None, hat=False,
+                            curves=None, steps=3, compress=True,
+                            full_output=False):
         r"""Expand the shear scalar into spin 2 weighted spherical harmonics.
 
         This uses the `spinsfast` module to expand the shear scalar (computed
@@ -2252,6 +2350,13 @@ class ExpansionCurve(BaseCurve):
             times the largest coefficient, then do not try to detect a knee in
             the coefficients but immediately increase the resolution. By
             default, knee detection is always run.
+        @param hat
+            If `True`, expand \f$\hat\sigma\f$ instead of \f$\sigma\f$.
+            Default is `False`.
+        @param curves,steps
+            In case ``hat==True``, the curves and steps to do time
+            interpolation with need to be supplied. See expand_xi_scalar() for
+            their meaning.
         @param compress
             Since the shear scalar is purely real for axisymmetric MOTSs, the
             only non-zero coefficients in the expansion will be the ones with
@@ -2265,7 +2370,19 @@ class ExpansionCurve(BaseCurve):
         """
         def _shear_scalar(params):
             with self.fix_evaluator():
-                return [self.shear_scalar(param) for param in params]
+                shear = [self.shear_scalar(param) for param in params]
+                if hat:
+                    if curves is None:
+                        raise ValueError("Need MOTT curves to compute hatted shear.")
+                    length_map = self.cached_length_maps()[0]
+                    proper_params = [length_map(param) for param in params]
+                    tevs = self.time_evolution_vector(
+                        pts=proper_params, curves=curves, steps=steps,
+                        full_output=True
+                    )
+                    conversion = np.asarray([(-tev.b_B/tev.c_B) for tev in tevs])
+                    shear = conversion * np.asarray(shear)
+                return shear
         return self._expand_into_SWSPH(
             func=_shear_scalar, spinweight=2, lmax=lmax, min_lmax=min_lmax,
             max_lmax=max_lmax, coeff_threshold=coeff_threshold,
@@ -2358,7 +2475,7 @@ class ExpansionCurve(BaseCurve):
         Since our coordinates \f$(\lambda, \varphi)\f$ are already adapted to
         the axisymmetry, this simplifies to an ODE for \f$\zeta\f$, namely
         \f[
-            \partial_\lambda = - \frac{\sqrt{\det q}}{R^2} \,,
+            \partial_\lambda \zeta = - \frac{\sqrt{\det q}}{R^2} \,,
         \f]
         where \f$R\f$ is the areal radius of \f$\mathcal{S}\f$.
 
@@ -3307,7 +3424,8 @@ def evaluate_al0(al0, num=None, spinweight=2, real=True):
         Default is `True`, which is suitable if the expanded function had
         vanishing imaginary part in the first place.
     """
-    import spinsfast
+    # Local import to make this module usable without `spinsfast`.
+    import spinsfast # pylint: disable=import-outside-toplevel
     lmax = len(al0) - 1
     Nta = 2*lmax+1
     Nph = 2*lmax+1
@@ -3322,50 +3440,29 @@ def evaluate_al0(al0, num=None, spinweight=2, real=True):
     return xs, ys
 
 
-def _get_fixed_quad_abscissas(a, b, n):
-    r"""Return the abscissas of the Gaussian quadrature of order `n`.
+def interpret_basis_class(basis_cls):
+    r"""Convert a basis class string to the actual class object.
 
-    These are the exact points at which an integrand will be evaluated by
-    `scipy.integrate.fixed_quad(..., a, b, n)`. Note that this will hold for
-    _fixed_quad() *only* if no `full_domain` is given (or it is equal to the
-    integration interval).
+    This can be useful to allow users to supply a basis class as a string
+    (e.g. as command line argument). The object is returned "as is" if it is
+    not a string.
+
+    The returned class is a basis class usable for the pseudospectral solver.
+    It can be converted to a series class using ``cls.get_series_cls()``.
     """
-    xs_list = [None]
-    def f(x):
-        xs_list[0] = x
-        return np.zeros_like(x)
-    fixed_quad(f, a=a, b=b, n=n)
-    return xs_list[0]
-
-
-def _fixed_quad(func, a, b, n, full_domain=None, min_n=30):
-    r"""Integrate a function using fixed order Gaussian quadrature.
-
-    This is a wrapper for `scipy.integrate.fixed_quad()`. Given a full domain
-    to integrate, it uses the information of the current sub-domain to choose
-    less than the full set of `n` points such that integrating the full domain
-    in several intervals, the total number of evaluations is approximately
-    `n`.
-
-    @param func
-        Function taking a list of values and returning a list of results.
-    @param a,b
-        Interval to integrate over.
-    @param n
-        Order of the Gaussian quadrature for the `full_domain`.
-    @param full_domain
-        Full domain to eventually integrate over. If not given, `a,b` is taken
-        to be the full domain, i.e. no reduction of quadrature order is done.
-    @param min_n
-        Minimum quadrature order for very small sub-domains.
-    """
-    if full_domain is not None:
-        w = full_domain[1] - full_domain[0]
-        if abs(b-a) < 1e-14*w:
-            return 0.0
-        n = max(min_n, int(round(n * abs(b-a)/w)))
-    value, _ = fixed_quad(func, a=a, b=b, n=n)
-    return value
+    if isinstance(basis_cls, str):
+        cls_str = basis_cls.lower()
+        if cls_str in ["cheby", "chebybasis", "chebyshev"]:
+            basis_cls = ChebyBasis
+        elif cls_str in ["sine", "sin"]:
+            basis_cls = SineBasis
+        elif cls_str in ["cosine", "cos"]:
+            basis_cls = CosineBasis
+        elif cls_str in ["fourier", "fourierbasis"]:
+            basis_cls = FourierBasis
+        else:
+            raise ValueError("Unknown basis class: %s" % basis_cls)
+    return basis_cls
 
 
 class DistanceSearchError(Exception):

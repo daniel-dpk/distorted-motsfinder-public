@@ -19,12 +19,6 @@ __all__ = [
 ]
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
-
-
 class SioProject():
     r"""Wraps a simulation data file to conveniently extract data from it.
 
@@ -42,7 +36,7 @@ class SioProject():
         """
         if not op.isfile(hdf5_file):
             raise FileNotFoundError("File not found: %s" % hdf5_file)
-        import SimulationIO
+        import SimulationIO # pylint: disable=import-outside-toplevel
         ## The SimulationIO project object.
         self.project = SimulationIO.readProjectHDF5(hdf5_file)
         self._patches = None

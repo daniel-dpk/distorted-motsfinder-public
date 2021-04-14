@@ -10,9 +10,15 @@ from .props import compute_props, max_constraint_along_curve
 from .props import compute_tube_signature
 from .props import compute_tev_divergence
 from .props import compute_time_evolution_vector
+from .props import compute_shear_hat_scalar
+from .props import compute_shear_hat2_integral
+from .props import compute_xi_hat2_integral
+from .props import compute_xi_tilde2_integral
 from .props import compute_xi_vector
 from .props import compute_xi2_integral
 from .props import compute_xi_scalar
+from .props import compute_xi_hat_scalar
+from .props import compute_xi_tilde_scalar
 from .props import compute_surface_gravity
 from .props import compute_surface_gravity_tev
 from .props import compute_extremality_parameter

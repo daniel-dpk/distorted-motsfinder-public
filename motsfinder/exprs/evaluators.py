@@ -44,10 +44,11 @@ class _Evaluator(object):
     def __init__(self, expr, sub_evaluators=None):
         r"""Base class init for evaluators.
 
-        Args:
-            expr: The expression object for which this evaluator is created.
-            sub_evaluators: List of further evaluators required to evaluate
-                this one. Currently this list is stored but not used.
+        @param expr
+            The expression object for which this evaluator is created.
+        @param sub_evaluators
+            List of further evaluators required to evaluate this one.
+            Currently this list is stored but not used.
         """
         self._domain = None
         self.domain = expr.domain  # calls the domain.setter
@@ -83,16 +84,17 @@ class TrivialEvaluator(_Evaluator):
     def __init__(self, expr, f, sub_evaluators=None):
         r"""Create an evaluator for a given function.
 
-        Args:
-            expr:   The expression object for which this evaluator is created.
-            f:      Either a simple callable representing the function to
-                    evaluate or a tuple/list of functions representing the
-                    function and a few of its derivatives. This function/these
-                    functions should respect the `use_mp` setting supplied to
-                    the numexpr.NumericExpression._evaluator() call which
-                    usually creates these evaluators.
-            sub_evaluators: List of further evaluators required to evaluate
-                    this one.
+        @param expr
+            The expression object for which this evaluator is created.
+        @param f
+            Either a simple callable representing the function to evaluate or
+            a tuple/list of functions representing the function and a few of
+            its derivatives. This function/these functions should respect the
+            `use_mp` setting supplied to the
+            numexpr.NumericExpression._evaluator() call which usually creates
+            these evaluators.
+        @param sub_evaluators
+            List of further evaluators required to evaluate this one.
         """
         super(TrivialEvaluator, self).__init__(expr, sub_evaluators=sub_evaluators)
         if callable(f):
@@ -226,12 +228,13 @@ class EvaluatorFactory(_Evaluator):
     def __init__(self, expr, factory, sub_evaluators=None):
         r"""Create an evaluator from a factory function.
 
-        Args:
-            expr:   The expression object for which this evaluator is created.
-            factory: A function called with one parameter `n` to return a
-                    callable that computes the value of the n'th derivative.
-            sub_evaluators: List of further evaluators required to evaluate
-                    this one.
+        @param expr
+            The expression object for which this evaluator is created.
+        @param factory
+            A function called with one parameter `n` to return a callable that
+            computes the value of the n'th derivative.
+        @param sub_evaluators
+            List of further evaluators required to evaluate this one.
         """
         super(EvaluatorFactory, self).__init__(expr, sub_evaluators=sub_evaluators)
         if not callable(factory):

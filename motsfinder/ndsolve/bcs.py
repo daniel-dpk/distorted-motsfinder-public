@@ -53,34 +53,39 @@ class RobinCondition(object):
         For a pure Dirichlet condition, set ``alpha=1, beta=0`` and for a pure
         Neumann condition ``alpha=0, beta=1``.
 
-        Args:
-            x: (float or tuple/list)
-                Value at which to impose the condition. For 1D problems, this
-                should simply be the `x`-value at which to impose the condition.
-                For 2D problems, it should be a tuple/list specifying the
-                `x=const` or `y=const` line to impose the condition at. For
-                example, to define the line `x=5`, this argument should be set to
-                `x=(5.0, None)`.
-            alpha: (float or callable)
-                Coefficient of the 'Dirichlet' part of the condition (see above).
-            beta: (float or callable)
-                Coefficient of the 'Neumann' part of the condition (see above).
-            value: (float or callable)
-                Value of the condition (see above).
-            corners: (boolean, optional)
-                Only relevant in 2D. If `True` (default), apply the condition at
-                all collocation points along the specified axis including the
-                boundary ones. If `False`, the boundary points are excluded. This
-                may be important to make the resulting matrix equation a full-rank
-                equation, since imposing multiple conditions at the same points
-                (e.g. the corners) may make the matrix singular.
-            add_rows: (boolean, optional)
-                Whether to add or replace rows in the matrix and the inhomogeneity
-                vector to impose the condition. Adding rows will create a
-                non-square matrix, i.e. the system may become overdetermined and
-                must be solved using e.g. a least squares method such as
-                `scipy.lstsq`. Default is `False`, i.e. to replace rows, which is
-                what you should do to get a determined system of equations.
+        @param x
+            (float or tuple/list)
+            Value at which to impose the condition. For 1D problems, this
+            should simply be the `x`-value at which to impose the condition.
+            For 2D problems, it should be a tuple/list specifying the
+            `x=const` or `y=const` line to impose the condition at. For
+            example, to define the line `x=5`, this argument should be set to
+            `x=(5.0, None)`.
+        @param alpha
+            (float or callable)
+            Coefficient of the 'Dirichlet' part of the condition (see above).
+        @param beta
+            (float or callable)
+            Coefficient of the 'Neumann' part of the condition (see above).
+        @param value
+            (float or callable)
+            Value of the condition (see above).
+        @param corners
+            (boolean, optional)
+            Only relevant in 2D. If `True` (default), apply the condition at
+            all collocation points along the specified axis including the
+            boundary ones. If `False`, the boundary points are excluded. This
+            may be important to make the resulting matrix equation a full-rank
+            equation, since imposing multiple conditions at the same points
+            (e.g. the corners) may make the matrix singular.
+        @param add_rows
+            (boolean, optional)
+            Whether to add or replace rows in the matrix and the inhomogeneity
+            vector to impose the condition. Adding rows will create a
+            non-square matrix, i.e. the system may become overdetermined and
+            must be solved using e.g. a least squares method such as
+            `scipy.lstsq`. Default is `False`, i.e. to replace rows, which is
+            what you should do to get a determined system of equations.
         """
         ## Where to impose the condition
         self._x = x
@@ -122,23 +127,29 @@ class RobinCondition(object):
         list (i.e. the caller only needs to repeatedly supply this list,
         starting with an empty one).
 
-        Args:
-            basis: Spectral basis used during solving.
-            L: Fully populated operator matrix.
-            f: Inhomogeneity vector.
-            blocked_indices: List which is updated by this method to store
-                which equations have been replaced (in order not to replace a
-                condition in later calls).
-            L_done: Whether the operator matrix `L` has already been processed
-                and should be left untouched. May be useful if caching of
-                matrices with conditions already imposed is done, which may
-                speed up computation significantly.
-            f_done: Whether the inhomogeneity has already been processed and
-                should be left untouched. Might be useful when re-using the
-                same inhomogeneity (and same basis) to solve the same equation
-                with different boundary conditions.
-            use_mp: Whether to use arbitrary precision math operations (`True`) or
-                faster floating point precision operations (`False`, default).
+        @param basis
+            Spectral basis used during solving.
+        @param L
+            Fully populated operator matrix.
+        @param f
+            Inhomogeneity vector.
+        @param blocked_indices
+            List which is updated by this method to store which equations have
+            been replaced (in order not to replace a condition in later
+            calls).
+        @param L_done
+            Whether the operator matrix `L` has already been processed and
+            should be left untouched. May be useful if caching of matrices
+            with conditions already imposed is done, which may speed up
+            computation significantly.
+        @param f_done
+            Whether the inhomogeneity has already been processed and should be
+            left untouched. Might be useful when re-using the same
+            inhomogeneity (and same basis) to solve the same equation with
+            different boundary conditions.
+        @param use_mp
+            Whether to use arbitrary precision math operations (`True`) or
+            faster floating point precision operations (`False`, default).
         """
         if L_done and f_done:
             return L, f
@@ -203,11 +214,14 @@ class RobinCondition(object):
         This is a convenience function that handles the case of a NumPy matrix
         and that of an `mpmath` matrix.
 
-        Args:
-            ctx: `mp` or `fp`, the mpmath context to use if not a NumPy matrix.
-            mat: The NumPy or mpmath matrix to replace a row in.
-            n:   The row index of the row to replace.
-            row: The new data to write into the row. May be a `list`.
+        @param ctx
+            `mp` or `fp`, the mpmath context to use if not a NumPy matrix.
+        @param mat
+            The NumPy or mpmath matrix to replace a row in.
+        @param n
+            The row index of the row to replace.
+        @param row
+            The new data to write into the row. May be a `list`.
         """
         if isinstance(mat, np.ndarray):
             mat[n,:] = lmap(float, row)
@@ -217,10 +231,11 @@ class RobinCondition(object):
     def _append_rows(self, mat, rows):
         r"""Add rows to a NumPy or mpmath matrix.
 
-        Args:
-            mat: NumPy or mpmath matrix to add the rows to.
-            rows: List of rows, each being an iterable containing the
-                respective row's values.
+        @param mat
+            NumPy or mpmath matrix to add the rows to.
+        @param rows
+            List of rows, each being an iterable containing the respective
+            row's values.
         """
         if isinstance(mat, np.ndarray):
             mat = np.append(mat, [lmap(float, r) for r in rows], axis=0)
@@ -239,10 +254,12 @@ class RobinCondition(object):
         responsible for checking that we don't replace a blocked row, i.e. one
         that already has a condition imposed.
 
-        Args:
-            i: Desired row that should be replaced if it is free.
-            max_i: Maximum valid row index (total number of rows minus 1).
-            blocked: List of row indices that are blocked and cannot replaced.
+        @param i
+            Desired row that should be replaced if it is free.
+        @param max_i
+            Maximum valid row index (total number of rows minus 1).
+        @param blocked
+            List of row indices that are blocked and cannot replaced.
         """
         if self._add_rows:
             return None
@@ -323,7 +340,7 @@ class RobinCondition(object):
               value with all collocation points of the free axis to get a
               "line" of points to impose the condition at.
 
-        Returns:
+        @return
             A list of 2-tuples, each containing one index and one 1D or 2D
             point. The index will indicate the row in the matrix to replace
             with the condition evaluated at the returned point. The points

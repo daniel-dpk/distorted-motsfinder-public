@@ -312,7 +312,7 @@ class BrillLindquistMetric(_ConformallyFlatMetric):
         "Interaction energy in geometrostatics." Physical Review 131.1 (1963):
         471.
     """
-    def __init__(self, d, m1=1, m2=1, axis='z'):
+    def __init__(self, d, m1=1, m2=1, axis='z', offset=0.0):
         r"""Construct a Brill-Lindquist 3-metric.
 
         The ADM mass of the metric (specifically, the ADM mass of the
@@ -334,6 +334,9 @@ class BrillLindquistMetric(_ConformallyFlatMetric):
         @param axis (``{'x', 'y', 'z'}``, optional)
             Symmetry axis on which to place the two punctures. Default is
             `'z'`.
+        @param offset
+            Offset by which to move both punctures (along the given `axis`).
+            Default is `0.0`.
 
         @b References
 
@@ -348,8 +351,8 @@ class BrillLindquistMetric(_ConformallyFlatMetric):
         axis = dict(x=0, y=1, z=2).get(axis, axis)
         self._p1 = np.zeros(3)
         self._p2 = np.zeros(3)
-        self._p1[axis] = d/2.0
-        self._p2[axis] = -d/2.0
+        self._p1[axis] = d/2.0 + offset
+        self._p2[axis] = -d/2.0 + offset
 
     @property
     def m1(self):
@@ -365,6 +368,16 @@ class BrillLindquistMetric(_ConformallyFlatMetric):
     def d(self):
         r"""Distance parameter of the black holes."""
         return self._d
+
+    @property
+    def p1(self):
+        r"""Coordinate of the first puncture."""
+        return self._p1
+
+    @property
+    def p2(self):
+        r"""Coordinate of the second puncture."""
+        return self._p2
 
     def psi(self, point, derivatives=False, max_deriv=1):
         # see class docstring for the formulas

@@ -45,9 +45,10 @@ class ConstantExpression(NumericExpression):
     def __init__(self, value=0, name='const'):
         r"""Init function.
 
-        Args:
-            value:  The constant value.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param value
+            The constant value.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(ConstantExpression, self).__init__(name=name)
         ## The constant value this expression represents.
@@ -80,9 +81,10 @@ class IdentityExpression(NumericExpression):
     def __init__(self, a=1.0, name='Id'):
         r"""Init function.
 
-        Args:
-            a:      Factor to multiply the argument with.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param a
+            Factor to multiply the argument with.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(IdentityExpression, self).__init__(name=name)
         ## Factor to multiply the argument with.
@@ -115,10 +117,12 @@ class ScaleExpression(NumericExpression):
     def __init__(self, expr, a, name='scale'):
         r"""Init function.
 
-        Args:
-            expr:   The expression to scale.
-            a:      Factor to multiply the `expr` with.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param expr
+            The expression to scale.
+        @param a
+            Factor to multiply the `expr` with.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(ScaleExpression, self).__init__(e=expr, domain=expr.domain,
                                               verbosity=expr.verbosity,
@@ -156,10 +160,12 @@ class ProductExpression(NumericExpression):
     def __init__(self, expr1, expr2, name='mult'):
         r"""Init function.
 
-        Args:
-            expr1:  First expression.
-            expr2:  Second expression.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param expr1
+            First expression.
+        @param expr2
+            Second expression.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(ProductExpression, self).__init__(e1=expr1, e2=expr2,
                                                 domain=expr1.domain,
@@ -204,15 +210,18 @@ class ProductExpression2D(NumericExpression):
     def __init__(self, expr1, expr2, variables=('both', 'both'), name='mult'):
         r"""Init function.
 
-        Args:
-            expr1:  First expression.
-            expr2:  Second expression.
-            variables: tuple/list of two elements each bein either `'both'`,
-                    `0`, or `1`. The elements correspond to `expr1` and
-                    `expr2`, respectively. `'both'` means that the expression
-                    is a function of two variables, while `0` or `1` specify
-                    the functions to depend only on `x` or `y`, respectively.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param expr1
+            First expression.
+        @param expr2
+            Second expression.
+        @param variables
+            tuple/list of two elements each bein either ``'both'``, `0`, or
+            `1`. The elements correspond to `expr1` and `expr2`, respectively.
+            ``'both'`` means that the expression is a function of two
+            variables, while `0` or `1` specify the functions to depend only
+            on `x` or `y`, respectively.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(ProductExpression2D, self).__init__(e1=expr1, e2=expr2, name=name)
         self._v1, self._v2 = variables
@@ -403,26 +412,31 @@ class DivisionExpression2D(NumericExpression):
                  singularity_handling='raise', eps=None, name='divide'):
         r"""Init function.
 
-        Args:
-            expr1:  First expression.
-            expr2:  Second expression.
-            variables: tuple/list of two elements each bein either `'both'`,
-                    `0`, or `1`. The elements correspond to `expr1` and
-                    `expr2`, respectively. `'both'` means that the expression
-                    is a function of two variables, while `0` or `1` specify
-                    the functions to depend only on `x` or `y`, respectively.
-            singularity_handling: How to deal with the case when `expr2`
-                    vanishes at a certain point. Possible values are:
-                        * `"raise"` (default) raises a `ZeroDivisionError`
-                        * `"zero"` returns `0.0`, which may be useful if you
-                          (analytically) can determine that the respective
-                          limit exists and is zero
-                        * `"one"` returns `1.0` (rarely useful)
-                        * `"+inf"` positive infinity
-                        * `"-inf"` negative infinity
-            eps:    Small value below which to treat `expr2` to be zero. By
-                    default, only exactly zero is considered zero.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param expr1
+            First expression.
+        @param expr2
+            Second expression.
+        @param variables
+            tuple/list of two elements each bein either ``'both'``, `0`, or
+            `1`. The elements correspond to `expr1` and `expr2`, respectively.
+            ``'both'`` means that the expression is a function of two
+            variables, while `0` or `1` specify the functions to depend only
+            on `x` or `y`, respectively.
+        @param singularity_handling
+            How to deal with the case when `expr2` vanishes at a certain
+            point. Possible values are:
+                * `"raise"` (default) raises a `ZeroDivisionError`
+                * `"zero"` returns `0.0`, which may be useful if you
+                  (analytically) can determine that the respective
+                  limit exists and is zero
+                * `"one"` returns `1.0` (rarely useful)
+                * `"+inf"` positive infinity
+                * `"-inf"` negative infinity
+        @param eps
+            Small value below which to treat `expr2` to be zero. By default,
+            only exactly zero is considered zero.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(DivisionExpression2D, self).__init__(e1=expr1, e2=expr2, name=name)
         self._v1, self._v2 = variables
@@ -626,11 +640,14 @@ class SumExpression(NumericExpression):
     def __init__(self, expr1, expr2, coeff=1.0, name='add'):
         r"""Init function.
 
-        Args:
-            expr1:  First expression.
-            expr2:  Second expression.
-            coeff:  Coefficient for the second expression. Default is `1.0`.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param expr1
+            First expression.
+        @param expr2
+            Second expression.
+        @param coeff
+            Coefficient for the second expression. Default is `1.0`.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(SumExpression, self).__init__(e1=expr1, e2=expr2, name=name)
         self._coeff = coeff
@@ -689,13 +706,17 @@ class BlendExpression2D(SumExpression):
                  name='blend'):
         r"""Init function.
 
-        Args:
-            expr1:  First expression (\f$ f_1 \f$).
-            expr2:  Second expression (\f$ f_2 \f$).
-            blend_expr: Blending expression (\f$ \beta \f$).
-            variables:  As in ProductExpression2D, but with a third element
-                        for the `blend_expr`.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param expr1
+            First expression (\f$ f_1 \f$).
+        @param expr2
+            Second expression (\f$ f_2 \f$).
+        @param blend_expr
+            Blending expression (\f$ \beta \f$).
+        @param variables
+            As in ProductExpression2D, but with a third element for the
+            `blend_expr`.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         v1, v2, v3 = variables
         first = ProductExpression2D(expr1,
@@ -715,10 +736,12 @@ class EmbedExpression2D(NumericExpression):
     def __init__(self, expr, axis=0, name='embedding'):
         r"""Init function.
 
-        Args:
-            expr:   Expression to embed.
-            axis:   `0` to embed along the x-axis, `1` for the y-axis.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param expr
+            Expression to embed.
+        @param axis
+            `0` to embed along the x-axis, `1` for the y-axis.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(EmbedExpression2D, self).__init__(e=expr, name=name)
         self._axis = axis

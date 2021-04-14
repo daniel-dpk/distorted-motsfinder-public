@@ -28,7 +28,8 @@ class ChebyBasis(_SpectralSeriesBasis):
                                          lobatto=lobatto)
         self._Tderiv = dict()
 
-    def get_series_cls(self):
+    @classmethod
+    def get_series_cls(cls):
         return cheby.Cheby
 
     def evaluate_all_at(self, x, n=0):

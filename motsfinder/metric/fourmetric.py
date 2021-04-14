@@ -17,7 +17,6 @@ been used thus far.
 from __future__ import print_function
 
 import numpy as np
-from scipy import linalg
 
 from .base import _GeneralMetric, trivial_lapse, trivial_shift
 from .base import trivial_dtlapse, trivial_dtshift
@@ -26,12 +25,6 @@ from .base import trivial_dtlapse, trivial_dtshift
 __all__ = [
     'FourMetric',
 ]
-
-
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
 
 
 class FourMetric(_GeneralMetric):
@@ -158,7 +151,7 @@ class FourMetric(_GeneralMetric):
         self._dtlapse = three_metric.get_dtlapse()
         self._dtshift = three_metric.get_dtshift()
         self._curv = three_metric.get_curv()
-        if not self._curv and self._curv is not 0:
+        if not self._curv and self._curv != 0:
             print("WARNING: Extrinsic curvature not given. Using zero.")
         msg = ("\n"
                "         If this is correct, consider modifying your metric\n"

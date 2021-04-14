@@ -130,11 +130,11 @@ def _optimize_curve_parameter(curve, x0, set_value, factor, max_shrinking,
     def _p(msg):
         if verbose:
             print(msg)
-    _res_cache = dict() if _cache is None else _cache
+    res_cache = dict() if _cache is None else _cache
     def _max_residual(num, value):
         key = (num, value)
         try:
-            return _res_cache[key]
+            return res_cache[key]
         except KeyError:
             pass
         modified_curve = set_value(value, num=num)
@@ -142,7 +142,7 @@ def _optimize_curve_parameter(curve, x0, set_value, factor, max_shrinking,
                                       metric=curve.metric)
         space = np.linspace(0, np.pi, 2*num+1, endpoint=False)[1:]
         residual = np.absolute(c1.expansions(params=space)).max()
-        _res_cache[key] = residual
+        res_cache[key] = residual
         return residual
     a = x0
     if num is None:
@@ -199,7 +199,7 @@ def _optimize_curve_parameter(curve, x0, set_value, factor, max_shrinking,
                     max_value=max_value, set_value=set_value,
                     factor=new_factor, num=num, verbose=verbose,
                     recursions=recursions-1,
-                    _cache=_res_cache,
+                    _cache=res_cache,
                 )
             return (opt, num) if full_output else opt
         a, b = b, c

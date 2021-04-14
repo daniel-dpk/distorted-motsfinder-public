@@ -83,10 +83,10 @@ class _SpectralBasis(object):
     def transform(self, x, back=False):
         r"""Transform a point between the physical and native/internal domain.
 
-        Args:
-            back: Whether to transform back from the physical to the native
-                domain. Default is `False`, i.e. we transform from the native
-                internal domain to the physical domain.
+        @param back
+            Whether to transform back from the physical to the native domain.
+            Default is `False`, i.e. we transform from the native internal
+            domain to the physical domain.
         """
         from_domain = self.internal_domain()
         to_domain = self.domain
@@ -159,9 +159,10 @@ class _SpectralBasis(object):
 
         The result is a list of N values.
 
-        Args:
-            x: Point at which to evaluate all basis function.
-            n: Derivative order of the basis functions to use.
+        @param x
+            Point at which to evaluate all basis function.
+        @param n
+            Derivative order of the basis functions to use.
         """
         pass
 
@@ -228,13 +229,14 @@ class _SpectralBasis(object):
         It should return an array/list of operator components (as above), each
         with as many elements as the given points list has.
 
-        Args:
-            op: Operator coefficient functions or a callable to compute them
-                all at once or a list of lists already containing the
-                evaluated operator.
-            as_numpy: Whether to construct a NumPy operator matrix (if `True`)
-                or an mpmath matrix (default), the latter being much slower
-                and requiring much memory.
+        @param op
+            Operator coefficient functions or a callable to compute them all
+            at once or a list of lists already containing the evaluated
+            operator.
+        @param as_numpy
+            Whether to construct a NumPy operator matrix (if `True`) or an
+            mpmath matrix (default), the latter being much slower and
+            requiring much memory.
         """
         if callable(op):
             sampled_op = op(np.array(self.pts) if as_numpy else self.pts)
@@ -336,8 +338,9 @@ class _SpectralSeriesBasis(_SpectralBasis):
         ## The (dummy) series object (created during init()).
         self._series = None
 
+    @classmethod
     @abstractmethod
-    def get_series_cls(self):
+    def get_series_cls(cls):
         r"""The series class for creating new objects of the series type."""
         pass
 

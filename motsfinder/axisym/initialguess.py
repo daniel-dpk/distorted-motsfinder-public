@@ -387,6 +387,58 @@ class InitHelper():
             )
         return c_top, c_bot
 
+    def find_common_MOTSs(self, m1, m2, d, kw_AH=None, kw_inner=None,
+                          unload=True, plot=False, plot_opts=None, **kw):
+        r"""Find the two common MOTSs.
+
+        Based on a Brill-Lindquist-like configuration given by `m1`, `m2`,
+        `d`, this method tries to find the two common MOTSs that can
+        individually be obtained using find_AH() and find_inner(). See their
+        documentation for more info.
+
+        @param m1,m2
+            Bare masses of the two punctures (i.e. Brill-Lindquist mass
+            parameters). These do not need to be very accurate, they are just
+            used for the initial round spheres' coordinate radii.
+        @param d
+            Rough coordinate distance of the punctures on the z-axis. Note
+            that currently the punctures need to be approximately the same
+            coordinate distance from the origin.
+        @param kw_AH,kw_inner
+            Optional arguments for the individual ``find_...()`` calls.
+        @param unload
+            Whether to unload any numerical data from the metric afterwards.
+            Default is `True`.
+        @param plot
+            Whether to plot the found MOTSs. Default is `False`.
+        @param plot_opts
+            Options supplied to the plotting command.
+        @param **kw
+            Common options for all ``find_...()`` calls. These are overridden
+            by the individual `kw_...` arguments.
+        """
+        with self._unload_after(unload=unload):
+            c_AH = self.find_AH(
+                m1=m1, m2=m2, d=d, unload=False,
+                **merge_dicts(kw, kw_AH or dict())
+            )
+            c_inner = self.find_inner(
+                c_AH, unload=False,
+                reference_curves=[(c_AH, 'AH', '-b')],
+                **merge_dicts(kw, kw_inner or dict())
+            )
+        if plot:
+            title = "MOTSs"
+            if hasattr(self.metric, 'time'):
+                title += r" $t = %s$" % self.metric.time
+            BaseCurve.plot_curves(
+                (c_AH, 'AH', '-b'), (c_inner, 'inner', '-g'),
+                **insert_missing(
+                    plot_opts or dict(), title=title,
+                )
+            )
+        return c_AH, c_inner
+
     def find_four_MOTSs(self, m1, m2, d, kw_AH=None, kw_top=None, kw_bot=None,
                         kw_inner=None, unload=True, plot=False,
                         plot_opts=None, **kw):

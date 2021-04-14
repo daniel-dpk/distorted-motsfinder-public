@@ -43,6 +43,10 @@ __all__ = [
 ]
 
 
+# Pylint incorrectly infers the return type of some numpy functions.
+# pylint: disable=invalid-unary-operand-type
+
+
 def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
             label=None, legendargs=None, rel_range=(0, 1), domain=None,
             value_pad=0, difference=False, offset=0, absolute=False,
@@ -274,8 +278,8 @@ def plot_1d(f, f2=None, points=500, l=('-k', '-g'), color=None, lw=1.5,
         f1 = (lambda x: abs(fun(x))) if absolute else fun
         line, = ax.plot(xs, [f1(x-offset) for x in space], l1, label=label1, **kw1)
         if f2 is not None:
-            _f2 = f2
-            f2 = (lambda x: abs(_f2(x))) if absolute else _f2
+            orig_f2 = f2
+            f2 = (lambda x: abs(orig_f2(x))) if absolute else orig_f2
             ax.plot(xs, [f2(x-offset) for x in space], l2, label=label2, **kw2)
         if mark_points is not None:
             marker_opts = dict()
@@ -476,8 +480,8 @@ def plot_data_disconnected(x, y, split_at=None, keep_color=True,
 
 
 def plot_curve(curve, domain=None, points=500, l='-k', label=None,
-               mirror_x=False, mirror_y=False, offset=(0, 0), figsize=(4, 4),
-               **kw):
+               mirror_x=False, mirror_y=False, close_half_circle=False,
+               offset=(0, 0), figsize=(4, 4), **kw):
     r"""Plot a given parametric curve.
 
     The `curve` should return `x,y` pairs of values when evaluated at a given
@@ -499,6 +503,9 @@ def plot_curve(curve, domain=None, points=500, l='-k', label=None,
         Change sign of all `x` values before applying the offset.
     @param mirror_y (boolean, optional)
         Change sign of all `y` values before applying the offset.
+    @param close_half_circle
+        If `True`, repeat the curve with negative `x` values and connect these
+        to the original values in reverse order. Default is `False`.
     @param offset (2-tuple/list, optional)
         x/y offset to apply to all values. Useful when the curve is
         parameterized w.r.t. an origin different from `(0, 0)`.
@@ -518,6 +525,9 @@ def plot_curve(curve, domain=None, points=500, l='-k', label=None,
         xs = -xs
     if mirror_y:
         ys = -ys
+    if close_half_circle:
+        xs = np.concatenate([xs, list(reversed(-xs))])
+        ys = np.concatenate([ys, list(reversed(ys))])
     xs += offset[0]
     ys += offset[1]
     return plot_data(xs, ys, l=l, label=label, figsize=figsize, **kw)
@@ -801,7 +811,7 @@ def video_from_folder(*folders, ext='png', filter_cb=None, **kw):
 def video_from_images(image_files, fps=5, callback=None, reverse=False,
                       dpi=72, interpolation=None, repeat_first=0,
                       repeat_last=0, save=None, repetitions=None, crop=None,
-                      snap_first=False):
+                      snap_first=False, snap_last=False):
     r"""Display a movie from a sequence of images.
 
     This renders the given images into a video to view inside the Jupyter
@@ -840,8 +850,8 @@ def video_from_images(image_files, fps=5, callback=None, reverse=False,
     @param crop
         4-tuple with the amount of cropping (in pixel) in order (left, botton,
         right, top).
-    @param snap_first
-        If `True`, save a snapshot of the first frame.
+    @param snap_first,snap_last
+        If `True`, save a snapshot of the first/last frame.
     """
     from IPython.display import HTML
     from matplotlib.animation import FuncAnimation
@@ -883,6 +893,13 @@ def video_from_images(image_files, fps=5, callback=None, reverse=False,
         fname = op.expanduser(save)
         os.makedirs(op.normpath(op.dirname(fname)), exist_ok=True)
         a.save(fname)
+    if snap_last and save:
+        fname = op.expanduser(save)
+        if fname.endswith(".mp4"):
+            fname = fname[:-4]
+        fname += "_last.png"
+        os.makedirs(op.normpath(op.dirname(fname)), exist_ok=True)
+        ax.figure.savefig(fname)
     plt.close(ax.figure)
     return HTML(v)
 

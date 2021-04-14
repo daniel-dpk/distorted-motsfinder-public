@@ -32,14 +32,15 @@ def resize_coeffs(coeffs, old_shape, new_shape):
 
         coeffs = resize_coeffs(coeffs, (old_num, 1), (new_num, 1))
 
-    Args:
-        coeffs: Flattened list of current coefficients, which should be
-            interpreted via `old_shape`.
-        old_shape: 2-tuple/list of the coefficient matrix size.
-        new_shape: 2-tuple/list of the desired new matrix size.
+    @param coeffs
+        Flattened list of current coefficients, which should be interpreted
+        via `old_shape`.
+    @param old_shape
+        2-tuple/list of the coefficient matrix size.
+    @param new_shape
+        2-tuple/list of the desired new matrix size.
 
-    Returns:
-        Flattened coefficient list corresponding to the new shape.
+    @return Flattened coefficient list corresponding to the new shape.
     """
     arr = np.array(coeffs, dtype=object)
     mat = arr.reshape(*old_shape)
@@ -58,19 +59,22 @@ def transform_domains(points, from_domain, to_domain, use_mp=False, dps=None):
     any numerical noise will not lead to points lying slightly outside after
     the transformation.
 
-    Args:
-        points: Iterable of all points to transform. Points must be plain
-                values, i.e. no vectors.
-        from_domain: 2-tuple/list indicating the interval the points are
-                currently living in.
-        to_domain: 2-tuple/list indicating the target interval the returned
-                points should live in.
-        use_mp: Whether to use arbitrary precision math operations (`True`) or
-                faster floating point precision operations (`False`, default).
-        dps:    Number of decimal places to use in case of `use_mp==True`.
+    @param points
+        Iterable of all points to transform. Points must be plain values, i.e.
+        no vectors.
+    @param from_domain
+        2-tuple/list indicating the interval the points are currently living
+        in.
+    @param to_domain
+        2-tuple/list indicating the target interval the returned points should
+        live in.
+    @param use_mp
+        Whether to use arbitrary precision math operations (`True`) or faster
+        floating point precision operations (`False`, default).
+    @param dps
+        Number of decimal places to use in case of `use_mp==True`.
 
-    Returns:
-        A `list` of the transformed points.
+    @return A `list` of the transformed points.
     """
     with mp.workdps(dps or mp.dps):
         fl = mp.mpf if use_mp else float
@@ -101,10 +105,11 @@ class SeriesExpression(NumericExpression):
     def __init__(self, a_n, domain, **kw):
         r"""Parent init for series expressions.
 
-        Args:
-            a_n:    Iterable of coefficient values. May also be empty.
-            domain: Domain on which this expansion should be defined. This is
-                    independent of the domain the basis is defined on.
+        @param a_n
+            Iterable of coefficient values. May also be empty.
+        @param domain
+            Domain on which this expansion should be defined. This is
+            independent of the domain the basis is defined on.
 
         Further keyword arguments are passed to the parent init, that is to
         numexpr.NumericExpression.__init__().
@@ -181,19 +186,23 @@ class SeriesExpression(NumericExpression):
         holds. In general, the higher the value of `num`, the better the above
         equation is satisfied.
 
-        Args:
-            y:  Data y-values.
-            x:  Positions of the data values on the x-axis. By default, an
-                equidistant grid on the domain `[a,b]` is used.
-            kind: (string or int, optional)
-                `kind` parameter for the `interp1d` call. Default is `'cubic'`.
-            num: Number of series terms to use for approximation. Default is
-                to use the current length of the coefficient list.
-            use_mp: Whether to use `mpmath` computations. Default is `False`.
-                Only affects the approximation step as the interpolation is
-                done by SciPy.
-            dps: Number of decimal places to use when `use_mp==True`.
-                Default is to use the current global setting.
+        @param y
+            Data y-values.
+        @param x
+            Positions of the data values on the x-axis. By default, an
+            equidistant grid on the domain `[a,b]` is used.
+        @param kind (string or int, optional)
+            `kind` parameter for the `interp1d` call. Default is `'cubic'`.
+        @param num
+            Number of series terms to use for approximation. Default is to use
+            the current length of the coefficient list.
+        @param use_mp
+            Whether to use `mpmath` computations. Default is `False`. Only
+            affects the approximation step as the interpolation is done by
+            SciPy.
+        @param dps
+            Number of decimal places to use when `use_mp==True`. Default is to
+            use the current global setting.
 
         """
         if x is None:
@@ -212,19 +221,22 @@ class SeriesExpression(NumericExpression):
         guaranteed to have `num` elements, corresponding to `N = num-1` in
         most textbooks for most bases.
 
-        Args:
-            f:  The function to approximate. May also be a constant, in which
-                case we still create `num` elements (most of which will be
-                zero for most bases).
-            num: Number of terms to use for approximation. This is also the
-                number of times `f` is evaluated. Default is to use the
-                current length of the coefficient list.
-            lobatto: Whether to use the Gauss-Lobatto (default) points for
-                sampling or just the Gauss points. May not be used by all
-                child classes.
-            use_mp: Whether to use `mpmath` computations. Default is `False`.
-            dps: Number of decimal places to use when `use_mp==True`.
-                Default is to use the current global setting.
+        @param f
+            The function to approximate. May also be a constant, in which case
+            we still create `num` elements (most of which will be zero for
+            most bases).
+        @param num
+            Number of terms to use for approximation. This is also the number
+            of times `f` is evaluated. Default is to use the current length of
+            the coefficient list.
+        @param lobatto
+            Whether to use the Gauss-Lobatto (default) points for sampling or
+            just the Gauss points. May not be used by all child classes.
+        @param use_mp
+            Whether to use `mpmath` computations. Default is `False`.
+        @param dps
+            Number of decimal places to use when `use_mp==True`. Default is to
+            use the current global setting.
         """
         with self.context(use_mp, dps):
             if num is None:
@@ -301,31 +313,29 @@ class SeriesExpression(NumericExpression):
         the collocation points. These may be used to further specify options
         such as symmetry, etc.
 
-        Args:
-            num: (int, optional)
-                Number of collocation points to create. Note that in most printed
-                formulas, the points have indices `0, 1, ..., N`, i.e. there are
-                `N+1` points. This function, however, returns `num` points. To get
-                the points that belong to a certain value of `N` in these
-                formulas, call this function with `num=N+1`.
-                The default is the current number of coefficients.
-            lobatto: (boolean, optional)
-                If `True` (default), return the Gauss-Lobatto points, which
-                include the endpoints of the interval. Otherwise, return the
-                interior (Gauss) points.
-            internal_domain: (boolean, optional)
-                If `False` (the default), return the collocation points mapped to
-                the range `[a,b]`. If `True`, use the internal domain (depends on
-                subclass).
-            use_mp: (boolean, optional)
-                Whether to compute the points using `mpmath` arbitrary precision
-                calculations. The result will then be a list of `mpmath.mpf`
-                floats. Default is `False`.
-            dps: (int, optional)
-                Number of decimal places to use when `use_mp==True`.
+        @param num (int, optional)
+            Number of collocation points to create. Note that in most printed
+            formulas, the points have indices `0, 1, ..., N`, i.e. there are
+            `N+1` points. This function, however, returns `num` points. To get
+            the points that belong to a certain value of `N` in these
+            formulas, call this function with `num=N+1`.
+            The default is the current number of coefficients.
+        @param lobatto (boolean, optional)
+            If `True` (default), return the Gauss-Lobatto points, which
+            include the endpoints of the interval. Otherwise, return the
+            interior (Gauss) points.
+        @param internal_domain (boolean, optional)
+            If `False` (the default), return the collocation points mapped to
+            the range `[a,b]`. If `True`, use the internal domain (depends on
+            subclass).
+        @param use_mp (boolean, optional)
+            Whether to compute the points using `mpmath` arbitrary precision
+            calculations. The result will then be a list of `mpmath.mpf`
+            floats. Default is `False`.
+        @param dps (int, optional)
+            Number of decimal places to use when `use_mp==True`.
 
-        Returns:
-            List of collocation points either in the domain of the basis (if
+        @return List of collocation points either in the domain of the basis (if
             `internal_domain==True`) or the physical domain (if
             `internal_domain==False`).
         """
@@ -352,6 +362,10 @@ class SeriesExpression(NumericExpression):
     def is_orthogonal(self):
         r"""Whether this series consists of orthogonal functions."""
         pass
+
+    @classmethod
+    def validate_and_fix_resolution(cls, proposed_resolution):
+        return proposed_resolution
 
     @classmethod
     def from_function(cls, f, num, domain=None, lobatto=True, use_mp=False,

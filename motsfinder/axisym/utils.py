@@ -3,6 +3,8 @@ r"""@package motsfinder.axisym.utils
 Utilities for curve analysis/modification.
 """
 
+from contextlib import contextmanager
+
 import numpy as np
 
 from ..utils import lrange
@@ -109,3 +111,13 @@ def detect_coeff_knee(coeffs, n_min=10, limit_order_up=8, limit_order_down=5,
         # detect a knee at all.
         knee = None
     return knee
+
+
+@contextmanager
+def _replace_metric(curve, metric):
+    orig_metric = curve.metric
+    try:
+        curve.metric = metric
+        yield
+    finally:
+        curve.metric = orig_metric

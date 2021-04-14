@@ -68,12 +68,6 @@ __all__ = [
 ]
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
-
-
 def christoffel_symbols(g_inv, dg):
     r"""Compute the Christoffel symbols of a metric.
 

@@ -17,9 +17,11 @@ import numpy as np
 from ...utils import timethis, find_files, update_user_data_in_file
 from ...numutils import inf_norm1d, clip, IntegrationResults
 from ...numutils import IntegrationResult
-from ...numutils import try_quad_tolerances
+from ...numutils import try_quad_tolerances, _fixed_quad
 from ...exprs.cheby import Cheby
+from ..utils import _replace_metric
 from ..curve import BaseCurve
+from ..curve.expcurve import interpret_basis_class
 
 
 __all__ = [
@@ -27,9 +29,15 @@ __all__ = [
     "compute_tube_signature",
     "compute_tev_divergence",
     "compute_time_evolution_vector",
+    "compute_shear_hat_scalar",
+    "compute_shear_hat2_integral",
+    "compute_xi_hat2_integral",
+    "compute_xi_tilde2_integral",
     "compute_xi_vector",
     "compute_xi2_integral",
     "compute_xi_scalar",
+    "compute_xi_hat_scalar",
+    "compute_xi_tilde_scalar",
     "compute_surface_gravity",
     "compute_surface_gravity_tev",
     "compute_timescale_tau2",
@@ -43,31 +51,29 @@ __all__ = [
 ]
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
-
-
 # Valid properties to compute.
 ALL_PROPS = (None, 'none', 'all', 'length_maps', 'constraints', 'ingoing_exp',
              'avg_ingoing_exp', 'area', 'ricci', 'mean_curv', 'curv2',
              'shear', 'shear2_integral', 'shear_scalar', 'stability',
              'stability_null', 'stability_convergence',
              'stability_convergence_null', 'neck', 'dist_top_bot',
-             'z_dist_top_inner', 'z_dist_bot_inner', 'point_dists',
-             'area_parts', 'multipoles', 'zeta')
+             'z_dist_top_inner', 'z_dist_bot_inner',
+             'ricci_difference_integral', 'ricci_interp', 'point_dists', 'area_parts',
+             'multipoles', 'zeta')
 
 
 # Of the above, those not included in 'all'.
-NEED_ACTIVATION_PROPS = ('stability_convergence', 'stability_convergence_null')
+NEED_ACTIVATION_PROPS = (
+    'stability_convergence',
+    'stability_convergence_null',
+    'ricci_difference_integral',
+    'ricci_interp',
+)
 
 
-def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
-                  m_terminate_index=30, max_multipole_n=10,
-                  stability_convergence_factors=(0.2, 0.4, 0.6, 0.8, 0.9, 1.1),
-                  verbosity=True, MOTS_map=None, fname=None,
-                  remove_invalid=True, update_file=False):
+def compute_props(hname, c, props, arg_dict=None, verbosity=True,
+                  MOTS_map=None, fname=None, remove_invalid=True,
+                  update_file=False, **kwargs):
     r"""Compute properties and store them in the curve object.
 
     All computed properties will be stored under the property's name in the
@@ -116,6 +122,10 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
             on the curve resolution. Additionally, the maximum absolute value
             of the Ricci scalar along the curve is found and stored. Inspect
             the actual data (dictionary) for details.
+        * **ricci_interp**:
+            Ricci scalar as series expansion into a Cosine series. The
+            resolution of this representation is set to the resolution of the
+            curve.
         * **mean_curv**:
             Similar to ``ricci``, but compute the trace of the extrinsic
             curvature of the MOTS in the slice instead.
@@ -203,6 +213,17 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
             the stored value will be a numutils.IntegrationResults object. Its
             `info` dictionary contains all splitting points. Sorting these
             gives you all the intervals of which the areas were computed.
+        * **ricci_difference_integral**:
+            Compute the integral of the difference of Ricci scalars between
+            the inner common MOTS and the individual ones. Only done for
+            ``hname="inner"``. The result is stored as a dictionary with keys
+            ``"value", "value1", "value2", "info1", "info2"``. Here,
+            ``"value"`` stores the value of the integral and ``"valueX"`` the
+            integrations of the portion before (``X=1``) and after (``X=2``)
+            the neck. The respective ``"infoX"`` entries contain the
+            parameters and values of the Ricci scalar along the inner and the
+            two individual MOTSs (where ``X=1`` refers to the top and ``X=2``
+            to the bottom MOTS).
         * **multipoles**:
             Compute the first 10 multipole moments of the MOTS. The first and
             second moments are computed numerically even though these have
@@ -218,7 +239,7 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
         * for ``"top"``: `area_parts`
         * for ``"bot"``: `dist_top_bot`, `area_parts`
         * for ``"inner"``: `neck`, `z_dist_top_inner`, `z_dist_bot_inner`,
-          `area_parts`
+          `area_parts`, `ricci_difference_integral`
 
     @param hname
         Name of horizon. Determines which kinds of properties are being
@@ -227,24 +248,19 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
         Curve representing the MOTS in axisymmetry.
     @param props
         Sequence of properties to compute (see above for the possible values).
-        Use the string ``"all"`` to compute all possible properties.
-    @param area_rtol
-        Relative tolerance for the area integral. Setting this too low will
-        result in integration warnings being produced and possibly
-        underestimated residual errors.
-    @param min_stability_values
-        Minimum number of MOTS-stability eigenvalues to compute. The default
-        is `30`.
-    @param m_terminate_index
-        Index of the eigenvalue of the `m=0` mode to use to as stopping
-        criterion for the angular mode. Default is `30`.
-        See .curve.expcurve.ExpansionCurve.stability_parameter() for details.
-    @param stability_convergence_factors
-        Factors by which to multiply the resolution used for computing the
-        stability spectrum. Each of the resulting lower or higher resolutions
-        is used to compute the same spectrum, so that convergence of the
-        individual eigenvalues can be examined. Defaults to ``(0.2, 0.4, 0.6,
-        0.8, 0.9, 1.1)``.
+        Use the string ``"all"`` to compute all possible properties except
+        ``"stability_convergence"``, ``"stability_convergence_null"``,
+        ``"ricci_difference_integral"``, ``"ricci_interp"``.
+    @param arg_dict
+        Dictionary containing (optional) detailed configuration for each
+        property. Properties not computed are ignored. For each computed
+        property, this dictionary may contain a set of options (as dictionary)
+        under the key of the property. For example:
+        ``arg_dict=dict(stability=dict(rtol=1e-9), area=dict(limit=200))``.
+        Note that there are (more or less) sensible default values chosen for
+        many of the options. Their current values can be inspected in the
+        source for the _prepare_arg_dict() function and other functions in the
+        trackmots.props module.
     @param verbosity
         Whether to print progress information.
     @param MOTS_map
@@ -270,9 +286,13 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
         data. You should hence not save the given curve to the file after
         calling this function, since you would potentially overwrite the
         updates of other processes.
+    @param **kwargs
+        Additional keyword arguments are passed to _prepare_arg_dict() for
+        configuring default options.
     """
     if MOTS_map is None:
         MOTS_map = dict()
+    arg_dict = _prepare_arg_dict(arg_dict, **kwargs)
     out_dir = run_name = None
     if update_file and not fname:
         raise ValueError("Cannot update file when no filename is given.")
@@ -314,16 +334,21 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
             return
         if args is None:
             args = dict()
+        args.update(arg_dict.get(p, {}))
+        stored_args = args.copy()
+        for arg in stored_args:
+            if isinstance(stored_args[arg], BaseCurve):
+                stored_args[arg] = stored_args[arg].loaded_from
         p_args = '%s_args' % p
         p_extras = '%s_extras' % p
-        if remove_invalid and p in data and p_args in data and data[p_args] == args:
+        if remove_invalid and p in data and p_args in data and data[p_args] == stored_args:
             if not _data_is_valid(p, data[p], data[p_args], hname):
                 print("Removing invalid '%s' data from curve to trigger "
                       "recomputation." % p)
                 # We don't save the file just now (for update_file) as data[p]
                 # will be recomputed anyway.
                 del data[p]
-        if p not in data or p_args not in data or data[p_args] != args:
+        if p not in data or p_args not in data or data[p_args] != stored_args:
             msg = "Computing property %-21s" % ("'%s'..." % p)
             with timethis(msg, " elapsed: {}", silent=verbosity == 0, eol=False):
                 try:
@@ -332,7 +357,7 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
                     if verbosity > 0:
                         print(" [cancelled due to missing data]", end="")
                     return
-            updates = {p: result, p_args: args}
+            updates = {p: result, p_args: stored_args}
             keys_to_remove = []
             if isinstance(result, _PropResult):
                 updates[p] = result.result
@@ -351,73 +376,152 @@ def compute_props(hname, c, props, area_rtol=1e-6, min_stability_values=30,
             did_something[0] = True
     if hname == 'bot' and out_dir:
         do_prop('dist_top_bot', _dist_top_bot,
-                dict(rtol=1e-5,
-                     allow_intersection=True,
-                     other_run=MOTS_map.get('top', run_name),
+                dict(other_run=MOTS_map.get('top', run_name),
                      other_hname='top'),
                 c=c, out_dir=out_dir)
-    do_prop('zeta', _zeta, dict(num=None), c=c)
-    do_prop('length_maps', _length_maps, dict(num=None, accurate=True), c=c)
-    do_prop('constraints', _constraints, dict(num=None, fd_order=None), c=c)
-    do_prop('area', _area, dict(epsrel=area_rtol, limit=100, v=1), c=c)
-    do_prop('ingoing_exp', _ingoing_exp, dict(Ns=None, eps=1e-6), c=c)
-    do_prop('avg_ingoing_exp', _avg_ingoing_exp,
-            dict(epsabs='auto', limit='auto'), c=c)
-    if c.num >= min_stability_values:
-        # This code ensures that the stability spectrum is not recomputed
-        # unnecessarily (i.e. when the minimum `min_num` has no effect because
-        # the curve has a higher resolution anyway). Since the property is
-        # recomputed on any argument changes, we set it to its previous
-        # default value in these cases so that it matches the previously
-        # stored value and does not trigger recomputation.
-        min_stability_values = 30 # previous default, has no effect here
-    do_prop('stability', _stability,
-            dict(min_num=min_stability_values, method='direct',
-                 m_terminate_index=m_terminate_index, v=2),
-            slice_normal=True, c=c)
-    do_prop('stability_null', _stability,
-            dict(min_num=min_stability_values, method='direct',
-                 m_terminate_index=m_terminate_index, v=2),
-            slice_normal=False, c=c)
-    do_prop('stability_convergence', _stability_convergence,
-            dict(min_num=min_stability_values,
-                 convergence_factors=stability_convergence_factors,
-                 method='direct', v=2),
+    do_prop('zeta', _zeta, c=c)
+    do_prop('length_maps', _length_maps, c=c)
+    do_prop('constraints', _constraints, c=c)
+    do_prop('area', _area, dict(v=1), c=c)
+    do_prop('ingoing_exp', _ingoing_exp, c=c)
+    do_prop('avg_ingoing_exp', _avg_ingoing_exp, c=c)
+    for prop in ["stability", "stability_null", "stability_convergence",
+                 "stability_convergence_null"]:
+        if c.num >= arg_dict[prop]["min_num"]:
+            # This code ensures that the stability spectrum is not recomputed
+            # unnecessarily (i.e. when the minimum `min_num` has no effect because
+            # the curve has a higher resolution anyway). Since the property is
+            # recomputed on any argument changes, we set it to its previous
+            # default value in these cases so that it matches the previously
+            # stored value and does not trigger recomputation.
+            arg_dict[prop]["min_num"] = 30 # previous default, has no effect here
+    do_prop('stability', _stability, dict(v=2), slice_normal=True, c=c)
+    do_prop('stability_null', _stability, dict(v=2), slice_normal=False, c=c)
+    do_prop('stability_convergence', _stability_convergence, dict(v=2),
             slice_normal=True, c=c, verbose=verbosity > 0)
-    do_prop('stability_convergence_null', _stability_convergence,
-            dict(min_num=min_stability_values,
-                 convergence_factors=stability_convergence_factors,
-                 method='direct', v=2),
+    do_prop('stability_convergence_null', _stability_convergence, dict(v=2),
             slice_normal=False, c=c, verbose=verbosity > 0)
-    do_prop('ricci', _ricci, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
-    do_prop('mean_curv', _mean_curv, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
-    do_prop('curv2', _curv_squared, dict(Ns=None, eps=1e-6, xatol=1e-6), c=c)
-    do_prop('shear', _shear, dict(num=None, eps=1e-6, xatol=1e-6, v=2), c=c)
-    do_prop('shear2_integral', _shear2_integral, dict(n="auto"), c=c)
-    do_prop('shear_scalar', _shear_scalar, dict(lmax="auto"), c=c)
+    do_prop('ricci', _ricci, c=c)
+    do_prop('ricci_interp', _ricci_interp, c=c)
+    do_prop('mean_curv', _mean_curv, c=c)
+    do_prop('curv2', _curv_squared, c=c)
+    do_prop('shear', _shear, dict(v=2), c=c)
+    do_prop('shear2_integral', _shear2_integral, c=c)
+    do_prop('shear_scalar', _shear_scalar, c=c)
     do_prop('point_dists', _point_dists, c=c)
     if hname == 'inner':
-        do_prop('neck', _neck, dict(xtol=1e-6, epsrel=1e-6), c=c)
+        do_prop('neck', _neck, c=c)
         for other_hname, where in zip(['top', 'bot'], ['top', 'bottom']):
             do_prop('z_dist_%s_inner' % other_hname, _z_dist_to_inner,
-                    dict(rtol=1e-5, where=where,
-                         other_run=MOTS_map.get(other_hname, run_name),
+                    dict(other_run=MOTS_map.get(other_hname, run_name),
                          other_hname=other_hname),
                     c=c, out_dir=out_dir)
         do_prop('area_parts', _area_parts_inner,
-                dict(epsrel=area_rtol, limit=100, v=1,
+                dict(v=1,
+                     top_run=MOTS_map.get('top', run_name),
+                     bot_run=MOTS_map.get('bot', run_name)),
+                c=c, out_dir=out_dir)
+        do_prop('ricci_difference_integral', _ricci_difference_integral,
+                dict(v=1,
                      top_run=MOTS_map.get('top', run_name),
                      bot_run=MOTS_map.get('bot', run_name)),
                 c=c, out_dir=out_dir)
     if hname in ('top', 'bot'):
         other_hname = 'bot' if hname == 'top' else 'top'
         do_prop('area_parts', _area_parts_individual,
-                dict(epsrel=area_rtol, limit=100, v=2,
+                dict(v=2,
                      other_run=MOTS_map.get(other_hname, run_name),
                      other_hname=other_hname),
                 c=c, out_dir=out_dir)
-    do_prop('multipoles', _multipoles, dict(max_n=max_multipole_n, v=1), c=c)
+    do_prop('multipoles', _multipoles, dict(v=1), c=c)
     return did_something[0]
+
+
+def _prepare_arg_dict(arg_dict, area_rtol=1e-6, min_stability_values=30,
+                      m_terminate_index=30, max_multipole_n=10,
+                      stability_convergence_factors=(0.2, 0.4, 0.6, 0.8, 0.9, 1.1),
+                      shear_max_lmax=None):
+    r"""Prepare default arguments for all computable properties.
+
+    Note that any existing values of dictionaries contained in `arg_dict` have
+    precedence over the extra arguments like `area_rtol`.
+
+    @param arg_dict
+        Dictionary containing a dictionary for each property. Missing
+        dictionaries are filled with empty ones (plus default values for some
+        options).
+    @param area_rtol
+        Relative tolerance for the area integral. Setting this too low will
+        result in integration warnings being produced and possibly
+        underestimated residual errors.
+    @param min_stability_values
+        Minimum number of MOTS-stability eigenvalues to compute. The default
+        is `30`.
+    @param m_terminate_index
+        Index of the eigenvalue of the `m=0` mode to use to as stopping
+        criterion for the angular mode. Default is `30`.
+        See .curve.expcurve.ExpansionCurve.stability_parameter() for details.
+    @param stability_convergence_factors
+        Factors by which to multiply the resolution used for computing the
+        stability spectrum. Each of the resulting lower or higher resolutions
+        is used to compute the same spectrum, so that convergence of the
+        individual eigenvalues can be examined. Defaults to ``(0.2, 0.4, 0.6,
+        0.8, 0.9, 1.1)``.
+    @param shear_max_lmax
+        Maximum shear mode to compute in case it does not converge earlier.
+        Default is to use the default value in
+        ..curve.expcurve.ExpansionCurve.expand_shear_scalar().
+    """
+    if arg_dict is None:
+        arg_dict = dict()
+    for prop in ALL_PROPS:
+        arg_dict.setdefault(prop, {})
+    arg_dict["area"].setdefault("epsrel", area_rtol)
+    arg_dict["area"].setdefault("limit", 100)
+    arg_dict["stability_convergence"].setdefault(
+        "convergence_factors", stability_convergence_factors
+    )
+    arg_dict["stability_convergence_null"].setdefault(
+        "convergence_factors", stability_convergence_factors
+    )
+    for prop in ["stability", "stability_null", "stability_convergence",
+                 "stability_convergence_null"]:
+        arg_dict[prop].setdefault("min_num", min_stability_values)
+    for prop in ["stability", "stability_null"]:
+        arg_dict[prop].setdefault("m_terminate_index", m_terminate_index)
+        arg_dict[prop].setdefault("method", "direct")
+    arg_dict["dist_top_bot"].setdefault("rtol", 1e-5)
+    arg_dict["dist_top_bot"].setdefault("allow_intersection", True)
+    arg_dict["zeta"].setdefault("num", None)
+    arg_dict["length_maps"].setdefault("num", None)
+    arg_dict["length_maps"].setdefault("accurate", True)
+    arg_dict["constraints"].setdefault("num", None)
+    arg_dict["constraints"].setdefault("fd_order", None)
+    arg_dict["ingoing_exp"].setdefault("Ns", None)
+    arg_dict["ingoing_exp"].setdefault("eps", 1e-6)
+    arg_dict["avg_ingoing_exp"].setdefault("epsabs", "auto")
+    arg_dict["avg_ingoing_exp"].setdefault("limit", "auto")
+    for prop in ["ricci", "mean_curv", "curv2"]:
+        arg_dict[prop].setdefault("Ns", None)
+        arg_dict[prop].setdefault("eps", 1e-6)
+        arg_dict[prop].setdefault("xatol", 1e-6)
+    arg_dict["shear"].setdefault("num", None)
+    arg_dict["shear"].setdefault("eps", 1e-6)
+    arg_dict["shear"].setdefault("xatol", 1e-6)
+    arg_dict["shear2_integral"].setdefault("n", "auto")
+    arg_dict["shear_scalar"].setdefault("lmax", "auto")
+    if shear_max_lmax is not None:
+        arg_dict["shear_scalar"].setdefault("max_lmax", shear_max_lmax)
+    arg_dict["neck"].setdefault("xtol", 1e-6)
+    arg_dict["neck"].setdefault("epsrel", 1e-6)
+    for other_hname, where in zip(['top', 'bot'], ['top', 'bottom']):
+        prop = "z_dist_%s_inner" % other_hname
+        arg_dict[prop].setdefault("rtol", 1e-5)
+        arg_dict[prop].setdefault("where", where)
+    arg_dict["area_parts"].setdefault("epsrel", area_rtol)
+    arg_dict["area_parts"].setdefault("limit", 100)
+    arg_dict["multipoles"].setdefault("max_n", max_multipole_n)
+    return arg_dict
 
 
 def _area(c, v=None, **kw):
@@ -571,6 +675,74 @@ def _area_parts_inner(c, out_dir, top_run, bot_run, v=None, **kw):
     )
 
 
+def _ricci_difference_integral(c, out_dir, top_run, bot_run, v):
+    # pylint: disable=unused-argument
+    r"""Compute the integral of the difference of Ricci scalars between inner
+    and the two individual MOTSs.
+
+    The following properties are prerequisites for computing this one:
+        * `length_maps`
+    """
+    c_top = _interpret_aux_curve(c=c, aux_run=top_run, aux_hname="top",
+                                 out_dir=out_dir)
+    c_bot = _interpret_aux_curve(c=c, aux_run=bot_run, aux_hname="bot",
+                                 out_dir=out_dir)
+    # Prevent loading top/bot metric files
+    with _replace_metric(c_top, c.metric), _replace_metric(c_bot, c.metric), \
+            c.fix_evaluator(), c_top.fix_evaluator(), c_bot.fix_evaluator():
+        lm_inner = c.user_data["length_maps"]["length_map"].evaluator()
+        im_inner = c.user_data["length_maps"]["inv_map"].evaluator()
+        neck = c.user_data['neck']['circumference']['param']
+        area_element = c.get_area_integrand()
+        n = 2 * max(c.num, c_top.num + c_bot.num)
+        def _integrate(a, b, other_curve, a_other=0.0, b_other=np.pi):
+            a_proper = lm_inner(a)
+            b_proper = lm_inner(b)
+            lm_other = other_curve.user_data["length_maps"]["length_map"].evaluator()
+            im_other = other_curve.user_data["length_maps"]["inv_map"].evaluator()
+            params = []
+            params_other = []
+            measure_inner = []
+            ricci_inner = []
+            ricci_other = []
+            def integrand(xs):
+                params[:] = xs
+                integrand_values = []
+                for param in params:
+                    measure_inner.append(area_element(param))
+                    ricci_inner.append(c.ricci_scalar(param))
+                    rel_proper = (lm_inner(param) - a_proper)/(b_proper-a_proper)
+                    param_other = im_other(a_other + rel_proper*(b_other-a_other))
+                    params_other.append(param_other)
+                    ricci_other.append(other_curve.ricci_scalar(param_other))
+                    integrand_values.append(
+                        measure_inner[-1] * (ricci_inner[-1] - ricci_other[-1])
+                    )
+                return integrand_values
+            value = 2*np.pi * _fixed_quad(integrand, a=a, b=b, n=n)
+            params, params_other, measure_inner, ricci_inner, ricci_other = map(
+                np.asarray,
+                [params, params_other, measure_inner, ricci_inner, ricci_other]
+            )
+            ricci_integral = 2*np.pi * _fixed_quad(
+                lambda _: measure_inner*ricci_inner, a=a, b=b, n=n
+            )
+            area = 2*np.pi * _fixed_quad(
+                lambda _: measure_inner, a=a, b=b, n=n
+            )
+            return value, dict(params=params, params_other=params_other,
+                               measure_inner=measure_inner,
+                               ricci_inner=ricci_inner,
+                               ricci_other=ricci_other,
+                               ricci_inner_integral=ricci_integral,
+                               area_inner=area)
+        value1, info1 = _integrate(a=0.0, b=neck, other_curve=c_top)
+        value2, info2 = _integrate(a=neck, b=np.pi, other_curve=c_bot)
+        return dict(value=value1+value2,
+                    value1=value1, info1=info1,
+                    value2=value2, info2=info2)
+
+
 def _data_is_valid(prop, value, args, hname):
     r"""Return whether the current data is valid or should be removed."""
     if prop == 'area_parts' and hname == 'inner':
@@ -647,7 +819,7 @@ def _multipoles(c, max_n, v=None):
     return IntegrationResults(*results, sum_makes_sense=False)
 
 
-def _stability(c, min_num, method, m_terminate_index, slice_normal, v=None):
+def _stability(c, min_num, method, m_terminate_index, slice_normal, v=None, **kw):
     # pylint: disable=unused-argument
     r"""Compute the stability spectrum for the curve.
 
@@ -659,7 +831,7 @@ def _stability(c, min_num, method, m_terminate_index, slice_normal, v=None):
     num = max(min_num, c.num)
     principal, spectrum = c.stability_parameter(
         num=num, m_terminate_index=m_terminate_index,
-        slice_normal=slice_normal, full_output=True
+        slice_normal=slice_normal, full_output=True, **kw
     )
     return _PropResult(
         result=(principal, spectrum.get(l='all', m=0)),
@@ -668,7 +840,7 @@ def _stability(c, min_num, method, m_terminate_index, slice_normal, v=None):
 
 
 def _stability_convergence(c, min_num, convergence_factors, method,
-                           slice_normal, verbose=False, v=None):
+                           slice_normal, verbose=False, v=None, **kw):
     # pylint: disable=unused-argument
     r"""Compute the stability spectrum at different resolutions.
 
@@ -707,7 +879,7 @@ def _stability_convergence(c, min_num, convergence_factors, method,
             print(" x%s(%s)" % (round(factor, 12), num), end='',
                   flush=True)
         principal, spectrum = c.stability_parameter(
-            num=num, m_max=0, slice_normal=slice_normal, full_output=True
+            num=num, m_max=0, slice_normal=slice_normal, full_output=True, **kw
         )
         return principal, spectrum.get(l='all', m=0)
     result = [_compute(f) for f in convergence_factors]
@@ -762,6 +934,18 @@ def _find_extremum(func, pts, eps, xatol, fx=None, domain=(0, np.pi)):
     return x_max, f_max, fx
 
 
+def _ricci_interp(c, num=None, basis_cls="cos"):
+    r"""Expand the Ricci scalar into a Cosine series."""
+    if num is None:
+        num = c.num
+    basis_cls = interpret_basis_class(basis_cls).get_series_cls()
+    with c.fix_evaluator():
+        ricci = basis_cls.from_function(
+            f=c.ricci_scalar, domain=(0, np.pi), num=num, lobatto=False,
+        )
+    return ricci
+
+
 def _shear(c, num, eps, xatol, v=None):
     # pylint: disable=unused-argument
     r"""Compute the shear and shear-square at Chebyshev collocation points.
@@ -802,14 +986,118 @@ def _shear2_integral(c, n):
     )
 
 
-def _shear_scalar(c, lmax):
+def _shear_scalar(c, lmax, **kw):
     r"""Expand the shear scalar into spin weighted spherical harmonics."""
     zeta = c.user_data.get('zeta', None)
     al0, values, ta_space = c.expand_shear_scalar(
-        lmax=lmax, full_output=True, zeta=zeta,
+        lmax=lmax, full_output=True, zeta=zeta, **kw
     )
     return dict(
         ta_space=ta_space, values=values, al0=al0,
+    )
+
+
+def compute_shear_hat_scalar(curve, curves, steps=3, lmax="auto", min_lmax=64,
+                             max_lmax=512, use_user_data=True,
+                             recompute=False, full_output=False,
+                             update_file=False):
+    r"""Expand \f$\hat\sigma_{(\ell)}\f$ into spin weighted spherical harmonics.
+
+    See .curve.expcurve.ExpansionCurve.expand_shear_scalar() for details and the
+    meaning of the parameters.
+    """
+    zeta = curve.user_data.get('zeta', None)
+    def _func(curve, curves, **kw):
+        al0, values, ta_space = curve.expand_shear_scalar(
+            curves=curves, steps=None, lmax=lmax, min_lmax=min_lmax,
+            max_lmax=max_lmax, zeta=zeta, hat=True, full_output=True,
+        )
+        return dict(
+            ta_space=ta_space, values=values, al0=al0,
+        )
+    return _compute_tube_property(
+        _func, kwargs=dict(lmax=lmax, min_lmax=min_lmax, max_lmax=max_lmax),
+        curve=curve, curves=curves, steps=steps, prop="shear_hat_scalar",
+        use_user_data=use_user_data, recompute=recompute, version=1,
+        full_output=full_output, update_file=update_file,
+    )
+
+
+def compute_shear_hat2_integral(curve, curves, steps=3, n="auto",
+                                use_user_data=True, recompute=False,
+                                full_output=False, update_file=False):
+    r"""Integrate \f$|\hat\sigma|^2\f$ over the MOTS.
+
+    See .curve.expcurve.ExpansionCurve.shear_hat_square_integral() for details.
+
+    The following properties are prerequisites for computing this one:
+        * `length_maps`
+        * `tev_divergence`
+    """
+    tevs = curve.user_data["tev_divergence"]["vectors"]
+    def _func(curve, curves, **kw):
+        value = curve.shear_hat_square_integral(tevs=tevs)
+        return dict(value=value)
+    return _compute_tube_property(
+        _func, kwargs=dict(n=n), curve=curve, curves=curves,
+        steps=steps, prop="shear_hat2_integral", use_user_data=use_user_data,
+        recompute=recompute, version=1, full_output=full_output,
+        update_file=update_file,
+    )
+
+
+def compute_xi_hat2_integral(curve, curves, steps=3, n="auto",
+                             use_user_data=True, recompute=False,
+                             full_output=False, update_file=False):
+    r"""Integrate \f$|\hat\xi|^2\f$ over the MOTS.
+
+    See .curve.expcurve.ExpansionCurve.xi_hat_square_integral() for details.
+
+    The following properties are prerequisites for computing this one:
+        * `length_maps`
+        * `tev_divergence`
+    """
+    tevs = curve.user_data["tev_divergence"]["vectors"]
+    def _func(curve, curves, **kw):
+        value = curve.xi_hat_square_integral(tevs, curves=curves, steps=None)
+        return dict(value=value)
+    return _compute_tube_property(
+        _func, kwargs=dict(n=n), curve=curve, curves=curves,
+        steps=steps, prop="xi_hat2_integral", use_user_data=use_user_data,
+        recompute=recompute, version=1, full_output=full_output,
+        update_file=update_file,
+    )
+
+
+def compute_xi_tilde2_integral(curve, curves, steps=3, n="auto",
+                               use_user_data=True, recompute=False,
+                               full_output=False, update_file=False):
+    r"""Integrate \f$|\tilde\xi|^2\f$ over the MOTS.
+
+    We define \f$\tilde\xi^\mu\f$ here as
+    \f[
+        \tilde\xi^\mu = q^{AB} \mathcal{V}^\mu \nabla_\mu \ell_B \,,
+    \f]
+    where \f$\mathcal{V}^\mu\f$ is the slicing-adapted evolution vector. See
+    .curve.expcurve.TimeVectorData() for the difference.
+
+    See .curve.expcurve.ExpansionCurve.xi_hat_square_integral() for details.
+
+    The following properties are prerequisites for computing this one:
+        * `length_maps`
+        * `tev_divergence`
+    """
+    tevs = curve.user_data["tev_divergence"]["vectors"]
+    def _func(curve, curves, **kw):
+        value = curve.compute_xi_square_integral(
+            tevs, curves=curves, steps=None, hat=False, r_hat=False,
+        )
+        return dict(value=value)
+    return _compute_tube_property(
+        _func, kwargs=dict(n=n), curve=curve, curves=curves,
+        steps=steps, prop="xi_tilde2_integral", use_user_data=use_user_data,
+        recompute=recompute, version=1, full_output=full_output,
+        update_file=update_file,
     )
 
 
@@ -892,7 +1180,7 @@ def compute_xi2_integral(curve, curves, steps=3, n="auto", use_user_data=True,
     return _compute_tube_property(
         _func, kwargs=dict(n=n), curve=curve, curves=curves,
         steps=steps, prop="xi2_integral", use_user_data=use_user_data,
-        recompute=recompute, version=1, full_output=full_output,
+        recompute=recompute, version=2, full_output=full_output,
         update_file=update_file,
     )
 
@@ -917,6 +1205,64 @@ def compute_xi_scalar(curve, curves, steps=3, lmax="auto", min_lmax=64,
     return _compute_tube_property(
         _func, kwargs=dict(lmax=lmax, min_lmax=min_lmax, max_lmax=max_lmax),
         curve=curve, curves=curves, steps=steps, prop="xi_scalar",
+        use_user_data=use_user_data, recompute=recompute, version=1,
+        full_output=full_output, update_file=update_file,
+    )
+
+
+def compute_xi_hat_scalar(curve, curves, steps=3, lmax="auto", min_lmax=64,
+                          max_lmax=512, use_user_data=True, recompute=False,
+                          full_output=False, update_file=False):
+    r"""Expand \f$\hat\xi_{(\ell)}\f$ into spin weighted spherical harmonics.
+
+    See .curve.expcurve.ExpansionCurve.expand_xi_scalar() for details and the
+    meaning of the parameters.
+    """
+    zeta = curve.user_data.get('zeta', None)
+    def _func(curve, curves, **kw):
+        al0, values, ta_space = curve.expand_xi_scalar(
+            curves=curves, steps=None, lmax=lmax, min_lmax=min_lmax,
+            max_lmax=max_lmax, zeta=zeta, hat=True, full_output=True,
+        )
+        return dict(
+            ta_space=ta_space, values=values, al0=al0,
+        )
+    return _compute_tube_property(
+        _func, kwargs=dict(lmax=lmax, min_lmax=min_lmax, max_lmax=max_lmax),
+        curve=curve, curves=curves, steps=steps, prop="xi_hat_scalar",
+        use_user_data=use_user_data, recompute=recompute, version=1,
+        full_output=full_output, update_file=update_file,
+    )
+
+
+def compute_xi_tilde_scalar(curve, curves, steps=3, lmax="auto", min_lmax=64,
+                            max_lmax=512, use_user_data=True, recompute=False,
+                            full_output=False, update_file=False):
+    r"""Expand \f$\tilde\xi_{(\ell)}\f$ into spin weighted spherical harmonics.
+
+    We define \f$\tilde\xi^\mu\f$ here as
+    \f[
+        \tilde\xi^\mu = q^{AB} \mathcal{V}^\mu \nabla_\mu \ell_B \,,
+    \f]
+    where \f$\mathcal{V}^\mu\f$ is the slicing-adapted evolution vector. See
+    .curve.expcurve.TimeVectorData() for the difference.
+
+    See .curve.expcurve.ExpansionCurve.expand_xi_scalar() for details and the
+    meaning of the parameters.
+    """
+    zeta = curve.user_data.get('zeta', None)
+    def _func(curve, curves, **kw):
+        al0, values, ta_space = curve.expand_xi_scalar(
+            curves=curves, steps=None, lmax=lmax, min_lmax=min_lmax,
+            max_lmax=max_lmax, zeta=zeta, hat=False, r_hat=False,
+            full_output=True,
+        )
+        return dict(
+            ta_space=ta_space, values=values, al0=al0,
+        )
+    return _compute_tube_property(
+        _func, kwargs=dict(lmax=lmax, min_lmax=min_lmax, max_lmax=max_lmax),
+        curve=curve, curves=curves, steps=steps, prop="xi_tilde_scalar",
         use_user_data=use_user_data, recompute=recompute, version=1,
         full_output=full_output, update_file=update_file,
     )
@@ -1308,32 +1654,27 @@ def _neck(c, xtol, epsrel):
 
 def _dist_top_bot(c, rtol, allow_intersection, other_run, other_hname, out_dir):
     r"""Compute the proper distance of the two individual MOTSs."""
-    c_other = _get_aux_curve(
-        "%s/../../%s/%s" % (out_dir, other_run, other_hname),
-        hname=other_hname,
-        it=c.metric.iteration,
-        disp=False,
-    )
-    if not c_other:
-        raise AuxResultMissing()
-    if c_other.metric.time != c.metric.time:
-        raise RuntimeError("Auxiliary curve not in correct slice.")
+    c_other = _interpret_aux_curve(c=c, aux_run=other_run,
+                                   aux_hname=other_hname, out_dir=out_dir)
     return c.z_distance(c_other, rtol=rtol,
                         allow_intersection=allow_intersection)
 
 
 def _z_dist_to_inner(c, rtol, where, other_run, other_hname, out_dir):
     r"""Compute the proper distance of inner and individual MOTSs."""
-    c_other = _get_aux_curve(
-        "%s/../../%s/%s" % (out_dir, other_run, other_hname),
-        hname=other_hname,
-        it=c.metric.iteration,
-        disp=False,
-    )
-    if not c_other:
-        raise AuxResultMissing()
-    if c_other.metric.time != c.metric.time:
-        raise RuntimeError("Auxiliary curve not in correct slice.")
+    if isinstance(other_run, BaseCurve):
+        c_other = other_run
+    else:
+        c_other = _get_aux_curve(
+            "%s/../../%s/%s" % (out_dir, other_run, other_hname),
+            hname=other_hname,
+            it=c.metric.iteration,
+            disp=False,
+        )
+        if not c_other:
+            raise AuxResultMissing()
+        if c_other.metric.time != c.metric.time:
+            raise RuntimeError("Auxiliary curve not in correct slice.")
     return c.inner_z_distance(c_other, rtol=rtol, where=where)
 
 
@@ -1585,6 +1926,45 @@ def compute_tev_divergence(curve, curves, n="auto", steps=3,
         use_user_data=use_user_data, recompute=recompute, version=1,
         full_output=full_output, update_file=update_file,
     )
+
+
+def _interpret_aux_curve(c, aux_run, aux_hname, out_dir, disp=True):
+    r"""Return an auxiliary curve in the same slice as the given one.
+
+    This returns a previously computed MOTS for horizon `aux_hname` in the
+    same slice as the given curve `c`. The given `aux_run` may also be the
+    curve itself, in which case it is returned without further checks.
+
+    @param c
+        The curve object from which the current iteration and time is used to
+        identify the slice to get the auxiliary curve in.
+    @param aux_run
+        The name of the finder "run" in which the auxiliary curve should be
+        found. May also be a curve object, which in this case is returned
+        immediately without further checks.
+    @param out_dir
+        Path to the folder containing the file for curve `c`.
+    @param disp
+        Whether to raise an error if the curve is either missing or not
+        contained in the same slice. If it is missing, an AuxResultMissing
+        error is raised. Curves in the wrong slice trigger a `RuntimeError`
+        (both only in case `aux_run` is not the curve itself).
+    """
+    if isinstance(aux_run, BaseCurve):
+        c_aux = aux_run
+    else:
+        c_aux = _get_aux_curve(
+            "%s/../../%s/%s" % (out_dir, aux_run, aux_hname),
+            hname=aux_hname,
+            it=c.metric.iteration,
+            disp=False,
+        )
+        if disp:
+            if not c_aux:
+                raise AuxResultMissing()
+            if c_aux.metric.time != c.metric.time:
+                raise RuntimeError("Auxiliary curve not in correct slice.")
+    return c_aux
 
 
 def _get_aux_curve(out_dir, hname, it, disp=True, verbose=False):

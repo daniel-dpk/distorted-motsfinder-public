@@ -50,6 +50,7 @@ def reload_all():
             pass
         """)
     return prefix + _reload_code(
+        "motsfinder.ipyutils.reloading",
         "motsfinder.utils",
         "motsfinder.numutils",
         "motsfinder.lockfile.lockfile",
@@ -67,6 +68,7 @@ def reload_all():
         "motsfinder.ndsolve.bases.base",
         "motsfinder.ndsolve.bases.cheby",
         "motsfinder.ndsolve.bases.trig",
+        "motsfinder.ndsolve.bases",
         "motsfinder.ndsolve.bcs",
         "motsfinder.ndsolve.solver",
         "motsfinder.ndsolve",
@@ -75,7 +77,6 @@ def reload_all():
         "motsfinder.ipyutils.plotting",
         "motsfinder.ipyutils.plotting3d",
         "motsfinder.ipyutils.printing",
-        "motsfinder.ipyutils.reloading",
         "motsfinder.ipyutils",
         "motsfinder.metric.helpers",
         "motsfinder.metric.base",
@@ -83,6 +84,7 @@ def reload_all():
         "motsfinder.metric.analytical.transformed",
         "motsfinder.metric.analytical.simple",
         "motsfinder.metric.analytical.schwarzschildks",
+        "motsfinder.metric.analytical.schwarzschildpg",
         "motsfinder.metric.analytical.kerrks",
         "motsfinder.metric.analytical",
         "motsfinder.metric.discrete.numerical",
@@ -118,5 +120,7 @@ def reload_all():
         "motsfinder.axisym.trackmots.props",
         "motsfinder.axisym.trackmots.tracker",
         "motsfinder.axisym.trackmots",
+        "motsfinder.axisym.shooting.shooting",
+        "motsfinder.axisym.shooting",
         "motsfinder.axisym",
     )

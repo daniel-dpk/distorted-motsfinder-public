@@ -147,13 +147,34 @@ class InverseExpression(NumericExpression):
             raise NotImplementedError("mpmath version not implemented")
         f = _make_callable(self.e)
         fi, domain = self._construct_inverse_function(f)
-        def dfi(y):
+        def d1fi(y):
             x = fi(y)
-            return 1.0/f.diff(x)
-        def ddfi(y):
+            df = f.diff(x)
+            return 1/df
+        def d2fi(y):
             x = fi(y)
-            return -f.diff(x, 2)/f.diff(x)**3
-        e = TrivialEvaluator(self, [fi, dfi, ddfi])
+            df = [0.0] + [f.diff(x, n) for n in range(1, 3)]
+            return -df[2]/df[1]**3
+        def d3fi(y):
+            x = fi(y)
+            df = [0.0] + [f.diff(x, n) for n in range(1, 4)]
+            return -df[3]/df[1]**4 + 3*df[2]**2/df[1]**5
+        def d4fi(y):
+            x = fi(y)
+            df = [0.0] + [f.diff(x, n) for n in range(1, 5)]
+            return -df[4]/df[1]**5 + 10*df[2]*df[3]/df[1]**6 - 15*df[2]**3/df[1]**7
+        def d5fi(y):
+            x = fi(y)
+            df = [0.0] + [f.diff(x, n) for n in range(1, 6)]
+            return (-df[5]/df[1]**6 + 15*df[2]*df[4]/df[1]**7 + 10*df[3]**2/df[1]**7
+                    - 105*df[2]**2*df[3]/df[1]**8 + 105*df[2]**4/df[1]**9)
+        def d6fi(y):
+            x = fi(y)
+            df = [0.0] + [f.diff(x, n) for n in range(1, 7)]
+            return (-df[6]/df[1]**7 + 21*df[2]*df[5]/df[1]**8 + 35*df[3]*df[4]/df[1]**8
+                    - 210*df[2]**2*df[4]/df[1]**9 - 280*df[2]*df[3]**2/df[1]**9
+                    + 1260*df[2]**3*df[3]/df[1]**10 - 945*df[2]**5/df[1]**11)
+        e = TrivialEvaluator(self, [fi, d1fi, d2fi, d3fi, d4fi, d5fi, d6fi])
         e.domain = domain
         return e
 

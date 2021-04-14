@@ -20,12 +20,6 @@ __all__ = [
 ]
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
-
-
 class SioScalarField(DiscreteScalarField):
     r"""Represents an axisymmetric scalar field with one component."""
 

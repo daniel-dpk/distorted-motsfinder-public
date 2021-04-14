@@ -41,12 +41,6 @@ from .numerical import GridDataError, interpolate, fd_xz_derivatives
 __all__ = []
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
-
-
 class BBox():
     r"""Bounding box for index ranges of matrix patches.
 
@@ -363,6 +357,16 @@ class DataPatch(GridPatch):
     def fd_order(self, order):
         r"""Current order of finite difference differentiation."""
         self._fd_order = order
+
+    @property
+    def safe_domain(self):
+        r"""Domain within which interpolation and differentiation is possible."""
+        (xmin, xmax), (ymin, ymax), (zmin, zmax) = self.domain
+        xmax -= (1 + self.fd_order/2) * self.dx_norm
+        zmin += (1 + self.fd_order/2) * self.dx_norm
+        zmax -= (1 + self.fd_order/2) * self.dx_norm
+        # We can mirror the data across x=0.
+        return [-xmax, xmax], [ymin, ymax], [zmin, zmax]
 
     def set_interpolation(self, interpolation):
         r"""Change the kind of interpolation to do between grid points.

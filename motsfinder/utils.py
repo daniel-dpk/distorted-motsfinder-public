@@ -91,10 +91,33 @@ def isiterable(obj):
     to check for.
     """
     try:
-        _ = iter(obj)
+        iter(obj)
     except TypeError:
         return False
     return True
+
+
+def cmp_versions(version1, version2):
+    r"""Compare two version strings losely.
+
+    The strings are split at "." and the corresponding parts compared as
+    integers. Non-integers count as 0. This allows a rough version comparison
+    like ``cmp_versions(mpl.__version__, "3.0")``. Optionally, either version
+    can be a list to skip the conversion step.
+
+    @return `-1` if `version1` is smaller than `version2`, `1` if it's larger,
+        and 0 if both are equal (within the lose comparison).
+    """
+    def ii(x):
+        try:
+            return int(x)
+        except:
+            return 0
+    if isinstance(version1, str):
+        version1 = list(map(ii, version1.split(".")))
+    if isinstance(version2, str):
+        version2 = list(map(ii, version2.split(".")))
+    return 0 if version1 == version2 else -1 if version1 < version2 else 1
 
 
 def get_chunks(items, chunksize):
@@ -245,11 +268,14 @@ def merge_dicts(*dicts):
 
     Note that only shallow copies are made of the dicts.
 
-    Example:
+    @b Examples
+
+    ```
         a = dict(a=1, b=2, c=3)
         b = dict(c=-3, d=-4)
         c = merge_dicts(a, b)
         # Result: dict(a=1, b=2, c=-3, d=-4)
+    ```
     """
     result = {}
     for d in dicts:
@@ -344,17 +370,18 @@ def printoptions(*args, **kwargs):
 def timethis(start_msg=None, end_msg="Elapsed time: {}", silent=False, eol=True):
     r"""Context manager for timing code execution.
 
-    Args:
-        start_msg: String to print at the beginning. May contain the
-            placeholder ``'{now}'``, which will be replaced by the current
-            date and time. A value of `True` will be taken to mean
-            ``"Started: {now}``.
-        end_msg: String to print after execution. Default is
-            ``"Elapsed time: {}"``.
-        silent: Whether to print anything at all. May be useful when a
-            function has a verbosity setting to conditionally time its results.
-        eol: Whether to print a newline after each message. May be useful to
-            print execution time in line with the starting message.
+    @param start_msg
+        String to print at the beginning. May contain the placeholder
+        ``'{now}'``, which will be replaced by the current date and time. A
+        value of `True` will be taken to mean ``"Started: {now}``.
+    @param end_msg
+        String to print after execution. Default is ``"Elapsed time: {}"``.
+    @param silent
+        Whether to print anything at all. May be useful when a function has a
+        verbosity setting to conditionally time its results.
+    @param eol
+        Whether to print a newline after each message. May be useful to print
+        execution time in line with the starting message.
     """
     if silent:
         yield

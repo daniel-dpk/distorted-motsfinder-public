@@ -6,7 +6,7 @@ The implementation here uses the formulas derived in
 \ref thornburg2003_1 "[1]". Specifically, we make heavy use of the quantities
 `A, B, C, D` defined in \ref thornburg2003_1 "[1]" in equation (12) to compute
 the expansion \f$ \Theta \f$ using equation (11). See also
-\ref pookkolb2018_1 "[2]" and the docstrings of the individual procedures.
+\ref pookkolb2018 "[2]" and the docstrings of the individual procedures.
 
 In the base class ExpansionCalc defined in this module, we do not consider how
 the used quantities \f$ s_i \f$ and \f$ \partial_i s_j \f$ are obtained. This
@@ -34,7 +34,7 @@ refparamcurve._RefParamExpansionCalc.
     for three-dimensional Cartesian grids in numerical relativity." Classical
     and quantum gravity 21.2 (2003): 743.
 
-\anchor pookkolb2018_1 [2] D. Pook-Kolb, O. Birnholtz, B. Krishnan and E.
+\anchor pookkolb2018 [2] D. Pook-Kolb, O. Birnholtz, B. Krishnan and E.
     Schnetter, "The existence and stability of marginally trapped surfaces."
     arXiv:1811.10405 [gr-qc].
 """
@@ -54,12 +54,6 @@ from ...metric import riemann_components
 
 
 __all__ = []
-
-
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
 
 
 @add_metaclass(ABCMeta)
@@ -1158,16 +1152,18 @@ class _FuncVariation(object):
     def __init__(self, f, diff, eps=0):
         r"""Create a callable and modify one derivative order.
 
-        Args:
-            f: Callable that should also implement `f.diff()`, e.g. an
-                evaluator of the motsfinder.exprs system.
-            diff: Derivative order of `f` to modify. `0` means that `eps` will
-                be added to any function value computed by `f` but not to
-                derivatives. A value of ``n>0`` means that `f` and all its
-                derivatives are returned "as is", except for the n'th
-                derivative to which the value of `eps` will be added.
-            eps: Value to add to the results of computing the `diff`'th
-                derivative of `f`.
+        @param f
+            Callable that should also implement `f.diff()`, e.g. an evaluator
+            of the motsfinder.exprs system.
+        @param diff
+            Derivative order of `f` to modify. `0` means that `eps` will be
+            added to any function value computed by `f` but not to
+            derivatives. A value of ``n>0`` means that `f` and all its
+            derivatives are returned "as is", except for the n'th derivative
+            to which the value of `eps` will be added.
+        @param eps
+            Value to add to the results of computing the `diff`'th derivative
+            of `f`.
         """
         ## The function to wrap.
         self._f = f

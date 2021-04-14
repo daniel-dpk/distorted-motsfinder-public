@@ -99,7 +99,8 @@ class RefParamCurve(ExpansionCurve):
             return super(RefParamCurve, self).__getstate__()
 
     @staticmethod
-    def from_curve(ref_curve, offset_coeffs=(), num=None, **kw):
+    def from_curve(ref_curve, offset_coeffs=(), num=None, cls=CosineSeries,
+                   **kw):
         r"""Static method to create a curve from a reference curve.
 
         This method can be used to create a RefParamCurve from a given
@@ -127,6 +128,9 @@ class RefParamCurve(ExpansionCurve):
             to take the current resolution of the reference curve. If smaller
             than the number of given `offset_coeffs`, trailing coefficients
             will be ignored.
+        @param cls
+            Series class for expanding the horizon function in. Default is
+            `CosineSeries`.
         @param **kw
             Further keyword arguments supplied to the RefParamCurve
             constructor. This may be used to explicitly specify the metric
@@ -134,7 +138,7 @@ class RefParamCurve(ExpansionCurve):
         """
         if num is None:
             num = ref_curve.num
-        h = CosineSeries(offset_coeffs, domain=(0, np.pi))
+        h = cls(offset_coeffs, domain=(0, np.pi))
         curve = RefParamCurve(h, ref_curve, **kw)
         curve.resample(num)
         return curve

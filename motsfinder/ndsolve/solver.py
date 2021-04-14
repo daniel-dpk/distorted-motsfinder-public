@@ -13,8 +13,11 @@ The pseudospectral method is described in detail in [1] and [2].
 @b Examples
 
 Solving the following equation on the interval \f$ (1/2, 2) \f$
-\f[ f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x) \f]
-with boundary conditions \f[
+\f[
+    f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+\f]
+with boundary conditions
+\f[
     f(1/2) = \exp(-a\cos(b/2)), \quad f(2) = \exp(-a\cos(2b))
 \f]
 
@@ -97,25 +100,29 @@ class NDSolver(object):
                  dps=None, mat_solver='scipy.solve'):
         r"""Initialize the spectral solver.
 
-        Args:
-            eq: Definition of the differential equation. This should either be
-                a 2-tuple containing the operator coefficient functions as
-                first element and the inhomogeneity function or scalar as
-                second, or a callable which evaluates all operator coefficient
-                functions and the inhomogeneity at a given set of points.
-                See ndsolve() for more information.
-            basis: The spectral basis into which the solution should be expanded.
-            boundary_conditions: An optional list of RobinCondition objects
-                (or sub classes) imposing any desired conditions.
-            use_mp: Whether to use arbitrary precision math operations
-                (`True`) or faster floating point precision operations
-                (`False`, default).
-            dps: In case of ``use_mp==True``, this defines the number of
-                decimal places to do the operations with. Default is to use
-                the current global precision.
-            mat_solver: Matrix solver method to use. If an mpmath method is
-                chosen and ``use_mp==True``, the whole problem is solved using
-                arbitrary precision operations. See ndsolve() for available solvers.
+        @param eq
+            Definition of the differential equation. This should either be a
+            2-tuple containing the operator coefficient functions as first
+            element and the inhomogeneity function or scalar as second, or a
+            callable which evaluates all operator coefficient functions and
+            the inhomogeneity at a given set of points. See ndsolve() for more
+            information.
+        @param basis
+            The spectral basis into which the solution should be expanded.
+        @param boundary_conditions
+            An optional list of RobinCondition objects (or sub classes)
+            imposing any desired conditions.
+        @param use_mp
+            Whether to use arbitrary precision math operations (`True`) or
+            faster floating point precision operations (`False`, default).
+        @param dps
+            In case of ``use_mp==True``, this defines the number of decimal
+            places to do the operations with. Default is to use the current
+            global precision.
+        @param mat_solver
+            Matrix solver method to use. If an mpmath method is chosen and
+            ``use_mp==True``, the whole problem is solved using arbitrary
+            precision operations. See ndsolve() for available solvers.
         """
         self._mat_solver = mat_solver
         self._basis = basis
@@ -367,16 +374,22 @@ def ndsolve(eq, basis, boundary_conditions=None, use_mp=False, dps=None,
             f = solution.evaluator()
             y = f(2.5)
 
+
     @b Examples
 
     Solving the following equation on the interval \f$ (1/2, 2) \f$
-    \f[  f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)  \f]
+    \f[
+        f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+    \f]
     with boundary conditions
-    \f[  f(1/2) = \exp(-a\cos(b/2)), \quad f(2) = \exp(-a\cos(2b))  \f]
+    \f[
+        f(1/2) = \exp(-a\cos(b/2)), \quad f(2) = \exp(-a\cos(2b))
+    \f]
 
     The exact solution is \f$ f(x) = \exp(-a\cos(b x)) \f$. The numerical
     solution can be obtained via:
 
+    ```
         sol = ndsolve(
             eq=((lambda x: -a*b**2*cos(b*x), lambda x: -a*b*sin(b*x), 1), 0),
             basis=ChebyBasis(domain=(0.5, 2), num=50),
@@ -385,24 +398,26 @@ def ndsolve(eq, basis, boundary_conditions=None, use_mp=False, dps=None,
                 DirichletCondition(x=2, value=exp(-a*cos(2*b))),
             )
         )
-
+    ```
 
     An equation with the same boundary conditions and solution, but with an
     inhomogeneity is
-    \f[  f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) \exp(-a\cos(b x))  \f]
+    \f[
+        f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) \exp(-a\cos(b x))
+    \f]
 
     The numerical solution is obtained via:
 
     ```
-    inhom = lambda x: a*b**2*cos(b*x)*exp(-a*cos(b*x))
-    sol = ndsolve(
-        eq=((0, lambda x: -a*b*sin(b*x), 1), inhom),
-        basis=ChebyBasis(domain=(0.5, 2), num=50),
-        boundary_conditions=(
-            DirichletCondition(x=0.5, value=exp(-a*cos(b/2))),
-            DirichletCondition(x=2, value=exp(-a*cos(2*b))),
+        inhom = lambda x: a*b**2*cos(b*x)*exp(-a*cos(b*x))
+        sol = ndsolve(
+            eq=((0, lambda x: -a*b*sin(b*x), 1), inhom),
+            basis=ChebyBasis(domain=(0.5, 2), num=50),
+            boundary_conditions=(
+                DirichletCondition(x=0.5, value=exp(-a*cos(b/2))),
+                DirichletCondition(x=2, value=exp(-a*cos(2*b))),
+            )
         )
-    )
     ```
     """
     solver = NDSolver(eq, basis, boundary_conditions, use_mp, dps, mat_solver)

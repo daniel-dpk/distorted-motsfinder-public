@@ -17,12 +17,6 @@ __all__ = [
 ]
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
-
-
 class ConstraintAnalyzer():
     r"""Collection of convenience methods to check constraint violations near
     a surface.

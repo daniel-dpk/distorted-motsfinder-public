@@ -20,12 +20,6 @@ __all__ = [
 ]
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
-
-
 # 1-D finite difference coefficients for first derivatives
 COEFFS_1ST = [
     np.array([                  -1., 0.,   1.                 ]) /   2., # order=2
@@ -350,7 +344,7 @@ def eval_sym_axisym_matrix(comp_funcs, *lower_orders, point, diff=0):
         Tz = np.array([[T00z, T01z, T02z],
                        [T01z, T11z, T12z],
                        [T02z, T12z, T22z]])
-        Ty = _get_Ty(point, T)
+        Ty = _get_Ty(point, T, dTdx=Tx)
         return np.asarray([Tx, Ty, Tz])
     if diff == 2:
         T, dT = lower_orders
@@ -430,7 +424,7 @@ def _get_Vxy_Vyy_Vyz(point, V, dV):
     return Vxy, Vyy, Vyz
 
 
-def _get_Ty(point, T):
+def _get_Ty(point, T, dTdx=None):
     r"""Compute the y-derivative of matrix T in x-z-plane assuming axisymmetry.
 
     Here, `T = (T_ij)` is a matrix-valued function (covariant tensor field).
@@ -440,7 +434,19 @@ def _get_Ty(point, T):
     x = point[0]
     T = np.asarray(T)
     if x == 0:
-        return nan_mat(T.shape)
+        # From the symmetries of an axisymmetric tensor in Cartesian
+        # coordinates, some components are trivially zero:
+        #   \partial_y {Txx, Tyy, Tzz, Txy} = 0
+        # For the remaining components Txz, Tyz we use L'Hospital's rule.
+        if dTdx is None:
+            return nan_mat(T.shape)
+        dy_Txz = -dTdx[1,2]
+        dy_Tyz = dTdx[0,2]
+        return np.array([
+            [0.0,    0.0,    dy_Txz],
+            [0.0,    0.0,    dy_Tyz],
+            [dy_Txz, dy_Tyz, 0.0],
+        ])
     return np.array([[-2*T[0,1]/x,       (T[0,0]-T[1,1])/x, -T[1,2]/x],
                      [(T[0,0]-T[1,1])/x, 2*T[0,1]/x,        T[0,2]/x],
                      [-T[1,2]/x,         T[0,2]/x,          0.]])

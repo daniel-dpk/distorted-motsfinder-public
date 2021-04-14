@@ -16,10 +16,8 @@ __all__ = [
 ]
 
 
-# It is customary to denote indices of tensors without spaces, e.g.:
-#   T_{ijk}  =>  T[i,j,k]
-# We disable the respective pylint warning for this file.
-# pylint: disable=bad-whitespace
+# Pylint incorrectly infers the return type of some numpy functions.
+# pylint: disable=invalid-unary-operand-type
 
 
 class StabilityCalc():
@@ -89,6 +87,7 @@ class StabilityCalc():
         self._q_inv = None
         self._shear = None
         self._xi_A = None
+        self._xi_A_r_hat = None
 
     @property
     def has_transformation(self):
@@ -346,8 +345,7 @@ class StabilityCalc():
 
         Computes \f$\partial_a\partial_b \ell^c\f$, where
         \f$a,b,c\in\{t,x,y,z\}\f$. If the transformation \f$\exp(\sigma)\f$ is
-        given, computes
-        \f$\partial_a\partial_b \left(\exp(\sigma)\ell^c\right)\f$.
+        given, computes \f$\partial_a\partial_b \left(\exp(\sigma)\ell^c\right)\f$.
         """
         if not self.has_transformation:
             return self._ddl_orig
@@ -861,7 +859,7 @@ class StabilityCalc():
         )
         return kappa
 
-    def xi_vector(self, dt_normal, tev, up=True):
+    def xi_vector(self, dt_normal, tev, up=True, r_hat=True):
         r"""Compute the xi vector.
 
         See .expcurve.ExpansionCurve.xi_vector() for the definition of the
@@ -878,31 +876,45 @@ class StabilityCalc():
         @param up
             Whether to return \f$\xi^A\f$ (`True`) or \f$\xi_A\f$ (`False`).
             Default is `True`.
+        @param r_hat
+            Whether to compute \f$\xi^A\f$ with the normalized vector
+            \f$\hat r^\mu := V^\mu/|V|\f$ or with the slicing-adapted evolution
+            vector \f$\mathcal{V}^\mu\f$ (see .curve.expcurve.TimeVectorData()
+            for the difference). Default is `True`, i.e. to use the normalized
+            vector.
         """
-        if self._xi_A is None:
+        xi_A = self._xi_A_r_hat if r_hat else self._xi_A
+        if xi_A is None:
             nabla_m_ell_n = self.nabla_m_ell_n(dt_normal) / np.sqrt(2)
-            V = tev.V_tilde
-            V = V / np.sqrt(abs(self.g4.dot(V).dot(V)))
+            if r_hat:
+                V = tev.V_tilde
+                V = V / np.sqrt(abs(self.g4.dot(V).dot(V)))
+            else:
+                V = tev.V_B
             # \chi_\nu = V^\rho \nabla_\rho \ell_\nu
             chi_n = np.einsum('r,rn->n', V, nabla_m_ell_n)
             # \xi_A = x^i_{,A} \chi_i, shape=(2,)
-            self._xi_A = np.einsum('Ai,i->A', self.dux3, chi_n[1:])
+            xi_A = np.einsum('Ai,i->A', self.dux3, chi_n[1:])
+            if r_hat:
+                self._xi_A_r_hat = xi_A
+            else:
+                self._xi_A = xi_A
         if up:
-            return self.q_inv.dot(self._xi_A)
-        return self._xi_A
+            return self.q_inv.dot(xi_A)
+        return xi_A
 
-    def xi_squared(self, dt_normal, tev):
+    def xi_squared(self, dt_normal, tev, r_hat=True):
         r"""Compute the square \f$\xi^A\xi_A\f$ of the xi vector."""
-        xi_A = self.xi_vector(dt_normal, tev, up=False)
-        xi_A_up = self.xi_vector(dt_normal, tev, up=True)
+        xi_A = self.xi_vector(dt_normal, tev, up=False, r_hat=r_hat)
+        xi_A_up = self.xi_vector(dt_normal, tev, up=True, r_hat=r_hat)
         return xi_A.dot(xi_A_up)
 
-    def xi_scalar(self, dt_normal, tev):
+    def xi_scalar(self, dt_normal, tev, r_hat=True):
         r"""Compute a complex scalar representing the xi vector.
 
         See .expcurve.ExpansionCurve.expand_xi_scalar() for details.
         """
-        xi_A = self.xi_vector(dt_normal, tev, up=False)
+        xi_A = self.xi_vector(dt_normal, tev, up=False, r_hat=r_hat)
         q = self.calc.induced_metric()
         return 1/np.sqrt(2) * (
             xi_A[0] / np.sqrt(q[0, 0])
@@ -1227,7 +1239,7 @@ class StabilitySpectrum():
             if self.is_value_real(v):
                 return "%g" % v.real
             return "(%g%s%gj)" % (
-                v.real, "+-"[v.imag >= 0], v.imag
+                v.real, "+-"[v.imag < 0], abs(v.imag)
             )
         msg = "Principal eigenvalue: %s\n" % self.principal.real
         msg += "Computed spectrum:\n"

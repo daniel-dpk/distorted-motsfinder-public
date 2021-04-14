@@ -112,16 +112,15 @@ class NumericExpression(object):
         They are used when traversing through a complete expression hierarchy
         in e.g. print_tree() or traverse_tree().
 
-        Args:
-            domain: (various, optional)
-                Domain to store for this expression.
-            name: (string, optional)
-                Name for the expression. Can be useful to label expressions in
-                a more complex expression tree to indicate their role/meaning.
-                By default, the current class name is used as name.
-            verbosity: (int, optional)
-                Verbosity to be used by child classes through the `verbosity`
-                attribute. Default is `1`.
+        @param domain (various, optional)
+            Domain to store for this expression.
+        @param name (string, optional)
+            Name for the expression. Can be useful to label expressions in
+            a more complex expression tree to indicate their role/meaning.
+            By default, the current class name is used as name.
+        @param verbosity (int, optional)
+            Verbosity to be used by child classes through the `verbosity`
+            attribute. Default is `1`.
 
         """
         self.__verbosity = verbosity
@@ -176,13 +175,14 @@ class NumericExpression(object):
         parents (as a list from root to immediate parent), its key under which
         it is stored in its parent, and the node itself.
 
-        Args:
-            include_root: Whether to include the root as first item. Default
-                is `False`.
-            skip_zeros: Whether to skip zero (i.e. unused) sub expressions.
-                Default is `False`.
-            parents: Optional list of parents of the root. Normally only used
-                internally for the recursion.
+        @param include_root
+            Whether to include the root as first item. Default is `False`.
+        @param skip_zeros
+            Whether to skip zero (i.e. unused) sub expressions. Default is
+            `False`.
+        @param parents
+            Optional list of parents of the root. Normally only used
+            internally for the recursion.
 
         @b Examples
         \code
@@ -210,11 +210,13 @@ class NumericExpression(object):
         Each expression's key under which it is stored as sub expression will
         be shown as well as its actual name and the class name.
 
-        Args:
-            root_name: Key name to print for the root expression.
-            nice_names: Whether to use the nice more descriptive name (when
-                implemented) or the usually shorter abstract names.
-            skip_zeros: Whether to skip zero (i.e. unused) sub expressions.
+        @param root_name
+            Key name to print for the root expression.
+        @param nice_names
+            Whether to use the nice more descriptive name (when implemented)
+            or the usually shorter abstract names.
+        @param skip_zeros
+            Whether to skip zero (i.e. unused) sub expressions.
         """
         def _p(expr, name, parents=()):
             n = expr.nice_name if nice_names else expr.name
@@ -228,14 +230,15 @@ class NumericExpression(object):
     def save(self, filename, overwrite=False, verbose=True):
         r"""Save the expression object to disk.
 
-        Args:
-            filename: The file name to store the data in. An extension
-                ``'.npy'`` will be added if not already there.
-            overwrite: Whether to overwrite an existing file with the same
-                name. If `False` (default) and such a file exists, a
-                `RuntimeError` is raised.
-            verbose: Whether to print when the file was written. Default is
-                `True`.
+        @param filename
+            The file name to store the data in. An extension ``'.npy'`` will
+            be added if not already there.
+        @param overwrite
+            Whether to overwrite an existing file with the same name. If
+            `False` (default) and such a file exists, a `RuntimeError` is
+            raised.
+        @param verbose
+            Whether to print when the file was written. Default is `True`.
         """
         save_to_file(
             filename, self, overwrite=overwrite, verbose=verbose,
@@ -277,12 +280,11 @@ class NumericExpression(object):
         arithmetics, except for one very expensive expression which should use
         floating point arithmetics.
 
-        Args:
-            use_mp: (``{None, True, False}``)
-                If `None`, don't override the evaluation mode and create
-                evaluators with the requested mode. If `True` or `False`,
-                ignore the requested evaluation mode when creating an
-                evaluator and use the value set here.
+        @param use_mp (``{None, True, False}``)
+            If `None`, don't override the evaluation mode and create
+            evaluators with the requested mode. If `True` or `False`,
+            ignore the requested evaluation mode when creating an
+            evaluator and use the value set here.
         """
         self._force_evaluation_mode = use_mp
 
@@ -293,11 +295,11 @@ class NumericExpression(object):
         arithmetics (for `False`) or arbitrary precision mpmath computations
         (for `True`). Default is `False`.
 
-        Args:
-            use_mp: Boolean indicating whether the evaluator should use
-                `mpmath` math operations or standard (and faster) floating
-                point operations. This may be ignored if
-                force_evaluation_mode() has been used to override this setting.
+        @param use_mp
+            Boolean indicating whether the evaluator should use `mpmath` math
+            operations or standard (and faster) floating point operations.
+            This may be ignored if force_evaluation_mode() has been used to
+            override this setting.
         """
         if self._force_evaluation_mode is not None:
             use_mp = self._force_evaluation_mode
@@ -387,9 +389,10 @@ class NumericExpression(object):
         based on the choice of `use_mp` and configure the desired decimal
         places.
 
-        Args:
-            use_mp: Whether to use `mp` (if `True`) or `fp`.
-            dps:    Decimal places to use in `mp` computations.
+        @param use_mp
+            Whether to use `mp` (if `True`) or `fp`.
+        @param dps
+            Decimal places to use in `mp` computations.
         """
         ctx = cls.mpmath_context(use_mp)
         if not use_mp or dps is None:
@@ -443,16 +446,20 @@ class SimpleExpression(NumericExpression):
     def __init__(self, fp_terms, mp_terms, desc, domain=None, name=None):
         r"""Init function.
 
-        Args:
-            fp_terms: List or callable for the floating point implementations
-                    of the various supported derivative orders. See the class
-                    description or the examples basics.SinSquaredExpression
-                    and basics.SimpleSinExpression for details.
-            mp_terms: Same as `fp_terms`, but for the `mpmath` implementations.
-            desc:   Abstract description/name of the kind of expression. This
-                    is used when printing the expression.
-            domain: Optional domain of the expression.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param fp_terms
+            List or callable for the floating point implementations of the
+            various supported derivative orders. See the class description or
+            the examples basics.SinSquaredExpression and
+            basics.SimpleSinExpression for details.
+        @param mp_terms
+            Same as `fp_terms`, but for the `mpmath` implementations.
+        @param desc
+            Abstract description/name of the kind of expression. This is used
+            when printing the expression.
+        @param domain
+            Optional domain of the expression.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(SimpleExpression, self).__init__(domain=domain, name=name)
         self._desc = desc

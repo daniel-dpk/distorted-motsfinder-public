@@ -35,15 +35,10 @@ This following gets rendered correctly:
 
 ## What this Script does
 
-This script reads from `stdin` and prints to `stdout`, i.e. you'd pipe this
-after `doxypypy` in your filter command.
-
-It does *not* fix all the problems mentioned above (a re-implementation of
-`doxypypy` would probably be the easiest solution). However, a few of the
-layout related and code-block problems are mitigated by removing the excessive
-indentation that `doxypypy` keeps in its output. This is done by finding the
-common minimum indentation of a Doxygen comment block created by `doxypypy`
-and replacing it by one space only.
+This script loads the `doxypypy` module and patches it to remove some of the
+features which lead to the above problems. The produced output is then
+transformed again to fix code-block detections. Finally, the generated code is
+printed to `stdout`.
 
 For example, consider the following docstring
 
@@ -51,32 +46,71 @@ For example, consider the following docstring
         def foo(self):
             r'''Brief description.
 
-            Long description.
-            '''
+            Some equation:
+            \f[
+                f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+            \f]
 
-Doxypypy converts this to:
+            Code example:
+
+                def my_foo(x):
+                    return 1 - 2*x
+
+            A sentence that ends with two words separated by a comma on a single
+            line, etc.
+            '''
+            pass
+
+Doxypypy on its own converts this to:
 
     class MyClass():
         ## @brief Brief description.
         #
-        #        Long description.
+        #       Some equation:
+        #       \f[
+        # f a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+        #       \f]
+        #
+        #       Code example:
+        #
+        #           def my_foo(x):
+        # return    2*x
+        #
+        #       A sentence that ends with two words separated by a comma on a single
+        # line
+        # etc.
         #
         def foo(self):
             pass
 
-This script then translates this to:
+This script instead produces:
 
     class MyClass():
         ## @brief Brief description.
         #
-        # Long description.
+        # Some equation:
+        # \f[
+        #     f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+        # \f]
+        #
+        # Code example:
+        #
+        #     def my_foo(x):
+        #         return 1 - 2*x
+        #
+        # A sentence that ends with two words separated by a comma on a single
+        # line, etc.
         #
         def foo(self):
             pass
 """
 
+from contextlib import redirect_stdout
+from io import StringIO
 import sys
 import re
+
+from doxypypy import doxypypy
 
 
 class DoxyCommentBlock():
@@ -175,9 +209,36 @@ class DoxyCommentBlock():
 
 
 def main():
-    r"""Read from stdin, fix comment block, and print to stdout."""
+    r"""Perform a (patched) doxypypy run and then fix comment blocks."""
+
+    # Patch the AstWalker class to remove heuristically detecting "args"
+    # constructs (which often misbehave at unexpected places) and the
+    # automatic "list" detection (which misbehaves equally). Ideally, doxypypy
+    # should have flags to disable these two features.
+    never_match = re.compile(r"(?!a)a")
+    doxypypy.AstWalker._AstWalker__argsRE = never_match
+    doxypypy.AstWalker._AstWalker__listRE = never_match
+
+    strout = StringIO()
+    error = None
+    with redirect_stdout(strout):
+        try:
+            doxypypy.main()
+        except SystemExit:
+            error = True
+        except:
+            error = "Error: %s" % sys.exc_info()[0]
+    out = strout.getvalue()
+    if error:
+        print(out)
+        if error is not True:
+            print(error)
+        sys.exit()
+    lines = out.rstrip('\r\n').split('\n')
+
+    # Perform additional clean-up after doxypypy had its go.
     doxy_block = DoxyCommentBlock()
-    for line in sys.stdin:
+    for line in lines:
         line = line.rstrip('\r\n')
         if doxy_block.in_block:
             if doxy_block.ends_block(line):

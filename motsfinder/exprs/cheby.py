@@ -114,10 +114,10 @@ if evaluate_Tn_double is None:
 def force_pure_python(pure_python=True):
     r"""Toggle during runtime which implementation of evaluate_Tn() to use.
 
-    Args:
-        pure_python: If `True`, switch to the pure Python implementation. If
-                `False`, try to use the Cython implementation but don't fail
-                if it is not available.
+    @param pure_python
+        If `True`, switch to the pure Python implementation. If `False`, try
+        to use the Cython implementation but don't fail if it is not
+        available.
 
     Returns:
         `True` if the requested implementation could be selected, `False` otherwise.
@@ -143,15 +143,14 @@ def evaluate_Tn(x, Tn, use_mp):
     or may not be modified, so it is best to assign the returned value to
     `Tn` afterwards.
 
-    Args:
-        x: (float or mp.mpf)
-            Argument at which to evaluate the `T_n`. Must lie in the interval
-            `[-1,1]`.
-        Tn: (list or numpy array)
-            The list to possibly modify. The number of elements in this list
-            determines the number of Chebyshev polynomials evaluated.
-        use_mp: (boolean, optional)
-            Whether to use `mpmath` computations.
+    @param x (float or mp.mpf)
+        Argument at which to evaluate the `T_n`. Must lie in the interval
+        `[-1,1]`.
+    @param Tn (list or numpy array)
+        The list to possibly modify. The number of elements in this list
+        determines the number of Chebyshev polynomials evaluated.
+    @param use_mp (boolean, optional)
+        Whether to use `mpmath` computations.
 
     Returns:
         The Chebyshev polynomials evaluated at `x` as `list` or numpy array.
@@ -177,15 +176,14 @@ def diff(a_n, use_mp, scale):
         u'(x) = \sum_n b_n T_n(x).
     \f]
 
-    Args:
-        a_n: (iterable)
-            Coefficients of the original function.
-        use_mp: (boolean, optional)
-            Whether to use `mpmath` computations.
-        scale: (float or mp.mpf)
-            Each coefficient will be multiplied with this scaling factor. This
-            can be used to account for a physical domain `[a,b]` which is
-            different from `[-1,1]`.
+    @param a_n (iterable)
+        Coefficients of the original function.
+    @param use_mp (boolean, optional)
+        Whether to use `mpmath` computations.
+    @param scale (float or mp.mpf)
+        Each coefficient will be multiplied with this scaling factor. This
+        can be used to account for a physical domain `[a,b]` which is
+        different from `[-1,1]`.
 
     Returns:
         Coefficients of the derivative of the function as a `list`.
@@ -235,19 +233,21 @@ class Cheby(SeriesExpression):
     def __init__(self, a_n, domain=(-1, 1), symmetry=None, name=None):
         r"""Create a truncated Chebyshev series expression.
 
-        Args:
-            a_n:    (iterable) The coefficients of the polynomials. May be
-                    empty to indicate a zero function.
-            domain: (2-tuple/list) The domain of this expression. The
-                    Chebyshev polynomials are defined on `[-1,1]`. Specifying
-                    a different domain will map it to this domain, while also
-                    ensuring that derivatives take into account this
-                    coordinate change.
-            symmetry: Optional symmetry setting to select only the even or odd
-                    polynomials having even or odd symmetry w.r.t. zero,
-                    respectively. This translates to the respective symmetry
-                    w.r.t. the domain center.
-            name:   Name of the expression (e.g. for print_tree()).
+        @param a_n (iterable)
+            The coefficients of the polynomials. May be empty to indicate a
+            zero function.
+        @param domain (2-tuple/list)
+            The domain of this expression. The Chebyshev polynomials are
+            defined on `[-1,1]`. Specifying a different domain will map it to
+            this domain, while also ensuring that derivatives take into
+            account this coordinate change.
+        @param symmetry
+            Optional symmetry setting to select only the even or odd
+            polynomials having even or odd symmetry w.r.t. zero, respectively.
+            This translates to the respective symmetry w.r.t. the domain
+            center.
+        @param name
+            Name of the expression (e.g. for print_tree()).
         """
         super(Cheby, self).__init__(a_n=a_n, domain=domain, name=name)
         if symmetry not in (None, 'even', 'odd'):
@@ -330,9 +330,10 @@ class Cheby(SeriesExpression):
         The formula implemented here is taken from [1]. This one can only be
         used if all Chebyshev polynomials up to the truncation point are used.
 
-        References:
-            [1]: Canuto, Claudio, et al. Spectral Methods: Fundamentals in
-                 Single Domains. Springer Science & Business Media, 2007.
+        @b References
+
+        [1] Canuto, Claudio, et al. Spectral Methods: Fundamentals in Single
+            Domains. Springer Science & Business Media, 2007.
         """
         num = len(a_n)
         N = num-1
@@ -363,12 +364,12 @@ class Cheby(SeriesExpression):
                            use_mp=False, dps=None, symmetry='current', **kw):
         r"""As series.SeriesExpression.collocation_points(), but with `symmetry` parameter.
 
-        Args:
-            symmetry: The symmetry the collocation points should respect. For
-                example, for even symmetry it makes no sense to have any
-                collocation point which has a corresponding collocation point
-                mirrored across `x=0`. The default, `'current'`, means that
-                the current symmetry should be used.
+        @param symmetry
+            The symmetry the collocation points should respect. For example,
+            for even symmetry it makes no sense to have any collocation point
+            which has a corresponding collocation point mirrored across `x=0`.
+            The default, `'current'`, means that the current symmetry should
+            be used.
         """
         if symmetry == 'current':
             symmetry = self.sym
@@ -380,8 +381,8 @@ class Cheby(SeriesExpression):
     def create_collocation_points(cls, num, lobatto=True, use_mp=False, dps=None, symmetry=None):
         r"""As series.SeriesExpression.create_collocation_points(), but with `symmetry` parameter.
 
-        Args:
-            symmetry: The symmetry the collocation points should respect.
+        @param symmetry
+            The symmetry the collocation points should respect.
         """
         with cls.context(use_mp, dps) as ctx:
             pi = ctx.pi
@@ -437,12 +438,12 @@ class _ChebyEval(EvaluatorBase):
         *expanded*, i.e. normal coefficients for all basis functions,
         previously missing ones being zero, of course.
 
-        Args:
-            an: Coefficients as iterable.
-            sym: Symmetry with respect to which the `an` are given.
+        @param an
+            Coefficients as iterable.
+        @param sym
+            Symmetry with respect to which the `an` are given.
 
-        Returns:
-            Coefficients as list, `mp.matrix` or NumPy array for all basis
+        @return Coefficients as list, `mp.matrix` or NumPy array for all basis
             functions up to the point of truncation.
         """
         if sym is None:
@@ -475,11 +476,10 @@ class _ChebyEval(EvaluatorBase):
         If coefficients for the requested derivative `n` are not yet cached,
         they are computed and then stored.
 
-        Args:
-            n: Derivative order to get coefficients for.
+        @param n
+            Derivative order to get coefficients for.
 
-        Returns:
-            Coefficients as a NumPy array or `mpmath` matrix. An empty
+        @return Coefficients as a NumPy array or `mpmath` matrix. An empty
             coefficient list will be returned as just an empty list `[]`.
         """
         if n >= len(self._coeffs):
@@ -495,12 +495,13 @@ class _ChebyEval(EvaluatorBase):
         if you evaluate the series and its derivatives at the same point, the
         basis has to be evaluated only once.
 
-        Args:
-            n: Derivative order of coefficients to use. Only has an effect if
-                `apply_coeffs==True`.
-            apply_coeffs: Whether to multiply the basis functions with the
-                selected coefficients (`True`) or return just the values of
-                the basis functions (`False`, default).
+        @param n
+            Derivative order of coefficients to use. Only has an effect if
+            `apply_coeffs==True`.
+        @param apply_coeffs
+            Whether to multiply the basis functions with the selected
+            coefficients (`True`) or return just the values of the basis
+            functions (`False`, default).
         """
         if self._dirty:
             self._Tk = evaluate_Tn(self._xrel, self._Tk, self.use_mp)
@@ -532,11 +533,10 @@ class _ChebyEval(EvaluatorBase):
         basis and can hence efficiently be cached for the lifetime of this
         object.
 
-        Args:
-            n: Derivative order of coefficients to return.
+        @param n
+            Derivative order of coefficients to return.
 
-        Returns:
-            List of coefficients. The i'th element of the returned list
+        @return List of coefficients. The i'th element of the returned list
             corresponds to the coefficients of \f$ T_i^{(n)} \f$.
         """
         if n in self._basis_derivs:

@@ -839,6 +839,7 @@ INPUT                 += docs_input/examples_bl.md
 INPUT                 += docs_input/examples_num_metric.md
 INPUT                 += docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.ipynb
 INPUT                 += docs_input/Tutorial_Implement_New_Analytical_Metric.ipynb
+INPUT                 += docs_input/Tutorial_shooting_method.ipynb
 INPUT                 += README_SRC.md
 INPUT                 += README.md
 INPUT                 += testutils.py

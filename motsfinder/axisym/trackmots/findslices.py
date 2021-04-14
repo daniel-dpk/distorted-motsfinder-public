@@ -19,7 +19,8 @@ def find_slices(sim_dir, backwards=False, start_slice=None, end_slice=None,
     r"""Gather all simulation data files.
 
     @param sim_dir
-        Folder to start searching recursively for simulation data files.
+        Folder to start searching recursively for simulation data files. May
+        be a sequence of folders to search in.
     @param backwards
         Whether to reverse the order of the slices found. Default is `False`.
     @param start_slice
@@ -43,9 +44,13 @@ def find_slices(sim_dir, backwards=False, start_slice=None, end_slice=None,
     @param disp
         Raise a `ValueError` if no slices are found.
     """
-    files = glob("%s/**/*.it*.s5" % sim_dir, recursive=True)
+    if isinstance(sim_dir, str):
+        sim_dir = [sim_dir]
+    files = []
+    for fld in sim_dir:
+        files.extend(list(glob("%s/**/*.it*.s5" % fld, recursive=True)))
     # remove duplicates (caused by symlinks) by constructing a dict
-    files = dict([(op.basename(fn), fn) for fn in files
+    files = dict([(op.splitext(op.splitext(fn)[0])[1][1:], fn) for fn in files
                   if re.search(r"\.it\d{10}\.s5", fn)
                   and not re.search(r"output-\d{4}-active", fn)
                   and (not skip_checkpoints or not re.search(r"checkpoint\.", fn))])
@@ -70,7 +75,7 @@ def find_slices(sim_dir, backwards=False, start_slice=None, end_slice=None,
                 and re.search(r"\.it%010d\.s5" % end_slice, fn)):
             break
     if disp and not result:
-        raise ValueError("No simulation data found in: %s" % sim_dir)
+        raise ValueError("No simulation data found in: %s" % (sim_dir,))
     if max_slices and len(result) > max_slices:
         result = result[:max_slices]
     return result

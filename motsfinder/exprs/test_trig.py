@@ -16,7 +16,7 @@ from mpmath import mp
 from testutils import DpkTestCase, slowtest
 from ..utils import lmap
 from ..numutils import inf_norm1d
-from .trig import CosineSeries, SineSeries
+from .trig import CosineSeries, SineSeries, FourierSeries
 from .trig import evaluate_trig_mat, evaluate_trig_series
 
 
@@ -113,7 +113,7 @@ class TestSineSeries(DpkTestCase):
         self.assertIsNot(s1.a_n, s2.a_n)
 
 
-class TestCosineseries(DpkTestCase):
+class TestCosineSeries(DpkTestCase):
     r"""Test the CosineSeries class."""
     def test_derivative(self):
         r"""Derivatives of simple cosine series."""
@@ -177,6 +177,57 @@ class TestCosineseries(DpkTestCase):
         self.assertEqual(s2.domain[1], 8)
         self.assertEqual(s1.a_n, s2.a_n)
         self.assertIsNot(s1.a_n, s2.a_n)
+
+
+class TestFourierSeries(DpkTestCase):
+    r"""Test the FourierSeries class."""
+    def test_derivative(self):
+        r"""Derivatives of simple Fourier series."""
+        pi = math.pi
+        a, b = 0, 2*pi
+        space = np.linspace(a, b, 10)
+        sin, cos = math.sin, math.cos
+        f = lambda x: -1 + 2*sin(1*x) - 1*cos(2*x) + 3*cos(3*x)
+        df = lambda x: 2*cos(1*x) + 2*sin(2*x) - 9*sin(3*x)
+        ddf = lambda x: -2*sin(1*x) + 4*cos(2*x) - 27*cos(3*x)
+        s = FourierSeries([-1, 0, 2, -1, 0, 3], (a, b))
+        e = s.evaluator()
+        self.assertListAlmostEqual(lmap(e, space), lmap(f, space), delta=1e-14)
+        self.assertListAlmostEqual(lmap(e.function(1), space), lmap(df, space), delta=1e-14)
+        self.assertListAlmostEqual(lmap(e.function(2), space), lmap(ddf, space), delta=1e-14)
+        a, b = 0, 20*pi
+        space = np.linspace(a, b, 10)
+        f = lambda x: 2 * cos(3*x/10.) - sin(4*x/10.)
+        df = lambda x: -6/10. * sin(3*x/10.) - 4/10. * cos(4*x/10.)
+        ddf = lambda x: -18/100. * cos(3*x/10.) + 16/100. * sin(4*x/10.)
+        s = FourierSeries([0, 0, 0, 0, 0, 2, 0, 0, -1, 0], (a, b))
+        e = s.evaluator()
+        self.assertListAlmostEqual(lmap(e, space), lmap(f, space), delta=1e-14)
+        self.assertListAlmostEqual(lmap(e.function(1), space), lmap(df, space), delta=1e-14)
+        self.assertListAlmostEqual(lmap(e.function(2), space), lmap(ddf, space), delta=1e-14)
+
+    def test_copy(self):
+        r"""Test that copies of series are independent."""
+        s1 = FourierSeries([0, 0, 2, 0], domain=(4, 8))
+        s2 = s1.copy()
+        self.assertIs(type(s2), FourierSeries)
+        self.assertEqual(s2.domain[0], 4)
+        self.assertEqual(s2.domain[1], 8)
+        self.assertEqual(s1.a_n, s2.a_n)
+        self.assertIsNot(s1.a_n, s2.a_n)
+
+    def test_from_function(self):
+        pi, sin, cos, exp = np.pi, math.sin, math.cos, math.exp
+        a, b = 0, 2*pi
+        f1 = lambda x: -1 + 2*sin(1*x) - 1*cos(2*x) + 3*cos(3*(x-0.2))
+        space = np.linspace(a, b, 10)
+        s1 = FourierSeries.from_function(f1, num=10, domain=(a, b))
+        e1 = s1.evaluator()
+        self.assertListAlmostEqual(lmap(e1, space), lmap(f1, space), delta=1e-14)
+        f2 = lambda x: exp(f1(x))
+        s2 = FourierSeries.from_function(f2, num=120, domain=(a, b))
+        e2 = s2.evaluator()
+        self.assertListAlmostEqual(lmap(e2, space), lmap(f2, space), delta=1e-12)
 
 
 class TestEvaluateTrig(DpkTestCase):

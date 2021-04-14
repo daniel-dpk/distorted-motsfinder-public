@@ -36,4 +36,4 @@ member changes in their `__setstate__()` implementation).
 """
 
 from .cheby import Cheby
-from .trig import SineSeries, CosineSeries
+from .trig import SineSeries, CosineSeries, FourierSeries

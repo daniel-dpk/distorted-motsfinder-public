@@ -13,7 +13,7 @@ from mpmath import mp
 from testutils import DpkTestCase
 from .solver import NDSolver, ndsolve
 from .bases.cheby import ChebyBasis
-from .bases.trig import SineBasis, CosineBasis
+from .bases.trig import SineBasis, CosineBasis, FourierBasis
 from .bcs import DirichletCondition
 
 
@@ -144,6 +144,27 @@ class TestNdsolve(DpkTestCase):
     def test_exp_sin_general(self):
         self._sin_basis(lobatto=True)
         self._sin_basis(lobatto=False)
+
+    def test_fourier(self):
+        # The exact solution in this test is 2*pi-periodic.
+        pi, sin, cos, exp = math.pi, math.sin, math.cos, math.exp
+        domain = 0, 2*pi
+        f_exact = lambda x: exp(sin(x))
+        eq = (
+            (1, lambda x: -exp(-sin(x)), lambda x: exp(-sin(x))),
+            lambda x: exp(sin(x)) - sin(x) + cos(x)**2 - cos(x)
+        )
+        f = ndsolve(
+            eq=eq,
+            basis=FourierBasis(domain=(0, 2*pi), num=30),
+            mat_solver='scipy.solve'
+        )
+        space = np.linspace(0, 2*pi, 20)
+        self.assertListAlmostEqual(
+            lmap(f.evaluator(), space),
+            lmap(f_exact, space),
+            delta=1e-14
+        )
 
 
 def run_tests():
