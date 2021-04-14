@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -135,6 +135,10 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a2f178806aef424a8c43c3b0b4269c7d6">step_mult</a></td></tr>
 <tr class="memdesc:a2f178806aef424a8c43c3b0b4269c7d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Factor to multiply the Newton steps with. <br /></td></tr>
 <tr class="separator:a2f178806aef424a8c43c3b0b4269c7d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f08d3374dab7c44e097ffdee518426c"><td class="memItemLeft" align="right" valign="top"><a id="a5f08d3374dab7c44e097ffdee518426c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a5f08d3374dab7c44e097ffdee518426c">min_step_mult</a></td></tr>
+<tr class="memdesc:a5f08d3374dab7c44e097ffdee518426c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum Newton step length used for non-trivial line searches. <br /></td></tr>
+<tr class="separator:a5f08d3374dab7c44e097ffdee518426c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c5f3dcf809a17b895fe12fc91272349"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a0c5f3dcf809a17b895fe12fc91272349">atol</a></td></tr>
 <tr class="memdesc:a0c5f3dcf809a17b895fe12fc91272349"><td class="mdescLeft">&#160;</td><td class="mdescRight">Absolute tolerance.  <a href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a0c5f3dcf809a17b895fe12fc91272349">More...</a><br /></td></tr>
 <tr class="separator:a0c5f3dcf809a17b895fe12fc91272349"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -247,6 +251,10 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:adfa699c1fb198b4d5003250cd5ca3a33"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#adfa699c1fb198b4d5003250cd5ca3a33">parallel</a></td></tr>
 <tr class="memdesc:adfa699c1fb198b4d5003250cd5ca3a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to evaluate the equation at the collocation points in parallel processes.  <a href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#adfa699c1fb198b4d5003250cd5ca3a33">More...</a><br /></td></tr>
 <tr class="separator:adfa699c1fb198b4d5003250cd5ca3a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab54a41ac720fc1f8a2f83235c2bc7bbd"><td class="memItemLeft" align="right" valign="top"><a id="ab54a41ac720fc1f8a2f83235c2bc7bbd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#ab54a41ac720fc1f8a2f83235c2bc7bbd">post_step_hook</a></td></tr>
+<tr class="memdesc:ab54a41ac720fc1f8a2f83235c2bc7bbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function to call after each step. Will be called as <code>post_step_hook(curve=curve, d=d, step=step)</code>, where <code>step</code> is the number of steps taken. Note that the curve will not have undergone convergence checks, so its <code>user_data["converged"]</code> value will always be <code>False</code>. <br /></td></tr>
+<tr class="separator:ab54a41ac720fc1f8a2f83235c2bc7bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5e1477d2e90a5760642db71ea5307d1"><td class="memItemLeft" align="right" valign="top"><a id="af5e1477d2e90a5760642db71ea5307d1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#af5e1477d2e90a5760642db71ea5307d1">user_data</a></td></tr>
 <tr class="memdesc:af5e1477d2e90a5760642db71ea5307d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Custom data to store in the final curve (excluding convergence data). <br /></td></tr>
@@ -258,6 +266,9 @@ Private Member Functions</h2></td></tr>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a77081afa71d42f672f1fe14aff2c89f4">_solve</a> (self, initial_curve, pool=None)</td></tr>
 <tr class="memdesc:a77081afa71d42f672f1fe14aff2c89f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapped function for performing the Newton steps. <br /></td></tr>
 <tr class="separator:a77081afa71d42f672f1fe14aff2c89f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5573fda55331e5a1eef4f30655758c31"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a5573fda55331e5a1eef4f30655758c31">_line_search_simple</a> (self, eq, d, <a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a0c5f3dcf809a17b895fe12fc91272349">atol</a>)</td></tr>
+<tr class="memdesc:a5573fda55331e5a1eef4f30655758c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a very simple line search.  <a href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a5573fda55331e5a1eef4f30655758c31">More...</a><br /></td></tr>
+<tr class="separator:a5573fda55331e5a1eef4f30655758c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aace6fc2881aea14385a87f9d9eb3dc3f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aace6fc2881aea14385a87f9d9eb3dc3f">_downsample</a> (self, eq, curve)</td></tr>
 <tr class="memdesc:aace6fc2881aea14385a87f9d9eb3dc3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Downsample the given curve without making the result worse.  <a href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#aace6fc2881aea14385a87f9d9eb3dc3f">More...</a><br /></td></tr>
 <tr class="separator:aace6fc2881aea14385a87f9d9eb3dc3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -579,14 +590,66 @@ Static Private Attributes</h2></td></tr>
 <p>Check whether we have converged and found a solution. </p>
 <p>This checks if either the relative or absolute tolerance has been achieved and, in case it has, returns <code>True</code>.</p>
 <p>In case the tolerance has been achieved at the collocation points (which is a fast O(1) test), a more detailed convergence check is performed at more points using <a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#af913b22445531da17229c590f1620d9c" title="Check for convergence and detect insufficient resolution.">_accurate_convergence_test()</a>.</p>
+<p>Note that the curve (and step delta <code>d</code>) may be resampled by this call in case the conditions for increasing the resolution are met.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">eq</td><td><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html" title="Compute the linearized expansion equation and keep track of results.">_LinearExpansionEquation</a> object. </td></tr>
     <tr><td class="paramname">curve</td><td>The current state of the solution. </td></tr>
-    <tr><td class="paramname">d</td><td>The current solution of the linear problem. </td></tr>
+    <tr><td class="paramname">d</td><td>The current solution of the linear problem. This is not used for anything except when resampling the curve. In this case, it is made sure the the representation of <code>d</code> has the same number of coefficients as the current trial solution <code>curve</code>. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a5573fda55331e5a1eef4f30655758c31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5573fda55331e5a1eef4f30655758c31">&#9670;&nbsp;</a></span>_line_search_simple()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">def _line_search_simple </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>eq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>atol</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform a very simple line search. </p>
+<p>We first take a full Newton step. If this produces a larger error than the current trial surface has, we half the step length and repeat. Once a minimum step length is reached, the step is taken even if it increases the error. </p>
 
 </div>
 </div>
@@ -686,7 +749,7 @@ Static Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  (<span class="stringliteral">&quot;max_steps&quot;</span>, <span class="stringliteral">&quot;step_mult&quot;</span>, <span class="stringliteral">&quot;atol&quot;</span>, <span class="stringliteral">&quot;rtol&quot;</span>, <span class="stringliteral">&quot;verbose&quot;</span>,</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=  (<span class="stringliteral">&quot;max_steps&quot;</span>, <span class="stringliteral">&quot;step_mult&quot;</span>, <span class="stringliteral">&quot;min_step_mult&quot;</span>, <span class="stringliteral">&quot;atol&quot;</span>, <span class="stringliteral">&quot;rtol&quot;</span>, <span class="stringliteral">&quot;verbose&quot;</span>,</div>
 <div class="line">                 <span class="stringliteral">&quot;target_expansion&quot;</span>, <span class="stringliteral">&quot;accurate_test_res&quot;</span>, <span class="stringliteral">&quot;auto_resolution&quot;</span>,</div>
 <div class="line">                 <span class="stringliteral">&quot;max_resolution&quot;</span>, <span class="stringliteral">&quot;linear_regime_threshold&quot;</span>, <span class="stringliteral">&quot;mat_solver&quot;</span>,</div>
 <div class="line">                 <span class="stringliteral">&quot;__fake_convergent_steps&quot;</span>, <span class="stringliteral">&quot;max_fake_convergent_steps&quot;</span>,</div>
@@ -700,7 +763,7 @@ Static Private Attributes</h2></td></tr>
 <div class="line">                 <span class="stringliteral">&quot;liberal_downsampling&quot;</span>, <span class="stringliteral">&quot;plot_steps&quot;</span>, <span class="stringliteral">&quot;plot_deltas&quot;</span>,</div>
 <div class="line">                 <span class="stringliteral">&quot;plot_opts&quot;</span>, <span class="stringliteral">&quot;reference_curves&quot;</span>, <span class="stringliteral">&quot;disp&quot;</span>, <span class="stringliteral">&quot;parallel&quot;</span>,</div>
 <div class="line">                 <span class="stringliteral">&quot;_prev_accurate_delta&quot;</span>, <span class="stringliteral">&quot;_prev_res_accurate_delta&quot;</span>,</div>
-<div class="line">                 <span class="stringliteral">&quot;user_data&quot;</span>)</div>
+<div class="line">                 <span class="stringliteral">&quot;post_step_hook&quot;</span>, <span class="stringliteral">&quot;user_data&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>

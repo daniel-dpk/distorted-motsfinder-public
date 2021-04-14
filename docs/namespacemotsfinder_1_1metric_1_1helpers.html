@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -136,27 +136,27 @@ Functions</h2></td></tr>
 <div class="line">print_indented(<span class="stringliteral">&quot;Gamma^0_11 = &quot;</span>, G[0,1,1])</div>
 <div class="line">print_indented(<span class="stringliteral">&quot;Gamma^1_bc = &quot;</span>, G[0,:,:])</div>
 </div><!-- fragment --><p>Continuing from above, we can obtain components of the Riemann curvature tensor.</p>
-<div class="fragment"><div class="line"> dg_inv = metric.diff(point, inverse=<span class="keyword">True</span>)</div>
-<div class="line"> ddg = metric.diff(point, diff=2)</div>
-<div class="line"> dG = christoffel_deriv(g.inv, dg_inv, dg, ddg)</div>
-<div class="line"> ra = range(3)</div>
-<div class="line"> Ra_bcd = [[[[riemann_components(G, dG, a, b, c, d)</div>
-<div class="line">              <span class="keywordflow">for</span> d <span class="keywordflow">in</span> ra] <span class="keywordflow">for</span> c <span class="keywordflow">in</span> ra] <span class="keywordflow">for</span> b <span class="keywordflow">in</span> ra] <span class="keywordflow">for</span> a <span class="keywordflow">in</span> ra]</div>
-<div class="line"> Ra_bcd = np.asarray(Ra_bcd)</div>
+<div class="fragment"><div class="line">dg_inv = metric.diff(point, inverse=<span class="keyword">True</span>)</div>
+<div class="line">ddg = metric.diff(point, diff=2)</div>
+<div class="line">dG = christoffel_deriv(g.inv, dg_inv, dg, ddg)</div>
+<div class="line">ra = range(3)</div>
+<div class="line">Ra_bcd = [[[[riemann_components(G, dG, a, b, c, d)</div>
+<div class="line">             <span class="keywordflow">for</span> d <span class="keywordflow">in</span> ra] <span class="keywordflow">for</span> c <span class="keywordflow">in</span> ra] <span class="keywordflow">for</span> b <span class="keywordflow">in</span> ra] <span class="keywordflow">for</span> a <span class="keywordflow">in</span> ra]</div>
+<div class="line">Ra_bcd = np.asarray(Ra_bcd)</div>
 <div class="line"> </div>
-<div class="line"> <span class="comment"># Print the coordinate representation of the endomorphism (i.e. the</span></div>
-<div class="line"> <span class="comment"># matrix) of R^a_b01.</span></div>
-<div class="line"> print_indented(<span class="stringliteral">&quot;R^a_b01 = &quot;</span>, Ra_bcd[:,:,0,1])</div>
+<div class="line"><span class="comment"># Print the coordinate representation of the endomorphism (i.e. the</span></div>
+<div class="line"><span class="comment"># matrix) of R^a_b01.</span></div>
+<div class="line">print_indented(<span class="stringliteral">&quot;R^a_b01 = &quot;</span>, Ra_bcd[:,:,0,1])</div>
 <div class="line"> </div>
-<div class="line"> <span class="comment"># We get the purely covariant Riemann tensor by lowering the first index.</span></div>
-<div class="line"> R_abcd = np.einsum(<span class="stringliteral">&#39;ae,ebcd&#39;</span>, g.mat, Ra_bcd)</div>
+<div class="line"><span class="comment"># We get the purely covariant Riemann tensor by lowering the first index.</span></div>
+<div class="line">R_abcd = np.einsum(<span class="stringliteral">&#39;ae,ebcd&#39;</span>, g.mat, Ra_bcd)</div>
 <div class="line"> </div>
-<div class="line"> <span class="comment"># Verify some of the symmetries.</span></div>
-<div class="line"> print(<span class="stringliteral">&quot;R_0012 = %s&quot;</span> % R_abcd[0,0,1,2])</div>
-<div class="line"> print(<span class="stringliteral">&quot;R_1200 = %s&quot;</span> % R_abcd[1,2,0,0])</div>
-<div class="line"><span class="keywordflow">print</span>   R_2101 = %s<span class="stringliteral">&quot; % (R_abcd[0,1,2,1] - R_abcd[2,1,0,1]))</span></div>
-<div class="line"><span class="stringliteral"> print(&quot;R_0101 + R_0110 = %s&quot;</span> % (R_abcd[0,1,0,1] + R_abcd[0,1,1,0]))</div>
-<div class="line"> print(<span class="stringliteral">&quot;R_0101 + R_1001 = %s&quot;</span> % (R_abcd[0,1,0,1] + R_abcd[1,0,0,1]))</div>
+<div class="line"><span class="comment"># Verify some of the symmetries.</span></div>
+<div class="line">print(<span class="stringliteral">&quot;R_0012 = %s&quot;</span> % R_abcd[0,0,1,2])</div>
+<div class="line">print(<span class="stringliteral">&quot;R_1200 = %s&quot;</span> % R_abcd[1,2,0,0])</div>
+<div class="line">print(<span class="stringliteral">&quot;R_0121 - R_2101 = %s&quot;</span> % (R_abcd[0,1,2,1] - R_abcd[2,1,0,1]))</div>
+<div class="line">print(<span class="stringliteral">&quot;R_0101 + R_0110 = %s&quot;</span> % (R_abcd[0,1,0,1] + R_abcd[0,1,1,0]))</div>
+<div class="line">print(<span class="stringliteral">&quot;R_0101 + R_1001 = %s&quot;</span> % (R_abcd[0,1,0,1] + R_abcd[1,0,0,1]))</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a5c66a599cf68c2571feb05f27563752b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5c66a599cf68c2571feb05f27563752b">&#9670;&nbsp;</a></span>christoffel_deriv()</h2>

@@ -32,8 +32,8 @@ var NAVTREE =
     [ "Packages", "namespaces.html", [
       [ "Packages", "namespaces.html", "namespaces_dup" ],
       [ "Package Functions", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ]
+        [ "All", "namespacemembers.html", "namespacemembers_dup" ],
+        [ "Functions", "namespacemembers_func.html", "namespacemembers_func" ]
       ] ]
     ] ],
     [ "Classes", "annotated.html", [
@@ -43,7 +43,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Variables", "functions_vars.html", null ]
+        [ "Variables", "functions_vars.html", "functions_vars" ]
       ] ]
     ] ]
   ] ]
@@ -52,14 +52,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#af121af077346547f69460bdda05c371d",
-"classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#aae8656d7ff183b7913bcc540b31a7221",
-"classmotsfinder_1_1exprs_1_1basics_1_1IdentityExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4",
-"classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a51cf0e70635c478b743cefdd04063d94",
-"classmotsfinder_1_1metric_1_1discrete_1_1discretize_1_1DiscretizedMetric.html#a426373bb5a8c9b2e4422997f142b0be1",
-"classmotsfinder_1_1metric_1_1simulation_1_1siometric_1_1SioSym2TensorField.html#aa8707a595b782cd4915e737da1520d09",
-"index.html",
-"namespacemotsfinder_1_1ndsolve_1_1solver.html#a6c5a6ec30b564ec0f7a10574b9837e14"
+"classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#ae140ab19abd6ce8f0f3448a685113abf",
+"classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a7e8a8baa28fed6fff0d093e96b962ab5",
+"classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a4203aa695256732128583c7b4f8dd33b",
+"classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a9a82d1e4020a5a6522ee737cd0969d4c",
+"classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#ae04bcd29d7f2040d1de4e63c3d497f42",
+"classmotsfinder_1_1metric_1_1discrete_1_1tensors_1_1__DiscreteField.html#aca546ca1aaed3338332094deb0777b2e",
+"classtestutils_1_1DpkTestCase.html#a30c890f67b92f6f7389e3e0d14b5c328",
+"namespacemotsfinder_1_1axisym_1_1trackmots_1_1tracker.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

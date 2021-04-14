@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -123,6 +123,13 @@ Public Member Functions</h2></td></tr>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html#a99fcbec625bd965c980276c6d38662cd">__call__</a> (self, pts)</td></tr>
 <tr class="memdesc:a99fcbec625bd965c980276c6d38662cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the equation suitable for ndsolve(). <br /></td></tr>
 <tr class="separator:a99fcbec625bd965c980276c6d38662cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2187f50c28e7c2890f45d8132a6f56c"><td class="memItemLeft" align="right" valign="top"><a id="ac2187f50c28e7c2890f45d8132a6f56c"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>resolution_changed</b> (self)</td></tr>
+<tr class="separator:ac2187f50c28e7c2890f45d8132a6f56c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a819084d107203d992dff8f45bef5a267"><td class="memItemLeft" align="right" valign="top"><a id="a819084d107203d992dff8f45bef5a267"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html#a819084d107203d992dff8f45bef5a267">evaluate_step</a> (self, coeffs, mult=1.0, full_output=False)</td></tr>
+<tr class="memdesc:a819084d107203d992dff8f45bef5a267"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluate a linear step by adding the given coefficients. <br /></td></tr>
+<tr class="separator:a819084d107203d992dff8f45bef5a267"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affc415abd1aac082911222f2870abcf1"><td class="memItemLeft" align="right" valign="top"><a id="affc415abd1aac082911222f2870abcf1"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html#affc415abd1aac082911222f2870abcf1">prev_rel_delta</a> (self)</td></tr>
 <tr class="memdesc:affc415abd1aac082911222f2870abcf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum deviation from target expansion relative to first evaluation. <br /></td></tr>
@@ -166,6 +173,9 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:ac9dea2a102ab97842c718ca08da3589c"><td class="memItemLeft" align="right" valign="top"><a id="ac9dea2a102ab97842c718ca08da3589c"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>_pool</b></td></tr>
 <tr class="separator:ac9dea2a102ab97842c718ca08da3589c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3b629cc2803e17a2e100902c3a2490f"><td class="memItemLeft" align="right" valign="top"><a id="ad3b629cc2803e17a2e100902c3a2490f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_prev_points</b></td></tr>
+<tr class="separator:ad3b629cc2803e17a2e100902c3a2490f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Compute the linearized expansion equation and keep track of results. </p>

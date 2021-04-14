@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -196,7 +196,8 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="classmotsfinder_1_1lockfile_1_1lockfile_1_1LockFile.html#ad2e9e52a76ef5007ffc0bc32248a94b2">LockFile</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html#a738fbffa6cfa5b5ec666c1c8499e55eb">KerrKSSlice</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html#a93cd5e0f7f095d49e6915d122e985e64">SchwarzschildKSSlice</a>
-, <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html#a511e477b3b0a301286efd6b50afd8082">BrillLindquistMetric</a>
+, <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSlice.html#a93cd5e0f7f095d49e6915d122e985e64">SchwarzschildPGSlice</a>
+, <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html#a032c91be69313f3b1ab2121b2779686f">BrillLindquistMetric</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1SchwarzschildSliceMetric.html#abccae40b7ebc646a6c6940a370623653">SchwarzschildSliceMetric</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html#ae37cff7f2dca9b1ede89fff9765d4a4d">TransformedMetric</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html#a271d068cb1029687509eaf23b3c7799f">MetricTensor</a>
@@ -289,6 +290,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html#a80b47b021461c45422759213d553c051">Cheby</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a80b47b021461c45422759213d553c051">SeriesExpression</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a80b47b021461c45422759213d553c051">CosineSeries</a>
+, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#a80b47b021461c45422759213d553c051">FourierSeries</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html#a80b47b021461c45422759213d553c051">SineSeries</a>
 </li>
 <li>_asdict()
@@ -317,6 +319,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </li>
 <li>_check_a_n()
 : <a class="el" href="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#aa5decd5c82696c001404461baaed455f">SeriesExpression</a>
+, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#aa5decd5c82696c001404461baaed455f">FourierSeries</a>
 </li>
 <li>_closest_point()
 : <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ae8dc93c8904c9d9f83b7fbe41c0854d6">BaseCurve</a>
@@ -344,6 +347,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#a9de67832c883046ff2fb0b60e3e7897b">_SpectralBasis</a>
 , <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html#a9de67832c883046ff2fb0b60e3e7897b">ChebyBasis</a>
 , <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html#a9de67832c883046ff2fb0b60e3e7897b">CosineBasis</a>
+, <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1FourierBasis.html#a9de67832c883046ff2fb0b60e3e7897b">FourierBasis</a>
 , <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html#a9de67832c883046ff2fb0b60e3e7897b">SineBasis</a>
 </li>
 <li>_compute_deriv_mat_row()
@@ -398,7 +402,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="classmotsfinder_1_1lockfile_1_1lockfile_1_1LockFile.html#af04d2136a01425dc9e2bc8c4abfe485f">LockFile</a>
 </li>
 <li>_current_ref_curve()
-: <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a1fa0326cdac19a559ceb2615ecd4af42">MOTSTracker</a>
+: <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ac72f08c6e50ad290d922a6063675ec65">MOTSTracker</a>
 </li>
 <li>_curve_params()
 : <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a738ed89ca6f57ea0a46cfc61d6ab4e38">ConstraintAnalyzer</a>
@@ -497,6 +501,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#aed77f5b2780f9112af9d4e39b106960f">NumericExpression</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html#aed77f5b2780f9112af9d4e39b106960f">SimpleExpression</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#aed77f5b2780f9112af9d4e39b106960f">CosineSeries</a>
+, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#aed77f5b2780f9112af9d4e39b106960f">FourierSeries</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html#aed77f5b2780f9112af9d4e39b106960f">SineSeries</a>
 </li>
 <li>_expand()
@@ -521,6 +526,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">NumericExpression</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">SimpleExpression</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">CosineSeries</a>
+, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">FourierSeries</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">SineSeries</a>
 </li>
 <li>_extend_expiration_time()
@@ -557,6 +563,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 : <a class="el" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html#a50ec87aa83b2ef6e8518a3e15025f05a">Cheby</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a50ec87aa83b2ef6e8518a3e15025f05a">SeriesExpression</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html#a50ec87aa83b2ef6e8518a3e15025f05a">_TrigSeries</a>
+, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#a50ec87aa83b2ef6e8518a3e15025f05a">FourierSeries</a>
 </li>
 <li>_funcs
 : <a class="el" href="classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorFactory.html#a8ef9f9e4473f46043da1484716b18268">EvaluatorFactory</a>
@@ -584,6 +591,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </li>
 <li>_get_diff_coeff_gen()
 : <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html#ab8d8ece224bc68d212e9b2aade2c5b85">_CosineSeriesEval</a>
+, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__FourierSeriesEval.html#ab8d8ece224bc68d212e9b2aade2c5b85">_FourierSeriesEval</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html#ab8d8ece224bc68d212e9b2aade2c5b85">_SineSeriesEval</a>
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#ab8d8ece224bc68d212e9b2aade2c5b85">_TrigEval</a>
 </li>
@@ -613,6 +621,9 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </li>
 <li>_get_region()
 : <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#acee89549b19d65444a3b9e830b07b7ad">DataPatch</a>
+</li>
+<li>_get_shape_location()
+: <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a17dc9b190e9dcc4d192af111e3f8e8b0">MOTSTracker</a>
 </li>
 <li>_get_Txy_Tyy_Tyz()
 : <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1fdderivs_1_1__FDField.html#ae29a9118e3be72789537a21beb5428ae">_FDField</a>
@@ -689,6 +700,9 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>_l_orig()
 : <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html#abef9086a89bd2c816bf41767762d0473">StabilityCalc</a>
 </li>
+<li>_line_search_simple()
+: <a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a5573fda55331e5a1eef4f30655758c31">NewtonKantorovich</a>
+</li>
 <li>_load_data()
 : <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__ScalarField.html#a0c3d00c2078ff2e7cf70e73031518702">_ScalarField</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1construct_1_1__Sym2TensorField.html#a0c3d00c2078ff2e7cf70e73031518702">_Sym2TensorField</a>
@@ -719,6 +733,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>_mat_at()
 : <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html#a8efc33ef9e8648f08abe28e225b94885">KerrKSSlice</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html#a8efc33ef9e8648f08abe28e225b94885">SchwarzschildKSSlice</a>
+, <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSlice.html#a8efc33ef9e8648f08abe28e225b94885">SchwarzschildPGSlice</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html#a8efc33ef9e8648f08abe28e225b94885">_ConformallyFlatMetric</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html#a8efc33ef9e8648f08abe28e225b94885">FlatThreeMetric</a>
 , <a class="el" href="classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1TransformedMetric.html#a8efc33ef9e8648f08abe28e225b94885">TransformedMetric</a>
@@ -749,9 +764,6 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 </li>
 <li>_patch_slices()
 : <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1utils_1_1ConstraintAnalyzer.html#a03b5c3646f16edc6679f25fdb5df19eb">ConstraintAnalyzer</a>
-</li>
-<li>_pi
-: <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a77cb85d6108d5dd55b566a7fde67fe1e">_TrigEval</a>
 </li>
 <li>_plot_delta()
 : <a class="el" href="classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html#a1238321d277ec435eb6e932395471d7d">NewtonKantorovich</a>
@@ -852,6 +864,9 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 <li>_unlock()
 : <a class="el" href="classmotsfinder_1_1lockfile_1_1lockfile_1_1LockFile.html#a306aed28634b9b3b76f34d6aff3044ef">LockFile</a>
 </li>
+<li>_upper
+: <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#ae6e8f2721f1fb3029852f3e13538bd69">_TrigEval</a>
+</li>
 <li>_use_mp
 : <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#ad0c65ea408dcad19e60c7c24f789c2b1">_SpectralBasis</a>
 </li>
@@ -876,7 +891,7 @@ $(document).ready(function(){initNavTree('functions.html',''); initResizable(); 
 , <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a21efeb4d9ad52728ca1b8a1e42867c69">_TrigEval</a>
 </li>
 <li>_xi_vector()
-: <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#a97d85720d041ce3165070dcebeb8090c">ExpansionCurve</a>
+: <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html#ad2458f51a1e26dd4fb842d4bd92c1e5b">ExpansionCurve</a>
 </li>
 <li>_xrel
 : <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a6911e68cc941d5d4f4431bbd52e4563b">_TrigEval</a>

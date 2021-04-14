@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -168,6 +168,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a51b0ae7f021b6c1658970edb47b05a8c">create_collocation_points</a> (cls, num, lobatto=True, use_mp=False, dps=None, **kw)</td></tr>
 <tr class="memdesc:a51b0ae7f021b6c1658970edb47b05a8c inherit pub_methods_classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subclasses should implement this as @classmethod. <br /></td></tr>
 <tr class="separator:a51b0ae7f021b6c1658970edb47b05a8c inherit pub_methods_classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc4f914955246db72c590e4e2237afc2 inherit pub_methods_classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression"><td class="memItemLeft" align="right" valign="top"><a id="adc4f914955246db72c590e4e2237afc2"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>validate_and_fix_resolution</b> (cls, proposed_resolution)</td></tr>
+<tr class="separator:adc4f914955246db72c590e4e2237afc2 inherit pub_methods_classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a656b674738d14d8e92876ca836db9e2f inherit pub_methods_classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression"><td class="memItemLeft" align="right" valign="top"><a id="a656b674738d14d8e92876ca836db9e2f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>from_function</b> (cls, f, num, <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a8a6287602630db6aeffcb6cf5787a216">domain</a>=None, lobatto=True, use_mp=False, dps=None, **kw)</td></tr>
 <tr class="separator:a656b674738d14d8e92876ca836db9e2f inherit pub_methods_classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -481,9 +484,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </div><div class="memdoc">
 
 <p>Use a more efficient formula to transform from physical to spectral space. </p>
-<pre class="fragment">   The formula implemented here is taken from [1]. This one can only be
-   used if all Chebyshev polynomials up to the truncation point are used.
-</pre> <dl class="section user"><dt>References</dt><dd>[1]: Canuto, Claudio, et al. Spectral Methods: Fundamentals in Single Domains. Springer Science &amp; Business Media, 2007. </dd></dl>
+<p>The formula implemented here is taken from [1]. This one can only be used if all Chebyshev polynomials up to the truncation point are used.</p>
+<p><b>References</b> </p>
+<p>[1] Canuto, Claudio, et al. Spectral Methods: Fundamentals in Single Domains. Springer Science &amp; Business Media, 2007. </p>
 
 </div>
 </div>

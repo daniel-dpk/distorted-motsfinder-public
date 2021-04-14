@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -221,22 +221,24 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The pseudospectral solution as a NumericExpression. To evaluate this solution, create an evaluator first, e.g.: <pre class="fragment">f = solution.evaluator()
 y = f(2.5)
-</pre> <b>Examples</b> </dd></dl>
+</pre></dd></dl>
+<p><b>Examples</b> </p>
 <p>Solving the following equation on the interval \( (1/2, 2) \) </p><p class="formulaDsp">
 \[ f&#39;&#39;(x) - a b \sin(b x) f&#39;(x) = a b^2 \cos(b x) f(x) \]
 </p>
 <p> with boundary conditions </p><p class="formulaDsp">
 \[ f(1/2) = \exp(-a\cos(b/2)), \quad f(2) = \exp(-a\cos(2b)) \]
 </p>
-<p>The exact solution is \( f(x) = \exp(-a\cos(b x)) \). The numerical solution can be obtained via: </p><pre class="fragment">sol = ndsolve(
-    eq=((lambda x: -a*b**2*cos(b*x), lambda x: -a*b*sin(b*x), 1), 0),
-    basis=ChebyBasis(domain=(0.5, 2), num=50),
-    boundary_conditions=(
-        DirichletCondition(x=0.5, value=exp(-a*cos(b/2))),
-        DirichletCondition(x=2, value=exp(-a*cos(2*b))),
-    )
-)
-</pre><p>An equation with the same boundary conditions and solution, but with an inhomogeneity is </p><p class="formulaDsp">
+<p>The exact solution is \( f(x) = \exp(-a\cos(b x)) \). The numerical solution can be obtained via:</p>
+<div class="fragment"><div class="line">sol = ndsolve(</div>
+<div class="line">    eq=((<span class="keyword">lambda</span> x: -a*b**2*cos(b*x), <span class="keyword">lambda</span> x: -a*b*sin(b*x), 1), 0),</div>
+<div class="line">    basis=ChebyBasis(domain=(0.5, 2), num=50),</div>
+<div class="line">    boundary_conditions=(</div>
+<div class="line">        DirichletCondition(x=0.5, value=exp(-a*cos(b/2))),</div>
+<div class="line">        DirichletCondition(x=2, value=exp(-a*cos(2*b))),</div>
+<div class="line">    )</div>
+<div class="line">)</div>
+</div><!-- fragment --><p>An equation with the same boundary conditions and solution, but with an inhomogeneity is </p><p class="formulaDsp">
 \[ f&#39;&#39;(x) - a b \sin(b x) f&#39;(x) = a b^2 \cos(b x) \exp(-a\cos(b x)) \]
 </p>
 <p>The numerical solution is obtained via:</p>

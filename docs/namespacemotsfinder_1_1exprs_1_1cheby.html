@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -160,20 +160,20 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>evaluate_Tn_mpmath</b>
 <div class="line">ev = f.evaluator()</div>
 <div class="line">plot_1d(ev.function(1), title=<span class="stringliteral">&quot;f&#39;(x)&quot;</span>)</div>
 <div class="line">plot_1d(ev.function(2), title=<span class="stringliteral">&quot;f&#39;&#39;(x)&quot;</span>)</div>
-</div><!-- fragment --><p>Create a series expansion from a known function. </p><div class="fragment"><div class="line"> <span class="keyword">from</span> math <span class="keyword">import</span> cos, exp</div>
-<div class="line"> a, b = 10, 20</div>
-<div class="line"> <span class="keyword">def </span>func(x):</div>
-<div class="line">     x = 2*(x-a)/(b-a) - 1</div>
-<div class="line"><span class="keywordflow">return</span>  x**2 + .2*exp(-x) * cos(10*x**2) + .9</div>
-<div class="line"> f = Cheby.from_function(func, 70, domain=(a, b))</div>
+</div><!-- fragment --><p>Create a series expansion from a known function. </p><div class="fragment"><div class="line"><span class="keyword">from</span> math <span class="keyword">import</span> cos, exp</div>
+<div class="line">a, b = 10, 20</div>
+<div class="line"><span class="keyword">def </span>func(x):</div>
+<div class="line">    x = 2*(x-a)/(b-a) - 1</div>
+<div class="line">    <span class="keywordflow">return</span> 1 - x**2 + .2*exp(-x) * cos(10*x**2) + .9</div>
+<div class="line">f = Cheby.from_function(func, 70, domain=(a, b))</div>
 <div class="line"> </div>
-<div class="line"> <span class="comment"># Plot the function and the error (i.e. difference)</span></div>
-<div class="line"> plot_1d(f, title=<span class="stringliteral">&quot;f(x)&quot;</span>)</div>
-<div class="line"> plot_1d(f, func, difference=<span class="keyword">True</span>, title=<span class="stringliteral">&quot;difference&quot;</span>)</div>
+<div class="line"><span class="comment"># Plot the function and the error (i.e. difference)</span></div>
+<div class="line">plot_1d(f, title=<span class="stringliteral">&quot;f(x)&quot;</span>)</div>
+<div class="line">plot_1d(f, func, difference=<span class="keyword">True</span>, title=<span class="stringliteral">&quot;difference&quot;</span>)</div>
 <div class="line"> </div>
-<div class="line"> <span class="comment"># Plot how the coefficients converge</span></div>
-<div class="line"> plot_data(range(len(f.a_n)), f.a_n, title=<span class="stringliteral">&quot;coefficients&quot;</span>,</div>
-<div class="line">           absolute=<span class="keyword">True</span>, ylog=<span class="keyword">True</span>)</div>
+<div class="line"><span class="comment"># Plot how the coefficients converge</span></div>
+<div class="line">plot_data(range(len(f.a_n)), f.a_n, title=<span class="stringliteral">&quot;coefficients&quot;</span>,</div>
+<div class="line">          absolute=<span class="keyword">True</span>, ylog=<span class="keyword">True</span>)</div>
 </div><!-- fragment --> </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a02f6256b355b7fc70f926e11ed8cadce"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a02f6256b355b7fc70f926e11ed8cadce">&#9670;&nbsp;</a></span>_create_jn()</h2>

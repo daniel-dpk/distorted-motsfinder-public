@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -132,6 +132,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 <tr class="memitem:a427c92668b067dbeb28d5d898f69a186"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a427c92668b067dbeb28d5d898f69a186">isiterable</a> (obj)</td></tr>
 <tr class="memdesc:a427c92668b067dbeb28d5d898f69a186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether an object is iterable.  <a href="namespacemotsfinder_1_1utils.html#a427c92668b067dbeb28d5d898f69a186">More...</a><br /></td></tr>
 <tr class="separator:a427c92668b067dbeb28d5d898f69a186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf79ea08ed208b5320445345680c009a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#abf79ea08ed208b5320445345680c009a">cmp_versions</a> (version1, version2)</td></tr>
+<tr class="memdesc:abf79ea08ed208b5320445345680c009a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two version strings losely.  <a href="namespacemotsfinder_1_1utils.html#abf79ea08ed208b5320445345680c009a">More...</a><br /></td></tr>
+<tr class="separator:abf79ea08ed208b5320445345680c009a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a2e27892babf36003f3952662cbeb45"><td class="memItemLeft" align="right" valign="top"><a id="a1a2e27892babf36003f3952662cbeb45"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1utils.html#a1a2e27892babf36003f3952662cbeb45">get_chunks</a> (items, chunksize)</td></tr>
 <tr class="memdesc:a1a2e27892babf36003f3952662cbeb45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generator for partitioning items into chunks. <br /></td></tr>
@@ -226,6 +229,38 @@ Variables</h2></td></tr>
 <div class="line">        result = a**2 + b**3 + c**4</div>
 <div class="line">        <span class="keywordflow">return</span> result</div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a id="abf79ea08ed208b5320445345680c009a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf79ea08ed208b5320445345680c009a">&#9670;&nbsp;</a></span>cmp_versions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def motsfinder.utils.cmp_versions </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>version1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>version2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compare two version strings losely. </p>
+<p>The strings are split at "." and the corresponding parts compared as integers. Non-integers count as 0. This allows a rough version comparison like <code>cmp_versions(mpl.__version__, "3.0")</code>. Optionally, either version can be a list to skip the conversion step.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>-1</code> if <code>version1</code> is smaller than <code>version2</code>, <code>1</code> if it's larger, and 0 if both are equal (within the lose comparison). </dd></dl>
+
 </div>
 </div>
 <a id="a8196b8d81fae69f2a93e570c913d8a07"></a>
@@ -569,7 +604,8 @@ Variables</h2></td></tr>
 
 <p>Merge two or more dicts, later ones replacing values of earlier ones. </p>
 <p>Note that only shallow copies are made of the dicts.</p>
-<p><b>Examples</b> </p><div class="fragment"><div class="line">a = dict(a=1, b=2, c=3)</div>
+<p><b>Examples</b> </p>
+<div class="fragment"><div class="line">a = dict(a=1, b=2, c=3)</div>
 <div class="line">b = dict(c=-3, d=-4)</div>
 <div class="line">c = merge_dicts(a, b)</div>
 <div class="line"><span class="comment"># Result: dict(a=1, b=2, c=-3, d=-4)</span></div>

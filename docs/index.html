@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -116,13 +116,14 @@ stability of marginally trapped surfaces in black-hole spacetimes." Physical Rev
 <ul>
 <li><a class="el" href="md_docs_input_examples_bl.html">Brill-Lindquist initial data</a></li>
 <li><a class="el" href="md_docs_input_examples_num_metric.html">Using the finder with a numerical metric</a></li>
+<li>Using the shooting method (<a href="../docs_input/Tutorial_shooting_method.html">html</a>, <a href="../docs_input/Tutorial_shooting_method.ipynb">notebook</a>)</li>
 <li>Finding stability spectra in Kerr slices (<a href="../docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.html">html</a>, <a href="../docs_input/Tutorial_Find_Eigenvalues_Kerr_Slice.ipynb">notebook</a>)</li>
 <li>Implementing a new analytical metric (<a href="../docs_input/Tutorial_Implement_New_Analytical_Metric.html">html</a>, <a href="../docs_input/Tutorial_Implement_New_Analytical_Metric.ipynb">notebook</a>)</li>
 </ul>
 <h1>Installation</h1>
-<p>The prerequisites for running the MOTS Finder are as follows:</p>
+<p>The prerequisites for running the MOTS Finder are as follows (indicated package versions have been tested, newer versions work in most cases):</p>
 <ul>
-<li>Python 3.6 or 3.7 (not tested with Python 3.8; use e.g. <code>pyenv</code> to obtain any Python version)</li>
+<li>Python 3.6, 3.7, 3.8, 3.9</li>
 <li>SciPy 1.2.1</li>
 <li>NumPy 1.16.1</li>
 <li>SymPy 1.3</li>
@@ -142,7 +143,7 @@ stability of marginally trapped surfaces in black-hole spacetimes." Physical Rev
 <div class="fragment"><div class="line">$ mkdir -p ~/src</div>
 <div class="line">$ cd ~/src</div>
 <div class="line">$ git clone https://github.com/daniel-dpk/distorted-motsfinder-public.git</div>
-</div><!-- fragment --><p>Finally, install all the required Python packages. The following installs the exact package versions the MOTS Finder was tested with. You may also try to install the most up to date versions. To do this, replace the second line below with <code>pip install numpy scipy sympy mpmath matplotlib jupyter</code>.</p>
+</div><!-- fragment --><p>Finally, install all the required Python packages:</p>
 <div class="fragment"><div class="line">$ source ~/py3env/bin/activate</div>
 <div class="line">$ pip install -r ~/src/distorted-motsfinder-public/python-requirements.txt</div>
 </div><!-- fragment --><h2>Using the MOTS Finder</h2>
@@ -161,7 +162,7 @@ stability of marginally trapped surfaces in black-hole spacetimes." Physical Rev
 <div class="fragment"><div class="line">$ sudo apt install python3-dev</div>
 <div class="line">$ source ~/py3env/bin/activate</div>
 <div class="line">$ cd ~/src/distorted-motsfinder-public</div>
-<div class="line">$ pip install cython==0.29.15  # remove the &#39;==...&#39; part to use the current version</div>
+<div class="line">$ pip install cython</div>
 <div class="line">$ ./cythonize_helper.py</div>
 </div><!-- fragment --><h2>(Optional) For reading simulation data using the <code>SioMetric</code> class</h2>
 <p>If you need to read simulation data and would like to use <a href="https://github.com/eschnett/SimulationIO">SimulationIO</a> for this purpose, please see its instructions for building and installation.</p>
@@ -176,6 +177,8 @@ stability of marginally trapped surfaces in black-hole spacetimes." Physical Rev
 <p>Further authors and contributors:</p>
 <ul>
 <li>Ofek Birnholtz</li>
+<li>Ivan Booth</li>
+<li>Robie A. Hennigar</li>
 <li>Jose Luis Jaramillo</li>
 <li>Badri Krishnan</li>
 <li>Erik Schnetter</li>

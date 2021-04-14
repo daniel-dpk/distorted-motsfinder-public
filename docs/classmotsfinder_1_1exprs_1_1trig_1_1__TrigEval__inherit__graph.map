@@ -1,8 +1,9 @@
 <map id="_TrigEval" name="_TrigEval">
-<area shape="rect" id="node1" title="Common base evaluator for trigonometric expressions." alt="" coords="115,229,195,256"/>
+<area shape="rect" id="node1" title="Common base evaluator for trigonometric expressions." alt="" coords="203,229,283,256"/>
 <area shape="rect" id="node5" href="$classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html" title="Evaluator class for CosineSeries." alt="" coords="5,304,147,331"/>
-<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html" title="Evaluator class for SineSeries." alt="" coords="171,304,296,331"/>
-<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorBase.html" title="Base class for custom evaluator classes." alt="" coords="97,155,213,181"/>
-<area shape="rect" id="node3" href="$classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html" title="Base class for all evaluator classes." alt="" coords="109,80,200,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="123,5,186,32"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1trig_1_1__FourierSeriesEval.html" title="Evaluator class for CosineSeries." alt="" coords="171,304,314,331"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html" title="Evaluator class for SineSeries." alt="" coords="339,304,464,331"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorBase.html" title="Base class for custom evaluator classes." alt="" coords="185,155,301,181"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html" title="Base class for all evaluator classes." alt="" coords="197,80,288,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="211,5,274,32"/>
 </map>

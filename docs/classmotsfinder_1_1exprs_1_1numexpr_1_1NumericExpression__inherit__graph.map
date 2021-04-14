@@ -12,7 +12,7 @@
 <area shape="rect" id="node12" href="$classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html" title="Sum of two expressions is an optional coefficient for the second term." alt="" coords="333,461,455,488"/>
 <area shape="rect" id="node14" href="$classmotsfinder_1_1exprs_1_1inverse_1_1InverseExpression.html" title="Inverse function expression." alt="" coords="323,512,465,539"/>
 <area shape="rect" id="node15" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html" title="Base class for simple functions." alt="" coords="325,563,463,589"/>
-<area shape="rect" id="node21" href="$classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html" title="Base class for truncated series expressions." alt="" coords="327,715,461,741"/>
+<area shape="rect" id="node21" href="$classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html" title="Base class for truncated series expressions." alt="" coords="327,740,461,767"/>
 <area shape="rect" id="node2" title=" " alt="" coords="5,309,68,336"/>
 <area shape="rect" id="node13" href="$classmotsfinder_1_1exprs_1_1basics_1_1BlendExpression2D.html" title="Blend between two expressions based on a third." alt="" coords="535,411,683,437"/>
 <area shape="rect" id="node16" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleCosExpression.html" title="Cosine expression with arbitrary derivatives." alt="" coords="528,461,691,488"/>
@@ -21,7 +21,8 @@
 <area shape="rect" id="node19" href="$classmotsfinder_1_1exprs_1_1basics_1_1SimpleSinhExpression.html" title="Hyperbolic sine (sinh) expression with arbitrary derivatives." alt="" coords="526,613,693,640"/>
 <area shape="rect" id="node20" href="$classmotsfinder_1_1exprs_1_1basics_1_1SinSquaredExpression.html" title="Sine squared (sin(x)**2) expression with first two derivatives." alt="" coords="526,664,693,691"/>
 <area shape="rect" id="node22" href="$classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html" title="Truncated Chebyshev series expression." alt="" coords="578,715,641,741"/>
-<area shape="rect" id="node23" href="$classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="563,765,655,792"/>
-<area shape="rect" id="node24" href="$classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="743,740,849,767"/>
-<area shape="rect" id="node25" href="$classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="751,791,841,817"/>
+<area shape="rect" id="node23" href="$classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html" title="Truncated Fourier series to represent a function." alt="" coords="556,765,663,792"/>
+<area shape="rect" id="node24" href="$classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="563,816,655,843"/>
+<area shape="rect" id="node25" href="$classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="743,791,849,817"/>
+<area shape="rect" id="node26" href="$classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="751,841,841,868"/>
 </map>

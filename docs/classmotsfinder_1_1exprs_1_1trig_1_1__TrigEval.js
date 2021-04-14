@@ -14,10 +14,10 @@ var classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval =
     [ "_deriv_coeffs", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a67501a5ed4eeee1933069b2577fa4b82", null ],
     [ "_jn", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a5e7ceb6287ec28964372b8be10a400a2", null ],
     [ "_num", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a9e39dc64dd283440ccbff0f61807da28", null ],
-    [ "_pi", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a77cb85d6108d5dd55b566a7fde67fe1e", null ],
     [ "_scale", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a20c420f2c17b3a1a73f6c4f240d11c19", null ],
     [ "_sin", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a96a8e665fd7dec32ebc7bb912c952723", null ],
     [ "_trans", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#ac1657977a637a707b1061db7cbbfa596", null ],
+    [ "_upper", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#ae6e8f2721f1fb3029852f3e13538bd69", null ],
     [ "_xrel", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a6911e68cc941d5d4f4431bbd52e4563b", null ],
     [ "clamp", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#aebb886828e035f6758ad2f5a898a80e8", null ]
 ];

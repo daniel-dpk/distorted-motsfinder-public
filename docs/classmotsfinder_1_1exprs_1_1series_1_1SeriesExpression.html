@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -109,13 +109,14 @@ Inheritance diagram for SeriesExpression:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression__inherit__graph.png" border="0" usemap="#aSeriesExpression_inherit__map" alt="Inheritance graph"/></div>
 <map name="aSeriesExpression_inherit__map" id="aSeriesExpression_inherit__map">
-<area shape="rect" title="Base class for truncated series expressions." alt="" coords="21,155,154,181"/>
+<area shape="rect" title="Base class for truncated series expressions." alt="" coords="79,155,213,181"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html" title="Truncated Chebyshev series expression." alt="" coords="5,229,68,256"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="92,229,184,256"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="13,80,161,107"/>
-<area shape="rect" title=" " alt="" coords="56,5,119,32"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="23,304,130,331"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="154,304,245,331"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html" title="Truncated Fourier series to represent a function." alt="" coords="93,229,199,256"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="224,229,316,256"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="72,80,220,107"/>
+<area shape="rect" title=" " alt="" coords="115,5,177,32"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="155,304,262,331"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="286,304,377,331"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -161,6 +162,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a9949fe482a240f9233e2359d1ad942d4">is_orthogonal</a> (self)</td></tr>
 <tr class="memdesc:a9949fe482a240f9233e2359d1ad942d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether this series consists of orthogonal functions. <br /></td></tr>
 <tr class="separator:a9949fe482a240f9233e2359d1ad942d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc4f914955246db72c590e4e2237afc2"><td class="memItemLeft" align="right" valign="top"><a id="adc4f914955246db72c590e4e2237afc2"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>validate_and_fix_resolution</b> (cls, proposed_resolution)</td></tr>
+<tr class="separator:adc4f914955246db72c590e4e2237afc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a656b674738d14d8e92876ca836db9e2f"><td class="memItemLeft" align="right" valign="top"><a id="a656b674738d14d8e92876ca836db9e2f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>from_function</b> (cls, f, num, <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a8a6287602630db6aeffcb6cf5787a216">domain</a>=None, lobatto=True, use_mp=False, dps=None, **kw)</td></tr>
 <tr class="separator:a656b674738d14d8e92876ca836db9e2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -464,7 +468,7 @@ _evaluator() # create an evaluator object
 <p>Approximate a constant value. </p>
 <p>Subclasses may implement a more efficient algorithm here. This default implementation simply creates a constant function and approximates this function. </p>
 
-<p>Reimplemented in <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a80b47b021461c45422759213d553c051">CosineSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html#a80b47b021461c45422759213d553c051">SineSeries</a>, and <a class="el" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html#a80b47b021461c45422759213d553c051">Cheby</a>.</p>
+<p>Reimplemented in <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#a80b47b021461c45422759213d553c051">FourierSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a80b47b021461c45422759213d553c051">CosineSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html#a80b47b021461c45422759213d553c051">SineSeries</a>, and <a class="el" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html#a80b47b021461c45422759213d553c051">Cheby</a>.</p>
 
 </div>
 </div>
@@ -519,13 +523,9 @@ _evaluator() # create an evaluator object
 </div><div class="memdoc">
 
 <p>Approximate a function. </p>
-<pre class="fragment">   This samples the function `f` at `num` points in the current interval
-   `[a,b]` to create a series approximation using `num` terms.
-
-   After calling this, the series represented by this object is
-   guaranteed to have `num` elements, corresponding to `N = num-1` in
-   most textbooks for most bases.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>This samples the function <code>f</code> at <code>num</code> points in the current interval <code>[a,b]</code> to create a series approximation using <code>num</code> terms.</p>
+<p>After calling this, the series represented by this object is guaranteed to have <code>num</code> elements, corresponding to <code>N = num-1</code> in most textbooks for most bases.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">f</td><td>The function to approximate. May also be a constant, in which case we still create <code>num</code> elements (most of which will be zero for most bases). </td></tr>
     <tr><td class="paramname">num</td><td>Number of terms to use for approximation. This is also the number of times <code>f</code> is evaluated. Default is to use the current length of the coefficient list. </td></tr>
@@ -595,15 +595,9 @@ _evaluator() # create an evaluator object
 </div><div class="memdoc">
 
 <p>Return the Gauss-Lobatto or Gauss points for this series. </p>
-<pre class="fragment">   The returned list will have `num` elements. If you know the value of
-   `N`, you can find the corresponding value of `num` by checking the
-   textbooks for the number of degrees of freedom. The exact use of `N`
-   seems to be inconsistent across different books for many bases.
-
-   The ``**kw`` argument is passed to the subclass method for creating
-   the collocation points. These may be used to further specify options
-   such as symmetry, etc.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>The returned list will have <code>num</code> elements. If you know the value of <code>N</code>, you can find the corresponding value of <code>num</code> by checking the textbooks for the number of degrees of freedom. The exact use of <code>N</code> seems to be inconsistent across different books for many bases.</p>
+<p>The <code>**kw</code> argument is passed to the subclass method for creating the collocation points. These may be used to further specify options such as symmetry, etc.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">num</td><td>(int, optional) Number of collocation points to create. Note that in most printed formulas, the points have indices <code>0, 1, ..., N</code>, i.e. there are <code>N+1</code> points. This function, however, returns <code>num</code> points. To get the points that belong to a certain value of <code>N</code> in these formulas, call this function with <code>num=N+1</code>. The default is the current number of coefficients. </td></tr>
     <tr><td class="paramname">lobatto</td><td>(boolean, optional) If <code>True</code> (default), return the Gauss-Lobatto points, which include the endpoints of the interval. Otherwise, return the interior (Gauss) points. </td></tr>
@@ -704,20 +698,13 @@ _evaluator() # create an evaluator object
 </div><div class="memdoc">
 
 <p>Interpolate data and model the result as a series. </p>
-<pre class="fragment">   This is a convenience function that interpolates the given data using
-   `scipy.interpolate.interp1d` via cubic splines (by default) and then
-   approximates the result as a series with `num` terms.
-
-   If no x-values are present, the values `y` are assumed to lie
-   equidistant in the domain `[a,b]` (borders included).
-
-   Since the resulting interpolation function is approximated as a
-   series, there is no guarantee that \f[
-       f(x_i) = y_i
-   \f]
-   holds. In general, the higher the value of `num`, the better the above
-   equation is satisfied.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>This is a convenience function that interpolates the given data using <code>scipy.interpolate.interp1d</code> via cubic splines (by default) and then approximates the result as a series with <code>num</code> terms.</p>
+<p>If no x-values are present, the values <code>y</code> are assumed to lie equidistant in the domain <code>[a,b]</code> (borders included).</p>
+<p>Since the resulting interpolation function is approximated as a series, there is no guarantee that </p><p class="formulaDsp">
+\[ f(x_i) = y_i \]
+</p>
+<p> holds. In general, the higher the value of <code>num</code>, the better the above equation is satisfied.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">y</td><td>Data y-values. </td></tr>
     <tr><td class="paramname">x</td><td>Positions of the data values on the x-axis. By default, an equidistant grid on the domain <code>[a,b]</code> is used. </td></tr>
@@ -772,6 +759,8 @@ _evaluator() # create an evaluator object
 <p>Change resolution of the expansion. </p>
 <p>For orthogonal bases, upsampling is lossless. Also in that case, increasing and then reducing the resolution to its original value is lossless and introduces no numerical noise.</p>
 <p>For non-orthogonal bases, the function currently represented by the expansion will be sampled at the new requested number of collocation points to perform a lossy resampling. </p>
+
+<p>Reimplemented in <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#afbc6d958ccf100ffb45357d88aa30efe">FourierSeries</a>.</p>
 
 </div>
 </div>

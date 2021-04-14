@@ -27,6 +27,7 @@ var hierarchy =
     ] ],
     [ "_FuncWrap", "classmotsfinder_1_1utils_1_1__FuncWrap.html", null ],
     [ "_LapseWrapper", "classmotsfinder_1_1metric_1_1analytical_1_1transformed_1_1__LapseWrapper.html", null ],
+    [ "_MetricTensorCache", "classmotsfinder_1_1metric_1_1base_1_1__MetricTensorCache.html", null ],
     [ "_NeckInfo", "classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1__NeckInfo.html", null ],
     [ "_PropResult", "classmotsfinder_1_1axisym_1_1trackmots_1_1props_1_1__PropResult.html", null ],
     [ "_Runner", "classmotsfinder_1_1utils_1_1__Runner.html", null ],
@@ -43,6 +44,7 @@ var hierarchy =
         [ "InsufficientResolutionOrRoundoff", "classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html", null ],
         [ "StepLimitExceeded", "classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html", null ]
       ] ],
+      [ "ShootingMethodError", "classmotsfinder_1_1axisym_1_1shooting_1_1shooting_1_1ShootingMethodError.html", null ],
       [ "AuxResultMissing", "classmotsfinder_1_1axisym_1_1trackmots_1_1props_1_1AuxResultMissing.html", null ],
       [ "LockFileError", "classmotsfinder_1_1lockfile_1_1lockfile_1_1LockFileError.html", [
         [ "AlreadyLockedError", "classmotsfinder_1_1lockfile_1_1lockfile_1_1AlreadyLockedError.html", null ],
@@ -66,11 +68,11 @@ var hierarchy =
       [ "BaseParametricCurve", "classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html", [
         [ "BipolarCurve", "classmotsfinder_1_1axisym_1_1curve_1_1bipolarcurve_1_1BipolarCurve.html", null ],
         [ "ParametricCurve", "classmotsfinder_1_1axisym_1_1curve_1_1parametriccurve_1_1ParametricCurve.html", null ]
+      ] ],
+      [ "MotsFindingConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html", [
+        [ "BrillLindquistConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html", null ],
+        [ "GeneralMotsConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html", null ]
       ] ]
-    ] ],
-    [ "MotsFindingConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html", [
-      [ "BrillLindquistConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html", null ],
-      [ "GeneralMotsConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html", null ]
     ] ],
     [ "MOTSTracker", "classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html", null ],
     [ "object", null, [
@@ -95,6 +97,7 @@ var hierarchy =
           [ "_ChebyEval", "classmotsfinder_1_1exprs_1_1cheby_1_1__ChebyEval.html", null ],
           [ "_TrigEval", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html", [
             [ "_CosineSeriesEval", "classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html", null ],
+            [ "_FourierSeriesEval", "classmotsfinder_1_1exprs_1_1trig_1_1__FourierSeriesEval.html", null ],
             [ "_SineSeriesEval", "classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html", null ]
           ] ]
         ] ],
@@ -124,6 +127,7 @@ var hierarchy =
         ] ],
         [ "SeriesExpression", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html", [
           [ "Cheby", "classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html", null ],
+          [ "FourierSeries", "classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html", null ],
           [ "_TrigSeries", "classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html", [
             [ "CosineSeries", "classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html", null ],
             [ "SineSeries", "classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html", null ]
@@ -135,6 +139,7 @@ var hierarchy =
         [ "_ThreeMetric", "classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html", [
           [ "KerrKSSlice", "classmotsfinder_1_1metric_1_1analytical_1_1kerrks_1_1KerrKSSlice.html", null ],
           [ "SchwarzschildKSSlice", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSlice.html", null ],
+          [ "SchwarzschildPGSlice", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSlice.html", null ],
           [ "FlatThreeMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html", null ],
           [ "_ConformallyFlatMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html", [
             [ "BrillLindquistMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1BrillLindquistMetric.html", null ],
@@ -154,6 +159,7 @@ var hierarchy =
         [ "_SpectralSeriesBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html", [
           [ "ChebyBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html", null ],
           [ "CosineBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html", null ],
+          [ "FourierBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1FourierBasis.html", null ],
           [ "SineBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html", null ]
         ] ]
       ] ],
@@ -170,6 +176,7 @@ var hierarchy =
     [ "SchwarzschildKSSliceCurv", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceCurv.html", null ],
     [ "SchwarzschildKSSliceLapse", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceLapse.html", null ],
     [ "SchwarzschildKSSliceShift", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceShift.html", null ],
+    [ "SchwarzschildPGSliceCurv", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSliceCurv.html", null ],
     [ "SignatureQuantities", "classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1SignatureQuantities.html", null ],
     [ "SioProject", "classmotsfinder_1_1metric_1_1simulation_1_1sioproject_1_1SioProject.html", null ],
     [ "StabilityCalc", "classmotsfinder_1_1axisym_1_1curve_1_1stabcalc_1_1StabilityCalc.html", null ],
@@ -182,6 +189,7 @@ var hierarchy =
       [ "ExpressionWarning", "classmotsfinder_1_1exprs_1_1numexpr_1_1ExpressionWarning.html", null ]
     ] ],
     [ "ABCMeta", null, [
-      [ "BaseParametricCurve", "classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html", null ]
+      [ "BaseParametricCurve", "classmotsfinder_1_1axisym_1_1curve_1_1baseparamcurve_1_1BaseParametricCurve.html", null ],
+      [ "MotsFindingConfig", "classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html", null ]
     ] ]
 ];

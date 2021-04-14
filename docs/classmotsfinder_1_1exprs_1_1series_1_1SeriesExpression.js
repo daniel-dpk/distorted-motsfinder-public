@@ -17,6 +17,7 @@ var classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression =
     [ "N", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a8d46d885c64dcd7e03c1cce176d06b3e", null ],
     [ "resample", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#afbc6d958ccf100ffb45357d88aa30efe", null ],
     [ "set_coefficients", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a69a1d316f82763717a4b3b9cdc7acb4b", null ],
+    [ "validate_and_fix_resolution", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#adc4f914955246db72c590e4e2237afc2", null ],
     [ "a", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a4124bc0a9335c27f086f24ba207a4912", null ],
     [ "a_n", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#aa3d9f572c400e7b58723bfc2aeef6e13", null ],
     [ "b", "classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html#a21ad0bd836b90d08f4cf640b4c298e7c", null ]

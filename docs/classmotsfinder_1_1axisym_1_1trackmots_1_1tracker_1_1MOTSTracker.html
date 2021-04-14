@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -122,6 +122,12 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="memitem:ab50ed149167a30e290d4cdf70d0b90fd"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ab50ed149167a30e290d4cdf70d0b90fd">track</a> (self)</td></tr>
 <tr class="memdesc:ab50ed149167a30e290d4cdf70d0b90fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start the tracker.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ab50ed149167a30e290d4cdf70d0b90fd">More...</a><br /></td></tr>
 <tr class="separator:ab50ed149167a30e290d4cdf70d0b90fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b393744943f45f873babc2a478d63e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a70b393744943f45f873babc2a478d63e">predicted_location</a> (self, time, prev_curve, <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a61d55fcce94f715ed7f3a1ef95c76d78">full_output</a>=False, verbose=True)</td></tr>
+<tr class="memdesc:a70b393744943f45f873babc2a478d63e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predict the location of a given curve at a given time.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a70b393744943f45f873babc2a478d63e">More...</a><br /></td></tr>
+<tr class="separator:a70b393744943f45f873babc2a478d63e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3c2da93458d2c419d0617c20c22a4bb"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ab3c2da93458d2c419d0617c20c22a4bb">apply_velocity</a> (self, g, prev_curve)</td></tr>
+<tr class="memdesc:ab3c2da93458d2c419d0617c20c22a4bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Estimate horizon velocity and move the given curve accordingly.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ab3c2da93458d2c419d0617c20c22a4bb">More...</a><br /></td></tr>
+<tr class="separator:ab3c2da93458d2c419d0617c20c22a4bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeefa806c0241123693fbe09763456857"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#aeefa806c0241123693fbe09763456857">neck_trick</a> (self, g, c)</td></tr>
 <tr class="memdesc:aeefa806c0241123693fbe09763456857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check and possibly perform the <em>neck trick</em>.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#aeefa806c0241123693fbe09763456857">More...</a><br /></td></tr>
 <tr class="separator:aeefa806c0241123693fbe09763456857"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -261,7 +267,7 @@ Public Attributes</h2></td></tr>
 <tr class="separator:aacbb9862bad2dbc9c5950f1e17dcc795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16fa9806e9ed1764b21166ffbf9ae94b"><td class="memItemLeft" align="right" valign="top"><a id="a16fa9806e9ed1764b21166ffbf9ae94b"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a16fa9806e9ed1764b21166ffbf9ae94b">auto_bipolar_move</a></td></tr>
-<tr class="memdesc:a16fa9806e9ed1764b21166ffbf9ae94b"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>True</code>, move the origin of the bipolar coordinate system to the center between the lower end of the top and upper end of the bottom MOTS. <br /></td></tr>
+<tr class="memdesc:a16fa9806e9ed1764b21166ffbf9ae94b"><td class="mdescLeft">&#160;</td><td class="mdescRight">If <code>True</code>, move the origin of the bipolar coordinate system to the predicted location of the MOTS. Where this is depends on the chosen location prediction method. In case of an activated <em>neck trick</em>, choses the center between the lower end of the top and upper end of the bottom MOTS (even if the conditions for applying the neck trick are not met). <br /></td></tr>
 <tr class="separator:a16fa9806e9ed1764b21166ffbf9ae94b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7dd4ba423849c70c1e2d632d19c87af"><td class="memItemLeft" align="right" valign="top"><a id="ac7dd4ba423849c70c1e2d632d19c87af"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ac7dd4ba423849c70c1e2d632d19c87af">min_ref_num</a></td></tr>
@@ -283,6 +289,18 @@ Public Attributes</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a26a581cf5d1713935a7fee21d5921982">neck_trick_thresholds</a></td></tr>
 <tr class="memdesc:a26a581cf5d1713935a7fee21d5921982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thresholds for performing the <em>neck trick</em> (if enabled). The first float is compared against the ratio of the smaller individual MOTS's coordinate width to the neck's coordinate width. The second against the ratio of coordinate distance of the two individual MOTSs to the neck's width. If any of these two ratios lies above the respective threshold, the <em>neck trick</em> is performed. Note that an error is raised if either of the two individual MOTSs for this slice is not found. <br /></td></tr>
 <tr class="separator:a26a581cf5d1713935a7fee21d5921982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2cb2083070a148810a2ac83975a9c35"><td class="memItemLeft" align="right" valign="top"><a id="ac2cb2083070a148810a2ac83975a9c35"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ac2cb2083070a148810a2ac83975a9c35">predict_location</a></td></tr>
+<tr class="memdesc:ac2cb2083070a148810a2ac83975a9c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether to estimate a "coordinate velocity" of the MOTS to predict its location in the next slice. The reference shape is then moved by an appropriate amount prior to starting the search. <br /></td></tr>
+<tr class="separator:ac2cb2083070a148810a2ac83975a9c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f11668df3afb98d15b51cf377771404"><td class="memItemLeft" align="right" valign="top"><a id="a8f11668df3afb98d15b51cf377771404"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a8f11668df3afb98d15b51cf377771404">use_location</a></td></tr>
+<tr class="memdesc:a8f11668df3afb98d15b51cf377771404"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which location to use for tracking and predicting the next MOTS location. <code>"center"</code> (default) uses the coordinate center between the north and south pole while <code>"north"</code> and <code>"south"</code> only consider the location of that pole. <code>"xmin"</code> uses a local minimum of the x-coordinate. <br /></td></tr>
+<tr class="separator:a8f11668df3afb98d15b51cf377771404"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630d32536512f07b1f89c2a845035b4b"><td class="memItemLeft" align="right" valign="top"><a id="a630d32536512f07b1f89c2a845035b4b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a630d32536512f07b1f89c2a845035b4b">initial_velocity</a></td></tr>
+<tr class="memdesc:a630d32536512f07b1f89c2a845035b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coordinate velocity to use before it can be estimated. <br /></td></tr>
+<tr class="separator:a630d32536512f07b1f89c2a845035b4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65a86ebae492ca78e26c87ad0d7de7aa"><td class="memItemLeft" align="right" valign="top"><a id="a65a86ebae492ca78e26c87ad0d7de7aa"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a65a86ebae492ca78e26c87ad0d7de7aa">interpolation</a></td></tr>
 <tr class="memdesc:a65a86ebae492ca78e26c87ad0d7de7aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Kind of interpolation to perform on numerical data on a grid. Refer to <a class="el" href="classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a3a9587d764d75c9d761ba7f1cd107170" title="Change the kind of interpolation to do between grid points.">motsfinder.metric.discrete.patch.DataPatch.set_interpolation()</a> for more details. <br /></td></tr>
@@ -315,9 +333,13 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a90ca89846cfe222370ee22efcf1760a7">_do_step</a> (self, g, i, try_no, stride)</td></tr>
 <tr class="memdesc:a90ca89846cfe222370ee22efcf1760a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a6d9f5d6465f7a0b0dd8d1ed0d480c016" title="Find the MOTS in the i&#39;th slice.">_step()</a> <br /></td></tr>
 <tr class="separator:a90ca89846cfe222370ee22efcf1760a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fa0326cdac19a559ceb2615ecd4af42"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a1fa0326cdac19a559ceb2615ecd4af42">_current_ref_curve</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a9bda50c2ecb07d8a4e9f694c60e1120f">cfg</a>, allow_neck_trick=True)</td></tr>
-<tr class="memdesc:a1fa0326cdac19a559ceb2615ecd4af42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare and return the current reference curve.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a1fa0326cdac19a559ceb2615ecd4af42">More...</a><br /></td></tr>
-<tr class="separator:a1fa0326cdac19a559ceb2615ecd4af42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17dc9b190e9dcc4d192af111e3f8e8b0"><td class="memItemLeft" align="right" valign="top"><a id="a17dc9b190e9dcc4d192af111e3f8e8b0"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a17dc9b190e9dcc4d192af111e3f8e8b0">_get_shape_location</a> (self, c)</td></tr>
+<tr class="memdesc:a17dc9b190e9dcc4d192af111e3f8e8b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the z-coordinate of the location of the curve's shape. <br /></td></tr>
+<tr class="separator:a17dc9b190e9dcc4d192af111e3f8e8b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac72f08c6e50ad290d922a6063675ec65"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ac72f08c6e50ad290d922a6063675ec65">_current_ref_curve</a> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a9bda50c2ecb07d8a4e9f694c60e1120f">cfg</a>, allow_transform=True)</td></tr>
+<tr class="memdesc:ac72f08c6e50ad290d922a6063675ec65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare and return the current reference curve.  <a href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#ac72f08c6e50ad290d922a6063675ec65">More...</a><br /></td></tr>
+<tr class="separator:ac72f08c6e50ad290d922a6063675ec65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b98d09c0ecfdc3fa2198f2edf42afec"><td class="memItemLeft" align="right" valign="top"><a id="a1b98d09c0ecfdc3fa2198f2edf42afec"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>_reparam_settings</b> (self, <a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#a9bda50c2ecb07d8a4e9f694c60e1120f">cfg</a>)</td></tr>
 <tr class="separator:a1b98d09c0ecfdc3fa2198f2edf42afec"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -368,6 +390,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><b>_get_neck_info</b> (se
 <tr class="memitem:a4d9ab991df579155444184b5e1599802"><td class="memItemLeft" align="right" valign="top"><a id="a4d9ab991df579155444184b5e1599802"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>_compute_neck_info</b> (self, g)</td></tr>
 <tr class="separator:a4d9ab991df579155444184b5e1599802"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6cba35594215e72ddd65527cc65ef910"><td class="memItemLeft" align="right" valign="top"><a id="a6cba35594215e72ddd65527cc65ef910"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>_move_curve</b> (self, c, delta_z)</td></tr>
+<tr class="separator:a6cba35594215e72ddd65527cc65ef910"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae9bc8b079ac4b660b3ac82c19a730c4"><td class="memItemLeft" align="right" valign="top"><a id="aae9bc8b079ac4b660b3ac82c19a730c4"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1trackmots_1_1tracker_1_1MOTSTracker.html#aae9bc8b079ac4b660b3ac82c19a730c4">_get_cfg</a> (self, g, try_no)</td></tr>
 <tr class="memdesc:aae9bc8b079ac4b660b3ac82c19a730c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a configuration for the given metric's slice. <br /></td></tr>
@@ -399,6 +424,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:afa0effe9d3a84f94604afd11272aa67b"><td class="memItemLeft" align="right" valign="top"><a id="afa0effe9d3a84f94604afd11272aa67b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>_prev_locations</b></td></tr>
+<tr class="separator:afa0effe9d3a84f94604afd11272aa67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84ba717c455e1281e598df43eac6f817"><td class="memItemLeft" align="right" valign="top"><a id="a84ba717c455e1281e598df43eac6f817"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>_last_neck_info</b></td></tr>
 <tr class="separator:a84ba717c455e1281e598df43eac6f817"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -690,8 +718,8 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a1fa0326cdac19a559ceb2615ecd4af42"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fa0326cdac19a559ceb2615ecd4af42">&#9670;&nbsp;</a></span>_current_ref_curve()</h2>
+<a id="ac72f08c6e50ad290d922a6063675ec65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac72f08c6e50ad290d922a6063675ec65">&#9670;&nbsp;</a></span>_current_ref_curve()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -715,7 +743,7 @@ Private Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>allow_neck_trick</em> = <code>True</code>&#160;</td>
+          <td class="paramname"><em>allow_transform</em> = <code>True</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -770,7 +798,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the origin for bipolar coordinates. </p>
-<p>If the origin is specified using configuration options (<code>bipolar_kw</code>), then this value is returned. Otherwise, we use the center between the top and bottom MOTSs (assuming they have already been found). </p>
+<p>If the origin is specified using configuration options (<code>bipolar_kw</code>), then this value is returned. Otherwise, we use the predicted location of the MOTS (i.e. the center between the top and bottom MOTSs in case the neck trick is chosen). </p>
 
 </div>
 </div>
@@ -996,6 +1024,49 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ab3c2da93458d2c419d0617c20c22a4bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3c2da93458d2c419d0617c20c22a4bb">&#9670;&nbsp;</a></span>apply_velocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def apply_velocity </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>prev_curve</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Estimate horizon velocity and move the given curve accordingly. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">g</td><td>Metric representing the time at which to estimate the MOTS position. </td></tr>
+    <tr><td class="paramname">prev_curve</td><td>Previous curve to move to the estimated position. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aa09f5de26d7a1c3ecb12d56fd790789f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa09f5de26d7a1c3ecb12d56fd790789f">&#9670;&nbsp;</a></span>load_init_curve()</h2>
 
@@ -1054,6 +1125,64 @@ Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">g</td><td>Current slice's metric. </td></tr>
     <tr><td class="paramname">c</td><td>Reference curve (or initial guess) to apply the neck trick to. Should be a .<a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1ExpansionCurve.html" title="Base class for curves that can calculate their expansion.">curve.expcurve.ExpansionCurve</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a70b393744943f45f873babc2a478d63e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70b393744943f45f873babc2a478d63e">&#9670;&nbsp;</a></span>predicted_location()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def predicted_location </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>time</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>prev_curve</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>full_output</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Predict the location of a given curve at a given time. </p>
+<p>This predicts the location of the <em>anchor</em> point at a given time. This anchor is configured with the <code>use_location</code> property.</p>
+<dl class="section return"><dt>Returns</dt><dd>A tuple <code>(z, dz)</code> of the predicted location of the z-coordinate of the anchor point and the amount <code>dz</code> by which the <code>prev_curve</code> needs to be moved. Returns <code>(None, None)</code> if the location cannot be predicted for any reason, e.g. when too few steps have been taken or location prediction is not active.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">time</td><td>Time at which the location of <code>prev_curve</code> should be predicted. </td></tr>
+    <tr><td class="paramname">prev_curve</td><td>Curve to predict the location of. </td></tr>
+    <tr><td class="paramname">verbose</td><td>Print some info. Default is <code>True</code>. </td></tr>
   </table>
   </dd>
 </dl>

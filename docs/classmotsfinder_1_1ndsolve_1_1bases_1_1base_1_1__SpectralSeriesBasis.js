@@ -2,7 +2,7 @@ var classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis =
 [
     [ "__init__", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html#afded56458ebecbc5b58c808df0015a8d", null ],
     [ "_collocation_points", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html#a34f5e537d77d303750894eef841ed1ad", null ],
-    [ "get_series_cls", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html#a8c4f2b47f1ed55a6e9e1c2762c652513", null ],
+    [ "get_series_cls", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html#a5b6f886d52bfdf5eabac3f2cf0acb8bd", null ],
     [ "init", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html#a9ea7391b1d06b4bcc3ff8e84bb00b76d", null ],
     [ "internal_domain", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html#a4db25210759793611e7ba301f4dce561", null ],
     [ "series_factory", "classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html#ad34bed5ce698f4b0750565ad9aef64c7", null ],

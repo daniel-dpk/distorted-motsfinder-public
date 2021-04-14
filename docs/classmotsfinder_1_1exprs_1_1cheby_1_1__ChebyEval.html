@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -368,13 +368,8 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Convert coefficients w.r.t. a symmetry to general coefficients. </p>
-<pre class="fragment">   In case the Cheby expression is configured to be symmetric or
-   antisymmetric w.r.t. zero, its coefficients will consist of only those
-   of the basis functions with the correct symmetry. For the algorithms
-   used in the evaluator class, the simplest solution is to use
-   *expanded*, i.e. normal coefficients for all basis functions,
-   previously missing ones being zero, of course.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>In case the <a class="el" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html" title="Truncated Chebyshev series expression.">Cheby</a> expression is configured to be symmetric or antisymmetric w.r.t. zero, its coefficients will consist of only those of the basis functions with the correct symmetry. For the algorithms used in the evaluator class, the simplest solution is to use <em>expanded</em>, i.e. normal coefficients for all basis functions, previously missing ones being zero, of course.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">an</td><td>Coefficients as iterable. </td></tr>
     <tr><td class="paramname">sym</td><td>Symmetry with respect to which the <code>an</code> are given.</td></tr>
@@ -420,18 +415,12 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the coefficients for evaluating derivatives of basis functions. </p>
-<pre class="fragment">   The n'th derivative of an individual Chebyshev polynomial \f$T_k\f$ can
-   itself be expressed exactly as Chebyshev series, i.e. \f[
-       T_k^{(n)}(x) = \sum_{i=0}^{k-1} a^{k,n}_i T_i(x).
-   \f]
-   This function computes the coefficients \f$ a^{k,n}_i \f$ for all
-   basis functions `k = 1, ..., num` of a requested derivative order `n`,
-   where `num` is the number of basis functions in the current expansion.
-
-   The results are independent of the point `x` at which to evaluate the
-   basis and can hence efficiently be cached for the lifetime of this
-   object.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>The n'th derivative of an individual Chebyshev polynomial \(T_k\) can itself be expressed exactly as Chebyshev series, i.e. </p><p class="formulaDsp">
+\[ T_k^{(n)}(x) = \sum_{i=0}^{k-1} a^{k,n}_i T_i(x). \]
+</p>
+<p> This function computes the coefficients \( a^{k,n}_i \) for all basis functions <code>k = 1, ..., num</code> of a requested derivative order <code>n</code>, where <code>num</code> is the number of basis functions in the current expansion.</p>
+<p>The results are independent of the point <code>x</code> at which to evaluate the basis and can hence efficiently be cached for the lifetime of this object.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>Derivative order of coefficients to return.</td></tr>
   </table>
@@ -476,9 +465,8 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return cached coefficients for a certain derivative order. </p>
-<pre class="fragment">   If coefficients for the requested derivative `n` are not yet cached,
-   they are computed and then stored.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>If coefficients for the requested derivative <code>n</code> are not yet cached, they are computed and then stored.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>Derivative order to get coefficients for.</td></tr>
   </table>
@@ -529,10 +517,8 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the basis function values optionally multiplied with the coefficients. </p>
-<pre class="fragment">   Basis function values are only recomputed if required. This means that
-   if you evaluate the series and its derivatives at the same point, the
-   basis has to be evaluated only once.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>Basis function values are only recomputed if required. This means that if you evaluate the series and its derivatives at the same point, the basis has to be evaluated only once.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>Derivative order of coefficients to use. Only has an effect if <code>apply_coeffs==True</code>. </td></tr>
     <tr><td class="paramname">apply_coeffs</td><td>Whether to multiply the basis functions with the selected coefficients (<code>True</code>) or return just the values of the basis functions (<code>False</code>, default). </td></tr>

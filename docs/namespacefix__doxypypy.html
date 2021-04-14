@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -113,7 +113,7 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a292b3e3438c3baa15c1244a53cef086e"><td class="memItemLeft" align="right" valign="top"><a id="a292b3e3438c3baa15c1244a53cef086e"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacefix__doxypypy.html#a292b3e3438c3baa15c1244a53cef086e">main</a> ()</td></tr>
-<tr class="memdesc:a292b3e3438c3baa15c1244a53cef086e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read from stdin, fix comment block, and print to stdout. <br /></td></tr>
+<tr class="memdesc:a292b3e3438c3baa15c1244a53cef086e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform a (patched) doxypypy run and then fix comment blocks. <br /></td></tr>
 <tr class="separator:a292b3e3438c3baa15c1244a53cef086e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -128,31 +128,65 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 <li>LaTeX formulas containing primes &lsquo;&rsquo;` to indicate derivatives sometimes lead to the primes and a few more characters disappearing. This can sometimes be fixed by not putting the LaTeX code on its own line.</li>
 </ul>
 <p>An example for the last mentioned (LaTeX) problem is the following. This line gets rendered incorrectly: </p><p class="formulaDsp">
-\[ f a b \sin(b x) f&#39;(x) = a b^2 \cos(b x) f(x) \]
+\[ f&#39;&#39;(x) - a b \sin(b x) f&#39;(x) = a b^2 \cos(b x) f(x) \]
 </p>
 <p> This following gets rendered correctly: </p><p class="formulaDsp">
 \[ f&#39;&#39;(x) - a b \sin(b x) f&#39;(x) = a b^2 \cos(b x) f(x) \]
 </p>
 <h2>What this Script does</h2>
-<p>This script reads from <code>stdin</code> and prints to <code>stdout</code>, i.e. you'd pipe this after <code>doxypypy</code> in your filter command.</p>
-<p>It does <em>not</em> fix all the problems mentioned above (a re-implementation of <code>doxypypy</code> would probably be the easiest solution). However, a few of the layout related and code-block problems are mitigated by removing the excessive indentation that <code>doxypypy</code> keeps in its output. This is done by finding the common minimum indentation of a Doxygen comment block created by <code>doxypypy</code> and replacing it by one space only.</p>
+<p>This script loads the <code>doxypypy</code> module and patches it to remove some of the features which lead to the above problems. The produced output is then transformed again to fix code-block detections. Finally, the generated code is printed to <code>stdout</code>.</p>
 <p>For example, consider the following docstring </p><pre class="fragment">class MyClass():
     def foo(self):
         r'''Brief description.
 
-        Long description.
+        Some equation:
+        \f[
+            f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+        \f]
+
+        Code example:
+
+            def my_foo(x):
+                return 1 - 2*x
+
+        A sentence that ends with two words separated by a comma on a single
+        line, etc.
         '''
-</pre><p> Doxypypy converts this to: </p><pre class="fragment">class MyClass():
+        pass
+</pre><p> Doxypypy on its own converts this to: </p><pre class="fragment">class MyClass():
     ## @brief Brief description.
     #
-    #        Long description.
+    #       Some equation:
+    #       \f[
+    # f a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+    #       \f]
+    #
+    #       Code example:
+    #
+    #           def my_foo(x):
+    # return    2*x
+    #
+    #       A sentence that ends with two words separated by a comma on a single
+    # line
+    # etc.
     #
     def foo(self):
         pass
-</pre><p> This script then translates this to: </p><pre class="fragment">class MyClass():
+</pre><p> This script instead produces: </p><pre class="fragment">class MyClass():
     ## @brief Brief description.
     #
-    # Long description.
+    # Some equation:
+    # \f[
+    #     f''(x) - a b \sin(b x) f'(x) = a b^2 \cos(b x) f(x)
+    # \f]
+    #
+    # Code example:
+    #
+    #     def my_foo(x):
+    #         return 1 - 2*x
+    #
+    # A sentence that ends with two words separated by a comma on a single
+    # line, etc.
     #
     def foo(self):
         pass

@@ -18,6 +18,7 @@ var classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve =
     [ "curvature_in_coord_space", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a2eb82a7718f79c5641e8caf3d3c86da5", null ],
     [ "diff", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#af90ab29fbc886ed361b8bd4e78a468cd", null ],
     [ "find_line_intersection", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a06de71936f2ea3123e81da7cdf38e594", null ],
+    [ "find_local_min_x", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ab918d07baeb7e91c3d3db5bcb67e3d34", null ],
     [ "find_max_x", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a66c7cd146b41d259e63a054663978a2d", null ],
     [ "fix_evaluator", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a6386ff53ecf46bc525a3cb16448ae413", null ],
     [ "force_evaluator_update", "classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a6174ee487da3aeeb80f401bac6659a5b", null ],

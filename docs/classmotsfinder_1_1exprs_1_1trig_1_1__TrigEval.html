@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -110,12 +110,13 @@ Inheritance diagram for _TrigEval:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval__inherit__graph.png" border="0" usemap="#a__TrigEval_inherit__map" alt="Inheritance graph"/></div>
 <map name="a__TrigEval_inherit__map" id="a__TrigEval_inherit__map">
-<area shape="rect" title="Common base evaluator for trigonometric expressions." alt="" coords="115,229,195,256"/>
+<area shape="rect" title="Common base evaluator for trigonometric expressions." alt="" coords="203,229,283,256"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html" title="Evaluator class for CosineSeries." alt="" coords="5,304,147,331"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html" title="Evaluator class for SineSeries." alt="" coords="171,304,296,331"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorBase.html" title="Base class for custom evaluator classes." alt="" coords="97,155,213,181"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html" title="Base class for all evaluator classes." alt="" coords="109,80,200,107"/>
-<area shape="rect" title=" " alt="" coords="123,5,186,32"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__FourierSeriesEval.html" title="Evaluator class for CosineSeries." alt="" coords="171,304,314,331"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html" title="Evaluator class for SineSeries." alt="" coords="339,304,464,331"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1evaluators_1_1EvaluatorBase.html" title="Base class for custom evaluator classes." alt="" coords="185,155,301,181"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1evaluators_1_1__Evaluator.html" title="Base class for all evaluator classes." alt="" coords="197,80,288,107"/>
+<area shape="rect" title=" " alt="" coords="211,5,274,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -218,10 +219,10 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a77cb85d6108d5dd55b566a7fde67fe1e"><td class="memItemLeft" align="right" valign="top"><a id="a77cb85d6108d5dd55b566a7fde67fe1e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a77cb85d6108d5dd55b566a7fde67fe1e">_pi</a></td></tr>
-<tr class="memdesc:a77cb85d6108d5dd55b566a7fde67fe1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant <code>pi</code> with correct accuracy (float or mpmath). <br /></td></tr>
-<tr class="separator:a77cb85d6108d5dd55b566a7fde67fe1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6e8f2721f1fb3029852f3e13538bd69"><td class="memItemLeft" align="right" valign="top"><a id="ae6e8f2721f1fb3029852f3e13538bd69"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#ae6e8f2721f1fb3029852f3e13538bd69">_upper</a></td></tr>
+<tr class="memdesc:ae6e8f2721f1fb3029852f3e13538bd69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant <code>pi</code> (or 2pi for Fourier series) with correct accuracy (float or mpmath). <br /></td></tr>
+<tr class="separator:ae6e8f2721f1fb3029852f3e13538bd69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e39dc64dd283440ccbff0f61807da28"><td class="memItemLeft" align="right" valign="top"><a id="a9e39dc64dd283440ccbff0f61807da28"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigEval.html#a9e39dc64dd283440ccbff0f61807da28">_num</a></td></tr>
 <tr class="memdesc:a9e39dc64dd283440ccbff0f61807da28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of coefficients. <br /></td></tr>
@@ -456,7 +457,7 @@ Private Attributes</h2></td></tr>
 <p>This evaluates the basis functions (sine/cosine frequencies) usable for the even or odd derivatives. Note that no derivatives are actually computed. However, these can easily be obtained from the results returned here.</p>
 <p>The result is cached such that it can be reused in subsequent evaluations at the same point. A use case is that the function and its second derivative need to be evaluated at the same point <code>x</code>. The values will be computed only once in this case. </p>
 
-<p>Reimplemented in <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html#af31113aebcc6e5cdfbe6c5e398440827">_CosineSeriesEval</a>, and <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html#af31113aebcc6e5cdfbe6c5e398440827">_SineSeriesEval</a>.</p>
+<p>Reimplemented in <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__FourierSeriesEval.html#af31113aebcc6e5cdfbe6c5e398440827">_FourierSeriesEval</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html#af31113aebcc6e5cdfbe6c5e398440827">_CosineSeriesEval</a>, and <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html#af31113aebcc6e5cdfbe6c5e398440827">_SineSeriesEval</a>.</p>
 
 </div>
 </div>

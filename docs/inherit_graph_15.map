@@ -1,3 +1,18 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classfix__doxypypy_1_1DoxyCommentBlock.html" title="Class representing a single Doxygen comment block." alt="" coords="5,5,161,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,275,92,301"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1DistanceSearchError.html" title="Raised when the closest distance between curves could not be found." alt="" coords="163,5,318,32"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1IntegrationError.html" title="Raised for non&#45;converging integrals or if accuracy cannot be reached." alt="" coords="179,56,303,83"/>
+<area shape="rect" id="node4" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1TimeEvolutionVectorSearchError.html" title="Raised when the time evolution vector could not be represented via k and l." alt="" coords="140,107,341,149"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1axisym_1_1curve_1_1expcurve_1_1__IntersectionDetectionError.html" title="Raised when self&#45;intersection cannot be located." alt="" coords="141,173,341,200"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1axisym_1_1newton_1_1NoConvergence.html" title="Base for exceptions indicating failed convergence of Newton steps." alt="" coords="178,224,303,251"/>
+<area shape="rect" id="node9" href="$classmotsfinder_1_1axisym_1_1shooting_1_1shooting_1_1ShootingMethodError.html" title="Raised when an error occurs while integrating the coupled ODEs." alt="" coords="161,275,320,301"/>
+<area shape="rect" id="node10" href="$classmotsfinder_1_1axisym_1_1trackmots_1_1props_1_1AuxResultMissing.html" title="Raised when a result is missing required for computing a property." alt="" coords="171,325,310,352"/>
+<area shape="rect" id="node11" href="$classmotsfinder_1_1lockfile_1_1lockfile_1_1LockFileError.html" title="Base exception for any lockfile related errors." alt="" coords="187,376,294,403"/>
+<area shape="rect" id="node14" href="$classmotsfinder_1_1metric_1_1discrete_1_1numerical_1_1GridDataError.html" title="Raised if discrete data is not compatible with this module." alt="" coords="185,427,296,453"/>
+<area shape="rect" id="node15" href="$classmotsfinder_1_1ndsolve_1_1bcs_1_1NDSolveError.html" title="Raised for problems of the numerical task (like ill&#45;conditioned boundary conditions)." alt="" coords="186,477,295,504"/>
+<area shape="rect" id="node16" href="$classmotsfinder_1_1numutils_1_1NumericalError.html" title="Exception raised for problems with numerical evaluation." alt="" coords="181,528,301,555"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1axisym_1_1newton_1_1InsufficientResolutionOrRoundoff.html" title="Raised when resolution is too low or roundoff prevents convergence." alt="" coords="389,187,568,229"/>
+<area shape="rect" id="node8" href="$classmotsfinder_1_1axisym_1_1newton_1_1StepLimitExceeded.html" title="Raised when convergence not achieved within the step count limit." alt="" coords="405,253,552,280"/>
+<area shape="rect" id="node12" href="$classmotsfinder_1_1lockfile_1_1lockfile_1_1AlreadyLockedError.html" title="Raised when we try to lock while already having a lock." alt="" coords="405,355,553,381"/>
+<area shape="rect" id="node13" href="$classmotsfinder_1_1lockfile_1_1lockfile_1_1DanglingLockfile.html" title="Raised when an unknown lockfile is present which we can&#39;t handle." alt="" coords="413,405,544,432"/>
 </map>

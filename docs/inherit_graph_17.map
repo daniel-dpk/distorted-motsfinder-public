@@ -1,4 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,111,32"/>
-<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1ExpressionWarning.html" title="Warning issued when expressions might not evaluate as expected." alt="" coords="159,5,305,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,85,32"/>
+<area shape="rect" id="node2" href="$classtestutils_1_1DpkTestCase.html" title="Tweaked baseclass for unit tests." alt="" coords="133,5,240,32"/>
 </map>

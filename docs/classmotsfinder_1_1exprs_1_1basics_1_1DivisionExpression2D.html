@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -324,7 +324,8 @@ Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">expr1</td><td>First expression. </td></tr>
     <tr><td class="paramname">expr2</td><td>Second expression. </td></tr>
-    <tr><td class="paramname">variables</td><td>tuple/list of two elements each bein either &lsquo;'both&rsquo;<code>, </code>0<code>, or</code>1<code>. The elements correspond to</code>expr1<code>and </code>expr2<code>, respectively.</code>'both'<code>means that the expression is a function of two variables, while</code>0<code>or</code>1<code>specify the functions to depend only on</code>x<code>or</code>y<code>, respectively. @param singularity_handling How to deal with the case when</code>expr2` vanishes at a certain point. Possible values are:<ul>
+    <tr><td class="paramname">variables</td><td>tuple/list of two elements each bein either <code>'both'</code>, <code>0</code>, or <code>1</code>. The elements correspond to <code>expr1</code> and <code>expr2</code>, respectively. <code>'both'</code> means that the expression is a function of two variables, while <code>0</code> or <code>1</code> specify the functions to depend only on <code>x</code> or <code>y</code>, respectively. </td></tr>
+    <tr><td class="paramname">singularity_handling</td><td>How to deal with the case when <code>expr2</code> vanishes at a certain point. Possible values are:<ul>
 <li><code>"raise"</code> (default) raises a <code>ZeroDivisionError</code></li>
 <li><code>"zero"</code> returns <code>0.0</code>, which may be useful if you (analytically) can determine that the respective limit exists and is zero</li>
 <li><code>"one"</code> returns <code>1.0</code> (rarely useful)</li>

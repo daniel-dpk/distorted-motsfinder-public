@@ -1,14 +1,14 @@
 var namespacemotsfinder_1_1ipyutils =
 [
     [ "plotctx", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html", [
-      [ "_equal_lengths", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#aa6c16832366b91b2bba921d4e824d828", null ],
       [ "_interpret_pad", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a70c34eb0832f0595fe5cac632d7b1d21", null ],
       [ "has_latex", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a518c4b492f1f54d986f49e9d6376e51d", null ],
       [ "matplotlib_rc", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#acc6fd3af940769a776c74e46ac1f033d", null ],
       [ "pi_ticks", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#ab695b3cb6ca6cba663d5be162583af36", null ],
-      [ "plot_ctx", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#ae6832ccb436f46b3527022e6a84092f8", null ],
+      [ "plot_ctx", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#aad229dd5353a646709bd265a62e81c9e", null ],
       [ "plot_ctx_3d", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a5934ca9e64ee292218026aea030813eb", null ],
-      [ "simple_plot_ctx", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a98f950b2cda61185c151489a106f8c7d", null ],
+      [ "simple_plot_ctx", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a2c33eaee5abe539790a85c01e6840a37", null ],
+      [ "unify_axes_ranges", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a9027b5b7fb5aad7b23d9a690a7b32664", null ],
       [ "wrap_simple_plot_ctx", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#ab5c534dbbc134c781f510ef858cc3b6a", null ],
       [ "False", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#a36cde68b055f3f2ee671020af4ccf4e2", null ],
       [ "force", "namespacemotsfinder_1_1ipyutils_1_1plotctx.html#ab0a92c70357da47fe86696522eab7dc8", null ],
@@ -16,7 +16,7 @@ var namespacemotsfinder_1_1ipyutils =
     ] ],
     [ "plotting", "namespacemotsfinder_1_1ipyutils_1_1plotting.html", [
       [ "plot_1d", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#afa1ccea4ecdd59c832a48d310bd71679", null ],
-      [ "plot_curve", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a0fd22591782256d9b4f57b9043f7442f", null ],
+      [ "plot_curve", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a1bb194db12689631111b449f90c58d57", null ],
       [ "plot_data", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#abb30b91d522758723671c641968a2710", null ],
       [ "plot_data_disconnected", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#aaf644ed65b6e99e47e72d289304483e8", null ],
       [ "plot_image", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a97007b9f25f461c6b146abe2e4612dc3", null ],
@@ -24,7 +24,7 @@ var namespacemotsfinder_1_1ipyutils =
       [ "plot_multi", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a99a476c8accaa8f5302a2dbb86f271ca", null ],
       [ "plot_polar", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#af247b3154bd493134998add78c5ac1f9", null ],
       [ "video_from_folder", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a93429795dfce9f3718f34f34498dbb70", null ],
-      [ "video_from_images", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#ac727c84dad5a5c3eb1cfe48967b1fa50", null ],
+      [ "video_from_images", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a195399cd9720746eed9919048e42d952", null ],
       [ "False", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a36cde68b055f3f2ee671020af4ccf4e2", null ],
       [ "force", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#ab0a92c70357da47fe86696522eab7dc8", null ],
       [ "warn", "namespacemotsfinder_1_1ipyutils_1_1plotting.html#a1454e1f770b337ecbb62cd2028662081", null ]
@@ -42,7 +42,8 @@ var namespacemotsfinder_1_1ipyutils =
       [ "_crop", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#aa06ddb3206620e1a07271dfce2e8c24c", null ],
       [ "_extract_data_in_xlim", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#a6ddcffa4bf0dbfad34db6e588d2cf493", null ],
       [ "add_two_colorbars", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#a7b3cad2dd7710747cffccc09ee2b472b", null ],
-      [ "add_zero_line", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#aa15d2b93a93127df745d5efe6046c229", null ],
+      [ "add_zero_line", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#a924324427b0eb0c99f95519ab2aa0cbe", null ],
+      [ "add_zero_vline", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#a0ab9c9f895e671f4f55d18ad2ce3611e", null ],
       [ "False", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#a36cde68b055f3f2ee671020af4ccf4e2", null ],
       [ "force", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#ab0a92c70357da47fe86696522eab7dc8", null ],
       [ "warn", "namespacemotsfinder_1_1ipyutils_1_1plotutils.html#a1454e1f770b337ecbb62cd2028662081", null ]

@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -122,6 +122,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aab84c7546df468285531f22bd95ff98d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#aab84c7546df468285531f22bd95ff98d">find_individuals</a> (self, m1, m2, d, kw_top=None, kw_bot=None, unload=True, plot=False, plot_opts=None, **kw)</td></tr>
 <tr class="memdesc:aab84c7546df468285531f22bd95ff98d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the two individual MOTSs.  <a href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#aab84c7546df468285531f22bd95ff98d">More...</a><br /></td></tr>
 <tr class="separator:aab84c7546df468285531f22bd95ff98d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b97f828c24eb383e7b7ded91e9911ad"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a2b97f828c24eb383e7b7ded91e9911ad">find_common_MOTSs</a> (self, m1, m2, d, kw_AH=None, kw_inner=None, unload=True, plot=False, plot_opts=None, **kw)</td></tr>
+<tr class="memdesc:a2b97f828c24eb383e7b7ded91e9911ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the two common MOTSs.  <a href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a2b97f828c24eb383e7b7ded91e9911ad">More...</a><br /></td></tr>
+<tr class="separator:a2b97f828c24eb383e7b7ded91e9911ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e4f23f8190e3f46ad5ff0aeb902d76d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a0e4f23f8190e3f46ad5ff0aeb902d76d">find_four_MOTSs</a> (self, m1, m2, d, kw_AH=None, kw_top=None, kw_bot=None, kw_inner=None, unload=True, plot=False, plot_opts=None, **kw)</td></tr>
 <tr class="memdesc:a0e4f23f8190e3f46ad5ff0aeb902d76d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the two individual and the two common MOTSs.  <a href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a0e4f23f8190e3f46ad5ff0aeb902d76d">More...</a><br /></td></tr>
 <tr class="separator:a0e4f23f8190e3f46ad5ff0aeb902d76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -278,6 +281,97 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 
 <p>Find the apparent horizon (AH). </p>
 <p>This is based on a (crude) estimate of the coordinate radius of the AH based on the bare masses and mutual coordinate distances of the two punctures. </p>
+
+</div>
+</div>
+<a id="a2b97f828c24eb383e7b7ded91e9911ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b97f828c24eb383e7b7ded91e9911ad">&#9670;&nbsp;</a></span>find_common_MOTSs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def find_common_MOTSs </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>m1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>m2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw_AH</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kw_inner</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>unload</em> = <code>True</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>plot</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>plot_opts</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find the two common MOTSs. </p>
+<p>Based on a Brill-Lindquist-like configuration given by <code>m1</code>, <code>m2</code>, <code>d</code>, this method tries to find the two common MOTSs that can individually be obtained using <a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a8d8119deb7c1e981e5f774217624ae60" title="Find the apparent horizon (AH).">find_AH()</a> and <a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html#a7a8a198a3657b15a234ee0d348130dd4" title="Try to find the inner MOTS by walking along an area-expansion curve.">find_inner()</a>. See their documentation for more info.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m1,m2</td><td>Bare masses of the two punctures (i.e. Brill-Lindquist mass parameters). These do not need to be very accurate, they are just used for the initial round spheres' coordinate radii. </td></tr>
+    <tr><td class="paramname">d</td><td>Rough coordinate distance of the punctures on the z-axis. Note that currently the punctures need to be approximately the same coordinate distance from the origin. </td></tr>
+    <tr><td class="paramname">kw_AH,kw_inner</td><td>Optional arguments for the individual <code>find_...()</code> calls. </td></tr>
+    <tr><td class="paramname">unload</td><td>Whether to unload any numerical data from the metric afterwards. Default is <code>True</code>. </td></tr>
+    <tr><td class="paramname">plot</td><td>Whether to plot the found MOTSs. Default is <code>False</code>. </td></tr>
+    <tr><td class="paramname">plot_opts</td><td>Options supplied to the plotting command. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Common options for all <code>find_...()</code> calls. These are overridden by the individual <code>kw_...</code> arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

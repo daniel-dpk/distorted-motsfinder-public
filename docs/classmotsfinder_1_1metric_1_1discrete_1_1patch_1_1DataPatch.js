@@ -19,6 +19,7 @@ var classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch =
     [ "get_region", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a15904f703f220971b38af4ce4927bf9c", null ],
     [ "hermite_2d", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a8632e9cd5f65d0e12cd255f6f623d9c4", null ],
     [ "interpolate", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a558653e36f95a93d02cd51d12b666a03", null ],
+    [ "safe_domain", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#ab6193808bf4bb882a0fa71309e15001d", null ],
     [ "set_caching", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a102ccc14cc083be5db5e8a8bd3a7e9c5", null ],
     [ "set_interpolation", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#a3a9587d764d75c9d761ba7f1cd107170", null ],
     [ "_fd_order", "classmotsfinder_1_1metric_1_1discrete_1_1patch_1_1DataPatch.html#ab2768f9dbe2afb097f11e22eda07da2e", null ],

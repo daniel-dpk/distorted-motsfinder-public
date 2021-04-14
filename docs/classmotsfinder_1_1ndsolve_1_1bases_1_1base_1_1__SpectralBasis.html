@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -110,12 +110,13 @@ Inheritance diagram for _SpectralBasis:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis__inherit__graph.png" border="0" usemap="#a__SpectralBasis_inherit__map" alt="Inheritance graph"/></div>
 <map name="a__SpectralBasis_inherit__map" id="a__SpectralBasis_inherit__map">
-<area shape="rect" title="Abstract basis class for pseudospectral bases." alt="" coords="120,80,237,107"/>
-<area shape="rect" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html" title="Spectral basis base class utilizing implemented series expansions." alt="" coords="100,155,257,181"/>
-<area shape="rect" title=" " alt="" coords="147,5,210,32"/>
+<area shape="rect" title="Abstract basis class for pseudospectral bases." alt="" coords="183,80,300,107"/>
+<area shape="rect" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralSeriesBasis.html" title="Spectral basis base class utilizing implemented series expansions." alt="" coords="163,155,320,181"/>
+<area shape="rect" title=" " alt="" coords="210,5,273,32"/>
 <area shape="rect" href="classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html" title="Pseudospectral basis set of Chebyshev polynomials." alt="" coords="5,229,104,256"/>
 <area shape="rect" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html" title="Pseudospectral basis set of cosines." alt="" coords="128,229,229,256"/>
-<area shape="rect" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html" title="Pseudospectral basis set of sines." alt="" coords="253,229,339,256"/>
+<area shape="rect" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1FourierBasis.html" title="Pseudospectral basis set for Fourier series." alt="" coords="254,229,357,256"/>
+<area shape="rect" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html" title="Pseudospectral basis set of sines." alt="" coords="381,229,467,256"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -275,7 +276,7 @@ Private Attributes</h2></td></tr>
 <p>Compute the n'th derivative of all basis functions at all collocation points. </p>
 <p>Rows of the matrix should correspond to different collocation points and columns to the different basis functions. </p>
 
-<p>Reimplemented in <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html#a9de67832c883046ff2fb0b60e3e7897b">CosineBasis</a>, <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html#a9de67832c883046ff2fb0b60e3e7897b">SineBasis</a>, and <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html#a9de67832c883046ff2fb0b60e3e7897b">ChebyBasis</a>.</p>
+<p>Reimplemented in <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1FourierBasis.html#a9de67832c883046ff2fb0b60e3e7897b">FourierBasis</a>, <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html#a9de67832c883046ff2fb0b60e3e7897b">CosineBasis</a>, <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html#a9de67832c883046ff2fb0b60e3e7897b">SineBasis</a>, and <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html#a9de67832c883046ff2fb0b60e3e7897b">ChebyBasis</a>.</p>
 
 </div>
 </div>
@@ -357,24 +358,17 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Compute the operator matrix for the given differential operator. </p>
-<pre class="fragment">   This matrix, `L`, is defined as the matrix that results from applying
-   the differential operator of the given problem to the matrix `M`
-   consisting of the basis functions evaluated at the collocation
-   points, i.e. \f[
-       M_{ij} = \phi_j(x_i),
-   \f]
-   where \f$\phi_j\f$ is the j'th basis function and \f$x_i\f$ the i'th
-   collocation point.
-
-   The differential operator is given by a list of coefficient functions
-   `op`, where the elements correspond to the different values of `n`
-   used for calling deriv_mat().
-
-   For example (for a 1D basis):
-
-   \code{.unparsed}
-</pre><p> op multiplies the function phi(x) itself op multiplies phi'(x) op multiplies phi''(x) ... </p>
-<p>Alternatively, <code>op</code> may be a callable. In this case, it will be called with the full list of collocation points to evaluate the operator at. It should return an array/list of operator components (as above), each with as many elements as the given points list has.</p>
+<p>This matrix, <code>L</code>, is defined as the matrix that results from applying the differential operator of the given problem to the matrix <code>M</code> consisting of the basis functions evaluated at the collocation points, i.e. </p><p class="formulaDsp">
+\[ M_{ij} = \phi_j(x_i), \]
+</p>
+<p> where \(\phi_j\) is the j'th basis function and \(x_i\) the i'th collocation point.</p>
+<p>The differential operator is given by a list of coefficient functions <code>op</code>, where the elements correspond to the different values of <code>n</code> used for calling <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1base_1_1__SpectralBasis.html#accee3d9946f84e90b57f3e856b88da38" title="Return derivative matrix of derivative order n.">deriv_mat()</a>.</p>
+<p>For example (for a 1D basis):</p>
+<div class="fragment"><div class="line">op[0]: multiplies the function phi(x) itself</div>
+<div class="line">op[1]: multiplies phi&#39;(x)</div>
+<div class="line">op[2]: multiplies phi&#39;&#39;(x)</div>
+<div class="line">...</div>
+</div><!-- fragment --><p>Alternatively, <code>op</code> may be a callable. In this case, it will be called with the full list of collocation points to evaluate the operator at. It should return an array/list of operator components (as above), each with as many elements as the given points list has.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">op</td><td>Operator coefficient functions or a callable to compute them all at once or a list of lists already containing the evaluated operator. </td></tr>
@@ -439,8 +433,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Evaluate n'th derivative of all basis functions at x. </p>
-<pre class="fragment">   The result is a list of N values.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>The result is a list of N values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>Point at which to evaluate all basis function. </td></tr>
     <tr><td class="paramname">n</td><td>Derivative order of the basis functions to use. </td></tr>
@@ -448,7 +442,7 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html#ad0441ba3e12cddeee1137dc18db85fa9">CosineBasis</a>, <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html#ad0441ba3e12cddeee1137dc18db85fa9">SineBasis</a>, and <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html#ad0441ba3e12cddeee1137dc18db85fa9">ChebyBasis</a>.</p>
+<p>Reimplemented in <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1FourierBasis.html#ad0441ba3e12cddeee1137dc18db85fa9">FourierBasis</a>, <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html#ad0441ba3e12cddeee1137dc18db85fa9">CosineBasis</a>, <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html#ad0441ba3e12cddeee1137dc18db85fa9">SineBasis</a>, and <a class="el" href="classmotsfinder_1_1ndsolve_1_1bases_1_1cheby_1_1ChebyBasis.html#ad0441ba3e12cddeee1137dc18db85fa9">ChebyBasis</a>.</p>
 
 </div>
 </div>

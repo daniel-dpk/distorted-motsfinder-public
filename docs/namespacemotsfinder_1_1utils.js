@@ -3,6 +3,7 @@ var namespacemotsfinder_1_1utils =
     [ "_Runner", "classmotsfinder_1_1utils_1_1__Runner.html", "classmotsfinder_1_1utils_1_1__Runner" ],
     [ "_FuncWrap", "classmotsfinder_1_1utils_1_1__FuncWrap.html", "classmotsfinder_1_1utils_1_1__FuncWrap" ],
     [ "cache_method_results", "namespacemotsfinder_1_1utils.html#abb24437a9c3cbe3833e0300c93bc1920", null ],
+    [ "cmp_versions", "namespacemotsfinder_1_1utils.html#abf79ea08ed208b5320445345680c009a", null ],
     [ "find_file", "namespacemotsfinder_1_1utils.html#a8196b8d81fae69f2a93e570c913d8a07", null ],
     [ "find_files", "namespacemotsfinder_1_1utils.html#a88b99c225f6752ba1da7ab450dc1c965", null ],
     [ "get_chunks", "namespacemotsfinder_1_1utils.html#a1a2e27892babf36003f3952662cbeb45", null ],

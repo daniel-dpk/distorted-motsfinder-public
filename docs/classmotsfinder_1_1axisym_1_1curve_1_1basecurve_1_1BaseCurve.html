@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -230,6 +230,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 <tr class="memitem:a66c7cd146b41d259e63a054663978a2d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a66c7cd146b41d259e63a054663978a2d">find_max_x</a> (self, Ns=50)</td></tr>
 <tr class="memdesc:a66c7cd146b41d259e63a054663978a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the point of the curve with maximum distance to the z-axis.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a66c7cd146b41d259e63a054663978a2d">More...</a><br /></td></tr>
 <tr class="separator:a66c7cd146b41d259e63a054663978a2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab918d07baeb7e91c3d3db5bcb67e3d34"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ab918d07baeb7e91c3d3db5bcb67e3d34">find_local_min_x</a> (self, Ns=None)</td></tr>
+<tr class="memdesc:ab918d07baeb7e91c3d3db5bcb67e3d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find the location of a local minimum of the x-coordinate.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#ab918d07baeb7e91c3d3db5bcb67e3d34">More...</a><br /></td></tr>
+<tr class="separator:ab918d07baeb7e91c3d3db5bcb67e3d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a75c3e773d4be4b4834988c1d1cc5b4fc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a75c3e773d4be4b4834988c1d1cc5b4fc">inf_norm</a> (self, other_curve, **kw)</td></tr>
 <tr class="memdesc:a75c3e773d4be4b4834988c1d1cc5b4fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute L_inf norm of this curve minus another curve.  <a href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a75c3e773d4be4b4834988c1d1cc5b4fc">More...</a><br /></td></tr>
 <tr class="separator:a75c3e773d4be4b4834988c1d1cc5b4fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -803,7 +806,7 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return the proper length maps from the curve's <code>user_data</code>. </p>
-<p>A warning is printed if the <code>user_data</code> does not contain proper length map data. You can generate and store this data using ..<a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots_1_1props.html#a21f8b604915b93a35bb43250aaedb657" title="Compute properties and store them in the curve object.">trackmots.props.compute_props()</a>.</p>
+<p>A warning is printed if the <code>user_data</code> does not contain proper length map data. You can generate and store this data using ..<a class="el" href="namespacemotsfinder_1_1axisym_1_1trackmots_1_1props.html#a2be88c07cc8f9eda11d2b4bd20bdb7da" title="Compute properties and store them in the curve object.">trackmots.props.compute_props()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">evaluators</td><td>If <code>True</code> (default), return callable function objects instead of NumericExpression objects. </td></tr>
@@ -1000,6 +1003,43 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Parameter of the curve where the line intersects the curve. </dd></dl>
+
+</div>
+</div>
+<a id="ab918d07baeb7e91c3d3db5bcb67e3d34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab918d07baeb7e91c3d3db5bcb67e3d34">&#9670;&nbsp;</a></span>find_local_min_x()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def find_local_min_x </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Ns</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find the location of a local minimum of the x-coordinate. </p>
+<dl class="section return"><dt>Returns</dt><dd>Parameter of the curve where the minimum is located or <code>None</code> if no minimum could be found.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Ns</td><td>Number of points to use for the initial search. Default is to use the curve's current resolution (which needs to be defined as <code>num</code> property on this curve object). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1289,13 +1329,13 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Plot the curve represented by this object. </p>
-<p>The optional keyword arguments are passed to the called <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a0fd22591782256d9b4f57b9043f7442f" title="Plot a given parametric curve.">ipyutils.plotting.plot_curve()</a> function. Additional modifications of the plot (e.g. adding more curves) is thus supported in the usual way by setting <code>show=False</code> and working with the returned <code>ax</code> object.</p>
+<p>The optional keyword arguments are passed to the called <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a1bb194db12689631111b449f90c58d57" title="Plot a given parametric curve.">ipyutils.plotting.plot_curve()</a> function. Additional modifications of the plot (e.g. adding more curves) is thus supported in the usual way by setting <code>show=False</code> and working with the returned <code>ax</code> object.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">lw</td><td>(float) Linewidth for the curve. Default is <code>2</code>, which is slightly wider than the default linewidth of the <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1basecurve_1_1BaseCurve.html#a47ee51925b3eab3e6be9004ae866af46" title="Plot the curve represented by this object.">plot()</a> function. </td></tr>
     <tr><td class="paramname">equal_lengths</td><td>(boolean) Whether to force an aspect ratio of 1. Default is <code>True</code>. </td></tr>
     <tr><td class="paramname">copy_x</td><td>(boolean) Curves in axisymmetry are defined only for positive <code>x</code> values. Setting this to <code>False</code> prevents the curve to be completed on the negative <code>x</code>-side. </td></tr>
-    <tr><td class="paramname">**kw</td><td>Additional keyword arguments passed to <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a0fd22591782256d9b4f57b9043f7442f" title="Plot a given parametric curve.">ipyutils.plotting.plot_curve()</a>. </td></tr>
+    <tr><td class="paramname">**kw</td><td>Additional keyword arguments passed to <a class="el" href="namespacemotsfinder_1_1ipyutils_1_1plotting.html#a1bb194db12689631111b449f90c58d57" title="Plot a given parametric curve.">ipyutils.plotting.plot_curve()</a>. </td></tr>
   </table>
   </dd>
 </dl>

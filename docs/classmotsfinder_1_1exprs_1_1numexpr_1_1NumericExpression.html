@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -123,7 +123,7 @@ Inheritance diagram for NumericExpression:</div>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html" title="Sum of two expressions is an optional coefficient for the second term." alt="" coords="333,461,455,488"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1inverse_1_1InverseExpression.html" title="Inverse function expression." alt="" coords="323,512,465,539"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html" title="Base class for simple functions." alt="" coords="325,563,463,589"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html" title="Base class for truncated series expressions." alt="" coords="327,715,461,741"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html" title="Base class for truncated series expressions." alt="" coords="327,740,461,767"/>
 <area shape="rect" title=" " alt="" coords="5,309,68,336"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1basics_1_1BlendExpression2D.html" title="Blend between two expressions based on a third." alt="" coords="535,411,683,437"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1basics_1_1SimpleCosExpression.html" title="Cosine expression with arbitrary derivatives." alt="" coords="528,461,691,488"/>
@@ -132,9 +132,10 @@ Inheritance diagram for NumericExpression:</div>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1basics_1_1SimpleSinhExpression.html" title="Hyperbolic sine (sinh) expression with arbitrary derivatives." alt="" coords="526,613,693,640"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1basics_1_1SinSquaredExpression.html" title="Sine squared (sin(x)**2) expression with first two derivatives." alt="" coords="526,664,693,691"/>
 <area shape="rect" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html" title="Truncated Chebyshev series expression." alt="" coords="578,715,641,741"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="563,765,655,792"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="743,740,849,767"/>
-<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="751,791,841,817"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html" title="Truncated Fourier series to represent a function." alt="" coords="556,765,663,792"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="563,816,655,843"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="743,791,849,817"/>
+<area shape="rect" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="751,841,841,868"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -319,11 +320,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Base class init for numeric expressions. </p>
-<pre class="fragment">   The ``**sub_exprs`` sub expressions given as keyword arguments here
-   are stored in this object and can be accessed with the keys used here.
-   They are used when traversing through a complete expression hierarchy
-   in e.g. print_tree() or traverse_tree().
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>The <code>**sub_exprs</code> sub expressions given as keyword arguments here are stored in this object and can be accessed with the keys used here. They are used when traversing through a complete expression hierarchy in e.g. <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#ab497042123139f29b7c94c4cd947001d" title="Print the whole expression tree.">print_tree()</a> or <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#a04e0b3d6a2143ff0d72663206a1707bf" title="Generator that walks through a complete expression tree.">traverse_tree()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">domain</td><td>(various, optional) Domain to store for this expression. </td></tr>
     <tr><td class="paramname">name</td><td>(string, optional) Name for the expression. Can be useful to label expressions in a more complex expression tree to indicate their role/meaning. By default, the current class name is used as name. </td></tr>
@@ -487,7 +485,7 @@ Private Attributes</h2></td></tr>
     return ("a + b x, where a=%r, b=%r, x=%s"
             % (self.a, self.b, self.x.str()))
 </pre> 
-<p>Reimplemented in <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">CosineSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">SineSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">SimpleExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1inverse_1_1InverseExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">InverseExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html#a9af4ce18aa6820666679ec4e7b3af4f4">Cheby</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1EmbedExpression2D.html#a9af4ce18aa6820666679ec4e7b3af4f4">EmbedExpression2D</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">SumExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1OffsetExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">OffsetExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a9af4ce18aa6820666679ec4e7b3af4f4">DivisionExpression2D</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">DivisionExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression2D.html#a9af4ce18aa6820666679ec4e7b3af4f4">ProductExpression2D</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">ProductExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ScaleExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">ScaleExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1IdentityExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">IdentityExpression</a>, and <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ConstantExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">ConstantExpression</a>.</p>
+<p>Reimplemented in <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">FourierSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">CosineSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html#a9af4ce18aa6820666679ec4e7b3af4f4">SineSeries</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1SimpleExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">SimpleExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1inverse_1_1InverseExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">InverseExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html#a9af4ce18aa6820666679ec4e7b3af4f4">Cheby</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1EmbedExpression2D.html#a9af4ce18aa6820666679ec4e7b3af4f4">EmbedExpression2D</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1SumExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">SumExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1OffsetExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">OffsetExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression2D.html#a9af4ce18aa6820666679ec4e7b3af4f4">DivisionExpression2D</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1DivisionExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">DivisionExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression2D.html#a9af4ce18aa6820666679ec4e7b3af4f4">ProductExpression2D</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ProductExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">ProductExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ScaleExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">ScaleExpression</a>, <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1IdentityExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">IdentityExpression</a>, and <a class="el" href="classmotsfinder_1_1exprs_1_1basics_1_1ConstantExpression.html#a9af4ce18aa6820666679ec4e7b3af4f4">ConstantExpression</a>.</p>
 
 </div>
 </div>
@@ -524,10 +522,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Convenience function to be used as context manager. </p>
-<pre class="fragment">   This will automatically choose the correct context (`mp` or `fp`)
-   based on the choice of `use_mp` and configure the desired decimal
-   places.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>This will automatically choose the correct context (<code>mp</code> or <code>fp</code>) based on the choice of <code>use_mp</code> and configure the desired decimal places.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">use_mp</td><td>Whether to use <code>mp</code> (if <code>True</code>) or <code>fp</code>. </td></tr>
     <tr><td class="paramname">dps</td><td>Decimal places to use in <code>mp</code> computations. </td></tr>
@@ -564,10 +560,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create an evaluator for the expression in the current state. </p>
-<pre class="fragment">   Use `use_mp` to control whether the evaluator will use floating point
-   arithmetics (for `False`) or arbitrary precision mpmath computations
-   (for `True`). Default is `False`.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>Use <code>use_mp</code> to control whether the evaluator will use floating point arithmetics (for <code>False</code>) or arbitrary precision mpmath computations (for <code>True</code>). Default is <code>False</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">use_mp</td><td>Boolean indicating whether the evaluator should use <code>mpmath</code> math operations or standard (and faster) floating point operations. This may be ignored if <a class="el" href="classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html#af0d112fe749abbda2b4c0574995a1a57" title="Override the evaluation mode of future evaluators.">force_evaluation_mode()</a> has been used to override this setting. </td></tr>
   </table>
@@ -603,11 +597,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Override the evaluation mode of future evaluators. </p>
-<pre class="fragment">   This might be useful in a complicated expression tree when you want
-   e.g. all expressions to be computed using mpmath arbitrary precision
-   arithmetics, except for one very expensive expression which should use
-   floating point arithmetics.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>This might be useful in a complicated expression tree when you want e.g. all expressions to be computed using mpmath arbitrary precision arithmetics, except for one very expensive expression which should use floating point arithmetics.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">use_mp</td><td>(<code>{None, True, False}</code>) If <code>None</code>, don't override the evaluation mode and create evaluators with the requested mode. If <code>True</code> or <code>False</code>, ignore the requested evaluation mode when creating an evaluator and use the value set here. </td></tr>
   </table>
@@ -709,9 +700,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Print the whole expression tree. </p>
-<pre class="fragment">   Each expression's key under which it is stored as sub expression will
-   be shown as well as its actual name and the class name.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>Each expression's key under which it is stored as sub expression will be shown as well as its actual name and the class name.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">root_name</td><td>Key name to print for the root expression. </td></tr>
     <tr><td class="paramname">nice_names</td><td>Whether to use the nice more descriptive name (when implemented) or the usually shorter abstract names. </td></tr>
@@ -843,10 +833,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Generator that walks through a complete expression tree. </p>
-<pre class="fragment">   In each iteration, the returned values represent the current node's
-   parents (as a list from root to immediate parent), its key under which
-   it is stored in its parent, and the node itself.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>In each iteration, the returned values represent the current node's parents (as a list from root to immediate parent), its key under which it is stored in its parent, and the node itself.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">include_root</td><td>Whether to include the root as first item. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">skip_zeros</td><td>Whether to skip zero (i.e. unused) sub expressions. Default is <code>False</code>. </td></tr>

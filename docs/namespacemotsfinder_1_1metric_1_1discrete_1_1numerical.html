@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -147,9 +147,9 @@ def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="names
 def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a706dd9d0932db9119db313797b00bda9">_get_Vxy_Vyy_Vyz</a> (point, V, dV)</td></tr>
 <tr class="memdesc:a706dd9d0932db9119db313797b00bda9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the 2nd (y-)derivatives of vector V in x-z-plane assuming axisymmetry. <br /></td></tr>
 <tr class="separator:a706dd9d0932db9119db313797b00bda9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac320e99f16ba59412afd2d50e46aa923"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#ac320e99f16ba59412afd2d50e46aa923">_get_Ty</a> (point, T)</td></tr>
-<tr class="memdesc:ac320e99f16ba59412afd2d50e46aa923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the y-derivative of matrix T in x-z-plane assuming axisymmetry.  <a href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#ac320e99f16ba59412afd2d50e46aa923">More...</a><br /></td></tr>
-<tr class="separator:ac320e99f16ba59412afd2d50e46aa923"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6214fa1241eef020c7f99de3e604ed26"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a6214fa1241eef020c7f99de3e604ed26">_get_Ty</a> (point, T, dTdx=None)</td></tr>
+<tr class="memdesc:a6214fa1241eef020c7f99de3e604ed26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the y-derivative of matrix T in x-z-plane assuming axisymmetry.  <a href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#a6214fa1241eef020c7f99de3e604ed26">More...</a><br /></td></tr>
+<tr class="separator:a6214fa1241eef020c7f99de3e604ed26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae30017c2b34bfd2cb5b0271ad041d7de"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#ae30017c2b34bfd2cb5b0271ad041d7de">_get_Txy_Tyy_Tyz</a> (point, T, dT)</td></tr>
 <tr class="memdesc:ae30017c2b34bfd2cb5b0271ad041d7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the 2nd (y-)derivatives of matrix T in x-z-plane assuming axisymmetry.  <a href="namespacemotsfinder_1_1metric_1_1discrete_1_1numerical.html#ae30017c2b34bfd2cb5b0271ad041d7de">More...</a><br /></td></tr>
 <tr class="separator:ae30017c2b34bfd2cb5b0271ad041d7de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -266,8 +266,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="ac320e99f16ba59412afd2d50e46aa923"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac320e99f16ba59412afd2d50e46aa923">&#9670;&nbsp;</a></span>_get_Ty()</h2>
+<a id="a6214fa1241eef020c7f99de3e604ed26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6214fa1241eef020c7f99de3e604ed26">&#9670;&nbsp;</a></span>_get_Ty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -285,7 +285,13 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>T</em>&#160;</td>
+          <td class="paramname"><em>T</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dTdx</em> = <code>None</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

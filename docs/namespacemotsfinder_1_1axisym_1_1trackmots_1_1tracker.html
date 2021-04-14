@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -244,8 +244,8 @@ some/path/foo/run2/inner/inner_discrete_it0000000001.npy
 </pre><p> A missing entry in the <code>MOTS_map</code> means we should take the MOTS from the current run.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hname</td><td>Name of the horizon to track. This determines the file names as well as which properties are computed. For example, the distance between top and bottom MOTS is computed only if this MOTS has <code>hname="bot"</code> and a sibling MOTS for the same slice named <code>hname="top"</code> has already been found and stored. Similarly, the <em>neck</em> location and properties as well as the distance to the <code>"top"</code> and <code>"bot"</code> MOTSs is computed only for a run with <code>hname="inner"</code>. Examples <code>"AH"</code>, <code>"top"</code>, <code>"bot"</code>, <code>"inner"</code>. </td></tr>
-    <tr><td class="paramname">sim_dir</td><td>Folder to find the simulation slices in. Slices from all subfolders are found and sorted alphanumerically. Slices with the same base name (i.e. ignoring differently named parent folders) as one already in the list are skipped. Example <code>"data/simulation/brill-lindquist-2-res256"</code>. </td></tr>
+    <tr><td class="paramname">hname</td><td>Name of the horizon to track. This determines the file names as well as which properties are computed. For example, the distance between top and bottom MOTS is computed only if this MOTS has <code>hname="bot"</code> and a sibling MOTS for the same slice named <code>hname="top"</code> has already been found and stored. Similarly, the <em>neck</em> location and properties as well as the distance to the <code>"top"</code> and <code>"bot"</code> MOTSs is computed only for a run with <code>hname="inner"</code>. Examples: <code>"AH"</code>, <code>"top"</code>, <code>"bot"</code>, <code>"inner"</code>. </td></tr>
+    <tr><td class="paramname">sim_dir</td><td>Folder to find the simulation slices in. Slices from all subfolders are found and sorted alphanumerically. Slices with the same base name (i.e. ignoring differently named parent folders) as one already in the list are skipped. Example: <code>"data/simulation/brill-lindquist-2-res256"</code>. </td></tr>
     <tr><td class="paramname">out_base_dir</td><td>Parent folder for all the results. Example: <code>"./results"</code>. </td></tr>
     <tr><td class="paramname">folder</td><td>Sub folder of the <code>out_base_dir</code> containing results for this specific configuration and run. Example: <code>"BL-2-res256/run1/AH"</code>. If configured as in the examples and the MOTS configuration is set to use a <code>simple_name</code> (see the documentation of .<a class="el" href="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig.html#a5b50c5f12c0cd978218665a9b05e938f" title="Initialize a new configuration object.">findmots.MotsFindingConfig.__init__()</a>), then the curves will be stored in <code>./results/BL-2-res256/run1/AH</code>. </td></tr>
     <tr><td class="paramname">initial_guess</td><td>Curve or filename or float to use as initial guess for tracking this MOTS. Differentiation between the different MOTSs to track through slices happens by using different initial guesses. You may use the .<a class="el" href="classmotsfinder_1_1axisym_1_1initialguess_1_1InitHelper.html" title="Helper to find the initial MOTSs for a Brill-Lindquist-like metric.">initialguess.InitHelper</a> to help obtaining initial guesses for different MOTSs in a particular slice. </td></tr>

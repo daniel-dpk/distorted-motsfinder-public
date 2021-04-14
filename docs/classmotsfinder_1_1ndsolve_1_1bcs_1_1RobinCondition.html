@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -246,20 +246,13 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Define the boundary condition. </p>
-<pre class="fragment">   The general form of this boundary condition is \f[
-       \alpha(x) u(x) + \beta(x) \partial_\nu u(x) = g(x),
-   \f]
-   where \f$ x \f$ is specified by the `x` argument (see below) and
-   \f$ g(x) \f$ is given by `value`. The derivative of `u` is taken to be
-   perpendicular to the direction of the line specified by `x`, i.e. it
-   will be the outward pointing normal at the upper boundary and inward
-   pointing normal at the lower boundary of the respective dimension.
-
-   In 1D, we simply have \f$ \partial_\nu u(x) = u'(x) \f$.
-
-   For a pure Dirichlet condition, set ``alpha=1, beta=0`` and for a pure
-   Neumann condition ``alpha=0, beta=1``.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>The general form of this boundary condition is </p><p class="formulaDsp">
+\[ \alpha(x) u(x) + \beta(x) \partial_\nu u(x) = g(x), \]
+</p>
+<p> where \( x \) is specified by the <code>x</code> argument (see below) and \( g(x) \) is given by <code>value</code>. The derivative of <code>u</code> is taken to be perpendicular to the direction of the line specified by <code>x</code>, i.e. it will be the outward pointing normal at the upper boundary and inward pointing normal at the lower boundary of the respective dimension.</p>
+<p>In 1D, we simply have \( \partial_\nu u(x) = u&#39;(x) \).</p>
+<p>For a pure Dirichlet condition, set <code>alpha=1, beta=0</code> and for a pure Neumann condition <code>alpha=0, beta=1</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>(float or tuple/list) Value at which to impose the condition. For 1D problems, this should simply be the <code>x</code>-value at which to impose the condition. For 2D problems, it should be a tuple/list specifying the <code>x=const</code> or <code>y=const</code> line to impose the condition at. For example, to define the line <code>x=5</code>, this argument should be set to <code>x=(5.0, None)</code>. </td></tr>
     <tr><td class="paramname">alpha</td><td>(float or callable) Coefficient of the 'Dirichlet' part of the condition (see above). </td></tr>
@@ -417,10 +410,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Return an index of a row we should replace next. </p>
-<pre class="fragment">   This is called after the row to replace has been determined. It is
-   responsible for checking that we don't replace a blocked row, i.e. one
-   that already has a condition imposed.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>This is called after the row to replace has been determined. It is responsible for checking that we don't replace a blocked row, i.e. one that already has a condition imposed.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">i</td><td>Desired row that should be replaced if it is free. </td></tr>
     <tr><td class="paramname">max_i</td><td>Maximum valid row index (total number of rows minus 1). </td></tr>
@@ -568,9 +559,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Replace a row of a matrix by a different row. </p>
-<pre class="fragment">   This is a convenience function that handles the case of a NumPy matrix
-   and that of an `mpmath` matrix.
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>This is a convenience function that handles the case of a NumPy matrix and that of an <code>mpmath</code> matrix.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ctx</td><td><code>mp</code> or <code>fp</code>, the mpmath context to use if not a NumPy matrix. </td></tr>
     <tr><td class="paramname">mat</td><td>The NumPy or mpmath matrix to replace a row in. </td></tr>
@@ -690,14 +680,8 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Impose the condition by modifying the operator and inhomogeneity. </p>
-<pre class="fragment">   This should be called only during the solving process when the
-   operator matrix `L` and inhomogeneity vector `f` have been built. The
-   caller should supply the indices of rows (via `blocked_indices`) on
-   which previous conditions have been placed to avoid overwriting them
-   with the new conditions. The indices used here will be added to this
-   list (i.e. the caller only needs to repeatedly supply this list,
-   starting with an empty one).
-</pre><dl class="params"><dt>Parameters</dt><dd>
+<p>This should be called only during the solving process when the operator matrix <code>L</code> and inhomogeneity vector <code>f</code> have been built. The caller should supply the indices of rows (via <code>blocked_indices</code>) on which previous conditions have been placed to avoid overwriting them with the new conditions. The indices used here will be added to this list (i.e. the caller only needs to repeatedly supply this list, starting with an empty one).</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">basis</td><td>Spectral basis used during solving. </td></tr>
     <tr><td class="paramname">L</td><td>Fully populated operator matrix. </td></tr>

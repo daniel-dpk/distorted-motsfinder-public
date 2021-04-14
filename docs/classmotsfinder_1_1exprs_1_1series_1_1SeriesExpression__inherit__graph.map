@@ -1,9 +1,10 @@
 <map id="SeriesExpression" name="SeriesExpression">
-<area shape="rect" id="node1" title="Base class for truncated series expressions." alt="" coords="21,155,154,181"/>
+<area shape="rect" id="node1" title="Base class for truncated series expressions." alt="" coords="79,155,213,181"/>
 <area shape="rect" id="node4" href="$classmotsfinder_1_1exprs_1_1cheby_1_1Cheby.html" title="Truncated Chebyshev series expression." alt="" coords="5,229,68,256"/>
-<area shape="rect" id="node5" href="$classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="92,229,184,256"/>
-<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="13,80,161,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="56,5,119,32"/>
-<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="23,304,130,331"/>
-<area shape="rect" id="node7" href="$classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="154,304,245,331"/>
+<area shape="rect" id="node5" href="$classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html" title="Truncated Fourier series to represent a function." alt="" coords="93,229,199,256"/>
+<area shape="rect" id="node6" href="$classmotsfinder_1_1exprs_1_1trig_1_1__TrigSeries.html" title="Base class for trigonometric series expressions." alt="" coords="224,229,316,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="72,80,220,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="115,5,177,32"/>
+<area shape="rect" id="node7" href="$classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html" title="Truncated cosine series to represent a function." alt="" coords="155,304,262,331"/>
+<area shape="rect" id="node8" href="$classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html" title="Truncated sine series expression." alt="" coords="286,304,377,331"/>
 </map>

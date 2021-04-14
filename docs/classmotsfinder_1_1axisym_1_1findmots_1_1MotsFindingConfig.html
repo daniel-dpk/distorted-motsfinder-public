@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -110,9 +110,11 @@ Inheritance diagram for MotsFindingConfig:</div>
 <div class="dyncontent">
 <div class="center"><img src="classmotsfinder_1_1axisym_1_1findmots_1_1MotsFindingConfig__inherit__graph.png" border="0" usemap="#aMotsFindingConfig_inherit__map" alt="Inheritance graph"/></div>
 <map name="aMotsFindingConfig_inherit__map" id="aMotsFindingConfig_inherit__map">
-<area shape="rect" title="Abstract configuration base class for find_mots()." alt="" coords="93,5,236,32"/>
-<area shape="rect" href="classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html" title="Configuration for finding MOTSs in Brill&#45;Lindquist metrics." alt="" coords="5,80,153,107"/>
-<area shape="rect" href="classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html" title="General purpose MOTS finding configuration settings." alt="" coords="178,80,325,107"/>
+<area shape="rect" title="Abstract configuration base class for find_mots()." alt="" coords="93,80,236,107"/>
+<area shape="rect" href="classmotsfinder_1_1axisym_1_1findmots_1_1BrillLindquistConfig.html" title="Configuration for finding MOTSs in Brill&#45;Lindquist metrics." alt="" coords="5,155,153,181"/>
+<area shape="rect" href="classmotsfinder_1_1axisym_1_1findmots_1_1GeneralMotsConfig.html" title="General purpose MOTS finding configuration settings." alt="" coords="178,155,325,181"/>
+<area shape="rect" title=" " alt="" coords="65,5,155,32"/>
+<area shape="rect" title=" " alt="" coords="179,5,262,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -174,6 +176,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a03fafe9d73786fbc9096b7d21dd22faf"><td class="memItemLeft" align="right" valign="top"><a id="a03fafe9d73786fbc9096b7d21dd22faf"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ref_num</b></td></tr>
 <tr class="separator:a03fafe9d73786fbc9096b7d21dd22faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eb15006b092e517bb8b2bacb2302ae3"><td class="memItemLeft" align="right" valign="top"><a id="a6eb15006b092e517bb8b2bacb2302ae3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>horizon_class</b></td></tr>
+<tr class="separator:a6eb15006b092e517bb8b2bacb2302ae3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01346d161f1bb2ffbcdff8ac94378905"><td class="memItemLeft" align="right" valign="top"><a id="a01346d161f1bb2ffbcdff8ac94378905"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>recompute</b></td></tr>
 <tr class="separator:a01346d161f1bb2ffbcdff8ac94378905"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -186,6 +191,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a2bbc15728f925b709fa38bf3ed045005"><td class="memItemLeft" align="right" valign="top"><a id="a2bbc15728f925b709fa38bf3ed045005"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>save_verbose</b></td></tr>
 <tr class="separator:a2bbc15728f925b709fa38bf3ed045005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a468cdab7b99e23be7a2e6595bab2a18c"><td class="memItemLeft" align="right" valign="top"><a id="a468cdab7b99e23be7a2e6595bab2a18c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>save_trial_surfaces</b></td></tr>
+<tr class="separator:a468cdab7b99e23be7a2e6595bab2a18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55b555ea6d11f1543337cf52307976cf"><td class="memItemLeft" align="right" valign="top"><a id="a55b555ea6d11f1543337cf52307976cf"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>save_failed_curve</b></td></tr>
 <tr class="separator:a55b555ea6d11f1543337cf52307976cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -287,12 +295,14 @@ Private Attributes</h2></td></tr>
     <tr><td class="paramname">c_ref</td><td>Reference shape. Either a float, i.e. the radius of a circle to use, or any curve object which will be converted to a parametric curve. Must be set unless overridden via the <code>c_ref</code> kwarg to <a class="el" href="namespacemotsfinder_1_1axisym_1_1findmots.html#a44461d69473e86a2a16993bdd3e37eb5" title="Convenience function to prepare and perform a Newton-Kantorovich search.">find_mots()</a>. </td></tr>
     <tr><td class="paramname">num</td><td>Initial resolution of the solution. The default <code>'auto'</code> will use the reference shape's resolution. Note that if <code>auto_resolution</code> is <code>True</code> (either due to its default value or by setting it explicitly here as extra search argument (see below)), this is likely not going to be the actual resolution of the solution, which may be higher or lower. Default is &lsquo;'auto&rsquo;`. </td></tr>
     <tr><td class="paramname">ref_num</td><td>Resolution of the prepared reference shape. Downsampling significantly (to e.g. <code>20..80</code>) can increase the attainable accuracy by a large amount. If <code>c_ref</code> is a float (i.e. a sphere is created), then <code>ref_num</code> is ignored. Otherwise, if not given, the reference shape is used as-is without reparameterization. </td></tr>
+    <tr><td class="paramname">horizon_class</td><td>Series class to expand the horizon function into. Default is <code>CosineSeries</code>. </td></tr>
     <tr><td class="paramname">recompute</td><td>Whether to start the search even if a result file exists. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">dont_compute</td><td>If <code>True</code>, load results from files. If a file does not exist, no computation is started and a <code>FileNotFoundError</code> is raised. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">save</td><td>Boolean indicating whether to save/load results using files on disk. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">save_verbose</td><td>Whether to print a message containing the filename when saving a curve. Default is <code>True</code>. </td></tr>
+    <tr><td class="paramname">save_trial_surfaces</td><td>Whether to save the trial surface (i.e. the current curve) after each Newton step. Default is <code>False</code>. </td></tr>
     <tr><td class="paramname">save_failed_curve</td><td>Whether to save a dummy file to indicate a curve was searched but not found. Default is <code>False</code>. </td></tr>
-    <tr><td class="paramname">offset_coeffs</td><td>Coefficients used as initial offset from the reference curve. See <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html#aacb9864aabac9be3d8a5e88be39d1850" title="Static method to create a curve from a reference curve.">curve.refparamcurve.RefParamCurve.from_curve()</a>. Default is the empty list. </td></tr>
+    <tr><td class="paramname">offset_coeffs</td><td>Coefficients used as initial offset from the reference curve. See <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1refparamcurve_1_1RefParamCurve.html#a0b2e1409ea3c162ce1b1af1136f15bea" title="Static method to create a curve from a reference curve.">curve.refparamcurve.RefParamCurve.from_curve()</a>. Default is the empty list. </td></tr>
     <tr><td class="paramname">reparam</td><td>Whether and how to reparameterize the reference shape. Possible values are: <div class="fragment"><div class="line">False   # don&#39;t reparameterize</div>
 <div class="line">True    # reparameterize based on arc-length</div>
 <div class="line">2-tuple # custom reparameterization (see below)</div>

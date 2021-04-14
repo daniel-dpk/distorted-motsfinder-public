@@ -1,0 +1,6 @@
+<map id="FourierSeries" name="FourierSeries">
+<area shape="rect" id="node1" title="Truncated Fourier series to represent a function." alt="" coords="26,229,133,256"/>
+<area shape="rect" id="node2" href="$classmotsfinder_1_1exprs_1_1series_1_1SeriesExpression.html" title="Base class for truncated series expressions." alt="" coords="13,155,146,181"/>
+<area shape="rect" id="node3" href="$classmotsfinder_1_1exprs_1_1numexpr_1_1NumericExpression.html" title="Parent class for numeric expressions." alt="" coords="5,80,153,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="48,5,111,32"/>
+</map>

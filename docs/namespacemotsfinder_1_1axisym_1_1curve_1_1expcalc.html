@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -113,7 +113,7 @@ Classes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Computation class storing interim results of expansion calculations. </p>
-<p>The implementation here uses the formulas derived in <a class="el" href="namespacemotsfinder_1_1axisym_1_1curve_1_1expcalc.html#thornburg2003_1">[1]</a>. Specifically, we make heavy use of the quantities <code>A, B, C, D</code> defined in <a class="el" href="namespacemotsfinder_1_1axisym_1_1curve_1_1expcalc.html#thornburg2003_1">[1]</a> in equation (12) to compute the expansion \( \Theta \) using equation (11). See also <a class="el" href="namespacemotsfinder_1_1axisym_1_1newton.html#pookkolb2018_1">[2]</a> and the docstrings of the individual procedures.</p>
+<p>The implementation here uses the formulas derived in <a class="el" href="namespacemotsfinder_1_1axisym_1_1curve_1_1expcalc.html#thornburg2003_1">[1]</a>. Specifically, we make heavy use of the quantities <code>A, B, C, D</code> defined in <a class="el" href="namespacemotsfinder_1_1axisym_1_1curve_1_1expcalc.html#thornburg2003_1">[1]</a> in equation (12) to compute the expansion \( \Theta \) using equation (11). See also <a class="el" href="namespacemotsfinder_1_1axisym_1_1curve_1_1expcalc.html#pookkolb2018">[2]</a> and the docstrings of the individual procedures.</p>
 <p>In the base class <a class="el" href="classmotsfinder_1_1axisym_1_1curve_1_1expcalc_1_1ExpansionCalc.html" title="Abstract base class for computing the expansion at one point.">ExpansionCalc</a> defined in this module, we do not consider how the used quantities \( s_i \) and \( \partial_i s_j \) are obtained. This depends on how the surfaces are represented and hence is the responsibility of subclasses to implement. Additionally, subclasses also need to supply surface parameter derivatives defined in <a class="el" href="namespacemotsfinder_1_1axisym_1_1curve_1_1expcalc.html#thornburg2003_1">[1]</a> as \( X^u_i = \partial_i y^u \) and \( X^u_{ij} = \partial_i\partial_j y^u \). In the axisymmetric case considered here, we have only one parameter, \( y^u = \lambda \) along the curve, and hence drop the <code>u</code> superscript.</p>
 <p>Note that in this code, we call the covector field \( X_i \) simply <code>X</code> and the 2nd rank tensor field \( X_{ij} \) simply <code>Y</code> (Python cannot differentiate between objects based on how many indices you use).</p>
 <p><b>Examples</b> </p>
@@ -121,7 +121,7 @@ Classes</h2></td></tr>
 <p><b>References</b> </p>
 <p><a class="anchor" id="thornburg2003_1"></a>[1] Thornburg, Jonathan. "A fast apparent horizon finder
      for three-dimensional Cartesian grids in numerical relativity." Classical and quantum gravity 21.2 (2003): 743.</p>
-<p><a class="anchor" id="pookkolb2018_1"></a>[2] D. Pook-Kolb, O. Birnholtz, B. Krishnan and E. Schnetter, "The existence and stability of marginally trapped surfaces." arXiv:1811.10405 [gr-qc]. </p>
+<p><a class="anchor" id="pookkolb2018"></a>[2] D. Pook-Kolb, O. Birnholtz, B. Krishnan and E. Schnetter, "The existence and stability of marginally trapped surfaces." arXiv:1811.10405 [gr-qc]. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

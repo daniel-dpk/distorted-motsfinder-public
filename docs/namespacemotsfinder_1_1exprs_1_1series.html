@@ -35,7 +35,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">MOTS Finder
-   &#160;<span id="projectnumber">v1.4-3-g4c3aa7c</span>
+   &#160;<span id="projectnumber">v1.4-4-g8c2eec1</span>
    </div>
    <div id="projectbrief">Find non-star-shaped MOTSs</div>
   </td>
@@ -156,7 +156,7 @@ Functions</h2></td></tr>
 <p>Resize 2D coefficient matrix to a new shape. </p>
 <p>For orthogonal bases, this is equivalent to <em>resampling</em> the series expansion to a different resolution. Increasing the resolution and shrinking it afterwards is lossless.</p>
 <p>This function can be used to resize 1D coefficients by specifying the second dimension to have one element, i.e.: </p><pre class="fragment">coeffs = resize_coeffs(coeffs, (old_num, 1), (new_num, 1))
-</pre><dl class="params"><dt>Parameters</dt><dd>
+</pre> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">coeffs</td><td>Flattened list of current coefficients, which should be interpreted via <code>old_shape</code>. </td></tr>
     <tr><td class="paramname">old_shape</td><td>2-tuple/list of the coefficient matrix size. </td></tr>

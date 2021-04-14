@@ -62,6 +62,11 @@ var annotated_dup =
           [ "NewtonKantorovich", "classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich.html", "classmotsfinder_1_1axisym_1_1newton_1_1NewtonKantorovich" ],
           [ "_LinearExpansionEquation", "classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation.html", "classmotsfinder_1_1axisym_1_1newton_1_1__LinearExpansionEquation" ]
         ] ],
+        [ "shooting", "namespacemotsfinder_1_1axisym_1_1shooting.html", [
+          [ "shooting", "namespacemotsfinder_1_1axisym_1_1shooting_1_1shooting.html", [
+            [ "ShootingMethodError", "classmotsfinder_1_1axisym_1_1shooting_1_1shooting_1_1ShootingMethodError.html", null ]
+          ] ]
+        ] ],
         [ "trackmots", "namespacemotsfinder_1_1axisym_1_1trackmots.html", [
           [ "props", "namespacemotsfinder_1_1axisym_1_1trackmots_1_1props.html", [
             [ "_PropResult", "classmotsfinder_1_1axisym_1_1trackmots_1_1props_1_1__PropResult.html", "classmotsfinder_1_1axisym_1_1trackmots_1_1props_1_1__PropResult" ],
@@ -121,7 +126,9 @@ var annotated_dup =
           [ "SineSeries", "classmotsfinder_1_1exprs_1_1trig_1_1SineSeries.html", "classmotsfinder_1_1exprs_1_1trig_1_1SineSeries" ],
           [ "_SineSeriesEval", "classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval.html", "classmotsfinder_1_1exprs_1_1trig_1_1__SineSeriesEval" ],
           [ "CosineSeries", "classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries.html", "classmotsfinder_1_1exprs_1_1trig_1_1CosineSeries" ],
-          [ "_CosineSeriesEval", "classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html", "classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval" ]
+          [ "_CosineSeriesEval", "classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval.html", "classmotsfinder_1_1exprs_1_1trig_1_1__CosineSeriesEval" ],
+          [ "FourierSeries", "classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries.html", "classmotsfinder_1_1exprs_1_1trig_1_1FourierSeries" ],
+          [ "_FourierSeriesEval", "classmotsfinder_1_1exprs_1_1trig_1_1__FourierSeriesEval.html", "classmotsfinder_1_1exprs_1_1trig_1_1__FourierSeriesEval" ]
         ] ]
       ] ],
       [ "lockfile", "namespacemotsfinder_1_1lockfile.html", [
@@ -146,6 +153,10 @@ var annotated_dup =
             [ "SchwarzschildKSSliceShift", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceShift.html", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceShift" ],
             [ "SchwarzschildKSSliceCurv", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceCurv.html", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildks_1_1SchwarzschildKSSliceCurv" ]
           ] ],
+          [ "schwarzschildpg", "namespacemotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg.html", [
+            [ "SchwarzschildPGSlice", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSlice.html", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSlice" ],
+            [ "SchwarzschildPGSliceCurv", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSliceCurv.html", "classmotsfinder_1_1metric_1_1analytical_1_1schwarzschildpg_1_1SchwarzschildPGSliceCurv" ]
+          ] ],
           [ "simple", "namespacemotsfinder_1_1metric_1_1analytical_1_1simple.html", [
             [ "FlatThreeMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric.html", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1FlatThreeMetric" ],
             [ "_ConformallyFlatMetric", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric.html", "classmotsfinder_1_1metric_1_1analytical_1_1simple_1_1__ConformallyFlatMetric" ],
@@ -160,6 +171,7 @@ var annotated_dup =
           ] ]
         ] ],
         [ "base", "namespacemotsfinder_1_1metric_1_1base.html", [
+          [ "_MetricTensorCache", "classmotsfinder_1_1metric_1_1base_1_1__MetricTensorCache.html", null ],
           [ "MetricTensor", "classmotsfinder_1_1metric_1_1base_1_1MetricTensor.html", "classmotsfinder_1_1metric_1_1base_1_1MetricTensor" ],
           [ "_GeneralMetric", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric.html", "classmotsfinder_1_1metric_1_1base_1_1__GeneralMetric" ],
           [ "_ThreeMetric", "classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric.html", "classmotsfinder_1_1metric_1_1base_1_1__ThreeMetric" ]
@@ -232,7 +244,8 @@ var annotated_dup =
           ] ],
           [ "trig", "namespacemotsfinder_1_1ndsolve_1_1bases_1_1trig.html", [
             [ "SineBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis.html", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1SineBasis" ],
-            [ "CosineBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis" ]
+            [ "CosineBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis.html", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1CosineBasis" ],
+            [ "FourierBasis", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1FourierBasis.html", "classmotsfinder_1_1ndsolve_1_1bases_1_1trig_1_1FourierBasis" ]
           ] ]
         ] ],
         [ "bcs", "namespacemotsfinder_1_1ndsolve_1_1bcs.html", [
